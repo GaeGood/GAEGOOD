@@ -2,8 +2,15 @@ import cors from "cors";
 import express from "express";
 import { viewsRouter, userRouter } from "./routers";
 import { errorHandler } from "./middlewares";
+import path from "path";
 
 const app = express();
+
+app.set("view engine", "ejs");
+app.set("views", __dirname + "/views");
+
+app.use("/css", express.static("public/css"));
+app.use("/img", express.static("public/images"));
 
 // CORS 에러 방지
 app.use(cors());
