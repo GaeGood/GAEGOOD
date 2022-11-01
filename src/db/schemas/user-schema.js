@@ -6,30 +6,13 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
-    fullName: {
-      type: String,
-      required: true,
-    },
     password: {
       type: String,
       required: true,
     },
-    phoneNumber: {
+    name: {
       type: String,
-      required: false,
-    },
-    address: {
-      type: new Schema(
-        {
-          postalCode: String,
-          address1: String,
-          address2: String,
-        },
-        {
-          _id: false,
-        }
-      ),
-      required: false,
+      required: true,
     },
     role: {
       type: String,
@@ -38,7 +21,6 @@ const UserSchema = new Schema(
     },
   },
   {
-    collection: "users",
     timestamps: true,
   }
 );
