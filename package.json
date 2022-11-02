@@ -1,6 +1,7 @@
 {
   "name": "shopping-mall",
   "author": "team-n",
+  "type": "module",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
