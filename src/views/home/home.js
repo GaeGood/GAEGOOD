@@ -43,11 +43,11 @@ function insertTextToGreeting() {
 }
 
 function alertLandingText() {
-  alert("n팀 쇼핑몰입니다. 안녕하세요.");
+  alert("GAEGOOD 쇼핑몰입니다. 안녕하세요.");
 }
 
 function alertGreetingText() {
-  alert("n팀 쇼핑몰에 오신 것을 환영합니다");
+  alert("GAEGOOD 쇼핑몰에 오신 것을 환영합니다");
 }
 
 async function getDataFromApi() {

@@ -6,13 +6,6 @@
     <title>개굿</title>
     <!-- 아이콘 -->
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-32x32.png" />
-    <!-- daisyUi -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/daisyui@2.38.0/dist/full.css"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- CSS only Bootstrap -->
     <link
@@ -21,7 +14,7 @@
       integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
       crossorigin="anonymous"
     />
-    <!-- JavaScript Bundle with Popper -->
+    <!-- JavaScript Bundle with Popper Bootstrap -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
@@ -40,25 +33,29 @@
 
   <body>
     <!-- HEADER -->
-    <div class="navbar bg-base-100">
-      <div class="flex-1">
-        <a href="/" class="btn btn-ghost normal-case text-xl">GAEGOOD</a>
-      </div>
-      <div class="flex-none">
-        <ul class="menu menu-horizontal p-0">
-          <li><a href="/login">로그인</a></li>
-          <li><a href="/register">회원가입</a></li>
-          <li>
-            <a href="/cart" aria-current="page">
-              <span class="icon">
-                <i class="fas fa-cart-shopping"></i>
-              </span>
-              <span>장바구니</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <nav class="navbar">
+      <!-- <div class="container-fluid"> -->
+      <a class="navbar-brand" href="/">GAEGOOD</a>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/login"
+            >로그인</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/register">회원가입</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/cart"
+            >장바구니
+            <span class="icon">
+              <i class="fas fa-cart-shopping"></i>
+            </span>
+          </a>
+        </li>
+      </ul>
+      <!-- </div> -->
+    </nav>
 
     <!-- 메인 컨테이너 -->
     <main id="main__container" role="main">
@@ -134,107 +131,117 @@
       </div>
 
       <!-- 상품 카테고리 -->
-      <nav class="category">
-        <ul class="menu menu-horizontal bg-base-100">
-          <li><a href="/Total">TOTAL</a></li>
-          <li><a href="/Fabrics">FABRICS</a></li>
-          <li><a href="/Stickers">STICKERS</a></li>
-          <li tabindex="0">
-            <span>ETC</span>
-            <ul class="bg-base-100">
-              <li><a>기타1</a></li>
-              <li><a>기타2</a></li>
-              <li><a>기차3</a></li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
-
-      <!--시안 카테고리-->
-      <div class="tabs w-full flex justify-center">
-        <a class="tab tab-bordered tab-active">Total</a>
-        <a class="tab tab-bordered">Fabrics</a>
-        <a class="tab tab-bordered">Stickers</a>
-      </div>
+      <ul class="nav justify-content-center p-2">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">TOTAL</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/fabrics">FABRICS</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/stickers">STICKERS</a>
+        </li>
+      </ul>
 
       <!-- 구분선 -->
-      <div class="flex flex-col w-full">
-        <div class="divider"></div>
-      </div>
+      <hr class="my-2" />
+
       <!-- 상품들 -->
-      <div class="card__container">
-        <!-- 머그컵 -->
-        <a href="/product" class="card w-96 bg-base-100">
-          <figure class="px-10 pt-10">
-            <img
-              src="https://placeimg.com/400/225/arch"
-              alt="cup"
-              class="rounded-xl img"
-            />
-          </figure>
-          <div class="card-body items-center text-center">
-            <h2 class="card-title">개발자 머그컵</h2>
-            <p>개발자가 쓰는 머그컵!</p>
-            <p>10,000원</p>
+      <div class="cards">
+        <div class="card">
+          <img src="elice-rabbit.png" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <div class="card-text card-text-title">개굿 머그컵</div>
+            <div class="card-text card-spec">
+              포브스 선정 개발자가 갖고 싶어하는 컵 1위
+            </div>
+            <div class="card-text">137,000원</div>
           </div>
-        </a>
-
-        <!-- 티셔츠 -->
-        <a href="/product" class="card w-96 bg-base-100">
-          <figure class="px-10 pt-10">
-            <img
-              src="https://placeimg.com/400/225/arch"
-              alt="cup"
-              class="rounded-xl img"
-            />
-          </figure>
-          <div class="card-body items-center text-center">
-            <h2 class="card-title">개발자 티샤쯔</h2>
-            <p>개발자가 쓰는 티샤쯔!</p>
-            <p>20,000원</p>
+        </div>
+        <div class="card">
+          <img src="elice-rabbit.png" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <div class="card-text card-text-title">개굿 머그컵</div>
+            <div class="card-text card-spec">
+              포브스 선정 개발자가 갖고 싶어하는 컵 1위
+            </div>
+            <div class="card-text">137,000원</div>
           </div>
-        </a>
-
-        <!-- 칫솔 -->
-        <a href="/product" class="card w-96 bg-base-100">
-          <figure class="px-10 pt-10">
-            <img
-              src="https://placeimg.com/400/225/arch"
-              alt="cup"
-              class="rounded-xl img"
-            />
-          </figure>
-          <div class="card-body items-center text-center">
-            <h2 class="card-title">개발자 칫솔</h2>
-            <p>개발자가 쓰는 칫솔!</p>
-            <p>200,000원</p>
+        </div>
+        <div class="card">
+          <img src="elice-rabbit.png" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <div class="card-text card-text-title">개굿 머그컵</div>
+            <div class="card-text card-spec">
+              포브스 선정 개발자가 갖고 싶어하는 컵 1위
+            </div>
+            <div class="card-text">137,000원</div>
           </div>
-        </a>
-
-        <!-- 머그컵 -->
-        <a href="/product" class="card w-96 bg-base-100">
-          <figure class="px-10 pt-10">
-            <img
-              src="https://placeimg.com/400/225/arch"
-              alt="cup"
-              class="rounded-xl img"
-            />
-          </figure>
-          <div class="card-body items-center text-center">
-            <h2 class="card-title">개발자 머그컵</h2>
-            <p>개발자가 쓰는 머그컵!</p>
-            <p>10,000원</p>
+        </div>
+        <div class="card">
+          <img src="elice-rabbit.png" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <div class="card-text card-text-title">개굿 머그컵</div>
+            <div class="card-text card-spec">
+              포브스 선정 개발자가 갖고 싶어하는 컵 1위
+            </div>
+            <div class="card-text">137,000원</div>
           </div>
-        </a>
+        </div>
+        <div class="card">
+          <img src="elice-rabbit.png" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <div class="card-text card-text-title">개굿 머그컵</div>
+            <div class="card-text card-spec">
+              포브스 선정 개발자가 갖고 싶어하는 컵 1위
+            </div>
+            <div class="card-text">137,000원</div>
+          </div>
+        </div>
+        <div class="card">
+          <img src="elice-rabbit.png" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <div class="card-text card-text-title">개굿 머그컵</div>
+            <div class="card-text card-spec">
+              포브스 선정 개발자가 갖고 싶어하는 컵 1위
+            </div>
+            <div class="card-text">137,000원</div>
+          </div>
+        </div>
+        <div class="card">
+          <img src="elice-rabbit.png" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <div class="card-text card-text-title">개굿 머그컵</div>
+            <div class="card-text card-spec">
+              포브스 선정 개발자가 갖고 싶어하는 컵 1위
+            </div>
+            <div class="card-text">137,000원</div>
+          </div>
+        </div>
+        <div class="card">
+          <img src="elice-rabbit.png" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <div class="card-text card-text-title">개굿 머그컵</div>
+            <div class="card-text card-spec">
+              포브스 선정 개발자가 갖고 싶어하는 컵 1위
+            </div>
+            <div class="card-text">137,000원</div>
+          </div>
+        </div>
       </div>
     </main>
 
-    <!-- footer -->
-    <footer class="footer footer-center p-4 bg-base-300 text-base-content">
-      <div>
-        <p>2022.10.31 ~ 2022.11.13 - 12팀</p>
-        <p>사진저작권자 - yalco</p>
+    <!-- Footer -->
+    <footer
+      class="text-center text-white"
+      style="background-color: blanchedalmond"
+    >
+      <!-- Copyright -->
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+        <p>© 2022 개굿개굿</p>
+        <p>저작권 yalco</p>
       </div>
+      <!-- Copyright -->
     </footer>
   </body>
 </html>
