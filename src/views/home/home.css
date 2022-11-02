@@ -53,14 +53,14 @@ body {
   padding: 100px;
 }
 /*carousel container*/
-.w-full {
+/* .w-full {
   padding: 10px 100px;
 }
 
 .btn:hover {
   background-color: #e8e9eb;
   color: #303640;
-}
+} */
 
 /* 상품 카테고리 */
 .category {
@@ -75,6 +75,6 @@ body {
 }
 
 .img {
-  width: 230px;
-  height: 250px;
+  height: 300px;
+  background-color: black;
 }
