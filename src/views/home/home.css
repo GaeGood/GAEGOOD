@@ -120,3 +120,8 @@ html {
   justify-content: center;
   align-items: center;
 }
+
+/*display:none*/
+.hidden {
+  display: none;
+}
