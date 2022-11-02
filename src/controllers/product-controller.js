@@ -68,6 +68,13 @@ class ProductContoller {
     }
   }
 
+  async getProduct(req, res) {
+    const { pid } = req.params;
+
+    const product = await productService.getProductById(pid);
+    res.json(product);
+  }
+
   async editProduct(req, res) {
     const { pid } = req.params;
     const {
