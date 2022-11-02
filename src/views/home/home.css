@@ -24,12 +24,14 @@
 /* HEADER 카테고리 */
 
 .container.mt-3 {
+  padding: 10px;
+
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 
-  width: 500px;
+  width: 80rem;
   height: 100px;
 }
 
@@ -75,7 +77,6 @@ body {
   width: 80rem;
   height: 20rem;
   border: 1px black solid;
-  display: flex;
 }
 
 .carousel__container__img {
@@ -86,8 +87,13 @@ body {
 
 .button__contianer__next {
   background-color: tomato;
+  height: 50%;
+  width: 50%;
+  display: flex;
+  justify-content: space-around;
 }
 
 .button__contianer__circle {
   background-color: wheat;
+  display: flex;
 }
