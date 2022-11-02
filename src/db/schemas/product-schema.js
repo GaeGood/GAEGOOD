@@ -24,9 +24,11 @@ const ProductSchema = new Schema(
     },
     smallImageURL: {
       type: String,
+      required: true,
     },
     bigImageURL: {
       type: String,
+      required: true,
     },
   },
   {
