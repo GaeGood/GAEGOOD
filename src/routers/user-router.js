@@ -2,7 +2,7 @@ import { Router } from "express";
 import is from "@sindresorhus/is";
 import { loginRequired } from "../middlewares";
 import { userService } from "../services";
-import { User } from "../models";
+import { User } from "../db";
 
 const userRouter = Router();
 
@@ -36,10 +36,10 @@ userRouter.get("/", async (req, res) => {
 });
 
 //test
-userRouter.get("/users/:userId", async (req, res, next) => {
+userRouter.get("/:userId", async (req, res, next) => {
   const { userId } = req.params;
   try {
-    const foundUser = userList.find((el) => el.id === userId);
+    const foundUser = userList.find((el) => el.id === Number(userId));
     res.json(foundUser);
   } catch (err) {
     next(err);
