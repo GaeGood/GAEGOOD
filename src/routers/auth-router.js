@@ -18,12 +18,9 @@ authRouter.post("/login", async (req, res, next) => {
 
   try {
     const user = await User.find({ email });
-    console.log(user);
-    console.log(user.length);
     if (user.length < 1) {
       return res.json({ resCode: "404", resMsg: "가입된 메일이 아닙니다." });
     }
-    console.log(user);
 
     const success = await bcrypt.compare(password, user[0].password);
 
