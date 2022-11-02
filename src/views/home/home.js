@@ -3,20 +3,20 @@
 // 코드 예시를 남겨 두었습니다.
 
 // import { json } from "express";
-// // import nodemon from "nodemon";
-// import * as Api from "../api.js";
-// import { randomId } from "../useful-functions.js";
+// import nodemon from "nodemon";
+// import * as Api from "/api.js";
+// import { randomId } from "/useful-functions.js";
 
 // 요소(element), input 혹은 상수
 // const landingDiv = document.querySelector("#landingDiv");
 // const greetingDiv = document.querySelector("#greetingDiv");
-// const fabricBtn = document.querySelector("#btn-fabrics");
-// const stickerBtn = document.querySelector("#btn-stickers");
-// const card = document.querySelector(".card");
+const fabricBtn = document.querySelector(".btn-fabrics");
+const stickerBtn = document.querySelector(".btn-stickers");
+const card = document.querySelector(".card");
 const cards = document.querySelector(".cards");
 card.addEventListener("click", (e) => {
-  alert("카드들을 클릭했다!")
-})
+  alert("카드들을 클릭했다!");
+});
 
 // function fabricBtn() {
 //   if (card.classList.contains("sticker")) {
@@ -29,6 +29,11 @@ card.addEventListener("click", (e) => {
 //     card.classList.add("hidden");
 //   }
 // }
+
+const className = "";
+const productName = "";
+const productDesc = "";
+const price = "";
 
 // 템플릿리터럴 안의 내용은 백에서 json 파일로 가져올 때..!!!
 
@@ -81,7 +86,7 @@ function cardTemplateInsert() {
 }
 const thing = cardTemplateInsert().join("");
 
-cards.innerHTML = thing;
+cards.innerHTML += thing;
 
 // cards.append(resultArray[i]);
 // let apple = [a,b,c]
@@ -100,8 +105,8 @@ fabricBtn.addEventListener("click", () => {
 });
 // stickerBtn.addEventListener("click", stickerBtn);
 
-// addAllElements();
-// addAllEvents();
+addAllElements();
+addAllEvents();
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
