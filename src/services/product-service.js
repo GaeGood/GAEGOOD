@@ -49,6 +49,11 @@ class ProductService {
   async removeProduct(pid) {
     await productModel.delete(pid);
   }
+
+  async searchProduct(searchBy) {
+    const productList = await productModel.search(searchBy);
+    return productList;
+  }
 }
 
 const productService = new ProductService(productModel);

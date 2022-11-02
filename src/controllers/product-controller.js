@@ -107,6 +107,17 @@ class ProductContoller {
       next(e);
     }
   }
+
+  async searchProduct(req, res) {
+    if (Object.keys(req.query).length === 0) {
+      const productList = await productService.getProductList();
+      return res.json(productList);
+    } else {
+      const searchBy = req.query;
+      const productList = await productService.searchProduct(searchBy);
+      res.json(productList);
+    }
+  }
 }
 
 const productController = new ProductContoller();

@@ -48,6 +48,17 @@ class ProductModel {
   async delete(pid) {
     await Product.deleteOne({ _id: pid });
   }
+
+  async search(searchBy) {
+    console.log("searchBy");
+    console.log(searchBy);
+    const productList = await Product.find(searchBy);
+    if (productList.length > 0) {
+      return productList;
+    } else {
+      return [];
+    }
+  }
 }
 
 const productModel = new ProductModel();
