@@ -1,9 +1,7 @@
 import { Schema } from "mongoose";
-// import { shortId } from "./types/short-Id";
 
 const UserSchema = new Schema(
   {
-    // shortId,
     email: {
       type: String,
       required: true,

@@ -2,6 +2,7 @@ import { Router } from "express";
 import { User } from "../db";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+
 const authRouter = Router();
 
 authRouter.post("/login", async (req, res, next) => {
@@ -16,16 +17,16 @@ authRouter.post("/login", async (req, res, next) => {
   }
 
   try {
-    const user = await User.findOne({ email });
-    if (!user) {
+    const user = await User.find({ email });
+    if (user.length < 1) {
       return res.json({ resCode: "404", resMsg: "가입된 메일이 아닙니다." });
     }
 
-    const success = await bcrypt.compare(password, user.password);
+    const success = await bcrypt.compare(password, user[0].password);
 
     if (success) {
       const payload = {
-        id: user._id,
+        user_id: user.userId,
       };
       const key = process.env.JWT_SECRET_KEY || "secret";
       const token = jwt.sign(payload, key, {
@@ -65,48 +66,25 @@ authRouter.post("/join", async (req, res, next) => {
   }
 
   try {
-    const isDuplicate = await User.findOne({ email });
-    if (isDuplicate) {
-      return res.json({
-        resCode: 409,
-        resMsg: "이미 가입한 이메일이 존재합니다.",
-      });
-    } else {
-      const saltRound = parseInt(process.env.SALT_ROUND) || 10;
-      const hashPassword = await bcrypt.hash(password, saltRound);
-      const userInfo = await User.create({
-        email: email,
-        name: name,
-        password: hashPassword,
-        role: role,
-        address: address,
-      });
+    const saltRound = parseInt(process.env.SALT_ROUND) || 10;
+    const hashPassword = await bcrypt.hash(password, saltRound);
+    const userInfo = await User.create({
+      email: email,
+      name: name,
+      password: hashPassword,
+      role: role,
+      address: address,
+    });
 
-      return res.json({
-        resCode: "200",
-        resMsg: {
-          msg: "회원가입 유저 생성 완료",
-          user: userInfo.email,
-        },
-      });
-    }
-  } catch (err) {
-    console.log(err);
-    next(err);
-  }
-  next();
-});
-
-authRouter.get("/logout", async (req, res, next) => {
-  try {
-    res.clearCookie("jwt_token");
     res.json({
       resCode: "200",
       resMsg: {
-        msg: "정상적으로 로그아웃되었습니다. jwt token 삭제!",
+        msg: "회원가입 유저 생성 완료",
+        user: userInfo.email,
       },
     });
   } catch (err) {
+    console.log(err);
     next(err);
   }
   next();
