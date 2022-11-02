@@ -8,25 +8,22 @@ import {
   productRouter,
 } from "./routers";
 import { errorHandler } from "./middlewares";
+import { viewsRouter } from "./routers/views-router";
 
 const app = express();
 
-app.set("view engine", "ejs");
-app.engine("html", require("ejs").renderFile);
-app.set("views", __dirname + "/views");
-
-app.use("/public", express.static("public"));
-
 app.use(cors());
+
+app.use(viewsRouter);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/users", userRouter);
-app.use("/auth", authRouter);
-app.use("/products", productRouter);
-app.use("/orders", orderRouter);
-app.use("/", globalRouter);
+app.use("/api/users", userRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/products", productRouter);
+app.use("/api/orders", orderRouter);
+app.use("/api/", globalRouter);
 
 app.use(errorHandler);
 
