@@ -38,8 +38,34 @@ class ProductContoller {
   }
 
   async getProductList(req, res) {
-    const productList = await productService.getProductList();
-    res.json(productList);
+    if (Object.keys(req.query).length === 0) {
+      return res.json("에러, 쿼리 스트링이 존재해야 함");
+    } else {
+      const { getAll } = req.query;
+      if (!getAll) {
+        return res.json("에러, 쿼리 스트링에 getAll이 존재해야 함");
+      }
+
+      if (getAll !== "true" && getAll !== "false") {
+        return res.json(
+          "에러, 쿼리 스트링에 getAll의 값이 true 또는 false 여야 함"
+        );
+      }
+
+      if (getAll === "true") {
+        const productList = await productService.getProductList();
+        return res.json(productList);
+      } else {
+        const { pid } = req.query;
+
+        if (!pid) {
+          return res.json("에러, 쿼리 스트링에 pid이 존재해야 함");
+        }
+        const pidArr = pid.split(",");
+        const productList = await productService.getProductList(pidArr);
+        return res.json(productList);
+      }
+    }
   }
 
   async editProduct(req, res) {

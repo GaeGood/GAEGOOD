@@ -9,6 +9,19 @@ class ProductModel {
     return product;
   }
 
+  async findByIds(pidArr) {
+    const productList = new Array();
+
+    for (const pid of pidArr) {
+      const product = await Product.findOne({ _id: pid });
+      if (product) {
+        productList.push(product);
+      }
+    }
+
+    return productList;
+  }
+
   async findAll() {
     const productList = await Product.find({});
     return productList;

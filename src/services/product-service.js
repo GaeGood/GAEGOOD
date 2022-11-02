@@ -1,10 +1,6 @@
 import { productModel } from "../db";
 
 class ProductService {
-  constructor(productModel) {
-    this.productModel = productModel;
-  }
-
   async addProduct(productInfo) {
     const {
       name,
@@ -16,18 +12,23 @@ class ProductService {
       bigImageURL,
     } = productInfo;
 
-    const createdNewProduct = await this.productModel.create(productInfo);
+    const createdNewProduct = await productModel.create(productInfo);
     return createdNewProduct;
   }
 
   async getProductById(pid) {
-    const product = await this.productModel.findById(pid);
+    const product = await productModel.findById(pid);
     return product;
   }
 
-  async getProductList() {
-    const productList = await this.productModel.findAll();
-    return productList;
+  async getProductList(pidArr) {
+    if (!pidArr) {
+      const productList = await productModel.findAll();
+      return productList;
+    } else {
+      const productList = await productModel.findByIds(pidArr);
+      return productList;
+    }
   }
 
   async editProduct(pid, productInfo) {
@@ -41,12 +42,12 @@ class ProductService {
       bigImageURL,
     } = productInfo;
 
-    const updatedProduct = await this.productModel.update(pid, productInfo);
+    const updatedProduct = await productModel.update(pid, productInfo);
     return updatedProduct;
   }
 
   async removeProduct(pid) {
-    await this.productModel.delete(pid);
+    await productModel.delete(pid);
   }
 }
 
