@@ -14,6 +14,9 @@ const fabricBtn = document.querySelector(".btn-fabrics");
 const stickerBtn = document.querySelector(".btn-stickers");
 const card = document.querySelector(".card");
 const cards = document.querySelector(".cards");
+card.addEventListener("click", (e) => {
+  alert("카드들을 클릭했다!")
+})
 
 // function fabricBtn() {
 //   if (card.classList.contains("sticker")) {
