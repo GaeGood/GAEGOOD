@@ -12,6 +12,7 @@ import { errorHandler } from "./middlewares";
 const app = express();
 
 app.set("view engine", "ejs");
+app.engine("html", require("ejs").renderFile);
 app.set("views", __dirname + "/views");
 
 app.use("/public", express.static("public"));
