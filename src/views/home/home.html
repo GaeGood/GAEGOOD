@@ -1,128 +1,213 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>개굿</title>
+    <!-- 아이콘 -->
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-32x32.png" />
+    <!-- daisyUi -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@2.38.0/dist/full.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 폰트 어썸: 아이콘 -->
+    <script
+      defer
+      src="https://kit.fontawesome.com/9daa42bcef.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- 커스텀 css, js -->
+    <link rel="stylesheet" href="home.css" />
+    <script src="home.js" type="module" defer></script>
+  </head>
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>개굿</title>
-  <!-- 아이콘 -->
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon-32x32.png" />
-  <!-- 폰트 어썸: 아이콘 -->
-  <script defer src="https://kit.fontawesome.com/9daa42bcef.js" crossorigin="anonymous"></script>
-  <!-- 커스텀 css, js -->
-  <link rel="stylesheet" href="home.css" />
-  <script src="home.js" type="module" defer></script>
-</head>
-
-<body>
-  <!-- 헤더 -->
-  <nav class="navbar" role="navigation" aria-label="main navigation">
-    <div class="container mt-3">
-      <div class="navbar-brand">
-        <a class="navbar-item" href="/">
-          <img src="geagood-icon.png" width="30" height="30" />
-          <span class="has-text-link">개굿</span>
-        </a>
-
-        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
+  <body>
+    <!-- HEADER -->
+    <div class="navbar bg-base-100">
+      <div class="flex-1">
+        <a href="/" class="btn btn-ghost normal-case text-xl">GAEGOOD</a>
       </div>
-
-
-      <!--  -->
-      <div class="navbar-list">
-        <ul id="navbar-ul">
-          <li><a href="/login">LOGIN</a></li>
-          <li><a href="/register">JOIN</a></li>
+      <div class="flex-none">
+        <ul class="menu menu-horizontal p-0">
+          <li><a href="/login">로그인</a></li>
+          <li><a href="/register">회원가입</a></li>
           <li>
             <a href="/cart" aria-current="page">
               <span class="icon">
                 <i class="fas fa-cart-shopping"></i>
               </span>
-              <span>CART</span>
+              <span>장바구니</span>
             </a>
           </li>
         </ul>
       </div>
     </div>
-    </div>
-  </nav>
-<!-- 메인 컨테이너 -->
-  <main id="main__container" role="main">
 
-    <!-- 캐러셀 -->
-    <div class="carousel__container">
-      <div class="carousel__container__img">
-        캐러셀 입니다.
-        <div class="button__contianer__next">
-          <button class="button__left">left button</button>
-          <button class="button__right">right button</button>
-        </div>
-        <div class="button__contianer__circle">
-          <button>1</button>
-          <button>2</button>
-          <button>3</button>
+    <!-- 메인 컨테이너 -->
+    <main id="main__container" role="main">
+      <!-- 캐러셀 -->
+      <div class="carousel w-full">
+        <!-- 슬라이드 1 -->
+        <div id="slide1" class="carousel-item relative w-full">
+          <img src="https://placeimg.com/800/200/arch" class="w-full" />
+          <div
+            class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2"
+          >
+            <a href="#slide4" class="btn btn-circle">❮</a>
+            <a href="#slide2" class="btn btn-circle">❯</a>
+          </div>
         </div>
 
-      </div>
-    </div>
+        <!-- 슬라이드 2 -->
+        <div id="slide2" class="carousel-item relative w-full">
+          <img src="https://placeimg.com/800/200/arch" class="w-full" />
+          <div
+            class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2"
+          >
+            <a href="#slide1" class="btn btn-circle">❮</a>
+            <a href="#slide3" class="btn btn-circle">❯</a>
+          </div>
+        </div>
 
-    <!-- 카테고리 -->
-    <div class="catecories__container">
-      <ul>
-        <li><a href="/Total">Total |</a></li>
-        <li><a href="/Fabrics">Fabrics |</a></li>
-        <li><a href="/Stickers">Stickers</a></li>
-      </ul>
-    </div>
+        <!-- 슬라이드 3 -->
+        <div id="slide3" class="carousel-item relative w-full">
+          <img src="https://placeimg.com/800/200/arch" class="w-full" />
+          <div
+            class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2"
+          >
+            <a href="#slide2" class="btn btn-circle">❮</a>
+            <a href="#slide4" class="btn btn-circle">❯</a>
+          </div>
+        </div>
 
-    <!-- 카테고리 -->
-    <div class="products__container">
-      <div class="product__container">
-        <div class="product__img">
-          <img src="/" alt="상품1에 대한 이미지">
-          <a href="/">상품1에 대한 이미지</a>
-        </div>
-        <div class="product__info">
-          <p>컵</p>
-          <p>상품간단설명</p>
-          <p>10,000원</p>
-        </div>
-      </div>
-      <div class="product__container">
-        <div class="product__img">
-          <img src="/" alt="상품2에 대한 이미지">
-          <a href="/">상품2에 대한 이미지</a>
-        </div>
-        <div class="product__info">
-          <p>티셔츠</p>
-          <p>상품간단설명</p>
-          <p>20,000원</p>
+        <!-- 슬라이드 4 -->
+        <div id="slide4" class="carousel-item relative w-full">
+          <img src="https://placeimg.com/800/200/arch" class="w-full" />
+          <div
+            class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2"
+          >
+            <a href="#slide3" class="btn btn-circle">❮</a>
+            <a href="#slide1" class="btn btn-circle">❯</a>
+          </div>
         </div>
       </div>
-    </div>
+      <div class="flex justify-center w-full py-2 gap-2">
+        <a href="#slide1" class="btn btn-circle btn-xs">1</a>
+        <a href="#slide2" class="btn btn-circle btn-xs">2</a>
+        <a href="#slide3" class="btn btn-circle btn-xs">3</a>
+        <a href="#slide4" class="btn btn-circle btn-xs">4</a>
+      </div>
+
+      <!-- 상품 카테고리 -->
+      <nav class="category">
+        <ul class="menu menu-horizontal bg-base-100">
+          <li><a href="/Total">TOTAL</a></li>
+          <li><a href="/Fabrics">FABRICS</a></li>
+          <li><a href="/Stickers">STICKERS</a></li>
+          <li tabindex="0">
+            <span>ETC</span>
+            <ul class="bg-base-100">
+              <li><a>기타1</a></li>
+              <li><a>기타2</a></li>
+              <li><a>기차3</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+
+      <!--시안 카테고리-->
+      <div class="tabs w-full flex justify-center">
+        <a class="tab tab-bordered tab-active">Total</a>
+        <a class="tab tab-bordered">Fabrics</a>
+        <a class="tab tab-bordered">Stickers</a>
+      </div>
+      <!-- <div class="catecories__container">
+        <ul>
+          <li><a href="/Total">Total |</a></li>
+          <li><a href="/Fabrics">Fabrics |</a></li>
+          <li><a href="/Stickers">Stickers</a></li>
+        </ul>
+      </div> -->
+
+      <!-- 구분선 -->
+      <div class="flex flex-col w-full">
+        <div class="divider"></div>
+      </div>
+      <!-- 상품들 -->
+      <div class="card__container">
+
+              <!-- 머그컵 -->
+        <a href="/product" class="card w-96 bg-base-100">
+          <figure class="px-10 pt-10">
+            <img
+              src="https://placeimg.com/400/225/arch"
+              alt="cup"
+              class="rounded-xl img"
+            />
+          </figure>
+          <div class="card-body items-center text-center">
+            <h2 class="card-title">개발자 머그컵</h2>
+            <p>개발자가 쓰는 머그컵!</p>
+            <p>10,000원</p>
+          </div>
+        </a>
+
+
+        <!-- 티셔츠 -->
+        <a href="/product" class="card w-96 bg-base-100">
+          <figure class="px-10 pt-10">
+            <img
+              src="https://placeimg.com/400/225/arch"
+              alt="cup"
+              class="rounded-xl img"
+            />
+          </figure>
+          <div class="card-body items-center text-center">
+            <h2 class="card-title">개발자 티샤쯔</h2>
+            <p>개발자가 쓰는 티샤쯔!</p>
+            <p>20,000원</p>
+          </div>
+        </a>
+      
+         <!-- 칫솔 -->
+        <a href="/product" class="card w-96 bg-base-100">
+          <figure class="px-10 pt-10">
+            <img
+              src="https://placeimg.com/400/225/arch"
+              alt="cup"
+              class="rounded-xl img"
+            />
+          </figure>
+          <div class="card-body items-center text-center">
+            <h2 class="card-title">개발자 칫솔</h2>
+            <p>개발자가 쓰는 칫솔!</p>
+            <p>200,000원</p>
+          </div>
+        </a>
+
+      <!-- 머그컵 -->
+        <a href="/product" class="card w-96 bg-base-100">
+          <figure class="px-10 pt-10">
+            <img src="https://placeimg.com/400/225/arch" alt="cup" class="rounded-xl img" />
+          </figure>
+          <div class="card-body items-center text-center">
+            <h2 class="card-title">개발자 머그컵</h2>
+            <p>개발자가 쓰는 머그컵!</p>
+            <p>10,000원</p>
+          </div>
+        </a>
+
     </main>
 
     <!-- footer -->
-    <footer class="footer" role="navigation" aria-label="main navigation">
-      <div class="container mt-3">
-        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
-      </div>
-      <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
-        <ul id="navbar-footer">
-          <li><a href="/login">대충만든사람이름</a></li>
-          <li><a href="/register">대충저작권이름</a></li>
-        </ul>
+    <footer class="footer footer-center p-4 bg-base-300 text-base-content">
+      <div>
+        <p>2022.10.31 ~ 2022.11.13 - 12팀</p>
+        <p>사진저작권자 - yalco</p>
       </div>
     </footer>
-
-</body>
-
+  </body>
 </html>
