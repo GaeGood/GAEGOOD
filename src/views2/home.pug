@@ -1,0 +1,19 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet", href="/public/css/home.css")
+        title Document
+    body
+        div
+            include header/header.pug
+        div
+            each product in productList
+                span 제목
+                div
+                    a(href=`/pug/product/detail/${product._id}`)
+                        span #{product.name}
+                        span #{product.shortDesc}
+                        span #{product.price} 원
