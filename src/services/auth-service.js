@@ -25,6 +25,7 @@ class AuthService {
       if (success) {
         const payload = {
           id: user._id,
+          role: user.role,
         };
         const key = process.env.JWT_SECRET_KEY || "secret";
         const token = jwt.sign(payload, key, {

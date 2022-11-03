@@ -28,7 +28,7 @@ class AuthController {
     try {
       const result = await authService.logout();
       res.clearCookie("jwt_token");
-      return res.json(result);
+      return res.json(result.message);
     } catch (err) {
       next(e);
     }
