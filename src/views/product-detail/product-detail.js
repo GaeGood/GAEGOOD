@@ -6,7 +6,7 @@ const id = sp[1];
 console.log(id);
 fetch(`/api/products/${id}`)
   .then((res) => res.json())
-  .then((product) => product.forEach(addproduct))
+  .then((product) => addproduct(product))
   .catch((err) => alert(err.message));
 
 // HTML Template 사용하여 댓글 화면에 표시하기
@@ -16,15 +16,10 @@ function addproduct(product) {
   // const desc = document.querySelector('.product-desc').innerHTML;
   // const price = document.querySelector('.product-price').innerHTML;
 
-  return `
-            <div class="product-container">
-            <div class="product-category">${product.category}</div>
-            <img src="#" class="product-img">
-            <div class="product-name">${product.name}</div>
-            <div class="product-desc">${product.shortDesc}</div>
-            <div class="product-price">${product.price}</div>
-        </div>
-    `;
+  document.querySelector(".product-category").innerHTML = data.category;
+  document.querySelector(".product-name").innerHTML = data.name;
+  document.querySelector(".product-desc").innerHTML = data.longDesc;
+  document.querySelector(".product-price").innerHTML = data.price;
 }
 
 // function addproductComponent(product) {

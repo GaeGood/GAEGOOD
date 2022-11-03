@@ -10,13 +10,15 @@ fetch("/api/products")
   .then((productList) => {
     const createCard = (item) => {
       return `<div class="card ${item.category}">
-      <a href='/api/products/${item._id}'>
-        <img src="elice-rabbit.png" class="card-img-top" alt="${item.name}" />
-        <div class="card-body">
+
+      <a href='/products/detail/${item._id}'>
+        <img src="elice-rabbit.png" class="card-img-top" alt="..." />
+        <div class="card-body"></div>
         <div class="card-text card-text-title">${item.name}</div>
-        <div class="card-text card-spec">${item.shortDesc}</div>
-        <div class="card-text">${addCommas(item.price)}</div>
+        <div class="card-text card-spec">
+          ${item.shortDesc}
         </div>
+        <div class="card-text">${addCommas(item.price)}</div>
       </a>
     </div>`;
     };
@@ -28,7 +30,7 @@ fetch("/api/products")
 
 cardCategories.forEach((cardCategory) =>
   cardCategory.addEventListener("click", (e) => {
-    const eleValue = e.target
+    const eleValue = e.target;
     //eleValue.style.display = "block";
     alert(`${eleValue}를 클릭햇다!`);
   })
