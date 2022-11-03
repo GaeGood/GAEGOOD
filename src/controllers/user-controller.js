@@ -42,7 +42,7 @@ class UserContoller {
     }
   }
 
-  async editUser(req, res) {
+  async editUser(req, res, next) {
     const { userId } = req.params;
     const { password, name, address } = req.body;
 
