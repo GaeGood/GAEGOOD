@@ -9,6 +9,7 @@ import {
 } from "./routers";
 import { errorHandler } from "./middlewares";
 import { viewsRouter } from "./routers/views-router";
+import cookieParser from "cookie-parser";
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(viewsRouter);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 app.use("/api/users", userRouter);
 app.use("/api/auth", authRouter);
