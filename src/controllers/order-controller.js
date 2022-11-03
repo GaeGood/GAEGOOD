@@ -4,7 +4,7 @@ class OrderController {
   async addOrder(req, res) {
     const {
       buyer,
-      productInfo,
+      // productInfo,
       shippingStatus,
       shippingAddress,
       totalAmount,
@@ -14,7 +14,7 @@ class OrderController {
 
     if (
       !buyer ||
-      !productInfo ||
+      // !productInfo ||
       !shippingStatus ||
       !shippingAddress ||
       !totalAmount ||
@@ -24,9 +24,9 @@ class OrderController {
       return res.json("입력 데이터 부족");
     }
 
-    const createdNewOrder = await productService.addProduct({
+    const createdNewOrder = await orderService.addOrder({
       buyer,
-      productInfo,
+      // productInfo,
       shippingStatus,
       shippingAddress,
       totalAmount,

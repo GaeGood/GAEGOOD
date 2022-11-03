@@ -5,7 +5,7 @@ const Order = model("Order", OrderSchema);
 
 class OrderModel {
   async findById(oid) {
-    const order = await Order.findOne({ id: oid });
+    const order = await Order.findOne({ id: oid }).populate("buyer");
     return order;
   }
 

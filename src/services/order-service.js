@@ -4,7 +4,7 @@ class OrderService {
   async addOrder(orderInfo) {
     const {
       buyer,
-      productInfo,
+      // productInfo,
       shippingStatus,
       shippingAddress,
       totalAmount,
@@ -12,7 +12,7 @@ class OrderService {
       recipientPhoneNumber,
     } = orderInfo;
 
-    const createdNewOrder = await orderModel.create(orderModel);
+    const createdNewOrder = await orderModel.create(orderInfo);
     return createdNewOrder;
   }
 
