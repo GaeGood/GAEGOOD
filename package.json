@@ -16,6 +16,7 @@
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.1",
+    "pug": "^3.0.2",
     "start": "^5.1.0"
   },
   "devDependencies": {
