@@ -14,18 +14,24 @@ class AuthController {
 
     try {
       const result = await authService.login(email, password);
+      if (result.token) {
+        res.cookie("jwt_token", result.token, { httpOnly: true });
+      }
+      return res.json(result.message);
     } catch (e) {
       next(e);
     }
-
-    if (result.token) {
-      res.cookie("jwt_token", result.token, { httpOnly: true });
-    }
-    return res.json(result.message);
+    next();
   }
 
   async logoutUser(req, res, next) {
-    authService.logout();
+    try {
+      const result = await authService.logout();
+      res.clearCookie("jwt_token");
+      return res.json(result);
+    } catch (err) {
+      next(e);
+    }
     next();
   }
 
@@ -33,13 +39,24 @@ class AuthController {
     const { name, password, email, role, address } = req.body;
     if (!name || !password || !email || !role || !address) {
       return res.json({
-        resCode: 404,
-        resMsg: "누락값이 있습니다.",
+        resCode: "404",
+        resMsg: {
+          msg: "누락값이 있습니다.",
+        },
       });
     }
-
-    authService.join(name, password, email, role, address);
-
+    try {
+      const result = await authService.join(
+        name,
+        password,
+        email,
+        role,
+        address
+      );
+      return res.json(result);
+    } catch (err) {
+      next(err);
+    }
     next();
   }
 }

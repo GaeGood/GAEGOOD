@@ -10,7 +10,14 @@ class AuthService {
     try {
       const user = await userModel.findByEmail(email);
       if (!user) {
-        throw new Error({ resCode: "404", resMsg: "가입된 메일이 아닙니다." });
+        return {
+          message: {
+            resCode: "404",
+            resMsg: {
+              msg: "가입된 메일이 아닙니다.",
+            },
+          },
+        };
       }
 
       const success = await bcrypt.compare(password, user.password);
@@ -50,13 +57,14 @@ class AuthService {
 
   async logout() {
     try {
-      res.clearCookie("jwt_token");
-      res.json({
-        resCode: "200",
-        resMsg: {
-          msg: "정상적으로 로그아웃되었습니다. jwt token 삭제!",
+      return {
+        message: {
+          resCode: "200",
+          resMsg: {
+            msg: "정상적으로 로그아웃되었습니다. jwt token 삭제!",
+          },
         },
-      });
+      };
     } catch (err) {
       throw new Error(err);
     }
@@ -66,10 +74,12 @@ class AuthService {
     try {
       const isDuplicate = await userModel.findByEmail(email);
       if (isDuplicate) {
-        return res.json({
+        return {
           resCode: 409,
-          resMsg: "이미 가입한 이메일이 존재합니다.",
-        });
+          resMsg: {
+            msg: "이미 가입한 이메일이 존재합니다.",
+          },
+        };
       } else {
         const saltRound = parseInt(process.env.SALT_ROUND) || 10;
         const hashPassword = await bcrypt.hash(password, saltRound);
@@ -80,13 +90,13 @@ class AuthService {
           role: role,
           address: address,
         });
-        return res.json({
+        return {
           resCode: "200",
           resMsg: {
             msg: "회원가입 유저 생성 완료",
             user: userInfo.email,
           },
-        });
+        };
       }
     } catch (err) {
       throw new Error(err);

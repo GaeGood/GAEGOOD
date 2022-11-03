@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { authController } from "../controllers";;
+import { authController } from "../controllers";
 const authRouter = Router();
 
 authRouter.post("/login", authController.loginUser);
 authRouter.get("/logout", authController.logoutUser);
-
+authRouter.post("/join", authController.joinUser); //test용
 // authRouter.post("/join", authController.joinUser);
 
 // authRouter.post("/login", async (req, res, next) => {
