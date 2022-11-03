@@ -9,8 +9,8 @@ export class UserModel {
     return user;
   }
 
-  async findById(userId) {
-    const user = await User.findOne({ _id: userId });
+  async findById(uid) {
+    const user = await User.findOne({ _id: uid });
     return user;
   }
 
@@ -24,12 +24,15 @@ export class UserModel {
     return users;
   }
 
-  async update({ userId, update }) {
+  async update({ userId, userInfo }) {
     const filter = { _id: userId };
     const option = { returnOriginal: false };
 
-    const updatedUser = await User.findOneAndUpdate(filter, update, option);
+    const updatedUser = await User.findOneAndUpdate(filter, userInfo, option);
     return updatedUser;
+  }
+  async delete(uid) {
+    await User.deleteOne({ _id: uid });
   }
 }
 
