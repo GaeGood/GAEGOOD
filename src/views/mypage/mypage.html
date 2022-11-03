@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>개굿</title>
+    <!-- 아이콘 -->
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-32x32.png" />
+
+    <!-- CSS only Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+    <!-- JavaScript Bundle with Popper Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+    <!-- 폰트 어썸: 아이콘 -->
+    <script defer src="https://kit.fontawesome.com/9daa42bcef.js" crossorigin="anonymous"></script>
+    <!-- 커스텀 css, js -->
+    <link rel="stylesheet" href="mypage.css" />
+    <script src="mypage.js" type="module" defer></script>
+</head>
+
+<body>
+    <!-- TEST -->
+    <!-- 적용 전 -->
+    <input type="checkbox" id="root">ROOT1
+
+    <!-- 적용 후 -->
+    <input type="checkbox" id="root2">
+    <label for="root2">ROOT2</label>
+
+    <!-- HEADER -->
+    <nav class="navbar">
+        <!-- <div class="container-fluid"> -->
+        <a class="navbar-brand" href="/">GAEGOOD</a>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/login">로그인</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/register">회원가입</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/cart">장바구니
+                    <span class="icon">
+                        <i class="fas fa-cart-shopping"></i>
+                    </span>
+                </a>
+            </li>
+        </ul>
+        <!-- </div> -->
+    </nav>
+
+    <!-- 메인 컨테이너 -->
+    <main id="main__container" role="main">
+        <div class="main-mypage">MYPAGE</div>
+
+        <!-- 구분선 -->
+        <hr class="my-2" />
+
+        <div class="">고객정보</div>
+        <!-- 구분선 -->
+        <hr class="my-2" />
+
+        <tbody>
+            <tr>
+                <div>
+                    <th>이름</th>
+                    <td>
+                        <span>홍길동(데이터 받아올 곳)</span>
+                        <a href="#">변경하기</a>
+                    </td>
+                </div>
+            </tr>
+
+            <tr>
+                <th>이메일</th>
+                <td>
+                    <div>
+                        <span>hello@gmail.com (데이터 받아올 곳)</span>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th>
+                    <span>비밀번호</span>
+                </th>
+                <td>
+                    <span class="">
+                        <input type="password" placeholder="비밀번호를 입력해주세요.">
+                    </span>
+                    <!-- <p class="">
+                        비밀번호는 영문자, 숫자,특수문자 모두 최소 1가지 이상 조합한 8~12자리이어야 합니다.
+                    </p> -->
+
+                    <div>
+                        <a href="#">변경하기</a>
+                    </div>
+                    <!-- <div class="">
+                        <ul class="bul_list sub_txt">
+                            <li class="dot_arr">영문자, 숫자, 특수문자 조합하여 8~12자리어야 합니다.</li>
+                            <li class="dot_arr">아이디와 4자리 이상 동일하거나, 4자리 이상 반복되는 문자와 숫자는 사용이 불가합니다.</li>
+                            <li class="dot_arr">사용 가능 특수문자: !"#$%&amp;'()*+,-./:;&lt;=&gt;?@[]^_`{|}~</li>
+                    </ul> -->
+                    </div>
+                </td>
+            </tr>
+            <tr class="input new_pw hide" id="trPwdCheck" data-handler="trPwdCheck">
+                <th scope="row">
+                    <span>비밀번호 확인</label>
+                </th>
+                <td>
+                    <div class="">
+                        <input type="password" class="text" placeholder="비밀번호를 재입력해주세요.">
+                    </div>
+                </td>
+            </tr>
+
+        </tbody>
+
+
+    </main>
+
+
+
+    <!-- Footer -->
+    <footer class="text-center text-white" style="background-color: blanchedalmond">
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+            <p>© 2022 개굿개굿</p>
+            <p>저작권 yalco</p>
+        </div>
+        <!-- Copyright -->
+    </footer>
+</body>
+
+</html>
