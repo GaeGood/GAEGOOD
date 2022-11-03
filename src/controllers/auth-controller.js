@@ -11,14 +11,17 @@ class AuthController {
         },
       });
     }
-    const isLogin = authService.login(email,password)
 
-    if (isLogin) {
-      
+    try {
+      const result = await authService.login(email, password);
+    } catch (e) {
+      next(e);
     }
-    //authService.login(email, password);
-    
-    next();
+
+    if (result.token) {
+      res.cookie("jwt_token", result.token, { httpOnly: true });
+    }
+    return res.json(result.message);
   }
 
   async logoutUser(req, res, next) {

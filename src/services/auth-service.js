@@ -23,21 +23,25 @@ class AuthService {
         const token = jwt.sign(payload, key, {
           expiresIn: "2h",
         });
-        res.cookie("jwt_token", token, { httpOnly: true });
-
-        return res.json({
-          resCode: "200",
-          resMsg: {
-            msg: "로그인 성공, jwt 토큰 발급",
+        return {
+          token: token,
+          message: {
+            resCode: "200",
+            resMsg: {
+              msg: "로그인 성공, jwt 토큰 발급",
+            },
           },
-        });
+        };
       } else {
-        return res.json({
-          resCode: "401",
-          resMsg: {
-            msg: "비밀번호가 일치하지 않습니다.",
+        return {
+          token: null,
+          message: {
+            resCode: "401",
+            resMsg: {
+              msg: "비밀번호가 일치하지 않습니다.",
+            },
           },
-        });
+        };
       }
     } catch (err) {
       throw new Error(err);
