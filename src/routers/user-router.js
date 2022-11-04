@@ -1,9 +1,11 @@
 import { Router } from "express";
-import is from "@sindresorhus/is";
-import { loginRequired } from "../middlewares";
-import { userService } from "../services";
-import { User } from "../db";
+import { userController } from "../controllers";
 
 const userRouter = Router();
+
+userRouter.get("/:userId", userController.getUser);
+userRouter.post("/", userController.addUser);
+userRouter.put("/:userId", userController.editUser);
+userRouter.delete("/:userId", userController.removeUser);
 
 export { userRouter };
