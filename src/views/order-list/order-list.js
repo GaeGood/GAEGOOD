@@ -64,23 +64,33 @@
 // 주문목록 가져와서 기존 테이블에 요소 하나하나 추가하기
 const orderListTable = document.querySelector(".orderlist-table");
 
-fetch("/api/products")
+fetch("/api/orders") // /api/orders 로 get요청
   .then((res) => {
     return res.json();
   })
   .then((orderList) => {
     const createOrderContent = (orderLists) => 
-	{`<tr>
-		<th><img src="#"></th>
-		<td>
-			<div>${orderList.name}</div>
-			<div>${orderList.count}</div>
-		</td>
-		<td>
-			<div>${orderList.deliveryStatus}</div>
-			<button class="order-cancel">주문취소</button>
-		</td>
-	</tr>`}
+	{                
+		`<div>
+			<div>${orderList.date}</div>
+			<table class="orderlist-table" id="order-${_id}">
+				<tr>
+					<th><img src="#"></th>
+					<td>
+						<div>${orderList.name}</div>
+						<div>${orderList.count}</div>
+					</td>
+					<td>
+						<div>${orderList.deliveryStatus}</div>
+						<button class="order-cancel">주문취소</button>
+					</td>
+				</tr>
+			</table>
+		</div>`		
+				}
+// 가져올 때 orderListTable에 주문 번호? 를 id로 넣어주기
+// id="order-${id}"
+
 
     orderList.forEach((orderContent) => {
       const newOrderContent = createOrderContent(orderContent);
@@ -97,8 +107,54 @@ function orderCancel(){
     // alert('test')
 		const answer = confirm("주문 취소 시 복구할 수 없습니다. \n 정말로 취소하시겠습니까?");
 		if(answer == true){
-			alert('주문이 취소되었습니다')
-		}
-    }
+			/* 주문이 취소되었을 때 할 일 
+			1. 서버에서 해당 주문 id 보내서 주문 목록 지우기
+			2. 화면에서도 주문 목록 지우기*/
 
-orderCancelBtn.addEventListener('click', orderCancel)
+			// db에서 주문정보 삭제
+				try {
+					// 삭제 성공
+					alert("주문 정보가 삭제되었습니다.");
+
+					// 삭제한 아이템 화면에서 지우기
+					// const deletedItem = document.querySelector(`#order-${id}`);
+					// deletedItem.remove();
+
+				} catch (err) {
+					alert(`주문정보 삭제 과정에서 오류가 발생하였습니다: ${err}`);
+				}
+			}
+		}
+    
+orderCancelBtn.addEventListener('click', orderCancel);
+
+
+// 회원탈퇴 기능 
+
+// 단순 탈퇴버튼 누르면 - confirm() 창 뜨고 - true면 jwt 토큰 날리고, db에서 정보 없앰 (delete)
+const deleteUserBtn = document.querySelector(".user-delete");
+
+async function deleteUser(){
+	const answer = confirm("회원 탈퇴 하시겠습니까? \n 진심이십니까?");
+
+		if(answer === true){
+			
+				try {
+          //  jwt 토큰 날리고 (로그아웃 방법이랑 비슷?)
+
+          // db에서 회원정보 삭제
+
+					// 삭제 성공
+					alert("회원 정보가 삭제되었습니다.");
+          
+          // 메인 홈페이지로 이동시키기
+          
+				} catch (err) {
+					alert(`회원정보 삭제 과정에서 오류가 발생하였습니다: ${err}`);
+			
+				}
+
+		}
+}
+
+deleteUserBtn.addEventListener('click', deleteUser);

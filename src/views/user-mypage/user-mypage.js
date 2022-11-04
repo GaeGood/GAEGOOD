@@ -80,4 +80,32 @@ fetch("/api/products")
   });
 
 
-  // 회원탈퇴할 때 jwt 토큰 날리고, db에서 정보 없앰 (delete)
+// 회원탈퇴 기능 
+
+// 단순 탈퇴버튼 누르면 - confirm() 창 뜨고 - true면 jwt 토큰 날리고, db에서 정보 없앰 (delete)
+const deleteUserBtn = document.querySelector(".user-delete");
+
+async function deleteUser(){
+	const answer = confirm("회원 탈퇴 하시겠습니까? \n 진심이십니까?");
+
+		if(answer === true){
+			
+				try {
+          //  jwt 토큰 날리고 (로그아웃 방법이랑 비슷?)
+
+          // db에서 회원정보 삭제
+
+					// 삭제 성공
+					alert("회원 정보가 삭제되었습니다.");
+          
+          // 메인 홈페이지로 이동시키기
+          
+				} catch (err) {
+					alert(`회원정보 삭제 과정에서 오류가 발생하였습니다: ${err}`);
+			
+				}
+
+		}
+}
+
+deleteUserBtn.addEventListener('click', deleteUser);
