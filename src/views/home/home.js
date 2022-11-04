@@ -17,9 +17,10 @@ fetch("/api/products")
         <div class="card-body">
         <div class="card-body">${item.category}</div>
         <div class="card-text card-text-title">${item.name}</div>
-        <div class="card-text card-spec">${item.shortDesc}</div>
-        <div class="card-text">${addCommas(item.price)}</div>
+        <div class="card-text card-spec">
+          ${item.shortDesc}
         </div>
+        <div class="card-text">${addCommas(item.price)}</div>
       </a>
       </div>
     </div>`;
