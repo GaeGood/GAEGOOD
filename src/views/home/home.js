@@ -4,11 +4,11 @@ const cards = document.querySelector(".cards");
 const categories = document.querySelectorAll(".nav-item");
 const navAddLogin = document.querySelector(".navbar-nav");
 
-const modalLogin = document.querySelector("#modalLogin");
-
 const loginFormSubmit = document.querySelector(".login__submit__btn");
 const email = document.querySelector("#email");
 const password = document.querySelector("#password");
+
+const logOutBtn = document.querySelector(".logout__btn");
 
 loginFormSubmit.addEventListener("click", (event) => {
   event.preventDefault;
@@ -32,8 +32,16 @@ loginFormSubmit.addEventListener("click", (event) => {
         //모달창이 닫히는 기능
         document.getElementsByTagName("body")[0].className = "";
         document.getElementsByTagName("body")[0].style = "none";
-        document.querySelector("#modalLogin").style = "display: none"
+        document.querySelector("#modalLogin").style = "display: none";
         document.querySelector(".modal-backdrop").remove();
+
+        //로그인을 했으니 로그인 버튼을 없애고 로그아웃으로 교체
+        const addLi = document.createElement("li");
+        document.querySelector(".login__btn").style = "display: none";
+        addLi.className = "nav-item";
+        addLi.className += " logout__btn";
+        addLi.innerHTML += `<a class="nav-link active" href="#none">로그아웃</a>`;
+        navAddLogin.prepend(addLi);
       }
       alert(resultMassage);
     });
@@ -67,8 +75,7 @@ fetch("/api/products")
       navAddLogin.prepend(addLi);
     } else {
       addLi.className += " logout__btn";
-      addLi.innerHTML += `<a class="nav-link active" data-bs-toggle="modal" data-bs-target="#modalLogin"
-      aria-current="page" href="#none">로그아웃</a>`;
+      addLi.innerHTML += `<a class="nav-link active" href="#none">로그아웃</a>`;
       navAddLogin.prepend(addLi);
     }
     return res.json();
@@ -95,4 +102,10 @@ fetch("/api/products")
         });
       });
     });
+  });
+
+  logOutBtn.addEventListener("click", () => {
+    fetch("/api/auth/logout")
+      .then((res) => res.json())
+      .then((data) => console.log(data));
   });
