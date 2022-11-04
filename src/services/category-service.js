@@ -13,6 +13,11 @@ class CategoryService {
     return category;
   }
 
+  async getCategoryByName(name) {
+    const category = await categoryModel.findByName(name);
+    return category;
+  }
+
   async getCategoryList() {
     const categoryList = await categoryModel.findAll();
     return categoryList;

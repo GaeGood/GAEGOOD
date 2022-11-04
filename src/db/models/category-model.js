@@ -9,6 +9,11 @@ class CategoryModel {
     return category;
   }
 
+  async findByName(name) {
+    const category = await Category.findOne({ name });
+    return category;
+  }
+
   async findAll() {
     const categoryList = await Category.find({});
     return categoryList;

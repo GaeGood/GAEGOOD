@@ -23,10 +23,17 @@ class CategoryContoller {
     return res.json(categoryList);
   }
 
-  async getCategory(req, res) {
+  async getCategoryById(req, res) {
     const { cid } = req.params;
 
     const Category = await categoryService.getCategoryById(cid);
+    res.json(Category);
+  }
+
+  async getCategoryByName(req, res) {
+    const name = req.query.category;
+
+    const Category = await categoryService.getCategoryByName(name);
     res.json(Category);
   }
 
