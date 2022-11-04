@@ -1,7 +1,7 @@
 import { productService } from "../services";
 
 class ProductContoller {
-  async addProduct(req, res) {
+  async addProduct(req, res, next) {
     const {
       name,
       category,
@@ -24,17 +24,23 @@ class ProductContoller {
       return res.json("입력 데이터 부족");
     }
 
-    const createdNewProduct = await productService.addProduct({
-      name,
-      category,
-      shortDesc,
-      longDesc,
-      price,
-      smallImageURL,
-      bigImageURL,
-    });
-
-    return res.json(createdNewProduct);
+    try {
+      const createdNewProduct = await productService.addProduct(
+        {
+          name,
+          category,
+          shortDesc,
+          longDesc,
+          price,
+          smallImageURL,
+          bigImageURL,
+        },
+        req.loggedInUser
+      );
+      return res.json(createdNewProduct);
+    } catch (e) {
+      next(e);
+    }
   }
 
   async getProductList(req, res) {

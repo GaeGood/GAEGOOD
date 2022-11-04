@@ -1,7 +1,7 @@
 import { productModel } from "../db";
 
 class ProductService {
-  async addProduct(productInfo) {
+  async addProduct(productInfo, loggedInUser) {
     const {
       name,
       category,
@@ -12,8 +12,12 @@ class ProductService {
       bigImageURL,
     } = productInfo;
 
-    const createdNewProduct = await productModel.create(productInfo);
-    return createdNewProduct;
+    if (loggedInUser.role === "admin") {
+      const createdNewProduct = await productModel.create(productInfo);
+      return createdNewProduct;
+    } else {
+      throw new Error("관리자가 아닙니다.");
+    }
   }
 
   async getProductById(pid) {
