@@ -24,10 +24,10 @@ export class UserModel {
     return users;
   }
 
-  async update({ userId, userInfo }) {
+  async update(userId, userInfo) {
     const filter = { _id: userId };
     const option = { returnOriginal: false };
-
+    console.log(userInfo);
     const updatedUser = await User.findOneAndUpdate(filter, userInfo, option);
     return updatedUser;
   }

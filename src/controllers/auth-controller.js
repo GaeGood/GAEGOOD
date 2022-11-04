@@ -34,31 +34,6 @@ class AuthController {
     }
     next();
   }
-
-  async joinUser(req, res, next) {
-    const { name, password, email, role, address } = req.body;
-    if (!name || !password || !email || !role || !address) {
-      return res.json({
-        resCode: "404",
-        resMsg: {
-          msg: "누락값이 있습니다.",
-        },
-      });
-    }
-    try {
-      const result = await authService.join(
-        name,
-        password,
-        email,
-        role,
-        address
-      );
-      return res.json(result);
-    } catch (err) {
-      next(err);
-    }
-    next();
-  }
 }
 
 const authController = new AuthController();
