@@ -12,12 +12,8 @@ class ProductService {
       bigImageURL,
     } = productInfo;
 
-    if (loggedInUser.role === "admin") {
-      const createdNewProduct = await productModel.create(productInfo);
-      return createdNewProduct;
-    } else {
-      throw new Error("관리자가 아닙니다.");
-    }
+    const createdNewProduct = await productModel.create(productInfo);
+    return createdNewProduct;
   }
 
   async getProductById(pid) {
@@ -60,6 +56,6 @@ class ProductService {
   }
 }
 
-const productService = new ProductService(productModel);
+const productService = new ProductService();
 
 export { productService };

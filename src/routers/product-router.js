@@ -5,7 +5,7 @@ import { loginRequired } from "../middlewares/login-required";
 
 const productRouter = Router();
 
-productRouter.post("/", loginRequired, productController.addProduct);
+productRouter.post("/", productController.addProduct);
 productRouter.get("/", productController.getProductList);
 productRouter.get("/search", productController.searchProduct);
 productRouter.get("/:pid", productController.getProduct);
