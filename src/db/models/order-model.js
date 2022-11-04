@@ -1,11 +1,14 @@
 import { model } from "mongoose";
 import { OrderSchema } from "../schemas/order-schema";
+import { productModel } from "../index";
 
 const Order = model("Order", OrderSchema);
 
 class OrderModel {
   async findById(oid) {
-    const order = await Order.findOne({ id: oid }).populate("buyer");
+    const order = await Order.findOne({ _id: oid })
+      .populate("buyer")
+      .populate("productList");
     return order;
   }
 
@@ -13,7 +16,9 @@ class OrderModel {
     const orderList = new Array();
 
     for (const oid of oidArr) {
-      const order = await Order.findOne({ _id: oid });
+      const order = await Order.findOne({ _id: oid })
+        .populate("buyer")
+        .populate("productList");
       if (order) {
         orderList.push(order);
       }
@@ -23,12 +28,16 @@ class OrderModel {
   }
 
   async findAll() {
-    const orderList = await Order.find({});
+    const orderList = await Order.find({})
+      .populate("buyer")
+      .populate("productList");
     return orderList;
   }
 
   async create(orderInfo) {
-    const createdNewOrder = await Order.create(orderInfo);
+    let createdNewOrder = await Order.create(orderInfo);
+    createdNewOrder = await createdNewOrder.populate("buyer");
+    createdNewOrder = await createdNewOrder.populate("productList");
     return createdNewOrder;
   }
 
@@ -36,11 +45,9 @@ class OrderModel {
     const filter = { _id: oid };
     const option = { returnOriginal: false };
 
-    const updatedOrder = await Order.findOneAndUpdate(
-      filter,
-      orderInfo,
-      option
-    );
+    const updatedOrder = await Order.findOneAndUpdate(filter, orderInfo, option)
+      .populate("buyer")
+      .populate("productList");
     return updatedOrder;
   }
 

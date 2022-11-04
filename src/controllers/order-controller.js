@@ -4,7 +4,8 @@ class OrderController {
   async addOrder(req, res) {
     const {
       buyer,
-      // productInfo,
+      productList,
+      countList,
       shippingStatus,
       shippingAddress,
       totalAmount,
@@ -14,7 +15,8 @@ class OrderController {
 
     if (
       !buyer ||
-      // !productInfo ||
+      !productList ||
+      !countList ||
       !shippingStatus ||
       !shippingAddress ||
       !totalAmount ||
@@ -26,7 +28,8 @@ class OrderController {
 
     const createdNewOrder = await orderService.addOrder({
       buyer,
-      // productInfo,
+      productList,
+      countList,
       shippingStatus,
       shippingAddress,
       totalAmount,
@@ -62,30 +65,13 @@ class OrderController {
 
   async editOrder(req, res) {
     const { oid } = req.params;
-    const {
-      buyer,
-      productInfo,
-      shippingStatus,
-      shippingAddress,
-      totalAmount,
-      recipientName,
-      recipientPhoneNumber,
-    } = req.body;
+    const { shippingAddress, recipientName, recipientPhoneNumber } = req.body;
 
-    if (
-      !buyer ||
-      !productInfo ||
-      !shippingStatus ||
-      !shippingAddress ||
-      !totalAmount ||
-      !recipientName ||
-      !recipientPhoneNumber
-    ) {
+    if (!shippingAddress || !recipientName || !recipientPhoneNumber) {
       return res.json("입력 데이터 부족");
     }
 
     const updatedOrder = await orderService.editOrder(oid, {
-      shippingStatus,
       shippingAddress,
       recipientName,
       recipientPhoneNumber,

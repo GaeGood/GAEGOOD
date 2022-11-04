@@ -1,5 +1,4 @@
 import cors from "cors";
-import "./db";
 import express from "express";
 import {
   userRouter,

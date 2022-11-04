@@ -4,7 +4,8 @@ class OrderService {
   async addOrder(orderInfo) {
     const {
       buyer,
-      // productInfo,
+      productList,
+      countList,
       shippingStatus,
       shippingAddress,
       totalAmount,
@@ -31,15 +32,10 @@ class OrderService {
     }
   }
 
-  async editOrder(orderInfo) {
-    const {
-      shippingStatus,
-      shippingAddress,
-      recipientName,
-      recipientPhoneNumber,
-    } = orderInfo;
+  async editOrder(oid, orderInfo) {
+    const { shippingAddress, recipientName, recipientPhoneNumber } = orderInfo;
 
-    const updatedNewOrder = await orderModel.update(orderInfo);
+    const updatedNewOrder = await orderModel.update(oid, orderInfo);
     return updatedNewOrder;
   }
 
