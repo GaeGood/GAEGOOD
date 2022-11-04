@@ -81,6 +81,7 @@ fetch("/api/products")
     return res.json();
   })
   .then((productList) => {
+
     productList.forEach((product) => {
       const newCard = createCard(product);
       cards.innerHTML += newCard;
