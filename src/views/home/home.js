@@ -4,6 +4,8 @@ const cards = document.querySelector(".cards");
 const categories = document.querySelectorAll(".nav-item");
 const navAddLogin = document.querySelector(".navbar-nav");
 
+const modalLogin = document.querySelector("#modalLogin");
+
 const loginFormSubmit = document.querySelector(".login__submit__btn");
 const email = document.querySelector("#email");
 const password = document.querySelector("#password");
@@ -24,7 +26,17 @@ loginFormSubmit.addEventListener("click", (event) => {
     }),
   })
     .then((res) => res.json())
-    .then((data) => console.log(data));
+    .then((data) => {
+      const resultMassage = data.resMsg.msg;
+      if (data.resCode === "200") {
+        //모달창이 닫히는 기능
+        document.getElementsByTagName("body")[0].className = "";
+        document.getElementsByTagName("body")[0].style = "none";
+        document.querySelector("#modalLogin").style = "display: none"
+        document.querySelector(".modal-backdrop").remove();
+      }
+      alert(resultMassage);
+    });
 });
 
 const createCard = (item) => {
