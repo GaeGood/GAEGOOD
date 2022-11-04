@@ -29,9 +29,6 @@
     <a class="navbar-brand" href="/">GAEGOOD</a>
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="/auth/login">로그인</a>
-      </li>
-      <li class="nav-item">
         <a class="nav-link" href="/register">회원가입</a>
       </li>
       <li class="nav-item">
@@ -84,41 +81,68 @@
     <ul class="nav justify-content-center p-2">
       <li class="nav-item">
         <button class="btn__total">
-          <a class="nav-link active btn-total" aria-current="page" href="#">전체</a>
+          <a class="nav-link active btn-total" aria-current="page" href="#none">전체</a>
         </button>
       </li>
       <li class="nav-item">
         <button class="btn__clothes">
-          <a class="nav-link" href="#">의류</a>
+          <a class="nav-link" href="#none">의류</a>
         </button>
       </li>
       <li class="nav-item">
         <button class="btn__fashion__goods">
-          <a class="nav-link" href="#">패션잡화</a>
+          <a class="nav-link" href="#none">패션잡화</a>
         </button>
       </li>
       <li class="nav-item">
         <button class="btn__phone__case">
-          <a class="nav-link" href="#">폰케이스/테크</a>
+          <a class="nav-link" href="#none">폰케이스/테크</a>
         </button>
       </li>
       <li class="nav-item">
         <button class="btn__living">
-          <a class="nav-link" href="#">홈데코/리빙</a>
+          <a class="nav-link" href="#none">홈데코/리빙</a>
         </button>
       </li>
       <li class="nav-item">
         <button class="btn__sticker">
-          <a class="nav-link" href="#">스티커/지류</a>
+          <a class="nav-link" href="#none">스티커/지류</a>
         </button>
       </li>
       <li class="nav-item">
         <button class="btn__office">
-          <a class="nav-link" href="#">문구/오피스</a>
+          <a class="nav-link" href="#none">문구/오피스</a>
         </button>
       </li>
     </ul>
 
+    <!--모달 로그인-->
+    <div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLoginLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="modalLoginLabel">환영합니다!</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form action="" method="" class="login__form">
+              <div class="mb-3">
+                <label for="inputEmail1" class="form-label">이메일</label>
+                <input type="email" class="form-control" id="email" placeholder="user@gaegood.com">
+              </div>
+              <div class="mb-3">
+                <label for="inputPassword1" class="form-label">비밀번호</label>
+                <input type="password" class="form-control" id="password" placeholder="****">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            <button type="button" class="btn btn-primary login__submit__btn">확인</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- 구분선 -->
     <hr class="my-2" />
 
@@ -126,7 +150,7 @@
     <div class="cards">
       <div class="card 컵">
         <a href="/api/products/636354e965b869e732d26c43"></a>
-        <img src="/public/images/product-imges/git-폴더-키링.png" class="card-img-top" alt="고래밥" />
+        <img src="/public/images/product-images/풀스택-개발자-노트북-케이스.png" class="card-img-top" alt="고래밥" />
         <div class="card-body">
           <div class="card-text card-text-title">테스트용 고래밥</div>
           <div class="card-text card-spec">
@@ -137,7 +161,7 @@
       </div>
       <div class="card 고래밥">
         <a href="/api/products/63628295d66abef64d53f920">
-          <img src="/public/images/product-imges/git-폴더-키링.png" class="card-img-top" alt="HTML 머그컵" />
+          <img src="/public/images/product-images/개발자-B5-노트.png" class="card-img-top" alt="HTML 머그컵" />
           <div class="card-body">
             <div class="card-text card-text-title">테스트용 머그컵</div>
             <div class="card-text card-spec">
