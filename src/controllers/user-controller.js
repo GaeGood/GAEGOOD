@@ -3,7 +3,6 @@ import { userService } from "../services";
 class UserContoller {
   async addUser(req, res, next) {
     const { email, password, name, role, address } = req.body;
-    console.log("UserController Password", password);
     if (!email || !password || !name || !role || !address) {
       return res.json({
         resCode: "404",
@@ -42,7 +41,7 @@ class UserContoller {
     }
   }
 
-  async editUser(req, res) {
+  async editUser(req, res, next) {
     const { userId } = req.params;
     const { password, name, address } = req.body;
 
