@@ -13,6 +13,8 @@ import cookieParser from "cookie-parser";
 
 const app = express();
 
+app.use("/public", express.static("public"));
+
 app.use(cors());
 
 app.use(viewsRouter);
