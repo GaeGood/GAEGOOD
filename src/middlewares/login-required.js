@@ -14,8 +14,8 @@ async function loginRequired(req, res, next) {
 
   try {
     const data = jwt.verify(token, process.env.JWT_SECRET_KEY);
-
     const user = await userModel.findById(data.id);
+    req.tokenPayload = data;
     req.loggedInUser = user;
     next();
   } catch (err) {
