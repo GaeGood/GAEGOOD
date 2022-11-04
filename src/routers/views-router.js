@@ -7,8 +7,18 @@ const viewsRouter = express.Router();
 // 아래와 같이 하면, http://localhost:5000/ 에서는 views/home/home.html 파일을,
 // http://localhost:5000/register 에서는 views/register/register.html 파일을 화면에 띄움
 viewsRouter.use("/", serveStatic("home"));
-viewsRouter.use("/register", serveStatic("register"));
-viewsRouter.use("/login", serveStatic("login"));
+viewsRouter.use("/auth/login", serveStatic("login"));
+viewsRouter.use("/auth/join", serveStatic("join"));
+viewsRouter.use("/users/mypage", serveStatic("user-mypage"));
+viewsRouter.use("/users?edit=true", serveStatic("user-edit"));
+viewsRouter.use("/products?write=true", serveStatic("product-write"));
+viewsRouter.use("/products/detail/:pid", serveStatic("product-detail"));
+viewsRouter.use("/products/list", serveStatic("product-list"));
+viewsRouter.use("/products?edit=true", serveStatic("product-edit"));
+viewsRouter.use("/cart", serveStatic("cart"));
+viewsRouter.use("/order?write=true", serveStatic("order-create"));
+viewsRouter.use("/orders/detail", serveStatic("order-detail"));
+viewsRouter.use("/orders/list", serveStatic("order-list"));
 
 // views 폴더의 최상단 파일인 rabbit.png, api.js 등을 쓸 수 있게 함
 viewsRouter.use("/", serveStatic(""));
