@@ -7,10 +7,11 @@ const total__price = document.querySelector(".total__price");
 const deliveryFee = document.querySelector(".deliveryFee");
 const total__sum = document.querySelector(".total__sum");
 const order__button = document.querySelector(".order__button");
-
+const databaseName = "cartDB";
+const version = 1;
+const objectStore = "cartStorage";
 /* 데이터 렌더링 */
 getAllIndexedDB(databaseName, version, objectStore, function (dataList) {
-  const cartContainer = document.querySelector(".cart__list__top");
   if (dataList.length !== 0) {
     dataRender(dataList);
   }
@@ -43,7 +44,7 @@ function getAllKeysIndexedDB(databaseName, version, objectStore, cb) {
       const transaction = db.transaction(objectStore, "readonly");
       const store = transaction.objectStore(objectStore);
       store.getAllKeys().onsuccess = function (response) {
-        cd(response.target.result);
+        cb(response.target.result);
       };
     };
   } else {
@@ -60,10 +61,11 @@ function dataRender(dataList) {
     getAllKeysIndexedDB(databaseName, version, objectStore, function (keys) {
       const cartProductId = keys[i]; // posts ObjectStore에 있는 Key를 id로 사용해보세요.
       /* 상품 상제정보 불러오기*/
-      fetch(`/api/products/${id}`)
+      fetch(`/api/products/${cartProductId}`)
         .then((res) => res.json())
         .then((product) => {
-          addproduct(product);
+          //addproduct(product);
+          console.log(product.name);
         })
         .catch((err) => alert(err.message));
     });
