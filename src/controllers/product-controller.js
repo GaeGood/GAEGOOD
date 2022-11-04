@@ -25,18 +25,15 @@ class ProductContoller {
     }
 
     try {
-      const createdNewProduct = await productService.addProduct(
-        {
-          name,
-          category,
-          shortDesc,
-          longDesc,
-          price,
-          smallImageURL,
-          bigImageURL,
-        },
-        req.loggedInUser
-      );
+      const createdNewProduct = await productService.addProduct({
+        name,
+        category,
+        shortDesc,
+        longDesc,
+        price,
+        smallImageURL,
+        bigImageURL,
+      });
       return res.json(createdNewProduct);
     } catch (e) {
       next(e);

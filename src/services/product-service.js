@@ -1,7 +1,7 @@
 import { productModel } from "../db";
 
 class ProductService {
-  async addProduct(productInfo, loggedInUser) {
+  async addProduct(productInfo) {
     const {
       name,
       category,
