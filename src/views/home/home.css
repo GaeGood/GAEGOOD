@@ -59,6 +59,10 @@ html {
   font-style: italic;
   letter-spacing: -4px;
 }
+	
+.nav-item {
+  margin: 10px;
+}
 
 .nav-item {
   margin:10px;
