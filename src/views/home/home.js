@@ -85,6 +85,12 @@ fetch("/api/products")
       addLi.className += " logout__btn";
       addLi.innerHTML += `<a class="nav-link active" href="#none">로그아웃</a>`;
       navAddLogin.prepend(addLi);
+
+      const joinHtml = document.querySelector(".nav-item.join")
+      joinHtml.remove()
+      
+      const mypageHtml = document.querySelector(".nav-item.mypage")
+      mypageHtml.style.display = "";
     }
     return res.json();
   })
