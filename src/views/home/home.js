@@ -40,13 +40,12 @@ loginFormSubmit.addEventListener("click", (event) => {
 });
 
 const createCard = (item) => {
-  return `<div class="card ${item.category}">
+  return `<div class="card ${item.category.name}">
   <a href='/products/detail/${item._id}'>
     <img src="${item.smallImageURL}" class="card-img-top" alt="${
     item.name
   }" />
-    <div class="card-body">
-    <div class="card-body">${item.category}</div>
+    <div class="card-body ${item.category.name}">
     <div class="card-text card-text-title">${item.name}</div>
     <div class="card-text card-spec">${item.shortDesc}</div>
     <div class="card-text">${addCommas(item.price)}</div>
