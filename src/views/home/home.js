@@ -32,9 +32,16 @@ if (loggedInUser) {
 function renderLoginLi() {
   const loginLi = document.createElement("li");
   loginLi.className += " login__btn";
-  loginLi.innerHTML += `<a class="nav-link active" data-bs-toggle="modal" data-bs-target="#modalLogin"
+  loginLi.innerHTML += `<a class="nav-link active nav-item" data-bs-toggle="modal" data-bs-target="#modalLogin"
               aria-current="page" href="#none">로그인</a>`;
   navAddLogin.prepend(loginLi);
+  
+  // 마이페이지 버튼 삭제 -> 회원가입 생성
+  const mypageHtml = document.querySelector(".nav-item.mypage")
+  mypageHtml.className = "nav-item mypage hidden";
+  const joinHtml = document.querySelector(".nav-item.join")
+  joinHtml.className = "nav-item join"
+
 }
 
 function removeLoginLi() {
@@ -45,7 +52,7 @@ function removeLoginLi() {
 function renderLogoutLi() {
   const logoutLi = document.createElement("li");
   logoutLi.className += " logout__btn";
-  logoutLi.innerHTML += `<a class="nav-link active">로그아웃</a>`;
+  logoutLi.innerHTML += `<a class="nav-link active nav-item">로그아웃</a>`;
 
   logoutLi.addEventListener("click", (e) => {
     e.preventDefault();
@@ -62,6 +69,14 @@ function renderLogoutLi() {
       });
   });
   navAddLogin.prepend(logoutLi);
+  
+  // 회원가입버튼 삭제 -> 마이페이지 버튼 나타내기
+  const mypageHtml = document.querySelector(".nav-item.mypage")
+  mypageHtml.className = "nav-item mypage";
+  
+  const joinHtml = document.querySelector(".nav-item.join")
+  joinHtml.className = "nav-item join hidden"
+  
 }
 
 function removeLogoutLi() {
