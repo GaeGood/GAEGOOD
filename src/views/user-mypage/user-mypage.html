@@ -20,6 +20,7 @@
     <!-- 커스텀 css, js -->
     <link rel="stylesheet" href="user-mypage.css"/>
     <script src="user-mypage.js" type="module" defer></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 
 <body>
@@ -63,7 +64,7 @@
             <ul class="mypage-category">
                 <li><a href="/users/mypage">회원정보수정</a></li>
                 <li><a href="/orders/list">주문/배송조회</a></li>
-                <button class="user-delete">회원탈퇴</button>
+                <button class="user__delete">회원탈퇴</button>
             </ul>
             <div>
                 <div class="table-header">고객정보</div>
@@ -75,7 +76,7 @@
                     <tr>
                         <th>이메일</th>
                         <td>
-                            <span>hello@gmail.com (데이터 받아올 곳)</span>
+                            <span class="user email">hello@gmail.com (데이터 받아올 곳)</span>;
                         </td>
                     </tr>
                     <tr>
@@ -83,21 +84,10 @@
                             <span>비밀번호 변경</span>
                         </th>
                         <td>
-                            <span>현재 비밀번호</span>
-                        </td>
-                        <td>
-                            <span>
-                                <input type="password" placeholder="비밀번호를 입력해주세요.">
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th></th>
-                        <td>
                             <span>새 비밀번호</span>
                         </td>
                         <td>
-                            <input type="password" placeholder="비밀번호를 입력해주세요.">
+                            <input class="user password__first" type="password" placeholder="비밀번호를 입력해주세요.">
                         </td>
                     </tr>
                     <tr>
@@ -106,40 +96,38 @@
                             <span>새 비밀번호 확인</span>
                         </td>
                         <td>
-                            <input type="password" placeholder="비밀번호를 재입력해주세요.">
-                            <button class="password change">변경하기</button>
-
-
+                            <input class="user password__second" type="password" placeholder="비밀번호를 재입력해주세요.">
                         </td>
                     </tr>
                     <tr>
                         <th>이름</th>
                         <td>
-                            <span>홍길동(데이터 받아올 곳)</span>
+                            <span class="user name">홍길동(데이터 받아올 곳)</span>
                         </td>
                     </tr>
                     <tr>
                         <th>휴대폰번호</th>
                         <td>
-                            <input type="text" placeholder="- 제외 입력해주세요" value="데이터받아올곳">
-                            <button class="phonenumber change">변경하기</button>
-
+                            <input class="user phonenumber" type="text" placeholder="- 제외 입력해주세요" value="데이터받아올곳">
                         </td>
                     </tr>
                     <tr>
                         <th>배송지</th>
                         <td>
                             <div>
-                                <input type="text" value="데이터받아올곳">
+                                <input type="text" value="데이터받아올곳" class="user postalcode__input">
                             </div>
                             <div>
-                                <input type="text" value="데이터받아올곳">
-                                <button class="address change">변경하기</button>
-
+                                <input type="text" value="데이터받아올곳" class="user address__input__1">
+                                <button class="address__search">주소검색</button>
+                            </div>
+                            <div>
+                                <input type="text" value="데이터받아올곳" class="user address__input__2">
                             </div>
                         </td>
                     </tr>
                 </table>
+                <button class="userinfo__change">변경하기</button>
             </div>
 
         </div>
