@@ -15,7 +15,7 @@ class AuthController {
     try {
       const result = await authService.login(email, password);
       if (result.token) {
-        res.cookie("jwt_token", result.token, { httpOnly: true });
+        res.cookie("jwt_token", result.token);
       }
       return res.json(result.message);
     } catch (e) {
