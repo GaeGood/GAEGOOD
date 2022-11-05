@@ -16,7 +16,13 @@ const joinEmail = document.querySelector("#join__email");
 const joinPassword = document.querySelector("#join__password");
 const joinPasswordCheck = document.querySelector("#join__password__check");
 const joinAddress = document.querySelector("#join__address");
-
+function removeModal() {
+  document.getElementsByTagName("body")[0].className = "";
+  document.getElementsByTagName("body")[0].style = "none";
+  document.querySelector("#modalLogin").style = "display: none";
+  document.querySelector(".modal-backdrop").remove();
+  return location.reload();
+}
 //토큰을 가지고 있는지 확인 후 가지고있으면 로그아웃버튼을, 없으면 로그인버튼
 fetch("api/auth/verifyToken")
   .then((res) => {
@@ -160,12 +166,7 @@ joinFormSubmit.addEventListener("click", (event) => {
         //const resultMassage = data.resMsg.msg;
         if (data.resCode === "200") {
           alert(`환영합니다 ${joinUserName.value}님`);
-          //모달창이 닫히는 기능
-          document.getElementsByTagName("body")[0].className = "";
-          document.getElementsByTagName("body")[0].style = "none";
-          document.querySelector("#modalLogin").style = "display: none";
-          document.querySelector(".modal-backdrop").remove();
-          location.reload();
+          removeModal();
         } else {
           alert("비밀번호를 확인해주세요");
         }
