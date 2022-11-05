@@ -2,7 +2,6 @@ import { userModel } from "../db";
 import bcrypt from "bcrypt";
 class UserService {
   async addUser(userInfo) {
-    console.log("userInfo", userInfo);
     const { email, name, password, role, address } = userInfo;
     try {
       const isDuplicate = await userModel.findByEmail(email);
