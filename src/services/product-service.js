@@ -43,6 +43,7 @@ class ProductService {
     } = productInfo;
 
     const updatedProduct = await productModel.update(pid, productInfo);
+
     return updatedProduct;
   }
 
@@ -56,6 +57,6 @@ class ProductService {
   }
 }
 
-const productService = new ProductService(productModel);
+const productService = new ProductService();
 
 export { productService };
