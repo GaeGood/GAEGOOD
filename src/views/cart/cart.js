@@ -3,7 +3,6 @@ const total__amount = document.querySelector(".total__amount");
 const total__price = document.querySelector(".total__price");
 const deliveryFee = document.querySelector(".deliveryFee");
 const total__sum = document.querySelector(".total__sum");
-
 const order__button = document.querySelector(".order__button");
 const databaseName = "cartDB";
 const version = 1;
@@ -66,6 +65,9 @@ function dataRender(dataList, databaseName, version, objectStore) {
     const cartDetail = document.createElement("div");
     const cartDetailBottom = document.createElement("div");
     const cartAmountBtn = document.createElement("div");
+    const cartPlusBtn = document.createElement("button");
+    const cartMinusBtn = document.createElement("button");
+    const cartDeleteBtn = document.createElement("button");
 
     /* cart__list__top 컨테이너 div */
     cartList.classList.add("cart__list__top");
@@ -87,6 +89,24 @@ function dataRender(dataList, databaseName, version, objectStore) {
     const cart__amount__btn__container = document.querySelector(
       ".cart__amount__btn__container"
     );
+    /* cart__plus__button  button */
+    cartPlusBtn.classList.add("cart__plus__button");
+    cart__amount__btn__container.prepend(cartPlusBtn);
+    const cart__plus__button = document.querySelector(".cart__plus__button");
+    cart__plus__button.textContent = "-";
+    /* cart__minus__button button */
+    cartMinusBtn.classList.add("cart__minus__button");
+    cart__amount__btn__container.appendChild(cartMinusBtn);
+    const cart__minus__button = document.querySelector(".cart__minus__button");
+    cart__minus__button.textContent = "+";
+
+    /* cart__delete__button 컨테이너 button */
+    cartDeleteBtn.classList.add("cart__delete__button");
+    cart__amount__btn__container.appendChild(cartDeleteBtn);
+    const cart__delete__button = document.querySelector(
+      ".cart__delete__button"
+    );
+    cart__delete__button.textContent = "🗑";
 
     /*이미지*/
     cartImage.classList.add("cart__detail__image");
@@ -98,8 +118,8 @@ function dataRender(dataList, databaseName, version, objectStore) {
     cartPrice.classList.add("cart__detail__price");
     cart__detail.appendChild(cartPrice);
     /* 수량 */
-    // cartAmount.classList.add("cart__amount");
-    // cart__amount__btn__container.insertBefore(cartAmount, cart__minus__button);
+    cartAmount.classList.add("cart__amount");
+    cart__amount__btn__container.insertBefore(cartAmount, cart__minus__button);
 
     getAllKeysIndexedDB(databaseName, version, objectStore, function (keys) {
       const cartProductId = keys[i]; // posts ObjectStore에 있는 Key를 id로 사용해보세요.
@@ -107,27 +127,56 @@ function dataRender(dataList, databaseName, version, objectStore) {
       fetch(`/api/products/${cartProductId}`)
         .then((res) => res.json())
         .then((product) => {
-          addproduct(product);
-          console.log("for문 체크 ~");
+          addproduct(product, i);
         })
         .catch((err) => alert(err.message));
     });
   }
 }
 // home에서 클릭한 제품의 상세 내용 html에 렌더링하는 함수
-function addproduct(product) {
-  const cartImage = document.querySelector(".cart__detail__image");
-  const cartName = document.querySelector(".cart__detail__name");
-  const cartPrice = document.querySelector(".cart__detail__price");
-  // const cartAmount = document.querySelector(".cart__amount");
+function addproduct(product, idx) {
+  //리팩토링! 한 번만 호출할 수 있도록 for문 위에다 선언하고 불러올수 있게 고쳐보자.
+  const cartImage = document.querySelectorAll(".cart__detail__image");
+  const cartName = document.querySelectorAll(".cart__detail__name");
+  const cartPrice = document.querySelectorAll(".cart__detail__price");
+  const cartAmount = document.querySelectorAll(".cart__amount");
   /*이미지*/
-  cartImage.setAttribute("src", product.smallImageURL);
+  cartImage[idx].setAttribute("src", product.smallImageURL);
   /* 이름 */
-  cartName.innerHTML = product.name;
+  cartName[idx].innerHTML = product.name;
   /* 가격 */
-  cartPrice.innerHTML = product.price;
+  cartPrice[idx].innerHTML = `${product.price} 원`;
   /* 수량 */
-  // cartAmount.textContent = 0;
+  cartAmount[idx].textContent = 1;
 
   // cartImage.src = product.smallImageURL;
 }
+function findKey() {
+  getAllIndexedDB(databaseName, version, objectStore, function (dataList) {
+    //dataList === response.target.result
+    return dataList.id;
+  });
+}
+
+/* indexedDB에 추가한 데이터 삭제하는 함수(기준: key) */
+function deleteIndexedDBdata(databaseName, version, objectStore, idObject) {
+  if (window.indexedDB) {
+    const request = indexedDB.open(databaseName, version);
+    const key = idObject.id;
+    request.onerror = (event) => console.log(event.target.errorCode);
+    request.onsuccess = function () {
+      const db = request.result;
+      const transaction = db.transaction(objectStore, "readwrite");
+      const store = transaction.objectStore(objectStore);
+      store.delete(key);
+    };
+  } else {
+    alert("해당 브라우저에서는 indexedDB를 지원하지 않습니다.");
+  }
+}
+
+/* 장바구니 상품 삭제 버튼 클릭 이벤트 */
+cart__delete__button.addEventListener("click", () => {
+  alert("딜리트");
+  //deleteIndexedDBdata(databaseName, version, objectStore, idObject);
+});
