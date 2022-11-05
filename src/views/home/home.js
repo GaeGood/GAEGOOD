@@ -35,13 +35,6 @@ loginFormSubmit.addEventListener("click", (event) => {
         document.querySelector("#modalLogin").style = "display: none";
         document.querySelector(".modal-backdrop").remove();
 
-        //마이페이지 태그 생김
-        const mypageLi = document.createElement("li");
-        mypageLi.className = "nav-item";
-        mypageLi.className += " mypage__btn";
-        mypageLi.innerHTML += `<a class="nav-link" href="/users/mypage">마이페이지</a>`;
-        navAddLogin.prepend(mypageLi);
-
         //로그인을 했으니 로그인 버튼을 없애고 로그아웃으로 교체
         const addLi = document.createElement("li");
         document.querySelector(".login__btn").style = "display: none";
@@ -50,6 +43,12 @@ loginFormSubmit.addEventListener("click", (event) => {
         addLi.innerHTML += `<a class="nav-link active" href="#none">로그아웃</a>`;
         navAddLogin.prepend(addLi);
 
+        // 회원가입버튼 삭제 -> 마이페이지 버튼 나타내기
+        const joinHtml = document.querySelector(".nav-item.join")
+        joinHtml.remove()
+        
+        const mypageHtml = document.querySelector(".nav-item.mypage")
+        mypageHtml.style.display = "";
 
       }
       alert(resultMassage);
