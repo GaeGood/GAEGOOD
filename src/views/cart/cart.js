@@ -1,4 +1,4 @@
-const cart__amount = document.querySelector(".cart__amount");
+const cart__container = document.querySelector(".cart__container");
 const total__amount = document.querySelector(".total__amount");
 const total__price = document.querySelector(".total__price");
 const deliveryFee = document.querySelector(".deliveryFee");
@@ -52,11 +52,8 @@ function getAllKeysIndexedDB(databaseName, version, objectStore, cb) {
 /* 데이터 렌더링 */
 function dataRender(dataList, databaseName, version, objectStore) {
   const cart__container = document.querySelector(".cart__container");
-  const cart__amount__btn__container = document.querySelector(
-    ".cart__amount__btn__container"
-  );
-  const cart__minus__button = document.querySelector(".cart__minus__button");
   for (let i = 0; i < dataList.length; i++) {
+    const cartCheck = document.createElement("input");
     const cartImage = document.createElement("img");
     const cartName = document.createElement("div");
     const cartPrice = document.createElement("div");
@@ -108,9 +105,13 @@ function dataRender(dataList, databaseName, version, objectStore) {
     );
     cart__delete__button.textContent = "🗑";
 
+    /* 체크박스 */
+    cartCheck.classList.add("cart__detail__check");
+    cartCheck.type = "checkbox";
+    cart__list__top.prepend(cartCheck);
     /*이미지*/
     cartImage.classList.add("cart__detail__image");
-    cart__list__top.prepend(cartImage);
+    cart__list__top.insertBefore(cartImage, cart__detail);
     /* 이름 */
     cartName.classList.add("cart__detail__name");
     cart__detail.prepend(cartName);
@@ -127,19 +128,38 @@ function dataRender(dataList, databaseName, version, objectStore) {
       fetch(`/api/products/${cartProductId}`)
         .then((res) => res.json())
         .then((product) => {
-          addproduct(product, i);
+          addproduct(product, i, cartProductId);
         })
         .catch((err) => alert(err.message));
+    });
+    /* 장바구니 상품 삭제 버튼 클릭 이벤트 */
+    cart__delete__button.addEventListener("click", (e) => {
+      const targetId = e.target.id;
+      const deleteTarget = `container-${targetId.substring(4)}`;
+      deleteIndexedDBdata(databaseName, version, objectStore, targetId);
+      document.querySelector(`#${deleteTarget}`).remove();
     });
   }
 }
 // home에서 클릭한 제품의 상세 내용 html에 렌더링하는 함수
-function addproduct(product, idx) {
+function addproduct(product, idx, cartProductId) {
   //리팩토링! 한 번만 호출할 수 있도록 for문 위에다 선언하고 불러올수 있게 고쳐보자.
   const cartImage = document.querySelectorAll(".cart__detail__image");
   const cartName = document.querySelectorAll(".cart__detail__name");
   const cartPrice = document.querySelectorAll(".cart__detail__price");
   const cartAmount = document.querySelectorAll(".cart__amount");
+  const cart__list__top = document.querySelectorAll(".cart__list__top");
+  const cart__detail__check = document.querySelectorAll(".cart__detail__check");
+  const cart__delete__button = document.querySelectorAll(
+    ".cart__delete__button"
+  );
+  /* 상품 컨테이너 */
+  cart__list__top[idx].id = `container-${cartProductId}`;
+  /* 삭제 체크박스 */
+  cart__detail__check[idx].setAttribute("value", cartProductId);
+  cart__detail__check[idx].setAttribute("name", cartProductId);
+  /* 삭제(휴지통) 버튼 */
+  cart__delete__button[idx].id = `btn-${cartProductId}`;
   /*이미지*/
   cartImage[idx].setAttribute("src", product.smallImageURL);
   /* 이름 */
@@ -148,21 +168,14 @@ function addproduct(product, idx) {
   cartPrice[idx].innerHTML = `${product.price} 원`;
   /* 수량 */
   cartAmount[idx].textContent = 1;
-
-  // cartImage.src = product.smallImageURL;
-}
-function findKey() {
-  getAllIndexedDB(databaseName, version, objectStore, function (dataList) {
-    //dataList === response.target.result
-    return dataList.id;
-  });
+  cartImage.src = product.smallImageURL;
 }
 
 /* indexedDB에 추가한 데이터 삭제하는 함수(기준: key) */
-function deleteIndexedDBdata(databaseName, version, objectStore, idObject) {
+function deleteIndexedDBdata(databaseName, version, objectStore, targetId) {
   if (window.indexedDB) {
     const request = indexedDB.open(databaseName, version);
-    const key = idObject.id;
+    const key = targetId.substring(4); //"btn-" 제거하고 id값만 반환
     request.onerror = (event) => console.log(event.target.errorCode);
     request.onsuccess = function () {
       const db = request.result;
@@ -174,9 +187,3 @@ function deleteIndexedDBdata(databaseName, version, objectStore, idObject) {
     alert("해당 브라우저에서는 indexedDB를 지원하지 않습니다.");
   }
 }
-
-/* 장바구니 상품 삭제 버튼 클릭 이벤트 */
-cart__delete__button.addEventListener("click", () => {
-  alert("딜리트");
-  //deleteIndexedDBdata(databaseName, version, objectStore, idObject);
-});
