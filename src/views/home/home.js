@@ -16,6 +16,7 @@ const joinEmail = document.querySelector("#join__email");
 const joinPassword = document.querySelector("#join__password");
 const joinPasswordCheck = document.querySelector("#join__password__check");
 const joinAddress = document.querySelector("#join__address");
+
 function removeModal() {
   document.getElementsByTagName("body")[0].className = "";
   document.getElementsByTagName("body")[0].style = "none";
@@ -130,46 +131,54 @@ logoutBtn.addEventListener("click", () => {
 });
 
 ///=========아래는 회원가입 기능=================
-// const joinFormSubmit = document.querySelector(".join__submit__btn");
-// const joinUserName = document.querySelector("#join__user__name");
-// const joinEmail = document.querySelector("#join__user__email");
-// const joinPassword = document.querySelector("#join__password");
-// const joinPasswordCheck = document.querySelector("#join__password__check");
-// const joinAddress = document.querySelector("#join__address");
 joinFormSubmit.addEventListener("click", (event) => {
   event.preventDefault;
   //!!!아래는 확인용 서비스때 꼭 지울 것
-  alert(
-    `입력한 정보입니다\n
-    name: ${joinUserName.value}\n
-    email: ${joinEmail.value}\n
-    password: ${joinPassword.value}\n
-    passwordCheck: ${joinPasswordCheck.value}\n
-    address: ${joinAddress.value}
-    `
-  );
-  if (joinPassword.value === joinPasswordCheck.value) {
+  const userInfo = {
+    name: joinUserName.value,
+    email: joinEmail.value,
+    password: joinPassword.value,
+    passwordCheck: joinPasswordCheck.value,
+    address: joinAddress.value,
+  };
+  //비밀번호와 비밀번호 확인 input 칸이 전부 맞아야 가입되게
+  if (userInfo.password === userInfo.passwordCheck) {
     fetch("/api/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        name: joinUserName.value,
-        email: joinEmail.value,
-        password: joinPassword.value,
-        address: joinAddress.value,
-      }),
+      body: JSON.stringify(userInfo),
     })
       .then((res) => res.json())
-      .then((data) => {
-        //const resultMassage = data.resMsg.msg;
-        if (data.resCode === "200") {
-          alert(`환영합니다 ${joinUserName.value}님`);
-          removeModal();
-        } else {
-          alert("비밀번호를 확인해주세요");
+      .then((joinResult) => {
+        if (joinResult.resCode === "200") {
+          return joinResult;
         }
+        // throw new Error(result);
+        return Promise.reject(joinResult);
+      })
+      .then(() => {
+        alert(`환영합니다 ${userInfo.name}님`);
+        removeModal();
+      })
+      //회원가입 후 바로 로그인하는 기능
+      .then(() => {
+        fetch("/api/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: userInfo.email,
+            password: userInfo.password,
+          }),
+        });
+        logoutBtn.style = "display: none";
+        loginBtn.style = "display: block";
+      })
+      .catch((err) => {
+        alert(err.resMsg.msg);
       });
   }
 });
