@@ -2,8 +2,8 @@ import { userService } from "../services";
 
 class UserContoller {
   async addUser(req, res, next) {
-    const { email, password, name, role, address } = req.body;
-    if (!email || !password || !name || !role || !address) {
+    const { email, password, name, address } = req.body;
+    if (!email || !password || !name || !address) {
       return res.json({
         resCode: "404",
         resMsg: {
@@ -16,7 +16,7 @@ class UserContoller {
         name,
         password,
         email,
-        role,
+        role: "basic-user",
         address,
       });
       return res.json(result);
