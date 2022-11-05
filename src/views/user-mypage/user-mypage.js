@@ -84,7 +84,7 @@ const [userEmail,
   userPhoneNumber, 
   userPostCode, 
   userAddressOne, 
-  userAddressTwo] = document.querySelectorAll('.user')
+  userExtraAddress] = document.querySelectorAll('.user')
 
 const deleteUserBtn = document.querySelector(".user__delete");
 const userInfoChangeBtn = document.querySelector(".userinfo__change")
@@ -105,19 +105,23 @@ _id: "636655ae94dfaf7ebaac2c02"
 */
 
 // 유저 불러오기
-let { addressOne, addressTwo, postCode, createdAt, email, name, password, role, updatedAt, __v, _id, phoneNumber } = loggedInUser
+let { address, extraAddress, postCode, createdAt, email, name, password, role, updatedAt, __v, _id, phoneNumber } = loggedInUser
 
 userEmail.innerHTML = email;
 userName.innerHTML = name;
 userPhoneNumber.value = phoneNumber;
 userPostCode.value = postCode;
-userAddressOne.value = addressOne;
-userAddressTwo.value = addressTwo;
+userAddressOne.value = address;
+userExtraAddress.value = extraAddress;
 
-if((userAddressOne.value == "undefined")){
+if(userPostCode.value == "undefined" || userAddressOne.value == "undefined"){
   userPostCode.value = ""
   userAddressOne.value = ""
-  userAddressTwo.value = ""
+  userExtraAddress.value = ""
+}
+
+if(userPhoneNumber.value == "undefined"){
+  userPhoneNumber.value = ""
 }
 
 // 주소찾기 
@@ -151,54 +155,53 @@ function searchAddress(e) {
       }
       userPostCode.value = `${data.zonecode}`;
       userAddressOne.value = `${addr} ${extraAddr}`;
-      userAddressTwo.focus();
+      userExtraAddress.focus();
     },
   }).open();
-  console.log(userAddressOne.value, userAddressTwo.value)
 }
 
 addressSearchBtn.addEventListener('click', searchAddress);
 
-  userPhoneNumber.value = ""
-  const numberCheck = userPhoneNumber.value.split("")
-
-  numberCheck.forEach((number) => {
-    const pattern = /[0-9]/g
-    const result = number.match(pattern);
-    if(!result){
-      alert('잘못 입력하셨습니다. 숫자만 입력하세요.')
-    }
-  })
 
 // 유저변경
 function saveUserData(e) {
     e.preventDefault();
+
     // 비밀번호 확인
-    if (userPassWordOne.value !== userPassWordTwo.value){
-      alert('비밀번호가 다릅니다. 다시 입력해주세요.')
-    } else {
+    if(userPassWordOne.value = "") {
       password = userPassWordOne.value;
-    }  
+    } else {
+      if (userPassWordOne.value !== userPassWordTwo.value){
+        alert('비밀번호가 다릅니다. 다시 입력해주세요.')
+      }
+    }
+
      // 주소를 변경했는데, 덜 입력한 경우(상세주소 칸이 비어있을 때)
-     if ((userAddressOne.value = "") || (userAddressTwo.value = "")) {
+     if ((userAddressOne.value = "") || (userExtraAddress.value = "")) {
       alert('주소를 다시 입력해주세요.')
      }
 
-     const userAddress = userPostCode.value + userAddressOne.value + userAddressTwo.value;
+    const userAddress = userPostCode.value + userAddressOne.value + userExtraAddress.value;
      
-    // 전화번호 옳은 형식이 아닐때
-    const numberCheck = userPhoneNumber.value.split("")
-    numberCheck.forEach((number) => {
-      const pattern = /[0-9]/g
-      const result = number.match(pattern);
-      if (!result){
-        alert('잘못 입력하셨습니다. 숫자만 입력하세요.')
-      }
-    })
+    // 전화번호
+    if(!(userPhoneNumber.value == "")){
+      const numberCheck = userPhoneNumber.value.split("")
+      numberCheck.forEach((number) => {
+        const pattern = /[0-9]/g
+        const result = number.match(pattern);
+        if (!result){
+          alert('잘못 입력하셨습니다. 숫자만 입력하세요.')
+        }
+      })
 
-    if (!((numberCheck.length >= 10) && (numberCheck.length <= 11))){
-      alert("잘못 입력하셨습니다. 알맞은 번호를 입력하세요.")
+      if (!((numberCheck.length >= 10) && (numberCheck.length <= 11))){
+        alert("잘못 입력하셨습니다. 알맞은 번호를 입력하세요.")
+      }
+    } else {
+      userPhoneNumber.value = phoneNumber
     }
+
+    console.log(userPostCode.value, userAddressOne.value, userExtraAddress.value, 3)
 
     
     fetch(`/api/users/${_id}`, {
@@ -211,23 +214,33 @@ function saveUserData(e) {
         "email": `${email}`,
         "password" : `${password}`,
         "phoneNumber" : `${userPhoneNumber.value}`,
+        "createdAt" : `${createdAt}`,
         "name": `${name}`,
         "role": `${role}`,
-        "address": `${userAddress}`
+        // "address": `${userPostCode.value} ${userAddressOne.value} ${userExtraAddress.value}`
+        "postCode": `${userPostCode.value}`,
+        "address": `${userAddressOne.value}`,
+        "extraAddress": `${userExtraAddress.value}`
       }),
     })
-    .then((response) => response.json())
+    .then((response) => {
+      console.log(response.json())
+    
+    })
     .then((userInfoChange) => {
       if(userInfoChange.resCode !== "200"){
         throw new Error()
       } 
       alert('회원정보가 변경되었습니다.')
     })
-    .catch((err) => alert('에러가 발생했습니다. 관리자에게 문의하세요.'));
+    // .catch((err) => alert('에러가 발생했습니다. 관리자에게 문의하세요.'));
+    .catch((err) => console.log('에러'));
 }
 
 userInfoChangeBtn.addEventListener('click', saveUserData)
-
+// userInfoChangeBtn.addEventListener('click', () => {
+//   console.log(`${userPostCode.value} ${userAddressOne.value} ${userExtraAddress.value}`)
+// })
 
 
 
