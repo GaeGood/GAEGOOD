@@ -105,7 +105,8 @@ body {
   justify-content: space-between;
 }
 
-.cart__amount__button {
+.cart__plus__button,
+.cart__minus__button {
   height: 30px;
   width: 30px;
   margin-left: 10px;
