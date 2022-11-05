@@ -10,6 +10,20 @@ const loginFormSubmit = document.querySelector(".login__submit__btn");
 const email = document.querySelector("#email");
 const password = document.querySelector("#password");
 
+const addLi = document.createElement("li");
+addLi.className = "nav-item";
+if (document.cookie === "") {
+  addLi.className += " login__btn";
+  addLi.innerHTML += `<a class="nav-link active" data-bs-toggle="modal" data-bs-target="#modalLogin"
+      aria-current="page" href="#none">로그인</a>`;
+  navAddLogin.prepend(addLi);
+} else {
+  addLi.className += " logout__btn";
+  addLi.innerHTML += `<a class="nav-link active" data-bs-toggle="modal" data-bs-target="#modalLogin"
+      aria-current="page" href="#none">로그아웃</a>`;
+  navAddLogin.prepend(addLi);
+}
+
 loginFormSubmit.addEventListener("click", (event) => {
   event.preventDefault;
   alert(
@@ -32,7 +46,7 @@ loginFormSubmit.addEventListener("click", (event) => {
         //모달창이 닫히는 기능
         document.getElementsByTagName("body")[0].className = "";
         document.getElementsByTagName("body")[0].style = "none";
-        document.querySelector("#modalLogin").style = "display: none"
+        document.querySelector("#modalLogin").style = "display: none";
         document.querySelector(".modal-backdrop").remove();
       }
       alert(resultMassage);
@@ -57,23 +71,9 @@ const createCard = (item) => {
 
 fetch("/api/products")
   .then((res) => {
-    const addLi = document.createElement("li");
-    addLi.className = "nav-item";
-    if (document.cookie === "") {
-      addLi.className += " login__btn";
-      addLi.innerHTML += `<a class="nav-link active" data-bs-toggle="modal" data-bs-target="#modalLogin"
-      aria-current="page" href="#none">로그인</a>`;
-      navAddLogin.prepend(addLi);
-    } else {
-      addLi.className += " logout__btn";
-      addLi.innerHTML += `<a class="nav-link active" data-bs-toggle="modal" data-bs-target="#modalLogin"
-      aria-current="page" href="#none">로그아웃</a>`;
-      navAddLogin.prepend(addLi);
-    }
     return res.json();
   })
   .then((productList) => {
-
     productList.forEach((product) => {
       const newCard = createCard(product);
       cards.innerHTML += newCard;
@@ -85,7 +85,7 @@ fetch("/api/products")
       category.addEventListener("click", (event) => {
         cards.textContent = "";
         productList.forEach((product) => {
-          if (product.category === event.target.text) {
+          if (product.category.name === event.target.text) {
             const newCard = createCard(product);
             cards.innerHTML += newCard;
           } else if (event.target.text === "전체") {
