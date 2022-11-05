@@ -68,8 +68,8 @@ html {
   box-sizing: border-box;
 }
 /*carousel container*/
-/* .carousel {
-} */
+.carousel {
+}
 .carousel-item .img {
   height: 300px;
   background-color: rgb(56, 55, 55);
