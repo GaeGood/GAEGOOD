@@ -1,26 +1,15 @@
-const [userEmail, userPassWordOne, userPassWordTwo, 
-  userName, userPhoneNumber, userPostCode, 
-  userAddressOne, userAddressTwo] = document.querySelectorAll('.user')
+const [userEmail, 
+  userPassWordOne, 
+  userPassWordTwo, 
+  userName, 
+  userPhoneNumber, 
+  userPostCode, 
+  userAddressOne, 
+  userAddressTwo] = document.querySelectorAll('.user')
 
 const deleteUserBtn = document.querySelector(".user__delete");
 const userInfoChangeBtn = document.querySelector(".userinfo__change")
 const addressChangeBtn = document.querySelector(".address__search");
-
-
-
-function changeAlert() {
-    // 비밀번호를 새로 작성한 경우
-
-     // 주소를 변경했는데, 덜 입력한 경우(상세주소 칸이 비어있을 때)
-
-     // 전화번호 옳은 형식이 아닐때, 비어있을 때 경고
-
-
-    alert("변경이 완료되었습니다.")
-    // 유저 정보 업데이트 하는 코드가 필요. 
-}
-
-userInfoChangeBtn.addEventListener('click',changeAlert)
 
 // let userData;
 // async function insertUserData() {
@@ -66,7 +55,6 @@ function parseJwt (token) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join('')));
 
-  
     return jsonPayload.id;
 }
 
@@ -82,6 +70,7 @@ const userId = parseJwt(token)
     return res.json();
   })
   .then((userData) => {
+    console.log(userData)
     const { address, email, name } = userData   
     userAddressOne.value = address
     userEmail.innerHTML = email
@@ -89,9 +78,49 @@ const userId = parseJwt(token)
   });
 
 
+// 유저변경
+
+function saveUserData() {
+    // 비밀번호 확인
+    
+    if(userPassWordOne.value !== userPassWordTwo.value){
+      alert('비밀번호가 다릅니다. 다시 입력해주세요.')
+    }
+   
+     // 주소를 변경했는데, 덜 입력한 경우(상세주소 칸이 비어있을 때)
+     if((userAddressOne.value = "") || (userAddressTwo.value = "")) {
+      alert('주소를 다시 입력해주세요.')
+     }
+
+     // 전화번호 옳은 형식이 아닐때, 비어있을 때 경고
+
+  fetch(`/api/users/${userId}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      "email": "tes@naver.com",
+      "password" : "1234",
+      "name": "tes hyung",
+      "role": "basic-user",
+      "address": `서울특별시 성북구`
+    }),
+  }).then((response) => {
+    if(!response.ok){
+      throw new Error()
+    } 
+    alert('회원정보가 변경되었습니다.')
+  })
+  .catch((err) => alert('에러가 발생했습니다. 관리자에게 문의하세요.'));
+}
+
+userInfoChangeBtn.addEventListener('click', saveUserData)
+
+
+
+
 // 주소찾기 
-
-
 // Daum 주소 API 
 function searchAddress(e) {
   e.preventDefault();
@@ -120,10 +149,8 @@ function searchAddress(e) {
         }
       } else {
       }
-
       userPostCode.value = `${data.zonecode}`;
       userAddressOne.value = `${addr} ${extraAddr}`;
-      userAddressTwo.placeholder = "상세 주소를 입력해 주세요.";
       userAddressTwo.focus();
     },
   }).open();
