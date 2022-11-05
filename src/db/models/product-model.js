@@ -1,11 +1,12 @@
 import { model } from "mongoose";
 import { ProductSchema } from "../schemas/product-schema";
+import { categoryModel } from "./category-model";
 
 const Product = model("Product", ProductSchema);
 
 class ProductModel {
   async findById(pid) {
-    const product = await Product.findOne({ _id: pid });
+    const product = await Product.findOne({ _id: pid }).populate("category");
     return product;
   }
 
@@ -13,7 +14,7 @@ class ProductModel {
     const productList = new Array();
 
     for (const pid of pidArr) {
-      const product = await Product.findOne({ _id: pid });
+      const product = await Product.findOne({ _id: pid }).populate("category");
       if (product) {
         productList.push(product);
       }
@@ -23,12 +24,13 @@ class ProductModel {
   }
 
   async findAll() {
-    const productList = await Product.find({});
+    const productList = await Product.find({}).populate("category");
     return productList;
   }
 
   async create(productInfo) {
-    const createdNewProduct = await Product.create(productInfo);
+    let createdNewProduct = await Product.create(productInfo);
+    createdNewProduct = await createdNewProduct.populate("category");
     return createdNewProduct;
   }
 
@@ -36,11 +38,14 @@ class ProductModel {
     const filter = { _id: pid };
     const option = { returnOriginal: false };
 
+    console.log(pid);
+    console.log(productInfo);
+
     const updatedProduct = await Product.findOneAndUpdate(
       filter,
       productInfo,
       option
-    );
+    ).populate("category");
 
     return updatedProduct;
   }
@@ -50,9 +55,15 @@ class ProductModel {
   }
 
   async search(searchBy) {
-    console.log("searchBy");
-    console.log(searchBy);
-    const productList = await Product.find(searchBy);
+    const { category } = searchBy;
+
+    if (category) {
+      const productCategory = await categoryModel.findByName(category);
+      searchBy.category = productCategory._id;
+    }
+
+    const productList = await Product.find(searchBy).populate("category");
+
     if (productList.length > 0) {
       return productList;
     } else {
