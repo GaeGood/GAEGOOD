@@ -36,11 +36,11 @@ a {
 }
 
 .navbar-nav {
-  width: 250px;
+  width: 400px;
 
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
 }
 
@@ -49,6 +49,10 @@ a {
   font-weight: 1000;
   font-style: italic;
   letter-spacing: -4px;
+}
+	
+.nav-item {
+  margin: 10px;
 }
 
 /* main */
