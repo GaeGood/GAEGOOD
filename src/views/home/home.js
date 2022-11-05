@@ -82,7 +82,6 @@ function renderLogoutLi() {
 function removeLogoutLi() {
   const logoutLi = document.querySelector(".logout__btn");
   navAddLogin.removeChild(logoutLi);
->>>>>>> dc70a257301e71492853d8466b472f5a85b193bc
 }
 
 loginFormSubmit.addEventListener("click", (event) => {
