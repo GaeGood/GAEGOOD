@@ -28,8 +28,16 @@
     <!-- <div class="container-fluid"> -->
     <a class="navbar-brand" href="/">GAEGOOD</a>
     <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="/register">회원가입</a>
+      <li class="nav-item login__btn">
+        <a class="nav-link active" data-bs-toggle="modal" data-bs-target="#modalLogin"
+       href="#none">로그인</a>
+      </li>
+      <li class="nav-item logout__btn">
+        <a class="nav-link active" href="/">로그아웃</a>
+      </li>
+      <li class="nav-item join__btn">
+        <a class="nav-link active" data-bs-toggle="modal" data-bs-target="#modalJoin"
+       href="#none">회원가입</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/cart">장바구니
@@ -151,45 +159,52 @@
         </div>
       </div>
     </div>
+
+    <!--모달 회원가입-->
+    <div class="modal fade" id="modalJoin" tabindex="-1" aria-labelledby="modalJoinLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="modalJoinLabel">환영합니다!</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form action="" method="" class="join__form">
+              <div class="mb-3">
+                <label for="inputUserName" class="form-label">이름</label>
+                <input type="text" class="form-control" id="join__user__name" placeholder="geagood">
+              </div>
+              <div class="mb-3">
+                <label for="inputEmail" class="form-label">이메일</label>
+                <input type="email" class="form-control" id="join__email" placeholder="user@gaegood.com">
+              </div>
+              <div class="mb-3">
+                <label for="inputPassword" class="form-label">비밀번호</label>
+                <input type="password" class="form-control" id="join__password" placeholder="****">
+              </div>
+              <div class="mb-3">
+                <label for="inputPasswordCheck" class="form-label">비밀번호 확인</label>
+                <input type="password" class="form-control" id="join__password__check" placeholder="****">
+              </div>
+              <div class="mb-3">
+                <label for="inputAddress" class="form-label">주소</label>
+                <input type="text" class="form-control" id="join__address" placeholder="서울특별시 개굿로 10-01 101호">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            <button type="button" class="btn btn-primary join__submit__btn">확인</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- 구분선 -->
     <hr class="my-2" />
 
     <!-- 상품들 -->
     <div class="cards">
-      <div class="card 컵">
-        <a href="/api/products/636354e965b869e732d26c43"></a>
-        <img src="/public/images/product-images/개발자-TDD-티셔츠.png" class="card-img-top" alt="고래밥" />
-        <div class="card-body">
-          <div class="card-text card-text-title">테스트용 고래밥</div>
-          <div class="card-text card-spec">
-            포브스 선정 개발자가 먹고 싶어하는 과자 1위
-          </div>
-          <div class="card-text">17,000원</div>
-        </div>
-      </div>
-      <div class="card 고래밥">
-        <a href="/api/products/63628295d66abef64d53f920">
-          <img src="/public/images/product-images/개발자-B5-노트.png" class="card-img-top" alt="HTML 머그컵" />
-          <div class="card-body">
-            <div class="card-text card-text-title">테스트용 고래밥</div>
-            <div class="card-text card-spec">
-              포브스 선정 개발자가 먹고 싶어하는 과자 1위
-            </div>
-            <div class="card-text">17,000원</div>
-          </div>
-      </div>
-      <div class="card 고래밥">
-        <a href="/api/products/63628295d66abef64d53f920">
-          <img src="/public/images/product-images/git-폴더-키링.png" class="card-img-top" alt="HTML 머그컵" />
-          <div class="card-body">
-            <div class="card-text card-text-title">테스트용 머그컵</div>
-            <div class="card-text card-spec">
-              포브스 선정 개발자가 갖고 싶어하는 컵 1위
-            </div>
-            <div class="card-text">137,000원</div>
-          </div>
-        </a>
-      </div>
     </div>
   </main>
 

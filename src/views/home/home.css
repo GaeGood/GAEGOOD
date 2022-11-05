@@ -125,3 +125,7 @@ html {
 .hidden {
   display: none;
 }
+/*로그인 버튼 관련*/
+.logout__btn {
+  display: none;
+}
