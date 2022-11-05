@@ -5,8 +5,8 @@ const orderRouter = Router();
 
 orderRouter.post("/", orderController.addOrder);
 orderRouter.get("/", orderController.getOrderList);
-orderRouter.get("/:pid", orderController.getOrder);
-orderRouter.put("/:pid", orderController.editOrder);
-orderRouter.delete("/:pid", orderController.removeOrder);
+orderRouter.get("/:oid", orderController.getOrder);
+orderRouter.put("/:oid", orderController.editOrder);
+orderRouter.delete("/:oid", orderController.removeOrder);
 
 export { orderRouter };
