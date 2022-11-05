@@ -3,7 +3,7 @@ async function verifyToken() {
   console.log("-------------------- 토큰 검증 시작 -------------------------");
 
   if (document.cookie.includes("jwt_token")) {
-    const verifyResult = await fetch("api/auth/verifyToken")
+    const verifyResult = await fetch("/api/auth/verifyToken")
       .then(async (res) => {
         const result = await res.json();
         // 서버가 200대의 status code를 반환한 경우 (검증 성공) => return result 으로 then 문으로 result 전달
