@@ -1,8 +1,7 @@
 async function verifyToken() {
   // 서버의 verifyToken API로 fetch 요청
-  console.log("-------------------- 토큰 검증 시작 -------------------------");
-
   if (document.cookie.includes("jwt_token")) {
+    console.log("------------ 토큰 검증 시작 ------------");
     const verifyResult = await fetch("/api/auth/verifyToken")
       .then(async (res) => {
         const result = await res.json();
@@ -37,8 +36,12 @@ async function verifyToken() {
         return { verifySucceed: false };
       });
 
+    console.log("------------ 토큰 검증 완료 ------------");
     return verifyResult;
   } else {
+    console.log(
+      "------------ 브라우저에 'jwt_token'이라는 이름의 쿠키가 없으므로 토큰 검증 수행 X ------------"
+    );
     return false;
   }
 }
