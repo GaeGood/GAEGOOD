@@ -43,16 +43,19 @@ class UserContoller {
 
   async editUser(req, res, next) {
     const { userId } = req.params;
-    const { password, name, address } = req.body;
+    const { password, name, postCode, address, extraAddress, phoneNumber } = req.body;
 
-    if (!password || !name || !address) {
+    if (!password || !name || !phoneNumber || !postCode || !address || !extraAddress ) {
       return res.json("입력 데이터 부족");
     }
     try {
       const updatedUser = await userService.editUser(userId, {
         password,
         name,
+        phoneNumber,
+        postCode,
         address,
+        extraAddress,
       });
 
       return res.json(updatedUser);
