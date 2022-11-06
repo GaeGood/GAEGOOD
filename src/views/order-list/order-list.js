@@ -9,38 +9,38 @@ console.log(loggedInUser)
 let { _id } = loggedInUser
 
 // 상품 불러오기
-fetch("/api/orders") // /api/orders 로 get요청
-  .then((res) => {
-    return res.json();
-  })
-  .then((orderLists) => {
-    orderLists.forEach(orderList)
-    const createOrderContent = (orderList) => 
-	{                
-		`<div>
-			<div>${orderLists.date}</div>
-			<table class="orderlist-table" id="order-${_id}">
-				<tr>
-					<th><img src=`&{orderList.smallImageURL}`></th>
-					<td>
-						<div>${orderList.name}</div>
-						<div>${orderList.count}</div>
-					</td>
-					<td>
-						<div>${orderList.deliveryStatus}</div>
-						<button class="order-cancel">주문취소</button>
-					</td>
-				</tr>
-			</table>
-		</div>`		
-				}
+// fetch("/api/orders") // /api/orders 로 get요청
+//   .then((res) => {
+//     return res.json();
+//   })
+//   .then((orderLists) => {
+//     orderLists.forEach(orderList)
+//     const createOrderContent = (orderList) => 
+// 	{                
+// 		`<div>
+// 			<div>${orderLists.date}</div>
+// 			<table class="orderlist-table" id="order-${_id}">
+// 				<tr>
+// 					<th><img src=`&{orderList.smallImageURL}`></th>
+// 					<td>
+// 						<div>${orderList.name}</div>
+// 						<div>${orderList.count}</div>
+// 					</td>
+// 					<td>
+// 						<div>${orderList.deliveryStatus}</div>
+// 						<button class="order-cancel">주문취소</button>
+// 					</td>
+// 				</tr>
+// 			</table>
+// 		</div>`		
+// 				}
 
 
-    orderList.forEach((orderContent) => {
-      const newOrderContent = createOrderContent(orderContent);
-      orderListTable.innerHTML += newOrderContent;
-    });
-  });
+//     orderList.forEach((orderContent) => {
+//       const newOrderContent = createOrderContent(orderContent);
+//       orderListTable.innerHTML += newOrderContent;
+//     });
+//   });
 
 
 

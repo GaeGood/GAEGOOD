@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>개굿</title>
+    <!-- 아이콘 -->
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-32x32.png" />
+
+    <!-- CSS only Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+    <!-- JavaScript Bundle with Popper Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+    <!-- 폰트 어썸: 아이콘 -->
+    <script defer src="https://kit.fontawesome.com/9daa42bcef.js" crossorigin="anonymous"></script>
+    <!-- 커스텀 css, js -->
+    <link rel="stylesheet" href="order-create.css" />
+    <script src="order-create.js" type="module" defer></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</head>
+
+<body>
+    <!-- 메인 컨테이너 -->
+    <main id="main__container" role="main">
+        <div class="main-title">
+            <span class="main-mypage">주문 & 결제</span>
+
+            <!-- 구분선 -->
+            <hr class="my-2" />
+        </div>
+
+        <section class="main-contents">
+            <div>
+                <table>
+                    <tr>
+                        <td colspan="2">
+                            <span>상품정보</span>
+                        </td>
+                        <td>
+                            <span>배송비</span>
+                        </td>
+                        <td>
+                            <span>수량</span>
+                        </td>
+                        <td>
+                            <span>상품금액</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>상품 사진</span>
+                        </td>
+                        <td>
+                            <span>상품정보</span>
+                        </td>
+                        <td>
+                            <span>배송비</span>
+                        </td>
+                        <td>
+                            <span>수량</span>
+                        </td>
+                        <td>
+                            <span>상품금액</span>
+                        </td>
+                    </tr>
+                 </table>
+            </div>
+        </section>
+        <p>  </p>
+        <section>
+            <div class="table-header">배송지 정보</div>
+            <!-- 구분선 -->
+            <hr class="my-2" />
+            <div class="delivery__infomation">
+                <div class="user__infomation">
+                    <table>
+                        <tr>
+                            <th>이름</th>
+                            <td>
+                                <input class="user name">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>휴대폰번호</th>
+                            <td>
+                                <input type="text" placeholder="- 제외 입력해주세요" class="user phonenumber" value="휴대폰번호">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>배송지</th>
+                            <td>
+                                <div>
+                                    <input type="text" class="user postalcode__input" value="우편번호">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <td>
+                                <div>
+                                    <input type="text" class="user address__input__1" value="도로명주소">
+                                    <!-- <button type="button" class="address__search">주소검색</button> -->
+                                    <input type="button" class="address__search" value="주소검색" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <td>
+                                <div>
+                                    <input type="text" placeholder="상세주소를 입력해주세요." class="user address__input__2" value="상세주소">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>요청사항</th>
+                            <td>
+                                <select id="request__Select__Box">
+                                    <option value="0" class="select__option">
+                                        배송시 요청사항을 선택해 주세요.
+                                    </option>
+                                    <option value="1" class="select__option">
+                                        배송 전 연락바랍니다.
+                                    </option>
+                                    <option value="2" class="select__option">
+                                        부재 시 경비실에 맡겨주세요.
+                                    </option>
+                                    <option value="3" class="select__option">
+                                        부재 시 문 앞에 놓아주세요.
+                                    </option>
+                                    <option value="4" class="select__option">
+                                        부재 시 택배함에 넣어주세요.
+                                    </option>
+                                    <option value="5" class="select__option">직접 입력</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <td>
+                                <div>
+                                    <input class="request__message" type="text" maxlength="50" placeholder="배송시 요청사항을 선택해 주세요." />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="pay__information">
+                    <div>결제상세</div>
+                    <aside>
+                        <div>주문금액</div>
+                        <div>배송비</div>
+                        <!-- 구분선 -->
+                        <hr class="my-2" />
+                        <span>총 금액</span><span>123원</span>
+                    </aside>
+                    <div>
+                        <button class="pay__button">결제하기</button>
+                    </div>                    
+                </div>
+            </div>
+        
+        </section>
+    </main>
+
+
+
+    <!-- Footer -->
+    <footer class="text-center text-white" style="background-color: blanchedalmond">
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+            <p>© 2022 개굿개굿</p>
+            <p>저작권 yalco</p>
+        </div>
+        <!-- Copyright -->
+    </footer>
+</body>
+
+</html>

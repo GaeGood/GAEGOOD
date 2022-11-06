@@ -16,7 +16,7 @@ viewsRouter.use("/products/detail/:pid", serveStatic("product-detail"));
 viewsRouter.use("/products/list", serveStatic("product-list"));
 viewsRouter.use("/products?edit=true", serveStatic("product-edit"));
 viewsRouter.use("/cart", serveStatic("cart"));
-viewsRouter.use("/order?write=true", serveStatic("order-create"));
+viewsRouter.use("/order/create", serveStatic("order-create"));
 viewsRouter.use("/orders/detail", serveStatic("order-detail"));
 viewsRouter.use("/orders/list", serveStatic("order-list"));
 
