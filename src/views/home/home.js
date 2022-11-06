@@ -1,14 +1,88 @@
 import { addCommas } from "/useful-functions.js";
+import { verifyToken } from "/verify-token.js";
+
+// verifyToken : 브라우저가 갖고 있는 JWT토큰을 서버로부터 검증 받는 함수
+// 검증 성공 시 => { verifySucceed: true, loggedInUser } 을 반환
+// 검증 실패 시 => { verifySucceed: false } 을 반환
+const verifyResult = await verifyToken();
+console.log("verifyResult");
+console.log(verifyResult);
+
+const { loggedInUser } = verifyResult;
+console.log("-------------------- 토큰 검증 종료 -------------------------");
 
 const cards = document.querySelector(".cards");
 const categories = document.querySelectorAll(".nav-item");
 const navAddLogin = document.querySelector(".navbar-nav");
 
+const modalLogin = document.querySelector("#modalLogin");
+
 const loginFormSubmit = document.querySelector(".login__submit__btn");
 const email = document.querySelector("#email");
 const password = document.querySelector("#password");
 
-const logOutBtn = document.querySelector(".logout__btn");
+if (loggedInUser) {
+  // removeLoginLi();
+  renderLogoutLi();
+} else {
+  // removeLogoutLi();
+  renderLoginLi();
+}
+
+function renderLoginLi() {
+  const loginLi = document.createElement("li");
+  loginLi.className += " login__btn";
+  loginLi.innerHTML += `<a class="nav-link active nav-item" data-bs-toggle="modal" data-bs-target="#modalLogin"
+              aria-current="page" href="#none">로그인</a>`;
+  navAddLogin.prepend(loginLi);
+  
+  // 마이페이지 버튼 삭제 -> 회원가입 생성
+  const mypageHtml = document.querySelector(".nav-item.mypage")
+  mypageHtml.className = "nav-item mypage hidden";
+  const joinHtml = document.querySelector(".nav-item.join")
+  joinHtml.className = "nav-item join"
+
+}
+
+function removeLoginLi() {
+  const loginLi = document.querySelector(".login__btn");
+  navAddLogin.removeChild(loginLi);
+}
+
+function renderLogoutLi() {
+  const logoutLi = document.createElement("li");
+  logoutLi.className += " logout__btn";
+  logoutLi.innerHTML += `<a class="nav-link active nav-item">로그아웃</a>`;
+
+  logoutLi.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    fetch("api/auth/logout", {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        alert(data.resMsg.msg);
+        removeLogoutLi();
+        renderLoginLi();
+      });
+  });
+  navAddLogin.prepend(logoutLi);
+  
+  // 회원가입버튼 삭제 -> 마이페이지 버튼 나타내기
+  const mypageHtml = document.querySelector(".nav-item.mypage")
+  mypageHtml.className = "nav-item mypage";
+  
+  const joinHtml = document.querySelector(".nav-item.join")
+  joinHtml.className = "nav-item join hidden"
+  
+}
+
+function removeLogoutLi() {
+  const logoutLi = document.querySelector(".logout__btn");
+  navAddLogin.removeChild(logoutLi);
+}
 
 loginFormSubmit.addEventListener("click", (event) => {
   event.preventDefault;
@@ -35,53 +109,37 @@ loginFormSubmit.addEventListener("click", (event) => {
         document.querySelector("#modalLogin").style = "display: none";
         document.querySelector(".modal-backdrop").remove();
 
-        //로그인을 했으니 로그인 버튼을 없애고 로그아웃으로 교체
-        const addLi = document.createElement("li");
-        document.querySelector(".login__btn").style = "display: none";
-        addLi.className = "nav-item";
-        addLi.className += " logout__btn";
-        addLi.innerHTML += `<a class="nav-link active" href="#none">로그아웃</a>`;
-        navAddLogin.prepend(addLi);
+        // 로그인 버튼 삭제
+        removeLoginLi();
+
+        // 로그아웃 버튼 보이게
+        renderLogoutLi();
       }
       alert(resultMassage);
     });
 });
 
 const createCard = (item) => {
-  return `<div class="card ${item.category}">
-  <a href='/products/detail/${item._id}'>
-    <img src="${item.smallImageURL}" class="card-img-top" alt="${
+  return `<div class="card ${item.category.name}">
+    <a href='/products/detail/${item._id}'>
+      <img src="${item.smallImageURL}" class="card-img-top" alt="${
     item.name
   }" />
-    <div class="card-body">
-    <div class="card-body">${item.category}</div>
-    <div class="card-text card-text-title">${item.name}</div>
-    <div class="card-text card-spec">${item.shortDesc}</div>
-    <div class="card-text">${addCommas(item.price)}</div>
+      <div class="card-body ${item.category.name}">
+      <div class="card-text card-text-title">${item.name}</div>
+      <div class="card-text card-spec">${item.shortDesc}</div>
+      <div class="card-text">${addCommas(item.price)}</div>
+      </div>
+    </a>
     </div>
-  </a>
-  </div>
-</div>`;
+  </div>`;
 };
 
 fetch("/api/products")
   .then((res) => {
-    const addLi = document.createElement("li");
-    addLi.className = "nav-item";
-    if (document.cookie === "") {
-      addLi.className += " login__btn";
-      addLi.innerHTML += `<a class="nav-link active" data-bs-toggle="modal" data-bs-target="#modalLogin"
-      aria-current="page" href="#none">로그인</a>`;
-      navAddLogin.prepend(addLi);
-    } else {
-      addLi.className += " logout__btn";
-      addLi.innerHTML += `<a class="nav-link active" href="#none">로그아웃</a>`;
-      navAddLogin.prepend(addLi);
-    }
     return res.json();
   })
   .then((productList) => {
-
     productList.forEach((product) => {
       const newCard = createCard(product);
       cards.innerHTML += newCard;
@@ -93,7 +151,7 @@ fetch("/api/products")
       category.addEventListener("click", (event) => {
         cards.textContent = "";
         productList.forEach((product) => {
-          if (product.category === event.target.text) {
+          if (product.category.name === event.target.text) {
             const newCard = createCard(product);
             cards.innerHTML += newCard;
           } else if (event.target.text === "전체") {
@@ -103,10 +161,4 @@ fetch("/api/products")
         });
       });
     });
-  });
-
-  logOutBtn.addEventListener("click", () => {
-    fetch("/api/auth/logout")
-      .then((res) => res.json())
-      .then((data) => console.log(data));
   });
