@@ -28,17 +28,15 @@
     <!-- <div class="container-fluid"> -->
     <a class="navbar-brand" href="/">GAEGOOD</a>
     <ul class="navbar-nav">
-      <li class="nav-item login__btn">
-        <a class="nav-link active" data-bs-toggle="modal" data-bs-target="#modalLogin"
-       href="#none">로그인</a>
+      <li class="nav-item admin hidden">
+        <a class="nav-link" href="/admin">관리자 모드</a>
       </li>
-      <li class="nav-item logout__btn">
-        <a class="nav-link active" href="/">로그아웃</a>
+      <li class="nav-item mypage hidden">
+        <a class="nav-link" href="/users/mypage">마이페이지</a>
+      </li>
       </li>
       <li class="nav-item join__btn">
-        <a class="nav-link active" data-bs-toggle="modal" data-bs-target="#modalJoin"
-       href="#none">회원가입</a>
-      </li>
+        <a class="nav-link active" data-bs-toggle="modal" data-bs-target="#modalJoin" href="#none">회원가입</a>
       <li class="nav-item">
         <a class="nav-link" href="/cart">장바구니
           <span class="icon">
@@ -132,34 +130,6 @@
       </li>
     </ul>
 
-    <!--모달 로그인-->
-    <div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLoginLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="modalLoginLabel">환영합니다!</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form action="" method="" class="login__form">
-              <div class="mb-3">
-                <label for="inputEmail1" class="form-label">이메일</label>
-                <input type="email" class="form-control" id="email" placeholder="user@gaegood.com">
-              </div>
-              <div class="mb-3">
-                <label for="inputPassword1" class="form-label">비밀번호</label>
-                <input type="password" class="form-control" id="password" placeholder="****">
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-            <button type="button" class="btn btn-primary login__submit__btn">확인</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!--모달 회원가입-->
     <div class="modal fade" id="modalJoin" tabindex="-1" aria-labelledby="modalJoinLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -215,7 +185,6 @@
       <p>© 2022 개굿개굿</p>
       <p>저작권 yalco</p>
     </div>
-    <!-- Copyright -->
   </footer>
 </body>
 
