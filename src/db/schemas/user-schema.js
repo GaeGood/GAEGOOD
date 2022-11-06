@@ -18,8 +18,7 @@ const UserSchema = new Schema(
     },
     phoneNumber: {
       type: String,
-      required: true,
-      default: "입력값이 없습니다",
+      required: false,
     },
     role: {
       type: String,
@@ -28,18 +27,16 @@ const UserSchema = new Schema(
     },
     postCode: {
       type: String,
-      required: true,
-      default: "입력값이 없습니다",
+      required: false,
     },
     address: {
       type: String,
       required: true,
-      default: "입력값이 없습니다",
+      // default: "입력값이 없습니다",
     },
     extraAddress: {
       type: String,
-      required: true,
-      default: "입력값이 없습니다",
+      required: false,
     },
   },
   {
