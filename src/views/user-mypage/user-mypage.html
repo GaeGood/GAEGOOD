@@ -18,23 +18,24 @@
     <!-- 폰트 어썸: 아이콘 -->
     <script defer src="https://kit.fontawesome.com/9daa42bcef.js" crossorigin="anonymous"></script>
     <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="user-mypage.css"/>
+    <link rel="stylesheet" href="user-mypage.css" />
     <script src="user-mypage.js" type="module" defer></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 
 <body>
-    <!-- TEST -->
-
-
     <!-- HEADER -->
     <nav class="navbar">
         <!-- <div class="container-fluid"> -->
         <a class="navbar-brand" href="/">GAEGOOD</a>
         <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/auth/login">로그인</a>
+            <li class="nav-item admin hidden">
+                <a class="nav-link" href="/admin">관리자 모드</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item mypage hidden">
+                <a class="nav-link" href="/users/mypage">마이페이지</a>
+            </li>
+            <li class="nav-item join">
                 <a class="nav-link" href="/auth/join">회원가입</a>
             </li>
             <li class="nav-item">
@@ -63,7 +64,8 @@
             <ul class="mypage-category">
                 <li><a href="/users/mypage">회원정보수정</a></li>
                 <li><a href="/orders/list">주문/배송조회</a></li>
-                <button class="user-delete">회원탈퇴</button>
+                <input type="button" class="user__delete" value="회원탈퇴" />
+                <!-- <button class="user__delete">회원탈퇴</button> -->
             </ul>
             <div>
                 <div class="table-header">고객정보</div>
@@ -71,11 +73,10 @@
                 <hr class="my-2" />
 
                 <table>
-
                     <tr>
                         <th>이메일</th>
                         <td>
-                            <span>hello@gmail.com (데이터 받아올 곳)</span>
+                            <span class="user email">이메일</span>
                         </td>
                     </tr>
                     <tr>
@@ -83,63 +84,63 @@
                             <span>비밀번호 변경</span>
                         </th>
                         <td>
-                            <span>현재 비밀번호</span>
+                            <span>비밀번호</span>
                         </td>
                         <td>
-                            <span>
-                                <input type="password" placeholder="비밀번호를 입력해주세요.">
-                            </span>
+                            <input class="user password__first" type="password" placeholder="비밀번호를 입력해주세요.">
                         </td>
                     </tr>
                     <tr>
                         <th></th>
                         <td>
-                            <span>새 비밀번호</span>
+                            <span>비밀번호 확인</span>
                         </td>
                         <td>
-                            <input type="password" placeholder="비밀번호를 입력해주세요.">
-                        </td>
-                    </tr>
-                    <tr>
-                        <th></th>
-                        <td>
-                            <span>새 비밀번호 확인</span>
-                        </td>
-                        <td>
-                            <input type="password" placeholder="비밀번호를 재입력해주세요.">
-                            <button class="password change">변경하기</button>
-
-
+                            <input class="user password__second" type="password" placeholder="비밀번호를 재입력해주세요.">
                         </td>
                     </tr>
                     <tr>
                         <th>이름</th>
                         <td>
-                            <span>홍길동(데이터 받아올 곳)</span>
+                            <input class="user name">
                         </td>
                     </tr>
                     <tr>
                         <th>휴대폰번호</th>
                         <td>
-                            <input type="text" placeholder="- 제외 입력해주세요" value="데이터받아올곳">
-                            <button class="phonenumber change">변경하기</button>
-
+                            <input type="text" placeholder="- 제외 입력해주세요" class="user phonenumber" value="휴대폰번호">
                         </td>
                     </tr>
                     <tr>
                         <th>배송지</th>
                         <td>
                             <div>
-                                <input type="text" value="데이터받아올곳">
+                                <input type="text" class="user postalcode__input" value="우편번호">
                             </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td>
                             <div>
-                                <input type="text" value="데이터받아올곳">
-                                <button class="address change">변경하기</button>
-
+                                <input type="text" class="user address__input__1" value="도로명주소">
+                                <!-- <button type="button" class="address__search">주소검색</button> -->
+                                <input type="button" class="address__search" value="주소검색"/>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td>    
+                            <div>
+                                <input type="text" placeholder="상세주소를 입력해주세요." class="user address__input__2"
+                                    value="상세주소">
                             </div>
                         </td>
                     </tr>
                 </table>
+                <input type="button" class="userinfo__change" value="변경하기" />
+                <!-- <button type="button" class="userinfo__change">변경하기</button> -->
             </div>
 
         </div>

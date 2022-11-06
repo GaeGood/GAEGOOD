@@ -2,7 +2,6 @@ import { userModel } from "../db";
 import bcrypt from "bcrypt";
 class UserService {
   async addUser(userInfo) {
-    console.log("userInfo", userInfo);
     const { email, name, password, role, address } = userInfo;
     try {
       const isDuplicate = await userModel.findByEmail(email);
@@ -42,13 +41,16 @@ class UserService {
   }
 
   async editUser(uid, userInfo) {
-    const { password, name, address } = userInfo;
+    const { password, name, address, phoneNumber, postCode, extraAddress } = userInfo;
     const saltRound = parseInt(process.env.SALT_ROUND) || 10;
     const hashPassword = await bcrypt.hash(password, saltRound);
     const updatedUser = await userModel.update(uid, {
       name: name,
       password: hashPassword,
+      phoneNumber: phoneNumber,
+      postCode: postCode,
       address: address,
+      extraAddress: extraAddress,
     });
     return updatedUser;
   }

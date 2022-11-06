@@ -30,7 +30,25 @@ class AuthController {
       res.clearCookie("jwt_token");
       return res.json(result.message);
     } catch (err) {
-      next(e);
+      next(err);
+    }
+    next();
+  }
+
+  async verifyToken(req, res, next) {
+    const token = req.cookies.jwt_token;
+    if (!token) {
+      return res.status(401).json({
+        resMsg: {
+          msg: "토큰이 존재하지 않습니다. 로그인이 되어있지 않습니다.",
+        },
+      });
+    }
+    try {
+      const result = await authService.verifyToken(token);
+      return res.json(result.message);
+    } catch (err) {
+      next(err);
     }
     next();
   }
