@@ -1,9 +1,25 @@
+import { main } from "/main.js";
+const { loggedInUser } = await main();
+
 const cart__container = document.querySelector(".cart__container");
 const total__amount = document.querySelector(".total__amount");
 const total__price = document.querySelector(".total__price");
 const deliveryFee = document.querySelector(".deliveryFee");
 const total__sum = document.querySelector(".total__sum");
-const order__button = document.querySelector(".order__button");
+const order__button__container = document.querySelector(
+  ".order__button__container"
+);
+const orderButton__User = `<button type="button" class="order__button__user"><a href="/orders?write=true">주문서 작성</a></button>`;
+const orderButton__Any = `  <button data-bs-toggle="modal" data-bs-target="#modalLogin">
+    주문서 작성
+  </button>`;
+
+if (loggedInUser) {
+  order__button__container.innerHTML = orderButton__User;
+} else {
+  order__button__container.innerHTML = orderButton__Any;
+}
+
 const databaseName = "cartDB";
 const version = 1;
 const objectStore = "cartStorage";
