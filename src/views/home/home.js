@@ -7,7 +7,7 @@ const categories = document.querySelectorAll(".nav-item.category");
 
 const createCard = (item) => {
   return `<div class="card ${item.category.name}">
-    <a href='/products/detail/${item._id}'>
+    <a href='/products/${item._id}'>
       <img src="${item.smallImageURL}" class="card-img-top" alt="${
     item.name
   }" />
