@@ -23,30 +23,6 @@
 </head>
 
 <body>
-  <!-- HEADER -->
-  <nav class="navbar">
-    <!-- <div class="container-fluid"> -->
-    <a class="navbar-brand" href="/">GAEGOOD</a>
-    <ul class="navbar-nav">
-      <li class="nav-item admin hidden">
-        <a class="nav-link" href="/admin">관리자 모드</a>
-      </li>
-      <li class="nav-item mypage hidden">
-        <a class="nav-link" href="/users/mypage">마이페이지</a>
-      </li>
-      <li class="nav-item join">
-        <a class="nav-link" href="/auth/join">회원가입</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/cart">장바구니
-          <span class="icon">
-            <i class="fas fa-cart-shopping"></i>
-          </span>
-        </a>
-      </li>
-    </ul>
-    <!-- </div> -->
-  </nav>
 
   <!-- 메인 컨테이너 -->
   <main id="main__container" role="main">
@@ -93,37 +69,37 @@
 
     <!-- 상품 카테고리 -->
     <ul class="nav justify-content-center p-2">
-      <li class="nav-item">
+      <li class="nav-item category">
         <button class="btn__total">
           <a class="nav-link active btn-total" aria-current="page" href="#none">전체</a>
         </button>
       </li>
-      <li class="nav-item">
+      <li class="nav-item category">
         <button class="btn__clothes">
           <a class="nav-link" href="#none">의류</a>
         </button>
       </li>
-      <li class="nav-item">
+      <li class="nav-item category">
         <button class="btn__fashion__goods">
           <a class="nav-link" href="#none">패션잡화</a>
         </button>
       </li>
-      <li class="nav-item">
+      <li class="nav-item category">
         <button class="btn__phone__case">
           <a class="nav-link" href="#none">폰케이스/테크</a>
         </button>
       </li>
-      <li class="nav-item">
+      <li class="nav-item category">
         <button class="btn__living">
           <a class="nav-link" href="#none">홈데코/리빙</a>
         </button>
       </li>
-      <li class="nav-item">
+      <li class="nav-item category">
         <button class="btn__sticker">
           <a class="nav-link" href="#none">스티커/지류</a>
         </button>
       </li>
-      <li class="nav-item">
+      <li class="nav-item category">
         <button class="btn__office">
           <a class="nav-link" href="#none">문구/오피스</a>
         </button>
@@ -131,32 +107,6 @@
     </ul>
 
     <!--모달 로그인-->
-    <div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLoginLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="modalLoginLabel">환영합니다!</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form action="" method="" class="login__form">
-              <div class="mb-3">
-                <label for="inputEmail1" class="form-label">이메일</label>
-                <input type="email" class="form-control" id="email" placeholder="user@gaegood.com">
-              </div>
-              <div class="mb-3">
-                <label for="inputPassword1" class="form-label">비밀번호</label>
-                <input type="password" class="form-control" id="password" placeholder="****">
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-            <button type="button" class="btn btn-primary login__submit__btn">확인</button>
-          </div>
-        </div>
-      </div>
-    </div>
     <!-- 구분선 -->
     <hr class="my-2" />
 
