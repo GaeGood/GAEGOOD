@@ -13,14 +13,15 @@ fetch("/api/orders") // /api/orders 로 get요청
   .then((res) => {
     return res.json();
   })
-  .then((orderList) => {
-    const createOrderContent = (orderLists) => 
+  .then((orderLists) => {
+    orderLists.forEach(orderList)
+    const createOrderContent = (orderList) => 
 	{                
 		`<div>
-			<div>${orderList.date}</div>
+			<div>${orderLists.date}</div>
 			<table class="orderlist-table" id="order-${_id}">
 				<tr>
-					<th><img src="#"></th>
+					<th><img src=`&{orderList.smallImageURL}`></th>
 					<td>
 						<div>${orderList.name}</div>
 						<div>${orderList.count}</div>
