@@ -67,6 +67,24 @@ body {
   padding: 100px;
   box-sizing: border-box;
 }
+
+.amount__container {
+  display: flex;
+  width: 100px;
+  justify-content: space-between;
+  padding: 50px 0;
+}
+.product__amount {
+  width: 50px;
+  text-align: center;
+}
+.plus__button,
+.minus__button {
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  text-align: center;
+}
 /*footer*/
 
 .footer {

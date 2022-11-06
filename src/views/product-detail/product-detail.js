@@ -1,4 +1,19 @@
 import { addCommas } from "/useful-functions.js";
+import { main } from "/main.js";
+const { loggedInUser } = await main();
+
+const button__container = document.querySelector(".button__container");
+const orderButton__User = `<button type="button" class="order__button__user"><a href="/orders?write=true">바로 구매하기</a></button>`;
+const orderButton__Any = `  <button data-bs-toggle="modal" data-bs-target="#modalLogin">
+    바로 구매하기
+  </button>`;
+
+if (loggedInUser) {
+  button__container.innerHTML = orderButton__User;
+} else {
+  button__container.innerHTML = orderButton__Any;
+}
+
 const button__cart = document.querySelector(".button__cart");
 const button__buy = document.querySelector(".button__buy");
 const button__remove = document.querySelector(".button__remove");
