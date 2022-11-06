@@ -33,30 +33,6 @@
 
   <body>
     <!-- HEADER -->
-    <nav class="navbar">
-      <!-- <div class="container-fluid"> -->
-      <a class="navbar-brand" href="/">GAEGOOD</a>
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/login"
-            >로그인</a
-          >
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/register">회원가입</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/cart"
-            >장바구니
-            <span class="icon">
-              <i class="fas fa-cart-shopping"></i>
-            </span>
-          </a>
-        </li>
-      </ul>
-      <!-- </div> -->
-    </nav>
-
     <!-- 메인 컨테이너 -->
     <main id="main__container" role="main">
       <div class="product__container">
@@ -66,10 +42,14 @@
         <div class="product__desc">상품상세설명</div>
         <div class="product__price">가격</div>
       </div>
+      <div class="amount__container">
+        <button class="plus__button">+</button>
+        <div class="product__amount">1</div>
+        <button class="minus__button">-</button>
+      </div>
       <div class="button__container">
         <button class="button__cart">장바구니</button>
         <button class="button__remove">장바구니 삭제</button>
-        <button class="button__buy">바로 구매하기</button>
         <button class="button__delete">
           indexedDB(데이터베이스) 삭제 - 주의, 데이터값 아니고 DB임
         </button>
