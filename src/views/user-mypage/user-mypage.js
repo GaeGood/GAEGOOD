@@ -1,81 +1,6 @@
-import { addCommas } from "/useful-functions.js";
-import { verifyToken } from "/verify-token.js";
+import { main } from "/main.js";
+const { loggedInUser } = await main();
 
-// verifyToken : 브라우저가 갖고 있는 JWT토큰을 서버로부터 검증 받는 함수
-// 검증 성공 시 => { verifySucceed: true, loggedInUser } 을 반환
-// 검증 실패 시 => { verifySucceed: false } 을 반환
-const verifyResult = await verifyToken();
-
-const { loggedInUser } = verifyResult;
-
-console.log("-------------------- 토큰 검증 종료 -------------------------");
-
-const navAddLogin = document.querySelector(".navbar-nav");
-
-if (loggedInUser) {
-  // removeLoginLi();
-  renderLogoutLi();
-} else {
-  // removeLogoutLi();
-  renderLoginLi();
-}
-
-function renderLoginLi() {
-  const loginLi = document.createElement("li");
-  loginLi.className += " login__btn";
-  loginLi.innerHTML += `<a class="nav-link active nav-item" data-bs-toggle="modal" data-bs-target="#modalLogin"
-              aria-current="page" href="#none">로그인</a>`;
-  navAddLogin.prepend(loginLi);
-  
-  // 마이페이지 버튼 삭제 -> 회원가입 생성
-  const mypageHtml = document.querySelector(".nav-item.mypage")
-  mypageHtml.className = "nav-item mypage hidden";
-  const joinHtml = document.querySelector(".nav-item.join")
-  joinHtml.className = "nav-item join"
-
-}
-
-function removeLoginLi() {
-  const loginLi = document.querySelector(".login__btn");
-  navAddLogin.removeChild(loginLi);
-}
-
-function renderLogoutLi() {
-  const logoutLi = document.createElement("li");
-  logoutLi.className += " logout__btn";
-  logoutLi.innerHTML += `<a class="nav-link active nav-item">로그아웃</a>`;
-
-  logoutLi.addEventListener("click", (e) => {
-    e.preventDefault();
-
-    fetch("/api/auth/logout", {
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        alert(data.resMsg.msg);
-        removeLogoutLi();
-        renderLoginLi();
-      });
-  });
-  navAddLogin.prepend(logoutLi);
-  
-  // 회원가입버튼 삭제 -> 마이페이지 버튼 나타내기
-  const mypageHtml = document.querySelector(".nav-item.mypage")
-  mypageHtml.className = "nav-item mypage";
-  
-  const joinHtml = document.querySelector(".nav-item.join")
-  joinHtml.className = "nav-item join hidden"
-  
-}
-
-function removeLogoutLi() {
-  const logoutLi = document.querySelector(".logout__btn");
-  navAddLogin.removeChild(logoutLi);
-  // window.location.href = "/";
-
-}
 
 const [userEmail, 
   userPassWordOne, 
@@ -102,13 +27,13 @@ userAddressOne.value = address;
 userExtraAddress.value = extraAddress;
 
 // 주소와 핸드폰번호가 없을 경우 빈칸으로 만들기
-if(userPostCode.value == "undefined" || userAddressOne.value == "undefined"){
+if(userPostCode.value === "undefined" || userAddressOne.value === "undefined"){
   userPostCode.value = ""
   userAddressOne.value = ""
   userExtraAddress.value = ""
 }
 
-if(userPhoneNumber.value == "undefined"){
+if(userPhoneNumber.value === "undefined"){
   userPhoneNumber.value = ""
 }
 
@@ -156,7 +81,7 @@ function saveUserData(e) {
     e.preventDefault();
 
     // 비밀번호 확인
-    if(!(userPassWordOne.value == "" && userPassWordTwo.value == "")){ // 두 칸이 빈칸이 아니면 = 하나라도 입력값이 있으면
+    if(!(userPassWordOne.value === "" && userPassWordTwo.value === "")){ // 두 칸이 빈칸이 아니면 = 하나라도 입력값이 있으면
       if (userPassWordOne.value !== userPassWordTwo.value) { // 두 값이 틀리면
         return alert('비밀번호가 다릅니다. 다시 입력해주세요.')
       } else if (userPassWordOne.value === userPassWordTwo.value) {
@@ -202,10 +127,6 @@ function saveUserData(e) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        // "password" : `${password}`,
-        // "name": `${userName.value}`,
-        // "address": `${userAddressOne.value}`,
-
         "_id" : `${_id}`,
         "email": `${email}`,
         "password" : `${password}`,
@@ -235,7 +156,7 @@ userInfoChangeBtn.addEventListener('click', saveUserData)
 
 function deleteUser(){
 	const answer = confirm("회원 탈퇴 하시겠습니까? \n탈퇴즉시 정보가 삭제됩니다.");
-	  if(answer === true){
+	  if(answer){
       fetch(`/api/users/${_id}`,{
       method:"DELETE"
       })
