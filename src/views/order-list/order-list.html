@@ -23,31 +23,6 @@
 </head>
 
 <body>
-    <!-- HEADER -->
-    <nav class="navbar">
-        <!-- <div class="container-fluid"> -->
-        <a class="navbar-brand" href="/">GAEGOOD</a>
-        <ul class="navbar-nav">
-            <li class="nav-item admin hidden">
-                <a class="nav-link" href="/admin">관리자 모드</a>
-            </li>
-            <li class="nav-item mypage hidden">
-                <a class="nav-link" href="/users/mypage">마이페이지</a>
-            </li>
-            <li class="nav-item join">
-                <a class="nav-link" href="/auth/join">회원가입</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/cart">장바구니
-                    <span class="icon">
-                        <i class="fas fa-cart-shopping"></i>
-                    </span>
-                </a>
-            </li>
-        </ul>
-        <!-- </div> -->
-    </nav>
-
     <!-- 메인 컨테이너 -->
     <main id="main__container" role="main">
         <div class="main-title">
@@ -61,7 +36,8 @@
             <ul class="mypage-category">
                 <li><a href="/users/mypage">회원정보수정</a></li>
                 <li><a href="/orders/list">주문/배송조회</a></li>
-                <button class="user-delete">회원탈퇴</button>
+                <input type="button" class="user__delete" value="회원탈퇴" />
+                <!-- <button class="user__delete">회원탈퇴</button> -->
             </ul>
             <div>
                 <div class="table-header">주문/배송 조회</div>
