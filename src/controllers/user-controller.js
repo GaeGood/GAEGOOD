@@ -2,8 +2,8 @@ import { userService } from "../services";
 
 class UserContoller {
   async addUser(req, res, next) {
-    const { email, password, name, role, address } = req.body;
-    if (!email || !password || !name || !role || !address) {
+    const { email, password, name, address } = req.body;
+    if (!email || !password || !name || !address) {
       return res.json({
         resCode: "404",
         resMsg: {
@@ -16,7 +16,7 @@ class UserContoller {
         name,
         password,
         email,
-        role,
+        role: "basic-user",
         address,
       });
       return res.json(result);
@@ -43,16 +43,19 @@ class UserContoller {
 
   async editUser(req, res, next) {
     const { userId } = req.params;
-    const { password, name, address } = req.body;
+    const { password, name, postCode, address, extraAddress, phoneNumber } = req.body;
 
-    if (!password || !name || !address) {
+    if (!password || !name || !phoneNumber || !postCode || !address || !extraAddress ) {
       return res.json("입력 데이터 부족");
     }
     try {
       const updatedUser = await userService.editUser(userId, {
         password,
         name,
+        phoneNumber,
+        postCode,
         address,
+        extraAddress,
       });
 
       return res.json(updatedUser);
@@ -68,6 +71,7 @@ class UserContoller {
 
     try {
       await userService.removeUser(userId);
+      res.clearCookie("jwt_token");
       res.json(`유저 삭제 완료(ID : ${userId})`);
     } catch (e) {
       console.log(e);
