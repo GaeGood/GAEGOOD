@@ -2,12 +2,47 @@ import { Schema } from "mongoose";
 
 const OrderSchema = new Schema(
   {
-    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
-    orderInfo: {
-      type: Array, // {productId, count} 묶음 array 생각중.
-    },
+    buyer: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    productList: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Product",
+        required: true,
+      },
+    ],
+    countList: [{ type: Number, required: true }],
+    // productList: [
+    //   {
+    //     type: Schema.Types.ObjectId,
+    //     ref: "Product",
+    //     required: true,
+    //   },
+    // ],
+    // countList: [
+    //   {
+    //     type: Number,
+    //     required: true,
+    //   },
+    // ],
     shippingStatus: {
       type: String,
+      default: "배송준비중",
+    },
+    shippingAddress: {
+      type: String,
+      required: true,
+    },
+    totalAmount: {
+      type: Number,
+      required: true,
+    },
+    recipientName: {
+      type: String,
+      required: true,
+    },
+    recipientPhoneNumber: {
+      type: String,
+      required: true,
     },
   },
   {

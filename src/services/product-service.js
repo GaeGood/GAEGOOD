@@ -2,16 +2,6 @@ import { productModel } from "../db";
 
 class ProductService {
   async addProduct(productInfo) {
-    const {
-      name,
-      category,
-      shortDesc,
-      longDesc,
-      price,
-      smallImageURL,
-      bigImageURL,
-    } = productInfo;
-
     const createdNewProduct = await productModel.create(productInfo);
     return createdNewProduct;
   }
@@ -32,17 +22,8 @@ class ProductService {
   }
 
   async editProduct(pid, productInfo) {
-    const {
-      name,
-      category,
-      shortDesc,
-      longDesc,
-      price,
-      smallImageURL,
-      bigImageURL,
-    } = productInfo;
-
     const updatedProduct = await productModel.update(pid, productInfo);
+
     return updatedProduct;
   }
 
@@ -56,6 +37,6 @@ class ProductService {
   }
 }
 
-const productService = new ProductService(productModel);
+const productService = new ProductService();
 
 export { productService };
