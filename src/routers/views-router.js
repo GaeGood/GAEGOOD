@@ -6,19 +6,35 @@ const viewsRouter = express.Router();
 // 페이지별로 html, css, js 파일들을 라우팅함
 // 아래와 같이 하면, http://localhost:5000/ 에서는 views/home/home.html 파일을,
 // http://localhost:5000/register 에서는 views/register/register.html 파일을 화면에 띄움
+
+//
 viewsRouter.use("/", serveStatic("home"));
-viewsRouter.use("/auth/login", serveStatic("login"));
-viewsRouter.use("/auth/join", serveStatic("register"));
-viewsRouter.use("/users/mypage", serveStatic("user-mypage"));
-viewsRouter.use("/users?edit=true", serveStatic("user-edit"));
-viewsRouter.use("/products?write=true", serveStatic("product-write"));
-viewsRouter.use("/products/detail/:pid", serveStatic("product-detail"));
-viewsRouter.use("/products/list", serveStatic("product-list"));
-viewsRouter.use("/products?edit=true", serveStatic("product-edit"));
+viewsRouter.use("/join", serveStatic("join"));
 viewsRouter.use("/cart", serveStatic("cart"));
-viewsRouter.use("/order/create", serveStatic("order-create"));
-viewsRouter.use("/orders/detail", serveStatic("order-detail"));
+
+// users
+viewsRouter.use("/users/mypage", serveStatic("user-mypage"));
+viewsRouter.use("/users/:uid/edit", serveStatic("user-edit"));
+viewsRouter.use("/users/admin", serveStatic("user-admin"));
+
+// products
+viewsRouter.use("/products/create", serveStatic("product-create"));
+viewsRouter.use("/products/list", serveStatic("product-list"));
+viewsRouter.use("/products/:pid", serveStatic("product-detail"));
+viewsRouter.use("/products/:pid/edit", serveStatic("product-edit"));
+
+// categories
+viewsRouter.use("/categories/create", serveStatic("category-create"));
+viewsRouter.use("/categories/list", serveStatic("category-list"));
+viewsRouter.use("/categories/:cid", serveStatic("category-detail"));
+viewsRouter.use("/categories/:cid/edit", serveStatic("category-edit"));
+
+// orders
+viewsRouter.use("/orders/create", serveStatic("order-create"));
+viewsRouter.use("/orders/complete", serveStatic("order-complete"));
 viewsRouter.use("/orders/list", serveStatic("order-list"));
+viewsRouter.use("/orders/:oid", serveStatic("order-detail"));
+viewsRouter.use("/orders/:oid/edit", serveStatic("order-edit"));
 
 // views 폴더의 최상단 파일인 rabbit.png, api.js 등을 쓸 수 있게 함
 viewsRouter.use("/", serveStatic(""));
