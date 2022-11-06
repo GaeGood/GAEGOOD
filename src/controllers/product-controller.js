@@ -10,6 +10,7 @@ class ProductContoller {
       price,
       smallImageURL,
       bigImageURL,
+      stock,
     } = req.body;
 
     if (
@@ -19,7 +20,8 @@ class ProductContoller {
       !longDesc ||
       !price ||
       !smallImageURL ||
-      !bigImageURL
+      !bigImageURL ||
+      !stock
     ) {
       return res.json("입력 데이터 부족");
     }
@@ -33,6 +35,7 @@ class ProductContoller {
         price,
         smallImageURL,
         bigImageURL,
+        stock,
       });
       return res.json(createdNewProduct);
     } catch (e) {
@@ -73,6 +76,7 @@ class ProductContoller {
       price,
       smallImageURL,
       bigImageURL,
+      stock,
     } = req.body;
 
     if (
@@ -82,7 +86,8 @@ class ProductContoller {
       !longDesc ||
       !price ||
       !smallImageURL ||
-      !bigImageURL
+      !bigImageURL ||
+      !stock
     ) {
       return res.json("입력 데이터 부족");
     }
@@ -95,6 +100,7 @@ class ProductContoller {
       price,
       smallImageURL,
       bigImageURL,
+      stock,
     });
 
     return res.json(updatedProduct);
