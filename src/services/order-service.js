@@ -13,6 +13,10 @@ class OrderService {
       recipientPhoneNumber,
     } = orderInfo;
 
+    if (productList.length !== countList.length) {
+      throw new Error("상품의 갯수와 수량의 갯수가 다릅니다.");
+    }
+
     const createdNewOrder = await orderModel.create(orderInfo);
     return createdNewOrder;
   }
