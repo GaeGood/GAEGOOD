@@ -105,15 +105,16 @@ _id: "636655ae94dfaf7ebaac2c02"
 */
 
 // 유저 불러오기
-let { address, extraAddress, postCode, createdAt, email, name, password, role, updatedAt, __v, _id, phoneNumber } = loggedInUser
+let { address, extraAddress, postCode, createdAt, email, name, password, role, _id, phoneNumber } = loggedInUser
 
 userEmail.innerHTML = email;
-userName.innerHTML = name;
+userName.value = name;
 userPhoneNumber.value = phoneNumber;
 userPostCode.value = postCode;
 userAddressOne.value = address;
 userExtraAddress.value = extraAddress;
 
+// 주소와 핸드폰번호가 없을 경우 빈칸으로 만들기
 if(userPostCode.value == "undefined" || userAddressOne.value == "undefined"){
   userPostCode.value = ""
   userAddressOne.value = ""
@@ -168,28 +169,27 @@ function saveUserData(e) {
     e.preventDefault();
 
     // 비밀번호 확인
-    if(userPassWordOne.value = "") {
-      password = userPassWordOne.value;
-    } else {
-      if (userPassWordOne.value !== userPassWordTwo.value){
+    if(userPassWordOne.value || userPassWordTwo.value){
+      if (userPassWordOne.value !== userPassWordTwo.value) {
         alert('비밀번호가 다릅니다. 다시 입력해주세요.')
+      } else if (userPassWordOne.value === userPassWordTwo.value) {
+        password = userPassWordOne.value;
       }
-    }
+    } 
 
-     // 주소를 변경했는데, 덜 입력한 경우(상세주소 칸이 비어있을 때)
-     if ((userAddressOne.value = "") || (userExtraAddress.value = "")) {
+    // 주소를 변경했는데, 덜 입력한 경우(상세주소 칸이 비어있을 때)
+    if ((userAddressOne.value === "") || (userExtraAddress.value === "")) {
       alert('주소를 다시 입력해주세요.')
-     }
-
-    const userAddress = userPostCode.value + userAddressOne.value + userExtraAddress.value;
+    }
      
+   
     // 전화번호
     if(!(userPhoneNumber.value == "")){
       const numberCheck = userPhoneNumber.value.split("")
       numberCheck.forEach((number) => {
         const pattern = /[0-9]/g
         const result = number.match(pattern);
-        if (!result){
+        if (false in result){
           alert('잘못 입력하셨습니다. 숫자만 입력하세요.')
         }
       })
@@ -201,47 +201,44 @@ function saveUserData(e) {
       userPhoneNumber.value = phoneNumber
     }
 
-    console.log(userPostCode.value, userAddressOne.value, userExtraAddress.value, 3)
-
     
     fetch(`/api/users/${_id}`, {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        "_id" : `${_id}`,
-        "email": `${email}`,
+        // "_id" : `${_id}`,
+        // "email": `${email}`,
         "password" : `${password}`,
-        "phoneNumber" : `${userPhoneNumber.value}`,
-        "createdAt" : `${createdAt}`,
-        "name": `${name}`,
-        "role": `${role}`,
-        // "address": `${userPostCode.value} ${userAddressOne.value} ${userExtraAddress.value}`
-        "postCode": `${userPostCode.value}`,
+        // "phoneNumber" : `${userPhoneNumber.value}`,
+        // "createdAt" : `${createdAt}`,
+        "name": `${userName.value}`,
+        // "role": `${role}`,
+        // "postCode": `${userPostCode.value}`,
         "address": `${userAddressOne.value}`,
-        "extraAddress": `${userExtraAddress.value}`
+        // "extraAddress": `${userExtraAddress.value}`
       }),
     })
-    .then((response) => {
-      console.log(response.json())
-    
-    })
+    .then((response) => response.json())
     .then((userInfoChange) => {
-      if(userInfoChange.resCode !== "200"){
-        throw new Error()
-      } 
+      console.log(userInfoChange)
       alert('회원정보가 변경되었습니다.')
+      window.location.href = "/users/mypage";
     })
-    // .catch((err) => alert('에러가 발생했습니다. 관리자에게 문의하세요.'));
-    .catch((err) => console.log('에러'));
+    .catch((err) => {
+      alert(`에러가 발생했습니다. 관리자에게 문의하세요. \n에러내용: ${err}`)
+    });
 }
 
 userInfoChangeBtn.addEventListener('click', saveUserData)
-// userInfoChangeBtn.addEventListener('click', () => {
-//   console.log(`${userPostCode.value} ${userAddressOne.value} ${userExtraAddress.value}`)
-// })
 
+// userInfoChangeBtn.addEventListener('click', () => {   
+//  if ((userAddressOne.value === "") || (userExtraAddress.value === "")) {
+//       alert('주소를 다시 입력해주세요.')
+//      }
+//  console.log(userPostCode.value, userAddressOne.value, userExtraAddress.value)
+// })
 
 
 
