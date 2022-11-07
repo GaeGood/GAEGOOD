@@ -33,6 +33,13 @@ if (document.cookie === "") {
   addLi.innerHTML += `<a class="nav-link active" data-bs-toggle="modal" data-bs-target="#modalLogin"
       aria-current="page" href="#none">로그아웃</a>`;
   navAddLogin.prepend(addLi);
+
+  // 회원가입버튼 삭제 -> 마이페이지 버튼 나타내기
+  const joinHtml = document.querySelector(".nav-item.join")
+  joinHtml.remove()
+
+  const mypageHtml = document.querySelector(".nav-item.mypage")
+  mypageHtml.style.display = "";
 }
 
 loginFormSubmit.addEventListener("click", (event) => {

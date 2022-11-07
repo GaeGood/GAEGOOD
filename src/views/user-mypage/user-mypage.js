@@ -23,19 +23,33 @@ const userId = parseJwt(token)
 
 // test userId = 6363ee2874a45025f7c7bd89
 
-// 유저 받아오기
- fetch(`/api/users/${userId}`, {
+const userList = fetch(`/api/users/${userId}`, {
   method: "GET"
-})
+  })
   .then((res) => {
     return res.json();
   })
   .then((userData) => {
-    const { address, email, name } = userData   
-    userAddressOne.value = address
-    userEmail.innerHTML = email
-    userName.innerHTML = name
+   return userData
   });
+
+
+
+// 유저 받아오기
+
+//  fetch(`/api/users/${userId}`, {
+//   method: "GET"
+// })
+//   .then((res) => {
+//     return res.json();
+//   })
+//   .then((userData) => {
+//     console.log(userData)
+//     const { address, email, name } = userData   
+//     userAddressOne.value = address
+//     userEmail.innerHTML = email
+//     userName.innerHTML = name
+//   });
 
 
 // 주소찾기 
@@ -79,6 +93,70 @@ function searchAddress(e) {
 }
 
 addressChangeBtn.addEventListener('click', searchAddress);
+
+  userPhoneNumber.value = ""
+  const numberCheck = userPhoneNumber.value.split("")
+
+  numberCheck.forEach((number) => {
+    const pattern = /[0-9]/g
+    const result = number.match(pattern);
+    if(!result){
+      alert('잘못 입력하셨습니다. 숫자만 입력하세요.')
+    }
+  })
+
+// 유저변경
+function saveUserData() {
+    // 비밀번호 확인
+    
+    if(userPassWordOne.value !== userPassWordTwo.value){
+      alert('비밀번호가 다릅니다. 다시 입력해주세요.')
+    }
+   
+     // 주소를 변경했는데, 덜 입력한 경우(상세주소 칸이 비어있을 때)
+     if((userAddressOne.value = "") || (userAddressTwo.value = "")) {
+      alert('주소를 다시 입력해주세요.')
+     }
+
+     // 전화번호 옳은 형식이 아닐때
+    const numberCheck = userPhoneNumber.value.split("")
+
+    numberCheck.forEach((number) => {
+      const pattern = /[0-9]/g
+      const result = number.match(pattern);
+      if(!result){
+        alert('잘못 입력하셨습니다. 숫자만 입력하세요.')
+      }
+    })
+
+
+  fetch(`/api/users/${userId}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      "email": `${userEmail}`,
+      "password" : "1234",
+      "name": "tes hyung",
+      "role": "basic-user",
+      "address": `서울특별시 성북구`
+    }),
+  }).then((response) => {
+    if(!response.ok){
+      throw new Error()
+    } 
+    alert('회원정보가 변경되었습니다.')
+  })
+  .catch((err) => alert('에러가 발생했습니다. 관리자에게 문의하세요.'));
+}
+
+userInfoChangeBtn.addEventListener('click', saveUserData)
+
+
+
+
+
 
 // 회원탈퇴 기능 
 
