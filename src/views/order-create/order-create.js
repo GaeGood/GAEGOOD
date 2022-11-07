@@ -14,13 +14,17 @@ const objectStore = "cartStorage";
 const { name, phoneNumber, postCode, address, extraAddress, _id } = loggedInUser
 const [ userName, userPhoneNumber, userPostCode, userAddress, userExterAddress, userRequestMessage ] = document.querySelectorAll('.user')
 
-console.log(name, phoneNumber, postCode, address, extraAddress, _id)
+console.log( userName, userPhoneNumber, userPostCode, userAddress, userExterAddress, userRequestMessage )
 
 userName.value = name
 userPhoneNumber.value = phoneNumber
 userPostCode.value = postCode
 userAddress.value = address
 userExterAddress.value = extraAddress
+
+
+
+
 
 
 // 장바구니 정보 가져오기
@@ -36,6 +40,12 @@ await getAllIndexedDB(DATABASE_NAME, version, objectStore,
         return res.json();
       })
       .then((productList) => {
+        let deliveryFee = 0
+        if(orderProduct.id){
+          deliveryFee = 3000
+        }
+
+
       orderProductTable.innerHTML += `
             <tr>
               <td>
@@ -51,7 +61,7 @@ await getAllIndexedDB(DATABASE_NAME, version, objectStore,
                   </span>
               </td>
               <td>
-                  <span class="order deliveryFee">배송비</span>
+                  <span class="order deliveryFee">${deliveryFee}</span>
               </td>
               <td>
                   <span class="order product__amount">${orderProduct.amount}</span>
@@ -153,21 +163,18 @@ addressSearchBtn.addEventListener('click', searchAddress);
 
 /*
 스키마
-  async addOrder(req, res, next) {
-    const {
-      buyer,
-      productList,
-      countList,
-      shippingStatus,
-      -shippingPostCode,
-      shippingAddress,
-      -shippingExtraAddress,
-      -shippingRequestMessage,
-      totalAmount,
-      recipientName,
-      recipientPhoneNumber,
-    } = req.body;
-
+{
+    "buyer":"6367d7d5afdfaa7d5b5cf0e2",
+    "productList":["63654f40faa3aa6363ad18f1", "6366157951ca058f75a619a1"],
+    "countList":["1", "5"],
+    "shippingStatus":"배송준비중",
+    "shippingPostCode" : "12345",
+    "shippingStreetAddress":"경기도",
+    "shippingExtraAddress":"김포시",
+    "totalAmount":"300000000",
+    "recipientName":"홍길동",
+    "recipientPhoneNumber":"010-1234-5678"
+}
 
 */
 
@@ -202,6 +209,19 @@ addressSearchBtn.addEventListener('click', searchAddress);
 //     "totalAmount": "총 금액",
 //     "recipientName":`${userName.value}`,
 //     "recipientPhoneNumber":`${userPhoneNumber.value}`
+
+// {
+//     "buyer":"6367d7d5afdfaa7d5b5cf0e2",
+//     "productList":["63654f40faa3aa6363ad18f1", "6366157951ca058f75a619a1"],
+//     "countList":["1", "5"],
+//     "shippingStatus":"배송준비중",
+//     "shippingPostCode" : "12345",
+//     "shippingStreetAddress":"경기도",
+//     "shippingExtraAddress":"김포시",
+//     "totalAmount":"300000000",
+//     "recipientName":"홍길동",
+//     "recipientPhoneNumber":"010-1234-5678"
+// }
 //       }
 
 //       console.log(shippingInformationList)
@@ -230,44 +250,34 @@ addressSearchBtn.addEventListener('click', searchAddress);
 
 
 
-
-
-
-
-
 // 요청사항
-const requestOption = {
-  1: "직접 수령하겠습니다.",
-  2: "배송 전 연락바랍니다.",
-  3: "부재 시 경비실에 맡겨주세요.",
-  4: "부재 시 문 앞에 놓아주세요.",
-  5: "부재 시 택배함에 넣어주세요.",
-  6: "직접 입력",
-};
 
 // "직접 입력" 선택 시 input칸 보이게 함
-// default값(배송 시 요청사항을 선택해 주세여) 이외를 선택 시 글자가 진해지도록 함
 const requestSelectBox = document.querySelector('#request__Select__Box')
-const requestMessageInput = document.querySelector('.request__message')
 const selectOptions = document.querySelectorAll('.select__option')
 
 function handleRequestChange(e) {
   const type = e.target.value;
-
+  console.log(type)
   if (type !== "5") { // type이 5이 아니면 
-    requestMessageInput.value = selectOptions[parseInt(type)].innerHTML.trim()
+    if (type === "0") {
+      userRequestMessage.value = ""
+    } else {
+      userRequestMessage.value = selectOptions[parseInt(type)].innerHTML.trim()
+    }
   } else {
-    requestMessageInput.placeholder = "최대 50자 입력가능"
-    requestMessageInput.focus()
+    userRequestMessage.value = ""
+    userRequestMessage.placeholder = "최대 50자 입력가능"
+    userRequestMessage.focus()
   }
 
 }
 
 requestSelectBox.addEventListener("change", handleRequestChange);
 
-const payBtn = document.querySelector('.pay__button')
-// 결제하기 버튼 눌렀을 때
 
+// 결제하기 버튼 눌렀을 때
+const payBtn = document.querySelector('.pay__button')
 
 function payBtnClick(){
     alert("결제 및 주문이 정상적으로 완료되었습니다.\n감사합니다.");

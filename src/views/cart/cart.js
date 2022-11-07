@@ -9,7 +9,7 @@ const total__sum = document.querySelector(".total__sum");
 const order__button__container = document.querySelector(
   ".order__button__container"
 );
-const orderButton__User = `<button type="button" class="order__button__user"><a href="/orders?write=true">주문서 작성</a></button>`;
+const orderButton__User = `<button type="button" class="order__button__user"><a href="/orders/create">주문서 작성</a></button>`;
 const orderButton__Any = `  <button data-bs-toggle="modal" data-bs-target="#modalLogin">
     주문서 작성
   </button>`;
