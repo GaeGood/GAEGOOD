@@ -21,69 +21,6 @@ const loginFormSubmit = document.querySelector(".login__submit__btn");
 const email = document.querySelector("#email");
 const password = document.querySelector("#password");
 
-<<<<<<< HEAD
-if (loggedInUser) {
-  // removeLoginLi();
-  renderLogoutLi();
-} else {
-  // removeLogoutLi();
-  renderLoginLi();
-}
-
-function renderLoginLi() {
-  const loginLi = document.createElement("li");
-  loginLi.className += " login__btn";
-  loginLi.innerHTML += `<a class="nav-link active nav-item" data-bs-toggle="modal" data-bs-target="#modalLogin"
-              aria-current="page" href="#none">로그인</a>`;
-  navAddLogin.prepend(loginLi);
-  
-  // 마이페이지 버튼 삭제 -> 회원가입 생성
-  const mypageHtml = document.querySelector(".nav-item.mypage")
-  mypageHtml.className = "nav-item mypage hidden";
-  const joinHtml = document.querySelector(".nav-item.join")
-  joinHtml.className = "nav-item join"
-
-}
-
-function removeLoginLi() {
-  const loginLi = document.querySelector(".login__btn");
-  navAddLogin.removeChild(loginLi);
-}
-
-function renderLogoutLi() {
-  const logoutLi = document.createElement("li");
-  logoutLi.className += " logout__btn";
-  logoutLi.innerHTML += `<a class="nav-link active nav-item">로그아웃</a>`;
-
-  logoutLi.addEventListener("click", (e) => {
-    e.preventDefault();
-
-    fetch("api/auth/logout", {
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        alert(data.resMsg.msg);
-        removeLogoutLi();
-        renderLoginLi();
-      });
-  });
-  navAddLogin.prepend(logoutLi);
-  
-  // 회원가입버튼 삭제 -> 마이페이지 버튼 나타내기
-  const mypageHtml = document.querySelector(".nav-item.mypage")
-  mypageHtml.className = "nav-item mypage";
-  
-  const joinHtml = document.querySelector(".nav-item.join")
-  joinHtml.className = "nav-item join hidden"
-  
-}
-
-function removeLogoutLi() {
-  const logoutLi = document.querySelector(".logout__btn");
-  navAddLogin.removeChild(logoutLi);
-=======
 const addLi = document.createElement("li");
 addLi.className = "nav-item";
 if (document.cookie === "") {
@@ -96,7 +33,6 @@ if (document.cookie === "") {
   addLi.innerHTML += `<a class="nav-link active" data-bs-toggle="modal" data-bs-target="#modalLogin"
       aria-current="page" href="#none">로그아웃</a>`;
   navAddLogin.prepend(addLi);
->>>>>>> f64e3ad (fix: api 구조가 변경됨으로 인한 코드수정)
 }
 
 loginFormSubmit.addEventListener("click", (event) => {
@@ -155,6 +91,22 @@ fetch("/api/products")
     return res.json();
   })
   .then((productList) => {
+<<<<<<< HEAD
+=======
+    const createCard = (item) => {
+      return `<div class="card ${item.category}">
+      <a href='/products/detail/${item._id}'>
+        <img src="elice-rabbit.png" class="card-img-top" alt="..." />
+        <div class="card-body"></div>
+        <div class="card-text card-text-title">${item.name}</div>
+        <div class="card-text card-spec">
+          ${item.shortDesc}
+        </div>
+        <div class="card-text">${addCommas(item.price)}</div>
+      </a>
+    </div>`;
+    };
+>>>>>>> a8e1144 (update: product detail 1차)
     productList.forEach((product) => {
       const newCard = createCard(product);
       cards.innerHTML += newCard;
