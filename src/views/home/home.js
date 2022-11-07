@@ -60,11 +60,22 @@ loginFormSubmit.addEventListener("click", (event) => {
         document.querySelector("#modalLogin").style = "display: none";
         document.querySelector(".modal-backdrop").remove();
 
-        // 로그인 버튼 삭제
-        removeLoginLi();
+        //마이페이지 태그 생김
+        const mypageLi = document.createElement("li");
+        mypageLi.className = "nav-item";
+        mypageLi.className += " mypage__btn";
+        mypageLi.innerHTML += `<a class="nav-link" href="/users/mypage">마이페이지</a>`;
+        navAddLogin.prepend(mypageLi);
 
-        // 로그아웃 버튼 보이게
-        renderLogoutLi();
+        //로그인을 했으니 로그인 버튼을 없애고 로그아웃으로 교체
+        const addLi = document.createElement("li");
+        document.querySelector(".login__btn").style = "display: none";
+        addLi.className = "nav-item";
+        addLi.className += " logout__btn";
+        addLi.innerHTML += `<a class="nav-link active" href="#none">로그아웃</a>`;
+        navAddLogin.prepend(addLi);
+
+
       }
       alert(resultMassage);
     });
@@ -91,8 +102,6 @@ fetch("/api/products")
     return res.json();
   })
   .then((productList) => {
-<<<<<<< HEAD
-=======
     const createCard = (item) => {
       return `<div class="card ${item.category}">
       <a href='/products/detail/${item._id}'>
@@ -106,7 +115,6 @@ fetch("/api/products")
       </a>
     </div>`;
     };
->>>>>>> a8e1144 (update: product detail 1차)
     productList.forEach((product) => {
       const newCard = createCard(product);
       cards.innerHTML += newCard;
