@@ -23,30 +23,6 @@
 </head>
 
 <body>
-  <!-- HEADER -->
-  <nav class="navbar">
-    <!-- <div class="container-fluid"> -->
-    <a class="navbar-brand" href="/">GAEGOOD</a>
-    <ul class="navbar-nav">
-      <li class="nav-item admin" style="display: none;">
-        <a class="nav-link" href="/admin">관리자 모드</a>
-      </li>
-      <li class="nav-item mypage" style="display: none;">
-        <a class="nav-link" href="/users/mypage">마이페이지</a>
-      </li>
-      <li class="nav-item join">
-        <a class="nav-link" href="/auth/join">회원가입</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/cart">장바구니
-          <span class="icon">
-            <i class="fas fa-cart-shopping"></i>
-          </span>
-        </a>
-      </li>
-    </ul>
-    <!-- </div> -->
-  </nav>
 
   <!-- 메인 컨테이너 -->
   <main id="main__container" role="main">
@@ -73,6 +49,73 @@
           </div>
           <div class="carousel-item">
             <img src="elice-rabbit.png" class="d-block w-100 img" alt="개굿 최고^^" />
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+
+    <!-- 상품 카테고리 -->
+    <ul class="nav justify-content-center p-2">
+      <li class="nav-item category">
+        <button class="btn__total">
+          <a class="nav-link active btn-total" aria-current="page" href="#none">전체</a>
+        </button>
+      </li>
+      <li class="nav-item category">
+        <button class="btn__clothes">
+          <a class="nav-link" href="#none">의류</a>
+        </button>
+      </li>
+      <li class="nav-item category">
+        <button class="btn__fashion__goods">
+          <a class="nav-link" href="#none">패션잡화</a>
+        </button>
+      </li>
+      <li class="nav-item category">
+        <button class="btn__phone__case">
+          <a class="nav-link" href="#none">폰케이스/테크</a>
+        </button>
+      </li>
+      <li class="nav-item category">
+        <button class="btn__living">
+          <a class="nav-link" href="#none">홈데코/리빙</a>
+        </button>
+      </li>
+      <li class="nav-item category">
+        <button class="btn__sticker">
+          <a class="nav-link" href="#none">스티커/지류</a>
+        </button>
+      </li>
+      <li class="nav-item category">
+        <button class="btn__office">
+          <a class="nav-link" href="#none">문구/오피스</a>
+        </button>
+      </li>
+    </ul>
+
+    <!--모달 로그인-->
+    <!-- 구분선 -->
+    <hr class="my-2" />
+
+    <!-- 상품들 -->
+    <div class="cards">
+      <div class="card 컵">
+        <a href="/api/products/636354e965b869e732d26c43"></a>
+        <img src="/public/images/product-images/개발자-TDD-티셔츠.png" class="card-img-top" alt="고래밥" />
+        <div class="card-body">
+          <div class="card-text card-text-title">테스트용 고래밥</div>
+          <div class="card-text card-spec">
+            포브스 선정 개발자가 먹고 싶어하는 과자 1위
           </div>
           <div class="card-text">17,000원</div>
         </div>
