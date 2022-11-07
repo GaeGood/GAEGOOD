@@ -21,6 +21,7 @@ const loginFormSubmit = document.querySelector(".login__submit__btn");
 const email = document.querySelector("#email");
 const password = document.querySelector("#password");
 
+<<<<<<< HEAD
 if (loggedInUser) {
   // removeLoginLi();
   renderLogoutLi();
@@ -67,6 +68,20 @@ function renderLogoutLi() {
 function removeLogoutLi() {
   const logoutLi = document.querySelector(".logout__btn");
   navAddLogin.removeChild(logoutLi);
+=======
+const addLi = document.createElement("li");
+addLi.className = "nav-item";
+if (document.cookie === "") {
+  addLi.className += " login__btn";
+  addLi.innerHTML += `<a class="nav-link active" data-bs-toggle="modal" data-bs-target="#modalLogin"
+      aria-current="page" href="#none">로그인</a>`;
+  navAddLogin.prepend(addLi);
+} else {
+  addLi.className += " logout__btn";
+  addLi.innerHTML += `<a class="nav-link active" data-bs-toggle="modal" data-bs-target="#modalLogin"
+      aria-current="page" href="#none">로그아웃</a>`;
+  navAddLogin.prepend(addLi);
+>>>>>>> f64e3ad (fix: api 구조가 변경됨으로 인한 코드수정)
 }
 
 loginFormSubmit.addEventListener("click", (event) => {
