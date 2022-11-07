@@ -1,6 +1,89 @@
-const [userEmail, userPassWordOne, userPassWordTwo, 
-  userName, userPhoneNumber, userPostCode, 
-  userAddressOne, userAddressTwo] = document.querySelectorAll('.user')
+import { addCommas } from "/useful-functions.js";
+import { verifyToken } from "/verify-token.js";
+
+// verifyToken : 브라우저가 갖고 있는 JWT토큰을 서버로부터 검증 받는 함수
+// 검증 성공 시 => { verifySucceed: true, loggedInUser } 을 반환
+// 검증 실패 시 => { verifySucceed: false } 을 반환
+const verifyResult = await verifyToken();
+
+const { loggedInUser } = verifyResult;
+console.log("-------------------- 토큰 검증 종료 -------------------------");
+
+const navAddLogin = document.querySelector(".navbar-nav");
+
+if (loggedInUser) {
+  // removeLoginLi();
+  renderLogoutLi();
+} else {
+  // removeLogoutLi();
+  renderLoginLi();
+}
+
+function renderLoginLi() {
+  const loginLi = document.createElement("li");
+  loginLi.className += " login__btn";
+  loginLi.innerHTML += `<a class="nav-link active nav-item" data-bs-toggle="modal" data-bs-target="#modalLogin"
+              aria-current="page" href="#none">로그인</a>`;
+  navAddLogin.prepend(loginLi);
+  
+  // 마이페이지 버튼 삭제 -> 회원가입 생성
+  const mypageHtml = document.querySelector(".nav-item.mypage")
+  mypageHtml.className = "nav-item mypage hidden";
+  const joinHtml = document.querySelector(".nav-item.join")
+  joinHtml.className = "nav-item join"
+
+}
+
+function removeLoginLi() {
+  const loginLi = document.querySelector(".login__btn");
+  navAddLogin.removeChild(loginLi);
+}
+
+function renderLogoutLi() {
+  const logoutLi = document.createElement("li");
+  logoutLi.className += " logout__btn";
+  logoutLi.innerHTML += `<a class="nav-link active nav-item">로그아웃</a>`;
+
+  logoutLi.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    fetch("/api/auth/logout", {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        alert(data.resMsg.msg);
+        removeLogoutLi();
+        renderLoginLi();
+      });
+  });
+  navAddLogin.prepend(logoutLi);
+  
+  // 회원가입버튼 삭제 -> 마이페이지 버튼 나타내기
+  const mypageHtml = document.querySelector(".nav-item.mypage")
+  mypageHtml.className = "nav-item mypage";
+  
+  const joinHtml = document.querySelector(".nav-item.join")
+  joinHtml.className = "nav-item join hidden"
+  
+}
+
+function removeLogoutLi() {
+  const logoutLi = document.querySelector(".logout__btn");
+  navAddLogin.removeChild(logoutLi);
+  window.location.href = "/";
+
+}
+
+const [userEmail, 
+  userPassWordOne, 
+  userPassWordTwo, 
+  userName, 
+  userPhoneNumber, 
+  userPostCode, 
+  userAddressOne, 
+  userAddressTwo] = document.querySelectorAll('.user')
 
 const deleteUserBtn = document.querySelector(".user__delete");
 const userInfoChangeBtn = document.querySelector(".userinfo__change")
