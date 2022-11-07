@@ -55,7 +55,7 @@ function addproduct(product) {
 
   productDescription.innerHTML = product.shortDesc;
   productPrice.innerHTML = product.price;
-  getAllIndexedDB(DATABASE_NAME, version, objectStore); //장바구니에 수량이 이미 있는경우 indexedDB에서 조회, 렌더링함
+  getAllIndexedDB(DATABASE_NAME, version, objectStore, id); //장바구니에 수량이 이미 있는경우 indexedDB에서 조회, 렌더링함
 }
 
 /*indexedDB 함수*/
@@ -174,15 +174,10 @@ function getAllIndexedDB(DATABASE_NAME, version, objectStore, id) {
         console.log(`전역에서 데려온 id : ${id}`);
         objectDataArray.forEach((data) => {
           if (id === data.id) {
-            console.log(`id : ${id}, data's id : ${data.id}`);
-            console.log("지금 페이지 id랑 오브젝트에 잇는것들중에 id랑 같네.");
-            productAmount.textContent = data.amount;
-          } else {
-            console.log(`id : ${id}, data's id : ${data.id}`);
             console.log(
-              "지금 페이지 id랑 오브젝트에 잇는것들중에 id랑 다르네."
+              `id : ${id}, data's id : ${data.id}, data's amount : ${data.amount}`
             );
-            productAmount.textContent = 1;
+            productAmount.textContent = data.amount;
           }
         });
 
@@ -224,7 +219,7 @@ function updateIndexedDB(DATABASE_NAME, version, objectStore, idObject) {
   if (window.indexedDB) {
     const request = indexedDB.open(DATABASE_NAME, version);
     const key = idObject[0];
-    getAllIndexedDB(DATABASE_NAME, version, objectStore);
+    getAllIndexedDB(DATABASE_NAME, version, objectStore, id);
     request.onerror = function (event) {
       console.log(event.target.errorCode);
       alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
