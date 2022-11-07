@@ -8,16 +8,21 @@ const addressChangeBtn = document.querySelector(".address__search");
 
 
 
-function changeAlert() {
-    // 비밀번호를 새로 작성한 경우
+// 유저 불러오기
+let { address, extraAddress, postCode, createdAt, email, name, password, role, _id, phoneNumber } = loggedInUser
 
-     // 주소를 변경했는데, 덜 입력한 경우(상세주소 칸이 비어있을 때)
+userEmail.innerHTML = email;
+userName.value = name;
+userPhoneNumber.value = phoneNumber;
+userPostCode.value = postCode;
+userAddressOne.value = address;
+userExtraAddress.value = extraAddress;
 
-     // 전화번호 옳은 형식이 아닐때, 비어있을 때 경고
-
-
-    alert("변경이 완료되었습니다.")
-    // 유저 정보 업데이트 하는 코드가 필요. 
+// 주소와 핸드폰번호가 없을 경우 빈칸으로 만들기
+if(userPostCode.value == "undefined" || userAddressOne.value == "undefined"){
+  userPostCode.value = ""
+  userAddressOne.value = ""
+  userExtraAddress.value = ""
 }
 
 userInfoChangeBtn.addEventListener('click',changeAlert)
@@ -129,7 +134,87 @@ function searchAddress(e) {
   }).open();
 }
 
-addressChangeBtn.addEventListener('click', searchAddress);
+addressSearchBtn.addEventListener('click', searchAddress);
+
+
+// 유저변경
+function saveUserData(e) {
+    e.preventDefault();
+
+    // 비밀번호 확인
+    if(userPassWordOne.value || userPassWordTwo.value){
+      if (userPassWordOne.value !== userPassWordTwo.value) {
+        alert('비밀번호가 다릅니다. 다시 입력해주세요.')
+      } else if (userPassWordOne.value === userPassWordTwo.value) {
+        password = userPassWordOne.value;
+      }
+    } 
+
+    // 주소를 변경했는데, 덜 입력한 경우(상세주소 칸이 비어있을 때)
+    if ((userAddressOne.value === "") || (userExtraAddress.value === "")) {
+      alert('주소를 다시 입력해주세요.')
+    }
+     
+   
+    // 전화번호
+    if(!(userPhoneNumber.value == "")){
+      const numberCheck = userPhoneNumber.value.split("")
+      numberCheck.forEach((number) => {
+        const pattern = /[0-9]/g
+        const result = number.match(pattern);
+        if (false in result){
+          alert('잘못 입력하셨습니다. 숫자만 입력하세요.')
+        }
+      })
+
+      if (!((numberCheck.length >= 10) && (numberCheck.length <= 11))){
+        alert("잘못 입력하셨습니다. 알맞은 번호를 입력하세요.")
+      }
+    } else {
+      userPhoneNumber.value = phoneNumber
+    }
+
+    
+    fetch(`/api/users/${_id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // "_id" : `${_id}`,
+        // "email": `${email}`,
+        "password" : `${password}`,
+        // "phoneNumber" : `${userPhoneNumber.value}`,
+        // "createdAt" : `${createdAt}`,
+        "name": `${userName.value}`,
+        // "role": `${role}`,
+        // "postCode": `${userPostCode.value}`,
+        "address": `${userAddressOne.value}`,
+        // "extraAddress": `${userExtraAddress.value}`
+      }),
+    })
+    .then((response) => response.json())
+    .then((userInfoChange) => {
+      console.log(userInfoChange)
+      alert('회원정보가 변경되었습니다.')
+      window.location.href = "/users/mypage";
+    })
+    .catch((err) => {
+      alert(`에러가 발생했습니다. 관리자에게 문의하세요. \n에러내용: ${err}`)
+    });
+}
+
+userInfoChangeBtn.addEventListener('click', saveUserData)
+
+// userInfoChangeBtn.addEventListener('click', () => {   
+//  if ((userAddressOne.value === "") || (userExtraAddress.value === "")) {
+//       alert('주소를 다시 입력해주세요.')
+//      }
+//  console.log(userPostCode.value, userAddressOne.value, userExtraAddress.value)
+// })
+
+
+
 
 // 회원탈퇴 기능 
 
