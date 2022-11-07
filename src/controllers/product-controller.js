@@ -23,7 +23,7 @@ class ProductContoller {
       !bigImageURL ||
       !stock
     ) {
-      return res.json("입력 데이터 부족");
+      return res.status(400).json("입력 데이터 부족");
     }
 
     try {
@@ -37,7 +37,7 @@ class ProductContoller {
         bigImageURL,
         stock,
       });
-      return res.json(createdNewProduct);
+      return res.status(200).json(createdNewProduct);
     } catch (e) {
       next(e);
     }
@@ -46,16 +46,16 @@ class ProductContoller {
   async getProductList(req, res) {
     if (Object.keys(req.query).length === 0) {
       const productList = await productService.getProductList();
-      return res.json(productList);
+      return res.status(200).json(productList);
     } else {
       const { pid } = req.query;
 
       if (!pid) {
-        return res.json("에러, 쿼리 스트링에 pid이 존재해야 함");
+        return res.status(400).json("에러, 쿼리 스트링에 pid이 존재해야 함");
       }
       const pidArr = pid.split(",");
       const productList = await productService.getProductList(pidArr);
-      return res.json(productList);
+      return res.status(200).json(productList);
     }
   }
 
@@ -63,7 +63,7 @@ class ProductContoller {
     const { pid } = req.params;
 
     const product = await productService.getProductById(pid);
-    res.json(product);
+    res.status(200).json(product);
   }
 
   async editProduct(req, res) {
@@ -89,7 +89,7 @@ class ProductContoller {
       !bigImageURL ||
       !stock
     ) {
-      return res.json("입력 데이터 부족");
+      return res.status(400).json("입력 데이터 부족");
     }
 
     const updatedProduct = await productService.editProduct(pid, {
@@ -103,7 +103,7 @@ class ProductContoller {
       stock,
     });
 
-    return res.json(updatedProduct);
+    return res.status(200).json(updatedProduct);
   }
 
   async removeProduct(req, res, next) {
@@ -111,7 +111,7 @@ class ProductContoller {
 
     try {
       await productService.removeProduct(pid);
-      res.json(`상품 삭제 완료(ID : ${pid})`);
+      res.status(200).json(`상품 삭제 완료(ID : ${pid})`);
     } catch (e) {
       next(e);
     }
@@ -120,11 +120,11 @@ class ProductContoller {
   async searchProduct(req, res) {
     if (Object.keys(req.query).length === 0) {
       const productList = await productService.getProductList();
-      return res.json(productList);
+      return res.status(200).json(productList);
     } else {
       const searchBy = req.query;
       const productList = await productService.searchProduct(searchBy);
-      res.json(productList);
+      res.status(200).json(productList);
     }
   }
 }
