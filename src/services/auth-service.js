@@ -7,21 +7,15 @@ class AuthService {
   }
 
   async login(email, password) {
+    const user = await userModel.findByEmail(email);
+    if (!user) {
+      const error = new Error("가입 된 메일이 아닙니다.");
+      error.statusCode = 422;
+      throw error;
+    }
+
+    const success = await bcrypt.compare(password, user.password);
     try {
-      const user = await userModel.findByEmail(email);
-      if (!user) {
-        return {
-          message: {
-            resCode: "404",
-            resMsg: {
-              msg: "가입된 메일이 아닙니다.",
-            },
-          },
-        };
-      }
-
-      const success = await bcrypt.compare(password, user.password);
-
       if (success) {
         const payload = {
           id: user._id,
@@ -31,69 +25,39 @@ class AuthService {
         const token = jwt.sign(payload, key, {
           expiresIn: "2h",
         });
-        return {
-          token: token,
-          message: {
-            resCode: "200",
-            resMsg: {
-              msg: "로그인 성공, jwt 토큰 발급",
-            },
-          },
-        };
+        return token;
       } else {
-        return {
-          token: null,
-          message: {
-            resCode: "401",
-            resMsg: {
-              msg: "비밀번호가 일치하지 않습니다.",
-            },
-          },
-        };
+        const error = new Error("비밀번호가 일치하지 않습니다.");
+        error.statusCode = 401;
+        throw error;
       }
     } catch (err) {
-      throw new Error(err);
+      const error = new Error("토큰 생성도중 에러가 발생하였습니다. ");
+      error.statusCode = 400;
+      throw error;
     }
   }
 
-  async logout() {
+  async logout(req, res) {
     try {
-      return {
-        message: {
-          resCode: "200",
-          resMsg: {
-            msg: "정상적으로 로그아웃되었습니다. jwt token 삭제!",
-          },
-        },
-      };
+      res.clearCookie("jwt_token");
     } catch (err) {
-      throw new Error(err);
+      const error = new Error("JWT token 삭제과정중 Error가 발생했습니다.");
+      error.statusCode = 400;
+      throw error;
     }
   }
-
   async verifyToken(token) {
     try {
-      const data = jwt.verify(token, process.env.JWT_SECRET_KEY || 10);
+      jwt.verify(token, process.env.JWT_SECRET_KEY || 10);
       const getUser = await userModel.findById(data.id); //PEPE 요청대로 User data 불러와서 뿌려줄 예정 , password 빼야한다고 판단하면 그때 리팩토링 하는걸로.
-      return {
-        message: {
-          resCode: "200",
-          resMsg: {
-            msg: "정상적인 토큰",
-            result: data,
-            user: getUser,
-          },
-        },
-      };
+      return getUser;
     } catch (err) {
-      return {
-        message: {
-          resCode: "403",
-          resMsg: {
-            msg: "유효한 정상적인 토큰이 아니거나 가입된 _Id를 찾을 수 없습니다. ",
-          },
-        },
-      };
+      const error = new Error(
+        "유효한 정상적인 토큰이 아니거나 가입된 _Id를 찾을 수 없습니다."
+      );
+      error.statusCode = 403;
+      throw error;
     }
   }
 }
