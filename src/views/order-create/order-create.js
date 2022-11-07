@@ -1,6 +1,101 @@
 import { main } from "/main.js";
 const { loggedInUser } = await main(); 
 
+console.log(loggedInUser)
+/*
+address: "d"
+createdAt: "2022-11-06T14:50:43.961Z"
+email: "test3@naver.com"
+extraAddress: "d"
+name: "may"
+password: "$2b$10$kiCMxMBhgu5XN4esa7i./OprjomKxlIeRice2vNBrJUb4QVEiD0wO"
+phoneNumber: "01012345678"
+postCode: "d"
+role: "basic-user"
+updatedAt: "2022-11-07T02:23:07.974Z"
+__v: 0
+_id: "6367c9c386545678e88c4bbf"
+
+*/
+const { name, phoneNumber, postCode, address, extraAddress } = loggedInUser
+const [ userDBName, userDBPhoneNumber, userDBPostCode, userDBAddress, userDBExterAddress ] = document.querySelectorAll('.user')
+
+console.log(name, phoneNumber, postCode, address, extraAddress)
+
+userDBName.value = name
+userDBPhoneNumber.value = phoneNumber
+userDBPostCode.value = postCode
+userDBAddress.value = address
+userDBExterAddress.value = extraAddress
+
+// 장바구니 정보 가져오기
+
+
+
+
+
+
+// 기존 DB의 사용자 정보 가져오기
+
+
+
+
+// 주소찾기 
+const addressSearchBtn = document.querySelector(".address__search");
+// Daum 주소 API 
+function searchAddress(e) {
+  e.preventDefault();
+
+  new daum.Postcode({
+    oncomplete: function (data) {
+      let addr = "";
+      let extraAddr = "";
+
+      if (data.userSelectedType === "R") {
+        addr = data.roadAddress;
+      } else {
+        addr = data.jibunAddress;
+      }
+
+      if (data.userSelectedType === "R") {
+        if (data.bname !== "" && /[동|로|가]$/g.test(data.bname)) {
+          extraAddr += data.bname;
+        }
+        if (data.buildingName !== "" && data.apartment === "Y") {
+          extraAddr +=
+            extraAddr !== "" ? ", " + data.buildingName : data.buildingName;
+        }
+        if (extraAddr !== "") {
+          extraAddr = " (" + extraAddr + ")";
+        }
+      } else {
+      }
+      userDBPostCode.value = `${data.zonecode}`;
+      userDBAddress.value = `${addr} ${extraAddr}`;
+      userDBExterAddress.value = ""
+      userDBExterAddress.focus();
+    },
+  }).open();
+}
+
+addressSearchBtn.addEventListener('click', searchAddress);
+
+
+
+// 받아온 정보를 배송정보로 POST
+// post시 빈칸 있으면 return alert 진행
+
+
+
+
+
+
+
+
+
+
+
+
 
 // 요청사항
 const requestOption = {
