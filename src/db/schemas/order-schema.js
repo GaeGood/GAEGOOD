@@ -40,6 +40,10 @@ const OrderSchema = new Schema(
       type: String,
       required: true,
     },
+    shippingRequestMessage: {
+      type: String,
+      required: true,
+    },
     totalAmount: {
       type: Number,
       required: true,

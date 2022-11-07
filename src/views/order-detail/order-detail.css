@@ -74,3 +74,9 @@
   align-items: center;
   justify-content: center;
 }
+
+#order__options__wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

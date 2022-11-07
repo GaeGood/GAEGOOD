@@ -10,6 +10,7 @@ class OrderService {
       shippingPostCode,
       shippingStreetAddress,
       shippingExtraAddress,
+      shippingRequestMessage,
       totalAmount,
       recipientName,
       recipientPhoneNumber,
@@ -43,6 +44,7 @@ class OrderService {
       shippingPostCode,
       shippingStreetAddress,
       shippingExtraAddress,
+      shippingRequestMessage,
       recipientName,
       recipientPhoneNumber,
     } = orderInfo;
