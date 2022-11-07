@@ -38,8 +38,9 @@ if (document.cookie === "") {
   const joinHtml = document.querySelector(".nav-item.join")
   joinHtml.remove()
 
-  const mypageHtml = document.querySelector(".nav-item.mypage")
-  mypageHtml.style.display = "";
+function removeLogoutLi() {
+  const logoutLi = document.querySelector(".logout__btn");
+  navAddLogin.removeChild(logoutLi);
 }
 
 loginFormSubmit.addEventListener("click", (event) => {
