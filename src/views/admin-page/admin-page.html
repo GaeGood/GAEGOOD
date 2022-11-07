@@ -18,8 +18,8 @@
   <!-- 폰트 어썸: 아이콘 -->
   <script defer src="https://kit.fontawesome.com/9daa42bcef.js" crossorigin="anonymous"></script>
   <!-- 커스텀 css, js -->
-  <link rel="stylesheet" href="user-mypage.css" />
-  <script src="user-mypage.js" type="module" defer></script>
+  <link rel="stylesheet" href="admin-page.css" />
+  <script src="admin-page.js" type="module" defer></script>
 </head>
 
 <body>
@@ -50,14 +50,17 @@
 
   <!-- 메인 컨테이너 -->
   <main id="main__container" role="main">
-    <button type="button" class="btn btn-success btn__admin__oder" data-bs-toggle="modal"
-      data-bs-target="#btn__admin__oder">주문관리</button>
-    <button type="button" class="btn btn-danger btn__admin__user" data-bs-toggle="modal"
-      data-bs-target="#btn__admin__user">회원관리</button>
-    <button type="button" class="btn btn-warning btn__admin__addCategory" data-bs-toggle="modal"
-      data-bs-target="#btn__admin__addCategory">카테고리 추가</button>
-    <button type="button" class="btn btn-info btn__admin__addProduct" data-bs-toggle="modal"
-      data-bs-target="#btn__admin__addProduct">제품 추가</button>
+    <div class="admin__page__list">
+      <button type="button" class="btn btn-success btn__admin__oder" data-bs-toggle="modal"
+        data-bs-target="#btn__admin__oder">주문관리</button>
+      <button type="button" class="btn btn-danger btn__admin__user" data-bs-toggle="modal"
+        data-bs-target="#btn__admin__user">회원관리</button>
+      <button type="button" class="btn btn-warning btn__admin__addCategory" data-bs-toggle="modal"
+        data-bs-target="#btn__admin__addCategory">카테고리 관리</button>
+      <button type="button" class="btn btn-info btn__admin__addProduct" data-bs-toggle="modal"
+        data-bs-target="#btn__admin__addProduct">상품 관리</button>
+    </div>
+
   </main>
 
   <!--카테고리 추가-->
@@ -98,7 +101,7 @@
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary col">카테고리 추가하기</button>
+          <button type="button" class="btn btn-primary col submit__category">카테고리 추가하기</button>
         </div>
       </div>
     </div>
@@ -162,11 +165,13 @@
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary col">제품 추가하기</button>
+          <button type="button" class="btn btn-primary col submit__product">제품 추가하기</button>
         </div>
       </div>
     </div>
   </div>
+
+
 
   <!-- Footer -->
   <footer class="text-center text-white" style="background-color: blanchedalmond">
