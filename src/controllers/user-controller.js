@@ -16,7 +16,7 @@ class UserContoller {
         role: "basic-user",
         address,
       });
-      return res.status(200).json(result); // case1
+      return res.status(200).json(result);
     } catch (err) {
       next(err);
     }
@@ -28,12 +28,7 @@ class UserContoller {
       const user = await userService.getUserById(userId);
       res.json(user);
     } catch (err) {
-      return res.json({
-        resCode: 404,
-        resMsg: {
-          msg: err,
-        },
-      });
+      next(err);
     }
   }
 
@@ -41,8 +36,8 @@ class UserContoller {
     const { userId } = req.params;
     const { password, name, postCode, address, extraAddress, phoneNumber } = req.body;
 
-    if (!password || !name || !phoneNumber || !postCode || !address || !extraAddress ) {
-      return res.json("입력 데이터 부족");
+    if (!password || !name || !address) {
+      return res.status(400).json("입력되지 않은 값이 있습니다!");
     }
     try {
       const updatedUser = await userService.editUser(userId, {
@@ -54,9 +49,8 @@ class UserContoller {
         extraAddress,
       });
 
-      return res.json(updatedUser);
+      return res.status(200).json(updatedUser);
     } catch (err) {
-      console.log(err);
       next(err);
     }
     next();
@@ -70,7 +64,6 @@ class UserContoller {
       res.clearCookie("jwt_token");
       res.json(`유저 삭제 완료(ID : ${userId})`);
     } catch (e) {
-      console.log(e);
       next(e);
     }
   }
