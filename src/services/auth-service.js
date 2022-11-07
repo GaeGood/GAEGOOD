@@ -49,7 +49,7 @@ class AuthService {
   }
   async verifyToken(token) {
     try {
-      jwt.verify(token, process.env.JWT_SECRET_KEY || 10);
+      const data = jwt.verify(token, process.env.JWT_SECRET_KEY || 10);
       const getUser = await userModel.findById(data.id); //PEPE 요청대로 User data 불러와서 뿌려줄 예정 , password 빼야한다고 판단하면 그때 리팩토링 하는걸로.
       return getUser;
     } catch (err) {
