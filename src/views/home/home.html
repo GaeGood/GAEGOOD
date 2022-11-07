@@ -22,35 +22,44 @@
   <script src="home.js" type="module" defer></script>
 </head>
 
-    <!-- 메인 컨테이너 -->
-    <main id="main__container" role="main">
-      <!-- 캐러셀 -->
-      <div
-        id="carouselExampleIndicators"
-        class="carousel slide"
-        data-bs-ride="true"
-      >
-        <div class="carousel-indicators">
-          <button
-            type="button"
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide-to="0"
-            class="active"
-            aria-current="true"
-            aria-label="Slide 1"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide-to="1"
-            aria-label="Slide 2"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide-to="2"
-            aria-label="Slide 3"
-          ></button>
+<body>
+  <!-- HEADER -->
+  <nav class="navbar">
+    <!-- <div class="container-fluid"> -->
+    <a class="navbar-brand" href="/">GAEGOOD</a>
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="/auth/login">로그인</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/auth/join">회원가입</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cart">장바구니
+          <span class="icon">
+            <i class="fas fa-cart-shopping"></i>
+          </span>
+        </a>
+      </li>
+    </ul>
+    <!-- </div> -->
+  </nav>
+
+  <!-- 메인 컨테이너 -->
+  <main id="main__container" role="main">
+    <!-- 캐러셀 -->
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+          aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+          aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+          aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="elice-rabbit.png" class="d-block w-100 img" alt="개굿 최고^^" />
         </div>
         <div class="carousel-inner">
           <div class="carousel-item active">
