@@ -7,7 +7,9 @@ class OrderController {
       productList,
       countList,
       shippingStatus,
-      shippingAddress,
+      shippingPostCode,
+      shippingStreetAddress,
+      shippingExtraAddress,
       totalAmount,
       recipientName,
       recipientPhoneNumber,
@@ -18,7 +20,9 @@ class OrderController {
       !productList ||
       !countList ||
       !shippingStatus ||
-      !shippingAddress ||
+      !shippingPostCode ||
+      !shippingStreetAddress ||
+      !shippingExtraAddress ||
       !totalAmount ||
       !recipientName ||
       !recipientPhoneNumber
@@ -32,7 +36,9 @@ class OrderController {
         productList,
         countList,
         shippingStatus,
-        shippingAddress,
+        shippingPostCode,
+        shippingStreetAddress,
+        shippingExtraAddress,
         totalAmount,
         recipientName,
         recipientPhoneNumber,
@@ -68,14 +74,28 @@ class OrderController {
 
   async editOrder(req, res) {
     const { oid } = req.params;
-    const { shippingAddress, recipientName, recipientPhoneNumber } = req.body;
+    const {
+      shippingPostCode,
+      shippingStreetAddress,
+      shippingExtraAddress,
+      recipientName,
+      recipientPhoneNumber,
+    } = req.body;
 
-    if (!shippingAddress || !recipientName || !recipientPhoneNumber) {
+    if (
+      !shippingPostCode ||
+      !shippingStreetAddress ||
+      !shippingExtraAddress ||
+      !recipientName ||
+      !recipientPhoneNumber
+    ) {
       return res.json("입력 데이터 부족");
     }
 
     const updatedOrder = await orderService.editOrder(oid, {
-      shippingAddress,
+      shippingPostCode,
+      shippingStreetAddress,
+      shippingExtraAddress,
       recipientName,
       recipientPhoneNumber,
     });
