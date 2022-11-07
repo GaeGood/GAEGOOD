@@ -42,23 +42,18 @@ class UserService {
   }
 
   async editUser(uid, userInfo) {
-    const { password, name, address } = userInfo;
+    const { password, name, address, phoneNumber, postCode, extraAddress } = userInfo;
     const saltRound = parseInt(process.env.SALT_ROUND) || 10;
-    try {
-      const hashPassword = await bcrypt.hash(password, saltRound);
-      const updatedUser = await userModel.update(uid, {
-        name: name,
-        password: hashPassword,
-        address: address,
-      });
-      return updatedUser;
-    } catch (err) {
-      const error = new Error(
-        " 회원정보 수정 도중 password Hash와 User 수정시도과정에서 에러가 발생하였습니다."
-      );
-      error.statusCode = 400;
-      throw error;
-    }
+    const hashPassword = await bcrypt.hash(password, saltRound);
+    const updatedUser = await userModel.update(uid, {
+      name: name,
+      password: hashPassword,
+      phoneNumber: phoneNumber,
+      postCode: postCode,
+      address: address,
+      extraAddress: extraAddress,
+    });
+    return updatedUser;
   }
 
   async removeUser(uid) {

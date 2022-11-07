@@ -16,15 +16,30 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
+    phoneNumber: {
+      type: String,
+      required: true,
+      default: "입력값이 없습니다",
+    },
     role: {
       type: String,
       required: false,
       default: "basic-user",
     },
+    postCode: {
+      type: String,
+      required: true,
+      default: "입력값이 없습니다",
+    },
     address: {
       type: String,
       required: true,
-      default: "서울특별시 선동구 성수성수2가3동 광나루로6길 49",
+      default: "입력값이 없습니다",
+    },
+    extraAddress: {
+      type: String,
+      required: true,
+      default: "입력값이 없습니다",
     },
   },
   {
