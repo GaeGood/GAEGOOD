@@ -36,8 +36,8 @@ class UserContoller {
     const { userId } = req.params;
     const { password, name, postCode, address, extraAddress, phoneNumber } = req.body;
 
-    if (!password || !name || !phoneNumber || !postCode || !address || !extraAddress ) {
-      return res.json("입력 데이터 부족");
+    if (!password || !name || !address) {
+      return res.status(400).json("입력되지 않은 값이 있습니다!");
     }
     try {
       const updatedUser = await userService.editUser(userId, {
