@@ -37,7 +37,7 @@ let productAmountNum = parseInt(productAmount.textContent);
 /* 상품 상제정보 불러오기*/
 // home에서 클릭한 제품의 상세 내용
 const html = window.location.href;
-const sp = html.split("detail/");
+const sp = html.split("products/");
 const id = sp[1].replace("/", "");
 const idObject = { id: id, amount: productAmountNum };
 fetch(`/api/products/${id}`)
