@@ -50,6 +50,10 @@ function renderOrderContent(order) {
       ></div>
     </div>
     <div class="order-detail__order-content__wrap">
+      <label class="order-detail__order-content__label">총액</label>
+      <div class="order-detail__order-content">${order.totalAmount}</div>
+    </div>
+    <div class="order-detail__order-content__wrap">
       <label class="order-detail__order-content__label">배송 상태</label>
       <div class="order-detail__order-content">${order.shippingStatus}</div>
     </div>
@@ -66,16 +70,16 @@ function renderOrderContent(order) {
       <div class="order-detail__order-content">${order.shippingExtraAddress}</div>
     </div>
     <div class="order-detail__order-content__wrap">
-      <label class="order-detail__order-content__label">총액</label>
-      <div class="order-detail__order-content">${order.totalAmount}</div>
-    </div>
-    <div class="order-detail__order-content__wrap">
       <label class="order-detail__order-content__label">수령인 이름</label>
       <div class="order-detail__order-content">${order.recipientName}</div>
     </div>
     <div class="order-detail__order-content__wrap">
       <label class="order-detail__order-content__label">수령인 연락처</label>
       <div class="order-detail__order-content">${order.recipientPhoneNumber}</div>
+    </div>
+    <div class="order-detail__order-content__wrap">
+      <label class="order-detail__order-content__label">요청사항</label>
+      <div class="order-detail__order-content">${order.shippingRequestMessage}</div>
     </div>`;
 }
 
@@ -105,6 +109,9 @@ function fillOrderEditModalInput(order) {
   document.getElementById(
     "order-edit__modal__input__shipping-extra-address"
   ).value = order.shippingExtraAddress;
+  document.getElementById(
+    "order-edit__modal__input__shipping-request-message"
+  ).value = order.shippingRequestMessage;
   document.getElementById("order-edit__modal__input__recipient-name").value =
     order.recipientName;
   document.getElementById(
@@ -125,6 +132,9 @@ orderEditSumbitBtn.addEventListener("click", (event) => {
   const shippingExtraAddress = document.getElementById(
     "order-edit__modal__input__shipping-extra-address"
   ).value;
+  const shippingRequestMessage = document.getElementById(
+    "order-edit__modal__input__shipping-request-message"
+  ).value;
   const recipientName = document.getElementById(
     "order-edit__modal__input__recipient-name"
   ).value;
@@ -140,6 +150,7 @@ orderEditSumbitBtn.addEventListener("click", (event) => {
       shippingPostCode,
       shippingStreetAddress,
       shippingExtraAddress,
+      shippingRequestMessage,
       recipientName,
       recipientPhoneNumber,
     }),

@@ -10,6 +10,7 @@ class OrderController {
       shippingPostCode,
       shippingStreetAddress,
       shippingExtraAddress,
+      shippingRequestMessage,
       totalAmount,
       recipientName,
       recipientPhoneNumber,
@@ -23,6 +24,7 @@ class OrderController {
       !shippingPostCode ||
       !shippingStreetAddress ||
       !shippingExtraAddress ||
+      !shippingRequestMessage ||
       !totalAmount ||
       !recipientName ||
       !recipientPhoneNumber
@@ -39,6 +41,7 @@ class OrderController {
         shippingPostCode,
         shippingStreetAddress,
         shippingExtraAddress,
+        shippingRequestMessage,
         totalAmount,
         recipientName,
         recipientPhoneNumber,
@@ -78,6 +81,7 @@ class OrderController {
       shippingPostCode,
       shippingStreetAddress,
       shippingExtraAddress,
+      shippingRequestMessage,
       recipientName,
       recipientPhoneNumber,
     } = req.body;
@@ -86,6 +90,7 @@ class OrderController {
       !shippingPostCode ||
       !shippingStreetAddress ||
       !shippingExtraAddress ||
+      !shippingRequestMessage ||
       !recipientName ||
       !recipientPhoneNumber
     ) {
@@ -96,6 +101,7 @@ class OrderController {
       shippingPostCode,
       shippingStreetAddress,
       shippingExtraAddress,
+      shippingRequestMessage,
       recipientName,
       recipientPhoneNumber,
     });
