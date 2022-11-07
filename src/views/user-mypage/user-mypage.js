@@ -6,57 +6,6 @@ const deleteUserBtn = document.querySelector(".user__delete");
 const userInfoChangeBtn = document.querySelector(".userinfo__change")
 const addressChangeBtn = document.querySelector(".address__search");
 
-
-
-function changeAlert() {
-    // 비밀번호를 새로 작성한 경우
-
-     // 주소를 변경했는데, 덜 입력한 경우(상세주소 칸이 비어있을 때)
-
-     // 전화번호 옳은 형식이 아닐때, 비어있을 때 경고
-
-
-    alert("변경이 완료되었습니다.")
-    // 유저 정보 업데이트 하는 코드가 필요. 
-}
-
-userInfoChangeBtn.addEventListener('click',changeAlert)
-
-// let userData;
-// async function insertUserData() {
-//   userData = await Api.get("/api/user");
-
-//   // 객체 destructuring
-//   const { fullName, email, address, phoneNumber } = userData;
-
-//   // 서버에서 온 비밀번호는 해쉬 문자열인데, 이를 빈 문자열로 바꿈
-//   // 나중에 사용자가 비밀번호 변경을 위해 입력했는지 확인하기 위함임.
-//   userData.password = "";
-
-//   securityTitle.innerText = `회원정보 관리 (${email})`;
-//   fullNameInput.value = fullName;
-
-//   if (address) {
-//     const { postalCode, address1, address2 } = address;
-
-//     postalCodeInput.value = postalCode;
-//     address1Input.value = address1;
-//     address2Input.value = address2;
-//   } else {
-//     // 나중에 입력 여부를 확인하기 위해 설정함
-//     userData.address = { postalCode: "", address1: "", address2: "" };
-//   }
-
-//   if (phoneNumber) {
-//     phoneNumberInput.value = phoneNumber;
-//   }
-
-//   // 크롬 자동완성 삭제함.
-//   passwordInput.value = "";
-
-// }
-
-
 // jwt 토큰에서 유저 id decode 하기 
 const token = document.cookie.split("=")[1]
 function parseJwt (token) {
