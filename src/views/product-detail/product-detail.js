@@ -171,12 +171,9 @@ function getAllIndexedDB(DATABASE_NAME, version, objectStore, id) {
       const store = transaction.objectStore(objectStore);
       store.getAll().onsuccess = function (response) {
         const objectDataArray = response.target.result;
-        console.log(`전역에서 데려온 id : ${id}`);
+
         objectDataArray.forEach((data) => {
           if (id === data.id) {
-            console.log(
-              `id : ${id}, data's id : ${data.id}, data's amount : ${data.amount}`
-            );
             productAmount.textContent = data.amount;
           }
         });
@@ -189,10 +186,18 @@ function getAllIndexedDB(DATABASE_NAME, version, objectStore, id) {
   }
 }
 /* 해당 indexedDB에 존재하는 특정 데이터 조회하기 */
-function getIndexedDB(DATABASE_NAME, version, objectStore, idObject) {
+
+function getIndexedDB(
+  DATABASE_NAME,
+  version,
+  objectStore,
+  idObject,
+  operation
+) {
   if (window.indexedDB) {
     const request = indexedDB.open(DATABASE_NAME, version);
     const key = idObject.id;
+    let validate__value = 0;
     request.onerror = function (event) {
       console.log(event.target.errorCode);
       alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
@@ -203,22 +208,47 @@ function getIndexedDB(DATABASE_NAME, version, objectStore, idObject) {
       const store = transaction.objectStore(objectStore);
       store.get(key).onsuccess = function (response) {
         if (response.target.result) {
-          alert("이미 장바구니에 담겨있는 상품입니다.");
+          if (
+            !confirm(
+              "이미 장바구니에 담겨있는 상품입니다.\n장바구니에서 수량을 변경해주세요."
+            )
+          ) {
+            // 취소(아니오) 버튼 클릭 시 이벤트
+            if (operation === "plus") {
+              productAmountNum -= 1;
+              productAmount.textContent = productAmountNum;
+            } else if (operation === "minus") {
+              productAmountNum += 1;
+              productAmount.textContent = productAmountNum;
+            }
+          } else {
+            // 확인(예) 버튼 클릭 시 이벤트
+            if (operation === "plus") {
+              productAmountNum -= 1;
+              productAmount.textContent = productAmountNum;
+            } else if (operation === "minus") {
+              productAmountNum += 1;
+              productAmount.textContent = productAmountNum;
+            }
+          }
+          validate__value += 1;
         }
       };
+
       store.get(key).onerror = function () {
         alert("indexedDB의 key를 가져오는데 실패했습니다.");
       };
     };
+    return validate__value;
   } else {
     alert("해당 브라우저에서는 indexedDB를 지원하지 않습니다.");
   }
 }
 
-function updateIndexedDB(DATABASE_NAME, version, objectStore, idObject) {
+function updateIndexedDB(DATABASE_NAME, version, objectStore, id) {
   if (window.indexedDB) {
     const request = indexedDB.open(DATABASE_NAME, version);
-    const key = idObject[0];
+    const key = id;
     getAllIndexedDB(DATABASE_NAME, version, objectStore, id);
     request.onerror = function (event) {
       console.log(event.target.errorCode);
@@ -227,17 +257,20 @@ function updateIndexedDB(DATABASE_NAME, version, objectStore, idObject) {
     request.onsuccess = function () {
       const db = request.result;
       const transaction = db.transaction(objectStore, "readwrite");
-      transaction.onerror = (e) => console.log("fail");
-      transaction.oncomplete = (e) => console.log("success");
+      transaction.onerror = function (e) {
+        console.log("fail");
+      };
+      transaction.oncomplete = function (e) {
+        console.log("success");
+      };
       const store = transaction.objectStore(objectStore);
+
       store.get(key).onsuccess = function (response) {
         const value = response.target.result;
-        value.content = parseInt(productAmount.textContent);
-        // console.log(
-        //   `value: ${value.id}, value.content : ${value.content} , key: ${key}`
-        // );
+
+        value.amount = parseInt(productAmount.textContent);
         store.put(value).onsuccess = function () {
-          console.log(`value = ${value}, key = ${key}`);
+          //productAmount.textContent = value.amount;
         };
       };
       store.get(key).onerror = function () {
@@ -247,7 +280,7 @@ function updateIndexedDB(DATABASE_NAME, version, objectStore, idObject) {
   }
 }
 
-function getAllKeysIndexedDB(DATABASE_NAME, version, objectStore, cb) {
+function getAllKeysIndexedDB(DATABASE_NAME, version, objectStore) {
   // getAllKeysIndexedDB 함수를 완성해주세요.
   if (window.indexedDB) {
     const request = indexedDB.open(DATABASE_NAME, version);
@@ -261,7 +294,6 @@ function getAllKeysIndexedDB(DATABASE_NAME, version, objectStore, cb) {
       const store = transaction.objectStore(objectStore);
       store.getAllKeys().onsuccess = function (response) {
         // cb(response.target.result);
-        cb(DATABASE_NAME, version, objectStore, response.target.result);
       };
       store.getAllKeys().onerror = function () {
         alert("indexedDB의 key를 가져오는데 실패했습니다.");
@@ -274,17 +306,29 @@ button__cart.addEventListener("click", () => {
   insertIndexedDB(DATABASE_NAME, version, objectStore, idObject, cartCount);
   cartCount += 1;
   if (cartCount > 1) {
-    getIndexedDB(DATABASE_NAME, version, objectStore, idObject);
+    let operation = "none";
+    getIndexedDB(DATABASE_NAME, version, objectStore, idObject, operation);
   }
-  console.log(cartCount);
+  // console.log(cartCount);
 });
 
 /* 상품 수량 +, - 클릭 이벤트*/
+let validation = 0;
 button__plus.addEventListener("click", function plusAmount() {
   productAmountNum += 1;
   productAmount.textContent = productAmountNum;
-  getAllKeysIndexedDB(DATABASE_NAME, version, objectStore, updateIndexedDB);
-  //updateIndexedDB(DATABASE_NAME, version, objectStore, idObject);
+  let plus = "plus";
+  validation = getIndexedDB(
+    DATABASE_NAME,
+    version,
+    objectStore,
+    idObject,
+    plus
+  );
+  console.log(validation);
+  if (validation > 0) {
+    updateIndexedDB(DATABASE_NAME, version, objectStore, id);
+  }
 });
 button__minus.addEventListener("click", function minusAmount() {
   productAmountNum -= 1;
@@ -292,7 +336,18 @@ button__minus.addEventListener("click", function minusAmount() {
     productAmountNum = 1;
   }
   productAmount.textContent = productAmountNum;
-  //updateIndexedDB(DATABASE_NAME, version, objectStore, idObject);
+  let minus = "minus";
+  validation = getIndexedDB(
+    DATABASE_NAME,
+    version,
+    objectStore,
+    idObject,
+    minus
+  );
+  console.log(validation);
+  if (validation > 0) {
+    updateIndexedDB(DATABASE_NAME, version, objectStore, id);
+  }
 });
 /* 장바구니 내용 삭제 버튼 클릭 이벤트 */
 button__remove.addEventListener("click", () => {
