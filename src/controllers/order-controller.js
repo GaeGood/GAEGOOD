@@ -8,7 +8,7 @@ class OrderController {
       countList,
       shippingStatus,
       shippingPostCode,
-      shippingAddress,
+      shippingStreetAddress,
       shippingExtraAddress,
       totalAmount,
       recipientName,
@@ -21,7 +21,7 @@ class OrderController {
       !countList ||
       !shippingStatus ||
       !shippingPostCode ||
-      !shippingAddress ||
+      !shippingStreetAddress ||
       !shippingExtraAddress ||
       !totalAmount ||
       !recipientName ||
@@ -37,7 +37,7 @@ class OrderController {
         countList,
         shippingStatus,
         shippingPostCode,
-        shippingAddress,
+        shippingStreetAddress,
         shippingExtraAddress,
         totalAmount,
         recipientName,
@@ -76,7 +76,7 @@ class OrderController {
     const { oid } = req.params;
     const {
       shippingPostCode,
-      shippingAddress,
+      shippingStreetAddress,
       shippingExtraAddress,
       recipientName,
       recipientPhoneNumber,
@@ -84,7 +84,7 @@ class OrderController {
 
     if (
       !shippingPostCode ||
-      !shippingAddress ||
+      !shippingStreetAddress ||
       !shippingExtraAddress ||
       !recipientName ||
       !recipientPhoneNumber
@@ -94,7 +94,7 @@ class OrderController {
 
     const updatedOrder = await orderService.editOrder(oid, {
       shippingPostCode,
-      shippingAddress,
+      shippingStreetAddress,
       shippingExtraAddress,
       recipientName,
       recipientPhoneNumber,

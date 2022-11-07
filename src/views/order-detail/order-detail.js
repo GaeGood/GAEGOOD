@@ -3,8 +3,6 @@ console.log("hi i'm order-detail.js");
 import { main } from "/main.js";
 const loggedInUser = await main();
 
-const orderDetailWrap = document.getElementById("order-detail__wrap");
-
 const path = window.location.href;
 console.log(path);
 
@@ -61,7 +59,7 @@ function renderOrderContent(order) {
     </div>
     <div class="order-detail__order-content__wrap">
       <label class="order-detail__order-content__label">배송지 도로명주소</label>
-      <div class="order-detail__order-content">${order.shippingAddress}</div>
+      <div class="order-detail__order-content">${order.shippingStreetAddress}</div>
     </div>
     <div class="order-detail__order-content__wrap">
       <label class="order-detail__order-content__label">배송지 상세주소</label>
@@ -101,8 +99,9 @@ function fillOrderEditModalInput(order) {
   document.getElementById(
     "order-edit__modal__input__shipping-post-code"
   ).value = order.shippingPostCode;
-  document.getElementById("order-edit__modal__input__shipping-address").value =
-    order.shippingAddress;
+  document.getElementById(
+    "order-edit__modal__input__shipping-street-address"
+  ).value = order.shippingStreetAddress;
   document.getElementById(
     "order-edit__modal__input__shipping-extra-address"
   ).value = order.shippingExtraAddress;
@@ -120,8 +119,8 @@ orderEditSumbitBtn.addEventListener("click", (event) => {
   const shippingPostCode = document.getElementById(
     "order-edit__modal__input__shipping-post-code"
   ).value;
-  const shippingAddress = document.getElementById(
-    "order-edit__modal__input__shipping-address"
+  const shippingStreetAddress = document.getElementById(
+    "order-edit__modal__input__shipping-street-address"
   ).value;
   const shippingExtraAddress = document.getElementById(
     "order-edit__modal__input__shipping-extra-address"
@@ -139,7 +138,7 @@ orderEditSumbitBtn.addEventListener("click", (event) => {
     },
     body: JSON.stringify({
       shippingPostCode,
-      shippingAddress,
+      shippingStreetAddress,
       shippingExtraAddress,
       recipientName,
       recipientPhoneNumber,

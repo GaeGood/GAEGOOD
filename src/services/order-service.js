@@ -8,7 +8,7 @@ class OrderService {
       countList,
       shippingStatus,
       shippingPostCode,
-      shippingAddress,
+      shippingStreetAddress,
       shippingExtraAddress,
       totalAmount,
       recipientName,
@@ -41,7 +41,7 @@ class OrderService {
   async editOrder(oid, orderInfo) {
     const {
       shippingPostCode,
-      shippingAddress,
+      shippingStreetAddress,
       shippingExtraAddress,
       recipientName,
       recipientPhoneNumber,
