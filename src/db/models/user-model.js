@@ -5,34 +5,69 @@ const User = model("User", UserSchema);
 
 export class UserModel {
   async findByEmail(email) {
-    const user = await User.findOne({ email });
-    return user;
+    try {
+      const user = await User.findOne({ email });
+      return user;
+    } catch (err) {
+      const error = new Error("User 검색 도중 에러가 발생하였습니다.");
+      error.statusCode = 404;
+      throw error;
+    }
   }
 
   async findById(uid) {
-    const user = await User.findOne({ _id: uid });
-    return user;
+    try {
+      const user = await User.findOne({ _id: uid });
+      return user;
+    } catch (err) {
+      const error = new Error("User 검색 도중 에러가 발생하였습니다.");
+      error.statusCode = 404;
+      throw error;
+    }
   }
 
   async create(userInfo) {
-    const createdNewUser = await User.create(userInfo);
-    return createdNewUser;
+    try {
+      const createdNewUser = await User.create(userInfo);
+      return createdNewUser;
+    } catch (err) {
+      const error = new Error("User 생성 도중 에러가 발생하였습니다.");
+      error.statusCode = 404;
+      throw error;
+    }
   }
 
   async findAll() {
-    const users = await User.find({});
-    return users;
+    try {
+      const users = await User.find({});
+      return users;
+    } catch (err) {
+      const error = new Error("User 전체검색 도중 에러가 발생하였습니다.");
+      error.statusCode = 404;
+      throw error;
+    }
   }
 
   async update(userId, userInfo) {
     const filter = { _id: userId };
     const option = { returnOriginal: false };
-    console.log(userInfo);
-    const updatedUser = await User.findOneAndUpdate(filter, userInfo, option);
-    return updatedUser;
+    try {
+      const updatedUser = await User.findOneAndUpdate(filter, userInfo, option);
+      return updatedUser;
+    } catch (err) {
+      const error = new Error("User 수정 도중 에러가 발생하였습니다.");
+      error.statusCode = 404;
+      throw error;
+    }
   }
   async delete(uid) {
-    await User.deleteOne({ _id: uid });
+    try {
+      await User.deleteOne({ _id: uid });
+    } catch (err) {
+      const error = new Error("User 삭제 도중 에러가 발생하였습니다.");
+      error.statusCode = 404;
+      throw error;
+    }
   }
 }
 
