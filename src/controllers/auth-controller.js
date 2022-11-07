@@ -21,7 +21,6 @@ class AuthController {
     } catch (e) {
       next(e);
     }
-    next();
   }
 
   async logoutUser(req, res, next) {
@@ -32,7 +31,6 @@ class AuthController {
     } catch (err) {
       next(err);
     }
-    next();
   }
 
   async verifyToken(req, res, next) {
@@ -50,7 +48,6 @@ class AuthController {
     } catch (err) {
       next(err);
     }
-    next();
   }
 }
 

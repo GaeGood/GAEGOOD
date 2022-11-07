@@ -3,14 +3,11 @@ import { userService } from "../services";
 class UserContoller {
   async addUser(req, res, next) {
     const { email, password, name, address } = req.body;
+
     if (!email || !password || !name || !address) {
-      return res.json({
-        resCode: "404",
-        resMsg: {
-          msg: "입력되지 않은 값이 있습니다!",
-        },
-      });
+      return res.status(400).json("입력되지 않은 값이 있습니다!");
     }
+
     try {
       const result = await userService.addUser({
         name,
@@ -19,11 +16,10 @@ class UserContoller {
         role: "basic-user",
         address,
       });
-      return res.json(result);
+      return res.status(200).json(result); // case1
     } catch (err) {
       next(err);
     }
-    next();
   }
 
   async getUser(req, res, next) {
