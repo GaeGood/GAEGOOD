@@ -39,23 +39,51 @@ let productAmountNum = parseInt(productAmount.textContent);
 const html = window.location.href;
 const sp = html.split("products/");
 const id = sp[1].replace("/", "");
-const idObject = { id: id, amount: productAmountNum };
+let nameValue = "";
+let categoryValue = "";
+let shortDescValue = "";
+let longDescValue = "";
+let priceValue = 0;
+let smallImageURLValue = "";
+let bigImageURLValue = "";
+let stockValue = 10;
+const idObject = {
+  id: id,
+  amount: productAmountNum,
+  name: nameValue,
+  category: categoryValue,
+  shortDesc: shortDescValue,
+  longDesc: longDescValue,
+  price: priceValue,
+  smallImageURL: smallImageURLValue,
+  bigImageURL: bigImageURLValue,
+  stock: stockValue,
+};
 fetch(`/api/products/${id}`)
   .then((res) => res.json())
   .then((product) => {
     addproduct(product);
+    insertIndexedDB(DATABASE_NAME, version, objectStore, idObject, product);
   })
   .catch((err) => alert(err.message));
 
 // home에서 클릭한 제품의 상세 내용 html에 렌더링하는 함수
 function addproduct(product) {
-  productCategory.innerHTML = product.category;
+  productCategory.innerHTML = product.category.name;
   productName.innerHTML = product.name;
   productImg.src = product.smallImageURL;
 
   productDescription.innerHTML = product.shortDesc;
   productPrice.innerHTML = product.price;
-  getAllIndexedDB(DATABASE_NAME, version, objectStore, id); //장바구니에 수량이 이미 있는경우 indexedDB에서 조회, 렌더링함
+  getAllIndexedDB(DATABASE_NAME, version, objectStore, id, function (result) {
+    result.forEach((data) => {
+      if (id === data.id) {
+        productAmount.textContent = data.amount;
+      }
+    });
+
+    productAmountNum = parseInt(productAmount.textContent);
+  }); //장바구니에 수량이 이미 있는경우 indexedDB에서 조회, 렌더링함
 }
 
 /*indexedDB 함수*/
@@ -88,26 +116,6 @@ function createIndexedDB(DATABASE_NAME, version, objectStore) {
   }
 }
 
-//잘못 생성된 indexedDB를 삭제하는 함수, 데이터베이스 자체를 삭제하므로 주의 요망.
-function deleteIndexedDB() {
-  //매개변수로 DATABASE_NAME를 줄 수 있음.
-  if (window.indexedDB) {
-    const request = indexedDB.deleteDatabase("undefined"); // DATABASE_NAME를 줄 수 있음.
-    const db = request.result;
-    db.close();
-    request.onsuccess = function () {
-      alert("Deleted database successfully");
-    };
-    request.onerror = function () {
-      alert("Error : Couldn't delete database");
-    };
-    request.onblocked = function () {
-      alert("Couldn't delete database due to the operation being blocked");
-    };
-  } else {
-    alert("해당 브라우저에서는 indexedDB를 지원하지 않습니다.");
-  }
-}
 /* indexedDB에 추가한 데이터 삭제하는 함수(기준: key) */
 function deleteIndexedDBdata(DATABASE_NAME, version, objectStore, idObject) {
   if (window.indexedDB) {
@@ -134,7 +142,7 @@ function insertIndexedDB(
   version,
   objectStore,
   idObject,
-  cartCount
+  product
 ) {
   if (window.indexedDB) {
     const request = indexedDB.open(DATABASE_NAME, version);
@@ -148,17 +156,22 @@ function insertIndexedDB(
       const store = transaction.objectStore(objectStore);
       // 상품 수량 담기 (최초)
       idObject.amount = parseInt(productAmount.textContent);
+      idObject.name = product.name;
+      idObject.category = product.category;
+      idObject.shortDesc = product.shortDesc;
+      idObject.longDesc = product.longDesc;
+      idObject.price = product.price;
+      idObject.smallImageURL = product.smallImageURL;
+      idObject.bigImageURL = product.bigImageURL;
+      idObject.stock = product.stock;
       store.add(idObject);
-      if (response.target.result && cartCount === 0) {
-        alert("상품을 장바구니에 담았습니다.");
-      }
     };
   } else {
     alert("해당 브라우저에서는 indexedDB를 지원하지 않습니다.");
   }
 }
 /* 해당 indexedDB에 존재하는 모든 데이터 조회하기 */
-function getAllIndexedDB(DATABASE_NAME, version, objectStore, id) {
+function getAllIndexedDB(DATABASE_NAME, version, objectStore, id, cb) {
   if (window.indexedDB) {
     const request = indexedDB.open(DATABASE_NAME, version);
     request.onerror = function (event) {
@@ -170,15 +183,7 @@ function getAllIndexedDB(DATABASE_NAME, version, objectStore, id) {
       const transaction = db.transaction(objectStore, "readonly");
       const store = transaction.objectStore(objectStore);
       store.getAll().onsuccess = function (response) {
-        const objectDataArray = response.target.result;
-
-        objectDataArray.forEach((data) => {
-          if (id === data.id) {
-            productAmount.textContent = data.amount;
-          }
-        });
-
-        productAmountNum = parseInt(productAmount.textContent);
+        cb(response.target.result);
       };
     };
   } else {
@@ -249,7 +254,15 @@ function updateIndexedDB(DATABASE_NAME, version, objectStore, id) {
   if (window.indexedDB) {
     const request = indexedDB.open(DATABASE_NAME, version);
     const key = id;
-    getAllIndexedDB(DATABASE_NAME, version, objectStore, id);
+    getAllIndexedDB(DATABASE_NAME, version, objectStore, id, function (result) {
+      result.forEach((data) => {
+        if (id === data.id) {
+          productAmount.textContent = data.amount;
+        }
+      });
+
+      productAmountNum = parseInt(productAmount.textContent);
+    });
     request.onerror = function (event) {
       console.log(event.target.errorCode);
       alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
@@ -303,7 +316,18 @@ function getAllKeysIndexedDB(DATABASE_NAME, version, objectStore) {
 }
 /* 장바구니 버튼 클릭 이벤트 */
 button__cart.addEventListener("click", () => {
+  getAllIndexedDB(DATABASE_NAME, version, objectStore, id, function (result) {
+    if (result) {
+      cartCount += 1;
+      return cartCount;
+    }
+  });
+
+  console.log(`cartCount : ${cartCount}`);
   insertIndexedDB(DATABASE_NAME, version, objectStore, idObject, cartCount);
+  if (cartCount === 0) {
+    alert("상품을 장바구니에 담았습니다.");
+  }
   cartCount += 1;
   if (cartCount > 1) {
     let operation = "none";
@@ -352,9 +376,5 @@ button__minus.addEventListener("click", function minusAmount() {
 /* 장바구니 내용 삭제 버튼 클릭 이벤트 */
 button__remove.addEventListener("click", () => {
   deleteIndexedDBdata(DATABASE_NAME, version, objectStore, idObject);
-});
-
-/* indexedDB 삭제 버튼 클릭 이벤트 */
-button__delete.addEventListener("click", () => {
-  deleteIndexedDB;
+  alert("상품을 장바구니에서 삭제했습니다.");
 });
