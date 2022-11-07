@@ -1,7 +1,7 @@
 import { orderService } from "../services";
 
 class OrderController {
-  async addOrder(req, res) {
+  async addOrder(req, res, next) {
     const {
       buyer,
       productList,
@@ -26,18 +26,21 @@ class OrderController {
       return res.json("입력 데이터 부족");
     }
 
-    const createdNewOrder = await orderService.addOrder({
-      buyer,
-      productList,
-      countList,
-      shippingStatus,
-      shippingAddress,
-      totalAmount,
-      recipientName,
-      recipientPhoneNumber,
-    });
-
-    return res.json(createdNewOrder);
+    try {
+      const createdNewOrder = await orderService.addOrder({
+        buyer,
+        productList,
+        countList,
+        shippingStatus,
+        shippingAddress,
+        totalAmount,
+        recipientName,
+        recipientPhoneNumber,
+      });
+      return res.status(200).json(createdNewOrder);
+    } catch (e) {
+      next(e);
+    }
   }
 
   async getOrderList(req, res) {
