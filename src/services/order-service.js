@@ -13,6 +13,18 @@ class OrderService {
       recipientPhoneNumber,
     } = orderInfo;
 
+    if (productList.length !== countList.length) {
+      const error = new Error("상품의 갯수와 수량의 갯수가 다릅니다.");
+      error.statusCode = 400;
+      throw error;
+    }
+
+    if (totalAmount < 0) {
+      const error = new Error("가격이 올바르지 않습니다.");
+      error.statusCode = 401;
+      throw error;
+    }
+
     const createdNewOrder = await orderModel.create(orderInfo);
     return createdNewOrder;
   }

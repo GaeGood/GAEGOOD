@@ -56,11 +56,19 @@ class OrderController {
     }
   }
 
-  async getOrder(req, res) {
+  async getOrder(req, res, next) {
     const { oid } = req.params;
 
-    const order = await orderService.getOrderById(oid);
-    res.json(order);
+    if (!oid) {
+      return res.status(400).json("입력 값이 부족합니다.");
+    }
+
+    try {
+      const order = await orderService.getOrderById(oid);
+      return res.status(200).json(order);
+    } catch (e) {
+      next(e);
+    }
   }
 
   async editOrder(req, res) {

@@ -35,9 +35,17 @@ class OrderModel {
   }
 
   async create(orderInfo) {
-    let createdNewOrder = await Order.create(orderInfo);
+    try {
+      let createdNewOrder = await Order.create(orderInfo);
+    } catch (e) {
+      e.message = "상품 생성 실패 DB 오류";
+      e.statusCode = 403;
+      throw e;
+    }
+
     createdNewOrder = await createdNewOrder.populate("buyer");
     createdNewOrder = await createdNewOrder.populate("productList");
+
     return createdNewOrder;
   }
 
