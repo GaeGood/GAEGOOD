@@ -192,3 +192,51 @@ orderDeleteBtn.addEventListener("click", (e) => {
 // 주소 검색 기능
 
 const addressSearchBtn = document.querySelector(".address__search");
+console.log("addressSearchBtn");
+console.log(addressSearchBtn);
+
+function searchAddress(e) {
+  e.preventDefault();
+
+  new daum.Postcode({
+    oncomplete: function (data) {
+      let addr = "";
+      let extraAddr = "";
+
+      if (data.userSelectedType === "R") {
+        addr = data.roadAddress;
+      } else {
+        addr = data.jibunAddress;
+      }
+
+      if (data.userSelectedType === "R") {
+        if (data.bname !== "" && /[동|로|가]$/g.test(data.bname)) {
+          extraAddr += data.bname;
+        }
+        if (data.buildingName !== "" && data.apartment === "Y") {
+          extraAddr +=
+            extraAddr !== "" ? ", " + data.buildingName : data.buildingName;
+        }
+        if (extraAddr !== "") {
+          extraAddr = " (" + extraAddr + ")";
+        }
+      } else {
+      }
+
+      const shippingPostCode = document.getElementById(
+        "order-edit__modal__input__shipping-post-code"
+      );
+      const shippingStreetAddress = document.getElementById(
+        "order-edit__modal__input__shipping-street-address"
+      );
+      const shippingExtraAddress = document.getElementById(
+        "order-edit__modal__input__shipping-extra-address"
+      );
+      shippingPostCode.value = `${data.zonecode}`;
+      shippingStreetAddress.value = `${addr} ${extraAddr}`;
+      shippingExtraAddress.focus();
+    },
+  }).open();
+}
+
+addressSearchBtn.addEventListener("click", searchAddress);
