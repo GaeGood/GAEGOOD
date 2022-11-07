@@ -91,7 +91,6 @@ const userInfoChangeBtn = document.querySelector(".userinfo__change")
 const addressChangeBtn = document.querySelector(".address__search");
 
 
-
 // 유저 불러오기
 let { address, extraAddress, postCode, createdAt, email, name, password, role, _id, phoneNumber } = loggedInUser
 
@@ -103,15 +102,15 @@ userAddressOne.value = address;
 userExtraAddress.value = extraAddress;
 
 // 주소와 핸드폰번호가 없을 경우 빈칸으로 만들기
-// if(userPostCode.value == "undefined" || userAddressOne.value == "undefined"){
-//   userPostCode.value = ""
-//   userAddressOne.value = ""
-//   userExtraAddress.value = ""
-// }
+if(userPostCode.value == "undefined" || userAddressOne.value == "undefined"){
+  userPostCode.value = ""
+  userAddressOne.value = ""
+  userExtraAddress.value = ""
+}
 
-// if(userPhoneNumber.value == "undefined"){
-//   userPhoneNumber.value = ""
-// }
+if(userPhoneNumber.value == "undefined"){
+  userPhoneNumber.value = ""
+}
 
 const userId = parseJwt(token)
 
@@ -186,7 +185,9 @@ function saveUserData(e) {
       } else if (userPassWordOne.value === userPassWordTwo.value) {
         password = userPassWordOne.value;
       }
-    } 
+    } else {
+      return alert('비밀번호를 입력해주세요.')
+    }
 
     // 주소를 변경했는데, 덜 입력한 경우(상세주소 칸이 비어있을 때)
     if ((userAddressOne.value === "") || (userExtraAddress.value === "")) {
@@ -253,31 +254,21 @@ function saveUserData(e) {
 userInfoChangeBtn.addEventListener('click', saveUserData)
 
 
-
 // 회원탈퇴 기능 
 
-async function deleteUser(){
- 
-	const answer = confirm("회원 탈퇴 하시겠습니까? \n 진심이십니까?");
-
-		if(answer === true){
-			
-				try {
-          // jwt 토큰 날리고 (로그아웃 방법이랑 비슷?)
-
-
-          // db에서 회원정보 삭제
-
-
-					// 삭제 성공하면 alert뜨고 메인 홈페이지로 이동
-					alert("회원 정보가 삭제되었습니다.");
-          window.location.href = "/";
-
-				} catch (err) {
-					alert(`회원정보 삭제 과정에서 오류가 발생하였습니다: ${err}`);
-			
-				}
-		}
+function deleteUser(){
+	const answer = confirm("회원 탈퇴 하시겠습니까? \n탈퇴즉시 정보가 삭제됩니다.");
+	  if(answer === true){
+      fetch(`/api/users/${_id}`,{
+      method:"DELETE"
+      })
+      .then(response=>response.json())
+      .then(data=>{
+        alert("회원 정보가 삭제되었습니다.")
+        window.location.href = "/"
+      })
+      .catch( err => alert(`회원정보 삭제 과정에서 오류가 발생하였습니다: ${err}`));
+    }
 }
 
 deleteUserBtn.addEventListener('click', deleteUser);

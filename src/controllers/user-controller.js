@@ -61,6 +61,7 @@ class UserContoller {
 
     try {
       await userService.removeUser(userId);
+      res.clearCookie("jwt_token");
       res.json(`유저 삭제 완료(ID : ${userId})`);
     } catch (e) {
       next(e);
