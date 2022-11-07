@@ -65,12 +65,19 @@ a {
 }
 
 .main-contents {
-    display: flex;
+  display: flex;
 }
 
-.delivery__infomation{
-    display: flex;
+.delivery__infomation {
+  display: flex;
 }
+
+.order.product__picture {
+  width: 100px;
+  height: 100px;
+}
+
+
 
 /*footer*/
 

@@ -11,21 +11,77 @@ const DATABASE_NAME = "cartDB";
 const version = 1;
 const objectStore = "cartStorage";
 
+const { name, phoneNumber, postCode, address, extraAddress, _id } = loggedInUser
+const [ userName, userPhoneNumber, userPostCode, userAddress, userExterAddress, userRequestMessage ] = document.querySelectorAll('.user')
 
+console.log(name, phoneNumber, postCode, address, extraAddress, _id)
 
+userName.value = name
+userPhoneNumber.value = phoneNumber
+userPostCode.value = postCode
+userAddress.value = address
+userExterAddress.value = extraAddress
 
-const test = await getAllKeysIndexedDB(DATABASE_NAME, version, objectStore, function(result) {return result})
-
-// 해당 indexedDB에 존재하는 모든 데이터 조회하기(Value값들을 조회)
-// await getAllIndexedDB(DATABASE_NAME, version, objectStore)
-//..
-// 모든 Key 조회
-// await getAllKeysIndexedDB(DATABASE_NAME, version, objectStore);
-
-// console.log(test)
 
 // 장바구니 정보 가져오기
+const orderProductTable = document.querySelector('.order.product__list')
+const [ orderProductId, orderProductPicture, orderProductInfo, orderdeliveryFee, orderProductAmount, orderProductPrice ] = document.querySelectorAll('.order')
 
+await getAllIndexedDB(DATABASE_NAME, version, objectStore, 
+  function(orderProductList) {
+    orderProductList.forEach((orderProduct) => { // orderProduct.id, orderProduct.amount
+
+      fetch(`/api/products/${orderProduct.id}`)
+      .then((res) => {
+        return res.json();
+      })
+      .then((productList) => {
+      orderProductTable.innerHTML += `
+            <tr>
+              <td>
+                  <span class="order product__id hidden">${orderProduct.id}</span>
+              </td>
+              <td>
+                  <img src="${productList.smallImageURL}" class="order product__picture" />
+              </td>
+              <td>
+                  <span class="order product__info">
+                    <div>${productList.name}</div>
+                    <div>${productList.shortDesc}</div>
+                  </span>
+              </td>
+              <td>
+                  <span class="order deliveryFee">배송비</span>
+              </td>
+              <td>
+                  <span class="order product__amount">${orderProduct.amount}</span>
+              </td>
+              <td>
+                  <span class="order product__price">${productList.price}</span>
+              </td>
+            </tr>  
+            `
+        })
+      .catch((err) => alert('상품 불러오는데 에러가 났습니다'));
+
+
+/*
+bigImageURL: "/public/images/product-images/자유형-개발자-스티커.png"
+category: {_id: '63654e94faa3aa6363ad18b3', name: '스티커/지류', createdAt: '2022-11-04T17:40:36.745Z', updatedAt: '2022-11-04T17:40:36.745Z', __v: 0}
+createdAt: "2022-11-04T17:41:53.130Z"
+longDesc: "스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. "
+name: "스티커/지류"
+price: 15000
+shortDesc: "스티커/지류 짧은 설명입니다."
+smallImageURL: "/public/images/product-images/말풍선-개발자-스티커.png"
+stock: 10
+updatedAt: "2022-11-04T17:41:53.130Z"
+__v: 0
+_id: "63654ee1faa3aa6363ad18bf"
+*/
+
+    })
+  })
 
 
 
@@ -47,16 +103,6 @@ __v: 0
 _id: "6367c9c386545678e88c4bbf"
 
 */
-const { name, phoneNumber, postCode, address, extraAddress, _id } = loggedInUser
-const [ userName, userPhoneNumber, userPostCode, userAddress, userExterAddress, userRequestMessage ] = document.querySelectorAll('.user')
-
-console.log(name, phoneNumber, postCode, address, extraAddress, _id)
-
-userName.value = name
-userPhoneNumber.value = phoneNumber
-userPostCode.value = postCode
-userAddress.value = address
-userExterAddress.value = extraAddress
 
 
 
@@ -143,22 +189,22 @@ addressSearchBtn.addEventListener('click', searchAddress);
 //       console.log(test)
 
 
-const shippingInformationList = 
-  {
-    "buyer":`${_id}`,
-    "productList":`${test}`,
-    "countList":["1", "3", "2"],
-    "shippingStatus":"배송전",
-    "shippingPostCode":`${userPostCode.value}`,
-    "shippingAddress":`${userAddress.value}`,
-    "shippingExtraAddress":`${userExterAddress.value}`,
-    "shippingRequestMessage": `${userRequestMessage.value}`,
-    "totalAmount": "총 금액",
-    "recipientName":`${userName.value}`,
-    "recipientPhoneNumber":`${userPhoneNumber.value}`
-      }
+// const shippingInformationList = 
+//   {
+//     "buyer":`${_id}`,
+//     "productList":`${test}`,
+//     "countList":["1", "3", "2"],
+//     "shippingStatus":"배송전",
+//     "shippingPostCode":`${userPostCode.value}`,
+//     "shippingAddress":`${userAddress.value}`,
+//     "shippingExtraAddress":`${userExterAddress.value}`,
+//     "shippingRequestMessage": `${userRequestMessage.value}`,
+//     "totalAmount": "총 금액",
+//     "recipientName":`${userName.value}`,
+//     "recipientPhoneNumber":`${userPhoneNumber.value}`
+//       }
 
-      console.log(shippingInformationList)
+//       console.log(shippingInformationList)
 
 // post시 빈칸 있으면 return alert 진행
 // 결제 완료 된다음에 indexedDB에서 값 지울건지도 상의해봐야겠네(즉 장바구니를 비울지?)

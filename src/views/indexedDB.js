@@ -1,7 +1,3 @@
-// const DATABASE_NAME = "cartDB";
-// const version = 1;
-// const objectStore = "cartStorage";
-
 //잘못 생성된 indexedDB를 삭제하는 함수, 데이터베이스 자체를 삭제하므로 주의 요망.
 // function deleteIndexedDB() {
 //   //매개변수로 DATABASE_NAME를 줄 수 있음.
@@ -49,7 +45,7 @@ async function deleteIndexedDBdata(
 }
 
 /* 해당 indexedDB에 존재하는 모든 데이터 조회하기 */
-async function getAllIndexedDB(DATABASE_NAME, version, objectStore) {
+async function getAllIndexedDB(DATABASE_NAME, version, objectStore, cb) {
   if (window.indexedDB) {
     const request = indexedDB.open(DATABASE_NAME, version);
     request.onerror = function (event) {
@@ -61,13 +57,14 @@ async function getAllIndexedDB(DATABASE_NAME, version, objectStore) {
       const transaction = db.transaction(objectStore, "readonly");
       const store = transaction.objectStore(objectStore);
       store.getAll().onsuccess = function (response) {
-        console.log(response.target.result);
+        cb(response.target.result);
       };
     };
   } else {
     alert("해당 브라우저에서는 indexedDB를 지원하지 않습니다.");
   }
 }
+
 
 /* 해당 indexedDB에 존재하는 특정 데이터 조회하기 */
 async function getIndexedDB(DATABASE_NAME, version, objectStore, idObject) {
@@ -110,7 +107,7 @@ async function getAllKeysIndexedDB(DATABASE_NAME, version, objectStore, cb) {
       const transaction = db.transaction(objectStore, "readwrite");
       const store = transaction.objectStore(objectStore);
       store.getAllKeys().onsuccess = function (response) {
-        cb(response.target.result);
+        cb(response.target.result)
       };
       store.getAllKeys().onerror = function () {
         alert("indexedDB의 key를 가져오는데 실패했습니다.");
