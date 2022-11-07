@@ -7,7 +7,10 @@ class OrderService {
       productList,
       countList,
       shippingStatus,
-      shippingAddress,
+      shippingPostCode,
+      shippingStreetAddress,
+      shippingExtraAddress,
+      shippingRequestMessage,
       totalAmount,
       recipientName,
       recipientPhoneNumber,
@@ -37,7 +40,14 @@ class OrderService {
   }
 
   async editOrder(oid, orderInfo) {
-    const { shippingAddress, recipientName, recipientPhoneNumber } = orderInfo;
+    const {
+      shippingPostCode,
+      shippingStreetAddress,
+      shippingExtraAddress,
+      shippingRequestMessage,
+      recipientName,
+      recipientPhoneNumber,
+    } = orderInfo;
 
     const updatedNewOrder = await orderModel.update(oid, orderInfo);
     return updatedNewOrder;
