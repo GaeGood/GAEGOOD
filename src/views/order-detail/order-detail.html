@@ -31,18 +31,95 @@
     <title>Document</title>
   </head>
   <body>
-    <span>HI IM ORDER DETAIL</span>
+    <!-- 주문 상세 -->
     <div id="order-detail__wrap"></div>
+
+    <!-- 주문 수정 / 삭제 옵션 -->
     <div id="order__options__wrap">
-      <a class="order__options__option" id="order__options__option__edit-btn">
+      <button data-bs-toggle="modal" data-bs-target="#order-edit__modal">
         수정하기
-      </a>
+      </button>
       <button
         class="order__options__option"
         id="order__options__option__delete-btn"
       >
         삭제하기
       </button>
+    </div>
+
+    <!-- 주문 수정 모달 -->
+    <div
+      class="modal fade"
+      id="order-edit__modal"
+      tabindex="-1"
+      aria-labelledby="order-edit__modal__label"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="order-edit__modal__label">
+              주문 수정
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form
+              action=""
+              method=""
+              class="order-edit__modal__shipping-address"
+            >
+              <div class="mb-3">
+                <label for="" class="form-label">배송 주소</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="order-edit__modal__input__shipping-address"
+                  placeholder=""
+                />
+              </div>
+              <div class="mb-3">
+                <label for="" class="form-label">수령인 이름</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="order-edit__modal__input__recipient-name"
+                  placeholder=""
+                />
+              </div>
+              <div class="mb-3">
+                <label for="" class="form-label">수령인 연락처</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="order-edit__modal__input__recipient-phone-number"
+                  placeholder=""
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              닫기
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary order-edit__submit-btn"
+            >
+              확인
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>

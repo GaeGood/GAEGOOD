@@ -24,53 +24,57 @@ fetch(`/api/orders/${oid}`)
     console.log(order);
 
     const orderDetailWrap = document.getElementById("order-detail__wrap");
-
-    orderDetailWrap.innerHTML += `
-        <div class="order-detail__order-content__wrap">
-          <label class="order-detail__order-content__label">구매자</label>
-          <div class="order-detail__order-content">${order.buyer.name}</div>
-        </div>
-        <div class="order-detail__order-content__wrap">
-          <label class="order-detail__order-content__label">구매 상품</label>
-          <div
-            class="order-detail__order-content"
-            id="order-detail__order-content__product-info"
-          ></div>
-        </div>
-        <div class="order-detail__order-content__wrap">
-          <label class="order-detail__order-content__label">배송 상태</label>
-          <div class="order-detail__order-content">${order.shippingStatus}</div>
-        </div>
-        <div class="order-detail__order-content__wrap">
-          <label class="order-detail__order-content__label">배송 주소</label>
-          <div class="order-detail__order-content">${order.shippingAddress}</div>
-        </div>
-        <div class="order-detail__order-content__wrap">
-          <label class="order-detail__order-content__label">총액</label>
-          <div class="order-detail__order-content">${order.totalAmount}</div>
-        </div>
-        <div class="order-detail__order-content__wrap">
-          <label class="order-detail__order-content__label">수령인 이름</label>
-          <div class="order-detail__order-content">${order.recipientName}</div>
-        </div>
-        <div class="order-detail__order-content__wrap">
-          <label class="order-detail__order-content__label">수령인 연락처</label>
-          <div class="order-detail__order-content">${order.recipientPhoneNumber}</div>
-        </div>`;
+    orderDetailWrap.innerHTML += renderOrderContent(order);
 
     const productInfo = document.getElementById(
       "order-detail__order-content__product-info"
     );
-
     renderOrderProduct(order, productInfo);
+
+    fillOrderEditModalInput(order);
   })
   .then((error) => {
     alert(error);
   });
 
+// order-content 렌더
+function renderOrderContent(order) {
+  return `
+    <div class="order-detail__order-content__wrap">
+      <label class="order-detail__order-content__label">구매자</label>
+      <div class="order-detail__order-content">${order.buyer.name}</div>
+    </div>
+    <div class="order-detail__order-content__wrap">
+      <label class="order-detail__order-content__label">구매 상품</label>
+      <div
+        class="order-detail__order-content"
+        id="order-detail__order-content__product-info"
+      ></div>
+    </div>
+    <div class="order-detail__order-content__wrap">
+      <label class="order-detail__order-content__label">배송 상태</label>
+      <div class="order-detail__order-content">${order.shippingStatus}</div>
+    </div>
+    <div class="order-detail__order-content__wrap">
+      <label class="order-detail__order-content__label">배송 주소</label>
+      <div class="order-detail__order-content">${order.shippingAddress}</div>
+    </div>
+    <div class="order-detail__order-content__wrap">
+      <label class="order-detail__order-content__label">총액</label>
+      <div class="order-detail__order-content">${order.totalAmount}</div>
+    </div>
+    <div class="order-detail__order-content__wrap">
+      <label class="order-detail__order-content__label">수령인 이름</label>
+      <div class="order-detail__order-content">${order.recipientName}</div>
+    </div>
+    <div class="order-detail__order-content__wrap">
+      <label class="order-detail__order-content__label">수령인 연락처</label>
+      <div class="order-detail__order-content">${order.recipientPhoneNumber}</div>
+    </div>`;
+}
+
+// order-content 중 product-info 렌더
 function renderOrderProduct(order, productInfo) {
-  console.log(order);
-  console.log(productInfo);
   for (let i = 0; i < order.productList.length; i++) {
     const productItem = document.createElement("div");
     productItem.classList.add(
@@ -82,12 +86,73 @@ function renderOrderProduct(order, productInfo) {
   }
 }
 
-const orderEditBtn = document.getElementById(
-  "order__options__option__edit-btn"
-);
+// 주문 수정 기능
 
-orderEditBtn.setAttribute("href", `/orders/${oid}/edit`);
+// 주문 수정 모달 창의 기본 값 채우기
+function fillOrderEditModalInput(order) {
+  document.getElementById("order-edit__modal__input__shipping-address").value =
+    order.shippingAddress;
+  document.getElementById("order-edit__modal__input__recipient-name").value =
+    order.recipientName;
+  document.getElementById(
+    "order-edit__modal__input__recipient-phone-number"
+  ).value = order.recipientPhoneNumber;
+}
 
+// 주문 수정 모달 창의 확인 버튼 클릭 시 주문 수정이 이루어짐
+const orderEditSumbitBtn = document.querySelector(".order-edit__submit-btn");
+
+orderEditSumbitBtn.addEventListener("click", (event) => {
+  const shippingAddress = document.getElementById(
+    "order-edit__modal__input__shipping-address"
+  ).value;
+  const recipientName = document.getElementById(
+    "order-edit__modal__input__recipient-name"
+  ).value;
+  const recipientPhoneNumber = document.getElementById(
+    "order-edit__modal__input__recipient-phone-number"
+  ).value;
+  fetch(`/api/orders/${oid}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      shippingAddress,
+      recipientName,
+      recipientPhoneNumber,
+    }),
+  })
+    .then((res) => {
+      const json = res.json();
+      if (res.ok) {
+        return json;
+      }
+      return Promise.reject(json);
+    })
+    .then((order) => {
+      // 수정된 Order 정보로 새로 그려주기
+      const orderDetailWrap = document.getElementById("order-detail__wrap");
+      orderDetailWrap.innerHTML = "";
+      orderDetailWrap.innerHTML += renderOrderContent(order);
+
+      const productInfo = document.getElementById(
+        "order-detail__order-content__product-info"
+      );
+      renderOrderProduct(order, productInfo);
+
+      //모달창이 닫히는 기능
+      document.getElementsByTagName("body")[0].className = "";
+      document.getElementsByTagName("body")[0].style = "none";
+      document.querySelector("#order-edit__modal").style = "display: none";
+      document.querySelector(".modal-backdrop").remove();
+    })
+    .catch((error) => {
+      alert(error);
+    });
+});
+
+// 주문 삭제 기능
 const orderDeleteBtn = document.getElementById(
   "order__options__option__delete-btn"
 );
@@ -99,6 +164,6 @@ orderDeleteBtn.addEventListener("click", (e) => {
   })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
+      alert("주문 삭제 완료");
     });
 });
