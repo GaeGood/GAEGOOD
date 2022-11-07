@@ -7,6 +7,7 @@ import { verifyToken } from "/verify-token.js";
 const verifyResult = await verifyToken();
 
 const { loggedInUser } = verifyResult;
+
 console.log("-------------------- 토큰 검증 종료 -------------------------");
 
 const navAddLogin = document.querySelector(".navbar-nav");
@@ -87,53 +88,37 @@ const [userEmail,
 
 const deleteUserBtn = document.querySelector(".user__delete");
 const userInfoChangeBtn = document.querySelector(".userinfo__change")
-const addressChangeBtn = document.querySelector(".address__search");
+const addressSearchBtn = document.querySelector(".address__search");
 
-// jwt 토큰에서 유저 id decode 하기 
-const token = document.cookie.split("=")[1]
-function parseJwt (token) {
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = JSON.parse(decodeURIComponent(window.atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join('')));
+/*
+loggedInUse = 
 
-  
-    return jsonPayload.id;
+address: "서울특별시"
+createdAt: "2022-11-05T12:23:10.518Z"
+email: "sian@naver.com"
+name: "샨"
+password: "$2b$10$x7nnorLdSpTJLmrq7l5cN.oz3sEh/GrbaTn6Z9r4TcOv97UR5vZJe"
+role: "basic-user"
+updatedAt: "2022-11-05T12:23:10.518Z"
+__v: 0
+_id: "636655ae94dfaf7ebaac2c02"
+*/
+
+// 유저 불러오기
+let { addressOne, addressTwo, postCode, createdAt, email, name, password, role, updatedAt, __v, _id, phoneNumber } = loggedInUser
+
+userEmail.innerHTML = email;
+userName.innerHTML = name;
+userPhoneNumber.value = phoneNumber;
+userPostCode.value = postCode;
+userAddressOne.value = addressOne;
+userAddressTwo.value = addressTwo;
+
+if((userAddressOne.value == "undefined")){
+  userPostCode.value = ""
+  userAddressOne.value = ""
+  userAddressTwo.value = ""
 }
-
-const userId = parseJwt(token)
-
-// test userId = 6363ee2874a45025f7c7bd89
-
-const userList = fetch(`/api/users/${userId}`, {
-  method: "GET"
-  })
-  .then((res) => {
-    return res.json();
-  })
-  .then((userData) => {
-   return userData
-  });
-
-
-
-// 유저 받아오기
-
-//  fetch(`/api/users/${userId}`, {
-//   method: "GET"
-// })
-//   .then((res) => {
-//     return res.json();
-//   })
-//   .then((userData) => {
-//     console.log(userData)
-//     const { address, email, name } = userData   
-//     userAddressOne.value = address
-//     userEmail.innerHTML = email
-//     userName.innerHTML = name
-//   });
-
 
 // 주소찾기 
 
@@ -173,9 +158,10 @@ function searchAddress(e) {
       userAddressTwo.focus();
     },
   }).open();
+  console.log(userAddressOne.value, userAddressTwo.value)
 }
 
-addressChangeBtn.addEventListener('click', searchAddress);
+addressSearchBtn.addEventListener('click', searchAddress);
 
   userPhoneNumber.value = ""
   const numberCheck = userPhoneNumber.value.split("")
@@ -189,49 +175,59 @@ addressChangeBtn.addEventListener('click', searchAddress);
   })
 
 // 유저변경
-function saveUserData() {
+function saveUserData(e) {
+    e.preventDefault();
     // 비밀번호 확인
-    
-    if(userPassWordOne.value !== userPassWordTwo.value){
+    if (userPassWordOne.value !== userPassWordTwo.value){
       alert('비밀번호가 다릅니다. 다시 입력해주세요.')
-    }
-   
+    } else {
+      password = userPassWordOne.value;
+    }  
      // 주소를 변경했는데, 덜 입력한 경우(상세주소 칸이 비어있을 때)
-     if((userAddressOne.value = "") || (userAddressTwo.value = "")) {
+     if ((userAddressOne.value = "") || (userAddressTwo.value = "")) {
       alert('주소를 다시 입력해주세요.')
      }
 
-     // 전화번호 옳은 형식이 아닐때
+     const userAddress = userPostCode.value + userAddressOne.value + userAddressTwo.value;
+     
+    // 전화번호 옳은 형식이 아닐때
     const numberCheck = userPhoneNumber.value.split("")
-
     numberCheck.forEach((number) => {
       const pattern = /[0-9]/g
       const result = number.match(pattern);
-      if(!result){
+      if (!result){
         alert('잘못 입력하셨습니다. 숫자만 입력하세요.')
       }
     })
 
+    if (!((numberCheck.length >= 10) && (numberCheck.length <= 11))){
+      alert("잘못 입력하셨습니다. 알맞은 번호를 입력하세요.")
+    }
 
-  fetch(`/api/users/${userId}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      "email": `${userEmail}`,
-      "password" : "1234",
-      "name": "tes hyung",
-      "role": "basic-user",
-      "address": `서울특별시 성북구`
-    }),
-  }).then((response) => {
-    if(!response.ok){
-      throw new Error()
-    } 
-    alert('회원정보가 변경되었습니다.')
-  })
-  .catch((err) => alert('에러가 발생했습니다. 관리자에게 문의하세요.'));
+    
+    fetch(`/api/users/${_id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "_id" : `${_id}`,
+        "email": `${email}`,
+        "password" : `${password}`,
+        "phoneNumber" : `${userPhoneNumber.value}`,
+        "name": `${name}`,
+        "role": `${role}`,
+        "address": `${userAddress}`
+      }),
+    })
+    .then((response) => response.json())
+    .then((userInfoChange) => {
+      if(userInfoChange.resCode !== "200"){
+        throw new Error()
+      } 
+      alert('회원정보가 변경되었습니다.')
+    })
+    .catch((err) => alert('에러가 발생했습니다. 관리자에게 문의하세요.'));
 }
 
 userInfoChangeBtn.addEventListener('click', saveUserData)
