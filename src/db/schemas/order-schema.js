@@ -28,7 +28,15 @@ const OrderSchema = new Schema(
       type: String,
       default: "배송준비중",
     },
+    shippingPostCode: {
+      type: String,
+      required: true,
+    },
     shippingAddress: {
+      type: String,
+      required: true,
+    },
+    shippingExtraAddress: {
       type: String,
       required: true,
     },

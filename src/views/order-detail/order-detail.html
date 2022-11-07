@@ -74,8 +74,18 @@
               method=""
               class="order-edit__modal__shipping-address"
             >
+              <input type="button" class="address__search" value="주소검색" />
               <div class="mb-3">
-                <label for="" class="form-label">배송 주소</label>
+                <label for="" class="form-label">우편주소</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="order-edit__modal__input__shipping-post-code"
+                  placeholder=""
+                />
+              </div>
+              <div class="mb-3">
+                <label for="" class="form-label">도로명 주소</label>
                 <input
                   type="text"
                   class="form-control"
@@ -83,6 +93,16 @@
                   placeholder=""
                 />
               </div>
+              <div class="mb-3">
+                <label for="" class="form-label">상세 주소</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="order-edit__modal__input__shipping-extra-address"
+                  placeholder=""
+                />
+              </div>
+
               <div class="mb-3">
                 <label for="" class="form-label">수령인 이름</label>
                 <input

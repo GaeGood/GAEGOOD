@@ -56,8 +56,16 @@ function renderOrderContent(order) {
       <div class="order-detail__order-content">${order.shippingStatus}</div>
     </div>
     <div class="order-detail__order-content__wrap">
-      <label class="order-detail__order-content__label">배송 주소</label>
+      <label class="order-detail__order-content__label">배송지 우편번호</label>
+      <div class="order-detail__order-content">${order.shippingPostCode}</div>
+    </div>
+    <div class="order-detail__order-content__wrap">
+      <label class="order-detail__order-content__label">배송지 도로명주소</label>
       <div class="order-detail__order-content">${order.shippingAddress}</div>
+    </div>
+    <div class="order-detail__order-content__wrap">
+      <label class="order-detail__order-content__label">배송지 상세주소</label>
+      <div class="order-detail__order-content">${order.shippingExtraAddress}</div>
     </div>
     <div class="order-detail__order-content__wrap">
       <label class="order-detail__order-content__label">총액</label>
@@ -90,8 +98,14 @@ function renderOrderProduct(order, productInfo) {
 
 // 주문 수정 모달 창의 기본 값 채우기
 function fillOrderEditModalInput(order) {
+  document.getElementById(
+    "order-edit__modal__input__shipping-post-code"
+  ).value = order.shippingPostCode;
   document.getElementById("order-edit__modal__input__shipping-address").value =
     order.shippingAddress;
+  document.getElementById(
+    "order-edit__modal__input__shipping-extra-address"
+  ).value = order.shippingExtraAddress;
   document.getElementById("order-edit__modal__input__recipient-name").value =
     order.recipientName;
   document.getElementById(
@@ -103,8 +117,14 @@ function fillOrderEditModalInput(order) {
 const orderEditSumbitBtn = document.querySelector(".order-edit__submit-btn");
 
 orderEditSumbitBtn.addEventListener("click", (event) => {
+  const shippingPostCode = document.getElementById(
+    "order-edit__modal__input__shipping-post-code"
+  ).value;
   const shippingAddress = document.getElementById(
     "order-edit__modal__input__shipping-address"
+  ).value;
+  const shippingExtraAddress = document.getElementById(
+    "order-edit__modal__input__shipping-extra-address"
   ).value;
   const recipientName = document.getElementById(
     "order-edit__modal__input__recipient-name"
@@ -118,7 +138,9 @@ orderEditSumbitBtn.addEventListener("click", (event) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
+      shippingPostCode,
       shippingAddress,
+      shippingExtraAddress,
       recipientName,
       recipientPhoneNumber,
     }),
@@ -167,3 +189,7 @@ orderDeleteBtn.addEventListener("click", (e) => {
       alert("주문 삭제 완료");
     });
 });
+
+// 주소 검색 기능
+
+const addressSearchBtn = document.querySelector(".address__search");
