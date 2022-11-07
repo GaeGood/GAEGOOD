@@ -7,7 +7,9 @@ class OrderController {
       productList,
       countList,
       shippingStatus,
+      shippingPostCode,
       shippingAddress,
+      shippingExtraAddress,
       totalAmount,
       recipientName,
       recipientPhoneNumber,
@@ -18,7 +20,9 @@ class OrderController {
       !productList ||
       !countList ||
       !shippingStatus ||
+      !shippingPostCode ||
       !shippingAddress ||
+      !shippingExtraAddress ||
       !totalAmount ||
       !recipientName ||
       !recipientPhoneNumber
@@ -32,7 +36,9 @@ class OrderController {
         productList,
         countList,
         shippingStatus,
+        shippingPostCode,
         shippingAddress,
+        shippingExtraAddress,
         totalAmount,
         recipientName,
         recipientPhoneNumber,
