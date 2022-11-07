@@ -1,14 +1,32 @@
 import { main } from "/main.js";
 const { loggedInUser } = await main(); 
+import {
+  deleteIndexedDBdata,
+  getAllIndexedDB,
+  getIndexedDB,
+  getAllKeysIndexedDB,
+} from "/indexedDB.js";
 
-console.log(loggedInUser)
+const DATABASE_NAME = "cartDB";
+const version = 1;
+const objectStore = "cartStorage";
 
+
+
+
+const test = await getAllKeysIndexedDB(DATABASE_NAME, version, objectStore, function(result) {return result})
+
+// 해당 indexedDB에 존재하는 모든 데이터 조회하기(Value값들을 조회)
+// await getAllIndexedDB(DATABASE_NAME, version, objectStore)
+//..
+// 모든 Key 조회
+// await getAllKeysIndexedDB(DATABASE_NAME, version, objectStore);
+
+// console.log(test)
 
 // 장바구니 정보 가져오기
 
 
-const idxedDB = window.indexedDB.open('cartDB');
-console.log(idxedDB)
 
 
 
@@ -125,10 +143,10 @@ addressSearchBtn.addEventListener('click', searchAddress);
 //       console.log(test)
 
 
-const shippingInformationList = (() => 
-    { return {
+const shippingInformationList = 
+  {
     "buyer":`${_id}`,
-    "productList":["636558f323b82631a9ca229c", "6365500afaa3aa6363ad1923", "63654fd2faa3aa6363ad190c"],
+    "productList":`${test}`,
     "countList":["1", "3", "2"],
     "shippingStatus":"배송전",
     "shippingPostCode":`${userPostCode.value}`,
@@ -138,8 +156,9 @@ const shippingInformationList = (() =>
     "totalAmount": "총 금액",
     "recipientName":`${userName.value}`,
     "recipientPhoneNumber":`${userPhoneNumber.value}`
-      }})
+      }
 
+      console.log(shippingInformationList)
 
 // post시 빈칸 있으면 return alert 진행
 // 결제 완료 된다음에 indexedDB에서 값 지울건지도 상의해봐야겠네(즉 장바구니를 비울지?)
