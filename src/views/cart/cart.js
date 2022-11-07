@@ -25,6 +25,8 @@ const DATABASE_NAME = "cartDB";
 const version = 1;
 const objectStore = "cartStorage";
 let checkedCount = 0;
+let totalAmount = 0;
+let totalPrice = 0;
 /* 데이터 렌더링 */
 getAllIndexedDB(DATABASE_NAME, version, objectStore, function (dataList) {
   //dataList === response.target.result
@@ -262,6 +264,17 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
         productAmountNum
       );
     });
+
+    /* 결제 금액 컨테이너 */
+    /* total__amount 총 수량 */
+    let amountValue = dataList[i].amount;
+    totalAmount += amountValue;
+    total__amount.textContent = totalAmount;
+    /* total__amount 총 수량 */
+    // let priceValue = dataList[i].price;
+    // console.log(priceValue);
+    // totalPrice += priceValue;
+    // total__price.textContent = totalPrice;
   }
 }
 
@@ -363,7 +376,6 @@ function updateIndexedDB(
   if (window.indexedDB) {
     const request = indexedDB.open(DATABASE_NAME, version);
     const key = productId;
-    console.log(`key 는 이거다 : ${key}`);
     getIndexedDB(DATABASE_NAME, version, objectStore, key, function (data) {
       if (data.id === key) {
         cartAmount.textContent = data.amount;
