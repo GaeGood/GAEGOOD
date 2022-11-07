@@ -45,7 +45,7 @@ async function deleteIndexedDBdata(
 }
 
 /* 해당 indexedDB에 존재하는 모든 데이터 조회하기 */
-async function getAllIndexedDB(DATABASE_NAME, version, objectStore, cb) {
+function getAllIndexedDB(DATABASE_NAME, version, objectStore, cb) {
   if (window.indexedDB) {
     const request = indexedDB.open(DATABASE_NAME, version);
     request.onerror = function (event) {

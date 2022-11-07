@@ -24,7 +24,6 @@ class OrderController {
       !shippingPostCode ||
       !shippingStreetAddress ||
       !shippingExtraAddress ||
-      !shippingRequestMessage ||
       !totalAmount ||
       !recipientName ||
       !recipientPhoneNumber
@@ -90,7 +89,6 @@ class OrderController {
       !shippingPostCode ||
       !shippingStreetAddress ||
       !shippingExtraAddress ||
-      !shippingRequestMessage ||
       !recipientName ||
       !recipientPhoneNumber
     ) {

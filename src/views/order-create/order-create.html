@@ -32,16 +32,12 @@
             <!-- 구분선 -->
             <hr class="my-2" />
         </div>
-
         <section class="main-contents">
             <div>
-                <table class="order product__list">
+                <table class="product__list">
                     <tr>
                         <td colspan="3">
                             <span>상품정보</span>
-                        </td>
-                        <td>
-                            <span>배송비</span>
                         </td>
                         <td>
                             <span>수량</span>
@@ -50,26 +46,6 @@
                             <span>상품금액</span>
                         </td>
                     </tr>
-                    <!-- <tr class="order product__list">  
-                        <td>
-                            <span class="order product__id">상품id</span>
-                        </td>
-                        <td>
-                            <span class="order product__picture">상품 사진</span>
-                        </td>
-                        <td>
-                            <span class="order product__info">상품정보</span>
-                        </td>
-                        <td>
-                            <span class="order deliveryFee">배송비</span>
-                        </td>
-                        <td>
-                            <span class="order product__amount">수량</span>
-                        </td>
-                        <td>
-                            <span class="order product__price">상품금액</span>
-                        </td> 
-                    </tr> -->
                  </table>
             </div>
         </section>
@@ -155,11 +131,11 @@
                 <div class="pay__information">
                     <div>결제상세</div>
                     <aside>
-                        <div>주문금액</div>
-                        <div>배송비</div>
+                        <div class="pay products__price">주문금액</div>
+                        <div class="pay delivery__fee">배송비</div>
                         <!-- 구분선 -->
                         <hr class="my-2" />
-                        <span>총 금액</span><span>123원</span>
+                        <span class="pay total__price">총 금액</span><span>123원</span>
                     </aside>
                     <div>
                         <button class="pay__button">결제하기</button>

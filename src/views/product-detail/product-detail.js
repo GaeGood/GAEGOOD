@@ -303,7 +303,7 @@ function getAllKeysIndexedDB(DATABASE_NAME, version, objectStore) {
 }
 /* 장바구니 버튼 클릭 이벤트 */
 button__cart.addEventListener("click", () => {
-  insertIndexedDB(DATABASE_NAME, version, objectStore, idObject, cartCount);
+  insertIndexedDB(DATABASE_NAME, version, objectStore, idObject, cartCount, productName.innerHTML);
   cartCount += 1;
   if (cartCount > 1) {
     let operation = "none";
