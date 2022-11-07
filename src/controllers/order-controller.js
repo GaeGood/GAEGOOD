@@ -23,7 +23,7 @@ class OrderController {
       !recipientName ||
       !recipientPhoneNumber
     ) {
-      return res.json("입력 데이터 부족");
+      return res.status(400).json("입력 데이터 부족");
     }
 
     try {
@@ -55,7 +55,7 @@ class OrderController {
       }
       const oidArr = oid.split(",");
       const orderList = await orderService.getOrderList(oidArr);
-      return res.json(orderList);
+      return res.status(200).json(orderList);
     }
   }
 
@@ -79,7 +79,7 @@ class OrderController {
     const { shippingAddress, recipientName, recipientPhoneNumber } = req.body;
 
     if (!shippingAddress || !recipientName || !recipientPhoneNumber) {
-      return res.json("입력 데이터 부족");
+      return res.status(400).json("입력 데이터 부족");
     }
 
     const updatedOrder = await orderService.editOrder(oid, {
@@ -88,7 +88,7 @@ class OrderController {
       recipientPhoneNumber,
     });
 
-    return res.json(updatedOrder);
+    return res.status(200).json(updatedOrder);
   }
 
   async removeOrder(req, res, next) {
@@ -96,7 +96,7 @@ class OrderController {
 
     try {
       await orderService.removeOrder(oid);
-      res.json(`상품 삭제 완료(ID : ${oid})`);
+      res.status(200).json(`상품 삭제 완료(ID : ${oid})`);
     } catch (e) {
       next(e);
     }
