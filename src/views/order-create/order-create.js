@@ -2,6 +2,18 @@ import { main } from "/main.js";
 const { loggedInUser } = await main(); 
 
 console.log(loggedInUser)
+
+
+// 장바구니 정보 가져오기
+
+
+const idxedDB = window.indexedDB.open('cartDB');
+console.log(idxedDB)
+
+
+
+// 기존 DB의 사용자 정보 가져오기
+
 /*
 address: "d"
 createdAt: "2022-11-06T14:50:43.961Z"
@@ -17,25 +29,16 @@ __v: 0
 _id: "6367c9c386545678e88c4bbf"
 
 */
-const { name, phoneNumber, postCode, address, extraAddress } = loggedInUser
-const [ userDBName, userDBPhoneNumber, userDBPostCode, userDBAddress, userDBExterAddress ] = document.querySelectorAll('.user')
+const { name, phoneNumber, postCode, address, extraAddress, _id } = loggedInUser
+const [ userName, userPhoneNumber, userPostCode, userAddress, userExterAddress, userRequestMessage ] = document.querySelectorAll('.user')
 
-console.log(name, phoneNumber, postCode, address, extraAddress)
+console.log(name, phoneNumber, postCode, address, extraAddress, _id)
 
-userDBName.value = name
-userDBPhoneNumber.value = phoneNumber
-userDBPostCode.value = postCode
-userDBAddress.value = address
-userDBExterAddress.value = extraAddress
-
-// 장바구니 정보 가져오기
-
-
-
-
-
-
-// 기존 DB의 사용자 정보 가져오기
+userName.value = name
+userPhoneNumber.value = phoneNumber
+userPostCode.value = postCode
+userAddress.value = address
+userExterAddress.value = extraAddress
 
 
 
@@ -70,10 +73,10 @@ function searchAddress(e) {
         }
       } else {
       }
-      userDBPostCode.value = `${data.zonecode}`;
-      userDBAddress.value = `${addr} ${extraAddr}`;
-      userDBExterAddress.value = ""
-      userDBExterAddress.focus();
+      userPostCode.value = `${data.zonecode}`;
+      userAddress.value = `${addr} ${extraAddr}`;
+      userExterAddress.value = ""
+      userExterAddress.focus();
     },
   }).open();
 }
@@ -83,9 +86,79 @@ addressSearchBtn.addEventListener('click', searchAddress);
 
 
 // 받아온 정보를 배송정보로 POST
+
+/*
+스키마
+  async addOrder(req, res, next) {
+    const {
+      buyer,
+      productList,
+      countList,
+      shippingStatus,
+      -shippingPostCode,
+      shippingAddress,
+      -shippingExtraAddress,
+      -shippingRequestMessage,
+      totalAmount,
+      recipientName,
+      recipientPhoneNumber,
+    } = req.body;
+
+
+*/
+
+
+// const test = {
+//     "buyer":`${_id}`,
+//     "productList":["636558f323b82631a9ca229c", "6365500afaa3aa6363ad1923", "63654fd2faa3aa6363ad190c"],
+//     "countList":["1", "3", "2"],
+//     "shippingStatus":"배송전",
+//     "shippingPostCode":`${userPostCode.value}`,
+//     "shippingAddress":`${userAddress.value}`,
+//     "shippingExtraAddress":`${userExterAddress.value}`,
+//     "shippingRequestMessage": `${userRequestMessage.value}`,
+//     "totalAmount":" 총 금액",
+//     "recipientName":`${userName.value}`,
+//     "recipientPhoneNumber":`${userPhoneNumber.value}`
+//       }
+
+//       console.log(test)
+
+
+const shippingInformationList = (() => 
+    { return {
+    "buyer":`${_id}`,
+    "productList":["636558f323b82631a9ca229c", "6365500afaa3aa6363ad1923", "63654fd2faa3aa6363ad190c"],
+    "countList":["1", "3", "2"],
+    "shippingStatus":"배송전",
+    "shippingPostCode":`${userPostCode.value}`,
+    "shippingAddress":`${userAddress.value}`,
+    "shippingExtraAddress":`${userExterAddress.value}`,
+    "shippingRequestMessage": `${userRequestMessage.value}`,
+    "totalAmount": "총 금액",
+    "recipientName":`${userName.value}`,
+    "recipientPhoneNumber":`${userPhoneNumber.value}`
+      }})
+
+
 // post시 빈칸 있으면 return alert 진행
+// 결제 완료 된다음에 indexedDB에서 값 지울건지도 상의해봐야겠네(즉 장바구니를 비울지?)
 
-
+// fetch(`api/orders`, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(shippingInformationList),
+//     })
+//     .then((response) => response.json())
+//     .then(() => {
+//       alert('회원정보가 변경되었습니다.')
+//       // window.location.href = "/users/mypage";
+//     })
+//     .catch((err) => {
+//       alert(`에러가 발생했습니다. 관리자에게 문의하세요. \n에러내용: ${err}`)
+//     });
 
 
 
