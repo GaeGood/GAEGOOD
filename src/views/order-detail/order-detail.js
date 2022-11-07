@@ -186,6 +186,7 @@ orderDeleteBtn.addEventListener("click", (e) => {
     .then((res) => res.json())
     .then((data) => {
       alert("주문 삭제 완료");
+      location.href = "/orders/list/";
     });
 });
 
