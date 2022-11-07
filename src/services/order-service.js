@@ -24,35 +24,65 @@ class OrderService {
       error.statusCode = 401;
       throw error;
     }
-
-    const createdNewOrder = await orderModel.create(orderInfo);
-    return createdNewOrder;
+    try {
+      const createdNewOrder = await orderModel.create(orderInfo);
+      return createdNewOrder;
+    } catch (err) {
+      const error = new Error("주문생성이 실패하였습니다.");
+      error.statusCode = 400;
+      throw error;
+    }
   }
 
   async getOrderById(oid) {
-    const order = await orderModel.findById(oid);
-    return order;
+    try {
+      const order = await orderModel.findById(oid);
+      return order;
+    } catch (err) {
+      const error = new Error("ID 기반 주문 조회에 실패하였습니다.");
+      error.statusCode = 400;
+      throw error;
+    }
   }
 
   async getOrderList(oidArr) {
-    if (!oidArr) {
-      const orderList = await orderModel.findAll();
-      return orderList;
-    } else {
-      const orderList = await orderModel.findByIds(oidArr);
-      return orderList;
+    try {
+      if (!oidArr) {
+        const orderList = await orderModel.findAll();
+        return orderList;
+      } else {
+        const orderList = await orderModel.findByIds(oidArr);
+        return orderList;
+      }
+    } catch (err) {
+      const error = new Error(
+        "주문리스트를 불러오는 과정에서 에러가 발생하였습니다."
+      );
+      error.statusCode = 400;
+      throw error;
     }
   }
 
   async editOrder(oid, orderInfo) {
     const { shippingAddress, recipientName, recipientPhoneNumber } = orderInfo;
-
-    const updatedNewOrder = await orderModel.update(oid, orderInfo);
-    return updatedNewOrder;
+    try {
+      const updatedNewOrder = await orderModel.update(oid, orderInfo);
+      return updatedNewOrder;
+    } catch (err) {
+      const error = new Error("주문 수정과정에서 에러가 발생하였습니다.");
+      error.statusCode = 400;
+      throw error;
+    }
   }
 
   async removeOrder(oid) {
-    await orderModel.delete(oid);
+    try {
+      await orderModel.delete(oid);
+    } catch (err) {
+      const error = new Error("주문 삭제과정에서 에러가 발생하였습니다.");
+      error.statusCode = 400;
+      throw error;
+    }
   }
 }
 
