@@ -38,14 +38,19 @@
 
     <!-- 주문 수정 / 삭제 옵션 -->
     <div id="order__options__wrap">
-      <button data-bs-toggle="modal" data-bs-target="#order-edit__modal">
-        수정하기
+      <button
+        class="order__options__option"
+        id="order__options__option__edit-btn"
+        data-bs-toggle="modal"
+        data-bs-target="#order-edit__modal"
+      >
+        주문 정보 수정
       </button>
       <button
         class="order__options__option"
-        id="order__options__option__delete-btn"
+        id="order__options__option__cancel-btn"
       >
-        삭제하기
+        주문 취소
       </button>
     </div>
 

@@ -29,6 +29,8 @@ fetch(`/api/orders/${oid}`)
     );
     renderOrderProduct(order, productInfo);
 
+    checkOrderShippingStatus(order);
+
     fillOrderEditModalInput(order);
   })
   .then((error) => {
@@ -96,6 +98,22 @@ function renderOrderProduct(order, productInfo) {
   }
 }
 
+function checkOrderShippingStatus(order) {
+  if (order.shippingStatus !== "배송전") {
+    const orderEditBtn = document.getElementById(
+      "order__options__option__edit-btn"
+    );
+    const orderCancelBtn = document.getElementById(
+      "order__options__option__cancel-btn"
+    );
+
+    orderEditBtn.disabled = true;
+    orderEditBtn.title = "배송이 시작되어 주문 정보를 수정할 수 없습니다.";
+    orderCancelBtn.disabled = true;
+    orderCancelBtn.title = "배송이 시작되어 주문을 취소할 수 없습니다.";
+  }
+}
+
 // 주문 수정 기능
 
 // 주문 수정 모달 창의 기본 값 채우기
@@ -141,6 +159,7 @@ orderEditSumbitBtn.addEventListener("click", (event) => {
   const recipientPhoneNumber = document.getElementById(
     "order-edit__modal__input__recipient-phone-number"
   ).value;
+
   fetch(`/api/orders/${oid}`, {
     method: "PUT",
     headers: {
@@ -185,12 +204,12 @@ orderEditSumbitBtn.addEventListener("click", (event) => {
 });
 
 // 주문 삭제 기능
-const orderDeleteBtn = document.getElementById(
-  "order__options__option__delete-btn"
+const orderCancelBtn = document.getElementById(
+  "order__options__option__cancel-btn"
 );
 
-orderDeleteBtn.addEventListener("click", (e) => {
-  console.log("삭제 버튼 클릭");
+orderCancelBtn.addEventListener("click", (e) => {
+  console.log("주문 취소 버튼 클릭");
   fetch(`/api/orders/${oid}`, {
     method: "DELETE",
   })
@@ -204,7 +223,7 @@ orderDeleteBtn.addEventListener("click", (e) => {
       return Promise.reject(json);
     })
     .then((data) => {
-      alert("주문 삭제 완료");
+      alert("주문 취소 완료(주문 내역에서 삭제됨)");
       location.href = "/orders/list/";
     })
     .catch((e) => {
