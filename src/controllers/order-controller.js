@@ -7,7 +7,10 @@ class OrderController {
       productList,
       countList,
       shippingStatus,
-      shippingAddress,
+      shippingPostCode,
+      shippingStreetAddress,
+      shippingExtraAddress,
+      shippingRequestMessage,
       totalAmount,
       recipientName,
       recipientPhoneNumber,
@@ -18,7 +21,10 @@ class OrderController {
       !productList ||
       !countList ||
       !shippingStatus ||
-      !shippingAddress ||
+      !shippingPostCode ||
+      !shippingStreetAddress ||
+      !shippingExtraAddress ||
+      !shippingRequestMessage ||
       !totalAmount ||
       !recipientName ||
       !recipientPhoneNumber
@@ -32,7 +38,10 @@ class OrderController {
         productList,
         countList,
         shippingStatus,
-        shippingAddress,
+        shippingPostCode,
+        shippingStreetAddress,
+        shippingExtraAddress,
+        shippingRequestMessage,
         totalAmount,
         recipientName,
         recipientPhoneNumber,

@@ -2,7 +2,8 @@ import { userModel } from "../db";
 import bcrypt from "bcrypt";
 class UserService {
   async addUser(userInfo) {
-    const { email, name, password, role, address } = userInfo;
+    const { email, name, password, postCode, streetAddress, extraAddress } =
+      userInfo;
 
     const isDuplicate = await userModel.findByEmail(email);
     if (isDuplicate) {
@@ -14,56 +15,39 @@ class UserService {
       const saltRound = parseInt(process.env.SALT_ROUND) || 10;
       const hashPassword = await bcrypt.hash(password, saltRound);
       const userInfo = await userModel.create({
-        email: email,
-        name: name,
+        email,
+        name,
         password: hashPassword,
-        role: role,
-        address: address,
+        postCode,
+        streetAddress,
+        extraAddress,
       });
       return userInfo;
     } catch (err) {
-      const error = new Error(
-        " 회원가입도중 password Hash와 User 추가과정에서 에러가 발생하였습니다."
-      );
+      const error = new Error(" 회원가입 도중 에러가 발생했습니다.");
       error.statusCode = 400;
       throw error;
     }
   }
 
   async getUserById(uid) {
-    try {
-      const user = await userModel.findById(uid);
-      return user;
-    } catch (err) {
-      const error = new Error(" ID로 유저 검색 과정중 에러가 발생하였습니다.");
-      error.statusCode = 400;
-      throw error;
-    }
+    const user = await userModel.findById(uid);
+    return user;
   }
 
   async editUser(uid, userInfo) {
-    const saltRound = parseInt(process.env.SALT_ROUND) || 10;
-    try {
+    const { password } = userInfo;
+    if (password) {
+      const saltRound = parseInt(process.env.SALT_ROUND) || 10;
       const hashPassword = await bcrypt.hash(password, saltRound);
-      const updatedUser = await userModel.update(uid, userInfo);
-      return updatedUser;
-    } catch (err) {
-      const error = new Error(
-        " 회원정보 수정 도중 password Hash와 User 수정시도과정에서 에러가 발생하였습니다."
-      );
-      error.statusCode = 400;
-      throw error;
+      userInfo.password = hashPassword;
     }
+    const updatedUser = await userModel.update(uid, userInfo);
+    return updatedUser;
   }
 
   async removeUser(uid) {
-    try {
-      await userModel.delete(uid);
-    } catch (err) {
-      const error = new Error(" 회원탈퇴 도중 에러가 발생하였습니다.");
-      error.statusCode = 400;
-      throw error;
-    }
+    await userModel.delete(uid);
   }
 }
 

@@ -2,16 +2,7 @@ import { orderModel } from "../db";
 
 class OrderService {
   async addOrder(orderInfo) {
-    const {
-      buyer,
-      productList,
-      countList,
-      shippingStatus,
-      shippingAddress,
-      totalAmount,
-      recipientName,
-      recipientPhoneNumber,
-    } = orderInfo;
+    const { productList, countList, totalAmount } = orderInfo;
 
     if (productList.length !== countList.length) {
       const error = new Error("상품의 갯수와 수량의 갯수가 다릅니다.");

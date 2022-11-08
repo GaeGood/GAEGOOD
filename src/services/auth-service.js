@@ -15,38 +15,29 @@ class AuthService {
     }
 
     const success = await bcrypt.compare(password, user.password);
-    try {
-      if (success) {
-        const payload = {
-          id: user._id,
-          role: user.role,
-        };
-        const key = process.env.JWT_SECRET_KEY || "secret";
+    if (success) {
+      const payload = {
+        id: user._id,
+        role: user.role,
+      };
+      const key = process.env.JWT_SECRET_KEY || "secret";
+      try {
         const token = jwt.sign(payload, key, {
           expiresIn: "2h",
         });
         return token;
-      } else {
-        const error = new Error("비밀번호가 일치하지 않습니다.");
-        error.statusCode = 401;
+      } catch (err) {
+        const error = new Error("토큰 생성도중 에러가 발생하였습니다. ");
+        error.statusCode = 400;
         throw error;
       }
-    } catch (err) {
-      const error = new Error("토큰 생성도중 에러가 발생하였습니다. ");
-      error.statusCode = 400;
+    } else {
+      const error = new Error("비밀번호가 일치하지 않습니다.");
+      error.statusCode = 401;
       throw error;
     }
   }
 
-  async logout(req, res) {
-    try {
-      res.clearCookie("jwt_token");
-    } catch (err) {
-      const error = new Error("JWT token 삭제과정중 Error가 발생했습니다.");
-      error.statusCode = 400;
-      throw error;
-    }
-  }
   async verifyToken(token) {
     try {
       const data = jwt.verify(token, process.env.JWT_SECRET_KEY || 10);

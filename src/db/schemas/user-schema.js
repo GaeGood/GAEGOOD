@@ -22,14 +22,13 @@ const UserSchema = new Schema(
     },
     role: {
       type: String,
-      required: false,
       default: "basic-user",
     },
     postCode: {
       type: String,
       required: false,
     },
-    address: {
+    streetAddress: {
       type: String,
       required: true,
       // default: "입력값이 없습니다",

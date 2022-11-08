@@ -2,6 +2,7 @@ import { authService } from "../services";
 
 class AuthController {
   async loginUser(req, res, next) {
+    const { email, password } = req.body;
     if (!email || !password) {
       return res.status(404).json("email,password 입력 필요!");
     }
@@ -19,10 +20,10 @@ class AuthController {
 
   async logoutUser(req, res, next) {
     try {
-      await authService.logout();
+      res.clearCookie("jwt_token");
       return res.status(200).json("로그아웃 되었습니다.");
-    } catch (err) {
-      next(err);
+    } catch (e) {
+      next(e);
     }
   }
 
@@ -36,8 +37,8 @@ class AuthController {
     try {
       const result = await authService.verifyToken(token);
       return res.status(200).json(result);
-    } catch (err) {
-      next(err);
+    } catch (e) {
+      next(e);
     }
   }
 }

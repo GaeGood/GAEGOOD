@@ -2,9 +2,17 @@ import { userService } from "../services";
 
 class UserContoller {
   async addUser(req, res, next) {
-    const { email, password, name, address } = req.body;
+    const { email, password, name, postCode, streetAddress, extraAddress } =
+      req.body;
 
-    if (!email || !password || !name || !address) {
+    if (
+      !email ||
+      !password ||
+      !name ||
+      !postCode ||
+      !streetAddress ||
+      !extraAddress
+    ) {
       return res.status(400).json("입력되지 않은 값이 있습니다!");
     }
 
@@ -13,8 +21,9 @@ class UserContoller {
         name,
         password,
         email,
-        role: "basic-user",
-        address,
+        postCode,
+        streetAddress,
+        extraAddress,
       });
       return res.status(200).json(result);
     } catch (err) {
@@ -40,7 +49,6 @@ class UserContoller {
     } catch (err) {
       next(err);
     }
-    next();
   }
 
   async removeUser(req, res, next) {
