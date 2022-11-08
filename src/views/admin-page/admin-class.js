@@ -1,50 +1,85 @@
 function createTop(listArr) {
-  const top = document.createElement("table");
-  top.className = "table text-center";
+  const top = document.createElement("thead");
+  top.className = "table-light";
+  const tr = document.createElement("tr");
   const addHtml = [];
-  addHtml.push(`
-  <thead>
-  <tr>
-    <th scope="col"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">${name}</font></font></th>
-  </tr>
-    </thead>
-    <thead class="table-light">
-      <tr>`);
-  4;
-  for (let list = 0; list < listArr.length(); list++) {
-    if (list < listArr.length - 2) {
-      addHtml.push(`
+  for (let count = 0; count < listArr.length; count++) {
+    addHtml.push(`
     <th scope="col">
         <font style="vertical-align: inherit;">
-          <font style="vertical-align: inherit;">${list}</font>
+          <font style="vertical-align: inherit;">${listArr[count]}</font>
         </font>
     </th>`);
-    } else {
-      addHtml.push(`
-      <th scope="col">
-          <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">상태관리</font>
-          </font>
-        </th>
-        <th scope="col">
-          <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">취소</font>
-          </font>
-        </th>`);
-    }
   }
-  addHtml.push(`</tr></thead>`);
-
-  top.innerHTML += addHtml.join("");
+  tr.innerHTML += addHtml.join("");
+  top.prepend(tr);
   return top;
 }
 
-function createMiddle(data){
-  
+function createMiddle(dataArr) {
+  const middle = document.createElement("tbody");
+  //middle.className = "table text-center";
+  const addHtml = [];
+  for (let count = 0; count < dataArr.length; count++) {
+    addHtml.push(
+      `<tr id="${dataArr[count]._id}">
+          <th scope="row">
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">${
+                dataArr[count].date
+              }</font>
+            </font>
+          </th>
+          <td>
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">${
+                dataArr[count].name
+              }</font>
+            </font>
+          </td>
+          <td>
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">${dataArr[
+                count
+              ].products.join(",<br>")}</font>
+            </font>
+          </td>
+          <td>
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">${
+                dataArr[count].total
+              }</font>
+            </font>
+          </td>
+          <td>
+            <div class="dropdown">
+              <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                ${dataArr[count].shopStatus}
+              </a>
+              <ul class="dropdown-menu btn__edit">
+                <li><a class="dropdown-item" href="#">배송전</a></li>
+                <li><a class="dropdown-item" href="#">배송중</a></li>
+                <li><a class="dropdown-item" href="#">배송완료</a></li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <button type="button" class="btn btn-outline-danger btn__delete">삭제하기</button>
+          </td>
+        </tr>`
+    );
+  }
+  middle.innerHTML += addHtml.join("");
+  return middle;
 }
 
-function createTable(datas) {
-  createTop();
+function createTable(listArr, datasArr) {
+  //datas 는 필요한 데이터만 받아온 객체들의 배열
+  const table = document.createElement("table");
+  table.className = "table text-center";
+  table.prepend(createTop(listArr));
+  table.append(createMiddle(datasArr));
+  return table;
 }
 
 export { createTable };

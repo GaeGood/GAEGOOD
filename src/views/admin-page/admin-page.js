@@ -5,7 +5,9 @@ import { createTable } from "./admin-class.js";
 
 const mainTag = document.getElementById("main__container");
 
-const adminPageList = document.querySelectorAll(".admin__page__list > button");
+const adminPageList = document.querySelectorAll(
+  ".admin__page__list > button"
+);
 
 const adminBtnOder = document.querySelector(".btn__admin__oder");
 const adminBtnUser = document.querySelector(".btn__admin__user");
@@ -21,7 +23,13 @@ const oderAdmin = [
   "취소",
 ];
 const userAdmin = ["가입날짜", "이메일", "이름", "권한", "관리"];
-const categoryAdmin = ["생성날짜", "카테고리 이름", "수정날짜", "수정", "삭제"];
+const categoryAdmin = [
+  "생성날짜",
+  "카테고리 이름",
+  "수정날짜",
+  "수정",
+  "삭제",
+];
 const productAdmin = [
   "생성날짜",
   "이름",
@@ -53,19 +61,13 @@ for (let i = 0; i < adminPageList.length; i++) {
     newHtml.className = `bd-example ${listNameEn}`;
     if (listName === "주문관리") {
       fetch("/api/orders")
-        .then(async (res) => {
-          const json = await res.json();
-
-          if (res.ok) {
-            return json;
-          }
-
-          return Promise.reject(json);
-        })
+        .then((res) => res.json())
         .then((data) => {
+          console.log(data);
           const newData = data.map((e) => {
             return {
-              date: e.createdAt,
+              _id: e._id,
+              date: e.createdAt.slice(0, 10),
               name: e.recipientName,
               products: e.productList.map((e) => e.name),
               total: e.totalAmount,
@@ -76,129 +78,180 @@ for (let i = 0; i < adminPageList.length; i++) {
           return newData;
         })
         .then((newData) => {
-          createTable(newData);
+          newHtml.appendChild(createTable(oderAdmin, newData));
+          mainTag.append(newHtml);
         })
-        .catch((e) => {
-          alert(e);
+        .then(() => {
+          oderManagementEdit();
+          oderManagementDelete();
         });
-      newHtml.innerHTML = innerOderManagement(listName);
-    } else if (listName === "회원관리") {
-      newHtml.innerHTML = innerUserManagement(listName);
-    } else if (listName === "카테고리 관리") {
-      newHtml.innerHTML = innerAddCategory(listName);
-    } else {
-      newHtml.innerHTML = innerAddProduct(listName);
+      //     newHtml.innerHTML = innerOderManagement(listName);
+      //   } else if (listName === "회원관리") {
+      //     newHtml.innerHTML = innerUserManagement(listName);
+      //   } else if (listName === "카테고리 관리") {
+      //     newHtml.innerHTML = innerAddCategory(listName);
+      //   } else {
+      //     newHtml.innerHTML = innerAddProduct(listName);
+      //   }
+      //   mainTag.append(newHtml);
+      // });
     }
-    mainTag.append(newHtml);
   });
 }
 
-function innerOderManagement(name) {
-  return `<!--${name}리스트-->
-  <table class="table text-center">
-  <thead>
-  <tr>
-    <th scope="col"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">${name}</font></font></th>
-  </tr>
-    </thead>
-    <thead class="table-light">
-      <tr>
-        <th scope="col">
-          <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">주문날짜</font>
-          </font>
-        </th>
-        <th scope="col">
-          <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">주문자</font>
-          </font>
-        </th>
-        <th scope="col">
-          <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">주문정보</font>
-          </font>
-        </th>
-        <th scope="col">
-          <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">주문총액</font>
-          </font>
-        </th>
-        <th scope="col">
-          <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">상태관리</font>
-          </font>
-        </th>
-        <th scope="col">
-          <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">취소</font>
-          </font>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">
-          <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">2020-01-01</font>
-          </font>
-        </th>
-        <td>
-          <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">청바지, 폰케이스</font>
-          </font>
-        </td>
-        <td>
-          <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">장미유</font>
-          </font>
-        </td>
-        <td>
-          <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">30000</font>
-          </font>
-        </td>
-        <td>
-        <div class="dropdown">
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          수정하기
-        </a>
-      
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">배송전</a></li>
-          <li><a class="dropdown-item" href="#">배송중</a></li>
-          <li><a class="dropdown-item" href="#">배송완료</a></li>
-        </ul>
-      </div>
-        </td>
-        <td>
-          <button type="button" class="btn btn-outline-danger">삭제하기</button>
-        </td>
-      </tr>
-      <tr>
-        <th scope="row">
-          <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">2</font>
-          </font>
-        </th>
-        <td>
-          <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">야곱</font>
-          </font>
-        </td>
-        <td>
-          <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">손튼</font>
-          </font>
-        </td>
-        <td>
-          <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">@지방</font>
-          </font>
-        </td>
-      </tr>
-    </tbody>
-  </table>`;
+function oderManagementEdit() {
+  const editBtns = document.querySelectorAll(".dropdown-item");
+  //버튼클릭 => 배송준비 => 랜더링화면바꾸기 => fetch 수정 =>
+  for (let count = 0; count < editBtns.length; count++) {
+    editBtns[count].addEventListener("click", (e) => {
+      //아래 기능이 없으면 배송상태가 바뀌면 최상단으로 화면이 이동한다
+      e.preventDefault()
+      const btnValue = e.target.text
+      const btnId =
+        e.target.parentElement.parentElement.parentElement.parentElement
+          .parentElement.id;
+      //배송상태가 바뀐 값(배송중 => 배송완료)으로 현재 버튼이 배송완료 바뀌는 기능
+      e.target.parentElement.parentElement.parentElement.querySelector("a").innerText = `${btnValue}`
+      fetch(`http://localhost:5000/api/orders/${btnId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          "shippingStatus": `${btnValue}`,
+        }),
+      })
+        .then((res) => res.json())
+        .then((alt) => alert(alt.shippingStatus));
+    });
+  }
 }
+
+function oderManagementDelete() {
+  const deleteBtns = document.querySelectorAll(".btn__delete");
+  for (let count = 0; count < deleteBtns.length; count++) {
+    deleteBtns[count].addEventListener("click", (e) => {
+      const btnId = e.target.parentElement.parentElement.id;
+      document.getElementById(`${btnId}`).remove();
+      fetch(`http://localhost:5000/api/orders/${btnId}`, {
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then((alt) => alert(alt));
+    });
+  }
+}
+
+// ====admin-class 모듈화 전 코드(기록용)=====
+// function innerOderManagement(name) {
+//   return `<!--${name}리스트-->
+//   <table class="table text-center">
+//   <thead>
+//   <tr>
+//     <th scope="col"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">${name}</font></font></th>
+//   </tr>
+//     </thead>
+//     <thead class="table-light">
+//       <tr>
+//         <th scope="col">
+//           <font style="vertical-align: inherit;">
+//             <font style="vertical-align: inherit;">주문날짜</font>
+//           </font>
+//         </th>
+//         <th scope="col">
+//           <font style="vertical-align: inherit;">
+//             <font style="vertical-align: inherit;">주문자</font>
+//           </font>
+//         </th>
+//         <th scope="col">
+//           <font style="vertical-align: inherit;">
+//             <font style="vertical-align: inherit;">주문정보</font>
+//           </font>
+//         </th>
+//         <th scope="col">
+//           <font style="vertical-align: inherit;">
+//             <font style="vertical-align: inherit;">주문총액</font>
+//           </font>
+//         </th>
+//         <th scope="col">
+//           <font style="vertical-align: inherit;">
+//             <font style="vertical-align: inherit;">상태관리</font>
+//           </font>
+//         </th>
+//         <th scope="col">
+//           <font style="vertical-align: inherit;">
+//             <font style="vertical-align: inherit;">취소</font>
+//           </font>
+//         </th>
+//       </tr>
+//     </thead>
+
+//     <tbody>
+//       <tr>
+//         <th scope="row">
+//           <font style="vertical-align: inherit;">
+//             <font style="vertical-align: inherit;">2020-01-01</font>
+//           </font>
+//         </th>
+//         <td>
+//           <font style="vertical-align: inherit;">
+//             <font style="vertical-align: inherit;">청바지, 폰케이스</font>
+//           </font>
+//         </td>
+//         <td>
+//           <font style="vertical-align: inherit;">
+//             <font style="vertical-align: inherit;">장미유</font>
+//           </font>
+//         </td>
+//         <td>
+//           <font style="vertical-align: inherit;">
+//             <font style="vertical-align: inherit;">30000</font>
+//           </font>
+//         </td>
+//         <td>
+//         <div class="dropdown">
+//           <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+//             수정하기
+//           </a>
+
+//           <ul class="dropdown-menu">
+//             <li><a class="dropdown-item" href="#">배송전</a></li>
+//             <li><a class="dropdown-item" href="#">배송중</a></li>
+//             <li><a class="dropdown-item" href="#">배송완료</a></li>
+//           </ul>
+//         </div>
+//         </td>
+//         <td>
+//           <button type="button" class="btn btn-outline-danger">삭제하기</button>
+//         </td>
+//       </tr>
+
+//       <tr>
+//         <th scope="row">
+//           <font style="vertical-align: inherit;">
+//             <font style="vertical-align: inherit;">2</font>
+//           </font>
+//         </th>
+//         <td>
+//           <font style="vertical-align: inherit;">
+//             <font style="vertical-align: inherit;">야곱</font>
+//           </font>
+//         </td>
+//         <td>
+//           <font style="vertical-align: inherit;">
+//             <font style="vertical-align: inherit;">손튼</font>
+//           </font>
+//         </td>
+//         <td>
+//           <font style="vertical-align: inherit;">
+//             <font style="vertical-align: inherit;">@지방</font>
+//           </font>
+//         </td>
+//       </tr>
+
+//     </tbody>
+//   </table>`;
+// }
 
 function innerUserManagement(name) {
   return `<!--${name}리스트-->
