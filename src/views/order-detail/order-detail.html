@@ -37,18 +37,25 @@
     <div id="order-detail__wrap"></div>
 
     <!-- 주문 수정 / 삭제 옵션 -->
-    <div id="order__options__wrap">
+    <div
+      id="order__options__wrap"
+      class="btn-group"
+      role="group"
+      aria-label="Basic example"
+    >
       <button
-        class="order__options__option"
         id="order__options__option__edit-btn"
+        type="button"
+        class="btn btn-warning order__options__option"
         data-bs-toggle="modal"
         data-bs-target="#order-edit__modal"
       >
         주문 정보 수정
       </button>
       <button
-        class="order__options__option"
         id="order__options__option__cancel-btn"
+        type="button"
+        class="btn btn-danger order__options__option"
       >
         주문 취소
       </button>

@@ -10,8 +10,9 @@ const oid = path.split("/")[4];
 console.log(oid);
 
 fetch(`/api/orders/${oid}`)
-  .then((res) => {
-    const json = res.json();
+  .then(async (res) => {
+    const json = await res.json();
+
     if (res.ok) {
       return json;
     }
@@ -40,49 +41,62 @@ fetch(`/api/orders/${oid}`)
 // order-content 렌더
 function renderOrderContent(order) {
   return `
-    <div class="order-detail__order-content__wrap">
-      <label class="order-detail__order-content__label">구매자</label>
-      <div class="order-detail__order-content">${order.buyer.name}</div>
+    <h2 class="order-detail__title">주문상세</h2>
+    <div class="order-detail__order-content__outer-wrap card">
+      <div class="order-detail__order-content__wrap">
+        <div class="order-detail__order-content order-detail__underline"><h6>
+          주문일  ${order.createdAt.slice(0, 10)}
+        </h6></div>
+      </div>
+      <div class="order-detail__order-content__wrap">
+        <div class="order-detail__order-content" id="order-detail__order-content__shipping-status__wrap">
+          <h4 id="shipping-ready" class="shipping-status">배송전</h4><h5> > </h5><h4 id="shipping-ongoing" class="shipping-status">배송중</h4><h5> > </h5><h4 id="shipping-finished" class="shipping-status">배송완료</h4>
+        </div>
+      </div>
+      <div class="order-detail__order-content__wrap" id="order-detail__order-content__product-info__wrap">
+        <label id="order-history" class="order-detail__order-content__label">주문 내역</label>
+        <div
+          class="order-detail__order-content card"
+          id="order-detail__order-content__product-info"
+        ></div>
+      </div>
+      <div class="order-detail__order-content__wrap">
+        <label class="order-detail__order-content__label">총 결제금액</label>
+        <div class="order-detail__order-content">
+          ${Number(order.totalAmount).toLocaleString()} 원
+        </div>
+      </div>
     </div>
-    <div class="order-detail__order-content__wrap">
-      <label class="order-detail__order-content__label">구매 상품</label>
-      <div
-        class="order-detail__order-content"
-        id="order-detail__order-content__product-info"
-      ></div>
+    <h5 class="order-detail__title">받는사람 정보</h5>
+    <div class="order-detail__order-content__outer-wrap card">
+      <div class="order-detail__order-content__wrap">
+        <label class="order-detail__order-content__label">받는사람</label>
+        <div class="order-detail__order-content order-detail__underline">
+          ${order.recipientName}
+        </div>
+      </div>
+      <div class="order-detail__order-content__wrap">
+        <label class="order-detail__order-content__label">연락처</label>
+        <div class="order-detail__order-content order-detail__underline">
+          ${order.recipientPhoneNumber}
+        </div>
+      </div>
+      <div class="order-detail__order-content__wrap">
+        <label class="order-detail__order-content__label">주소</label>
+        <div class="order-detail__order-content order-detail__underline">
+          (${order.shippingPostCode})
+          ${order.shippingStreetAddress}
+          ${order.shippingExtraAddress}
+        </div>
+      </div>
+      <div class="order-detail__order-content__wrap">
+        <label class="order-detail__order-content__label">배송 요청사항</label>
+        <div class="order-detail__order-content order-detail__underline">
+          ${order.shippingRequestMessage}
+        </div>
+      </div>
     </div>
-    <div class="order-detail__order-content__wrap">
-      <label class="order-detail__order-content__label">총액</label>
-      <div class="order-detail__order-content">${order.totalAmount}</div>
-    </div>
-    <div class="order-detail__order-content__wrap">
-      <label class="order-detail__order-content__label">배송 상태</label>
-      <div class="order-detail__order-content">${order.shippingStatus}</div>
-    </div>
-    <div class="order-detail__order-content__wrap">
-      <label class="order-detail__order-content__label">배송지 우편번호</label>
-      <div class="order-detail__order-content">${order.shippingPostCode}</div>
-    </div>
-    <div class="order-detail__order-content__wrap">
-      <label class="order-detail__order-content__label">배송지 도로명주소</label>
-      <div class="order-detail__order-content">${order.shippingStreetAddress}</div>
-    </div>
-    <div class="order-detail__order-content__wrap">
-      <label class="order-detail__order-content__label">배송지 상세주소</label>
-      <div class="order-detail__order-content">${order.shippingExtraAddress}</div>
-    </div>
-    <div class="order-detail__order-content__wrap">
-      <label class="order-detail__order-content__label">수령인 이름</label>
-      <div class="order-detail__order-content">${order.recipientName}</div>
-    </div>
-    <div class="order-detail__order-content__wrap">
-      <label class="order-detail__order-content__label">수령인 연락처</label>
-      <div class="order-detail__order-content">${order.recipientPhoneNumber}</div>
-    </div>
-    <div class="order-detail__order-content__wrap">
-      <label class="order-detail__order-content__label">요청사항</label>
-      <div class="order-detail__order-content">${order.shippingRequestMessage}</div>
-    </div>`;
+    `;
 }
 
 // order-content 중 product-info 렌더
@@ -92,14 +106,42 @@ function renderOrderProduct(order, productInfo) {
     productItem.classList.add(
       "order-detail__order-content__product-info__product-item"
     );
-    productItem.innerText = `${order.productList[i].name} ${order.countList[i]} 개`;
-
     productInfo.appendChild(productItem);
+
+    const productItemSmallImageURL = document.createElement("img");
+    productItemSmallImageURL.classList.add(
+      "order-detail__order-content__product-info__product-item__product-content"
+    );
+    productItemSmallImageURL.setAttribute("id", "order-detail__product-image");
+    productItemSmallImageURL.src = order.productList[i].smallImageURL;
+    productItem.appendChild(productItemSmallImageURL);
+
+    const productItemName = document.createElement("div");
+    productItemName.classList.add(
+      "order-detail__order-content__product-info__product-item__product-content"
+    );
+    productItemName.innerText = `${order.productList[i].name} ${order.countList[i]} 개`;
+    productItem.appendChild(productItemName);
+
+    const productItemPrice = document.createElement("div");
+    productItemPrice.classList.add(
+      "order-detail__order-content__product-info__product-item__product-content"
+    );
+    productItemPrice.innerText = `${Number(
+      order.productList[i].price
+    ).toLocaleString()} 원 x ${order.countList[i]} = ${(
+      Number(order.productList[i].price) * Number(order.countList[i])
+    ).toLocaleString()} 원`;
+    productItem.appendChild(productItemPrice);
   }
 }
 
 function checkOrderShippingStatus(order) {
-  if (order.shippingStatus !== "배송전") {
+  const shippingStatus = order.shippingStatus;
+  if (shippingStatus === "배송전") {
+    document.getElementById("shipping-ready").style.color = "black";
+    document.getElementById("shipping-ready").style.fontSize = "32px";
+  } else {
     const orderEditBtn = document.getElementById(
       "order__options__option__edit-btn"
     );
@@ -111,6 +153,14 @@ function checkOrderShippingStatus(order) {
     orderEditBtn.title = "배송이 시작되어 주문 정보를 수정할 수 없습니다.";
     orderCancelBtn.disabled = true;
     orderCancelBtn.title = "배송이 시작되어 주문을 취소할 수 없습니다.";
+
+    if (shippingStatus === "배송중") {
+      document.getElementById("shipping-ongoing").style.color = "black";
+      document.getElementById("shipping-ongoing").style.fontSize = "32px";
+    } else if (shippingStatus === "배송완료") {
+      document.getElementById("shipping-finished").style.color = "black";
+      document.getElementById("shipping-finished").style.fontSize = "32px";
+    }
   }
 }
 
@@ -174,8 +224,8 @@ orderEditSumbitBtn.addEventListener("click", (event) => {
       recipientPhoneNumber,
     }),
   })
-    .then((res) => {
-      const json = res.json();
+    .then(async (res) => {
+      const json = await res.json();
       if (res.ok) {
         return json;
       }
@@ -183,6 +233,7 @@ orderEditSumbitBtn.addEventListener("click", (event) => {
     })
     .then((order) => {
       // 수정된 Order 정보로 새로 그려주기
+      alert("수정이 완료되었습니다.");
       const orderDetailWrap = document.getElementById("order-detail__wrap");
       orderDetailWrap.innerHTML = "";
       orderDetailWrap.innerHTML += renderOrderContent(order);
@@ -190,7 +241,9 @@ orderEditSumbitBtn.addEventListener("click", (event) => {
       const productInfo = document.getElementById(
         "order-detail__order-content__product-info"
       );
+
       renderOrderProduct(order, productInfo);
+      checkOrderShippingStatus(order);
 
       //모달창이 닫히는 기능
       document.getElementsByTagName("body")[0].className = "";
@@ -210,25 +263,27 @@ const orderCancelBtn = document.getElementById(
 
 orderCancelBtn.addEventListener("click", (e) => {
   console.log("주문 취소 버튼 클릭");
-  fetch(`/api/orders/${oid}`, {
-    method: "DELETE",
-  })
-    .then(async (res) => {
-      const json = await res.json();
-
-      if (res.ok) {
-        return json;
-      }
-
-      return Promise.reject(json);
+  if (window.confirm("주문을 취소하시겠습니까?")) {
+    fetch(`/api/orders/${oid}`, {
+      method: "DELETE",
     })
-    .then((data) => {
-      alert("주문 취소 완료(주문 내역에서 삭제됨)");
-      location.href = "/orders/list/";
-    })
-    .catch((e) => {
-      alert(e);
-    });
+      .then(async (res) => {
+        const json = await res.json();
+
+        if (res.ok) {
+          return json;
+        }
+
+        return Promise.reject(json);
+      })
+      .then((data) => {
+        alert("주문 취소가 완료되었습니다.");
+        location.href = "/orders/list/";
+      })
+      .catch((e) => {
+        alert(e);
+      });
+  }
 });
 
 // 주소 검색 기능
