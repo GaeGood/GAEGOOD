@@ -42,18 +42,10 @@ class UserService {
   }
 
   async editUser(uid, userInfo) {
-    const { password, name, address, phoneNumber, postCode, extraAddress } = userInfo;
     const saltRound = parseInt(process.env.SALT_ROUND) || 10;
     try {
       const hashPassword = await bcrypt.hash(password, saltRound);
-      const updatedUser = await userModel.update(uid, {
-        name,
-        password: hashPassword,
-        address,
-        phoneNumber,
-        postCode,
-        extraAddress,
-      });
+      const updatedUser = await userModel.update(uid, userInfo);
       return updatedUser;
     } catch (err) {
       const error = new Error(

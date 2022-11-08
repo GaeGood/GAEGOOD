@@ -4,12 +4,9 @@ import { userModel } from "../db";
 async function loginRequired(req, res, next) {
   const token = req.cookies.jwt_token;
   if (!token) {
-    return res.json({
-      resCode: 403,
-      resMsg: {
-        msg: "토큰이 존재하지 않습니다.",
-      },
-    });
+    const e = new Error("토큰이 존재하지 않습니다.");
+    e.statusCode = 403;
+    next(e);
   }
 
   try {
@@ -19,12 +16,9 @@ async function loginRequired(req, res, next) {
     req.loggedInUser = user;
     next();
   } catch (err) {
-    return res.json({
-      resCode: 403,
-      resMsg: {
-        msg: err,
-      },
-    });
+    const e = new Error("JWT 토큰이 존재하지만, 검증에 실패했습니다.");
+    e.statusCode = 403;
+    next(e);
   }
 }
 export { loginRequired };

@@ -43,7 +43,7 @@ class OrderController {
     }
   }
 
-  async getOrderList(req, res) {
+  async getOrderList(req, res, next) {
     if (Object.keys(req.query).length === 0) {
       const orderList = await orderService.getOrderList();
       return res.json(orderList);
@@ -51,11 +51,16 @@ class OrderController {
       const { oid } = req.query;
 
       if (!oid) {
-        return res.json("에러, 쿼리 스트링에 oid이 존재해야 함");
+        return res.status(400).json("에러, 쿼리 스트링에 oid이 존재해야 함");
       }
-      const oidArr = oid.split(",");
-      const orderList = await orderService.getOrderList(oidArr);
-      return res.status(200).json(orderList);
+
+      try {
+        const oidArr = oid.split(",");
+        const orderList = await orderService.getOrderList(oidArr);
+        return res.status(200).json(orderList);
+      } catch (e) {
+        next(e);
+      }
     }
   }
 
@@ -74,21 +79,15 @@ class OrderController {
     }
   }
 
-  async editOrder(req, res) {
+  async editOrder(req, res, next) {
     const { oid } = req.params;
-    const { shippingAddress, recipientName, recipientPhoneNumber } = req.body;
 
-    if (!shippingAddress || !recipientName || !recipientPhoneNumber) {
-      return res.status(400).json("입력 데이터 부족");
+    try {
+      const updatedOrder = await orderService.editOrder(oid, req.body);
+      return res.status(200).json(updatedOrder);
+    } catch (e) {
+      next(e);
     }
-
-    const updatedOrder = await orderService.editOrder(oid, {
-      shippingAddress,
-      recipientName,
-      recipientPhoneNumber,
-    });
-
-    return res.status(200).json(updatedOrder);
   }
 
   async removeOrder(req, res, next) {
@@ -96,7 +95,7 @@ class OrderController {
 
     try {
       await orderService.removeOrder(oid);
-      res.status(200).json(`상품 삭제 완료(ID : ${oid})`);
+      return res.status(200).json(`상품 삭제 완료(ID : ${oid})`);
     } catch (e) {
       next(e);
     }

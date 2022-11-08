@@ -18,38 +18,54 @@ class CategoryContoller {
     }
   }
 
-  async getCategoryList(req, res) {
-    const categoryList = await categoryService.getCategoryList();
-    return res.status(200).json(categoryList);
+  async getCategoryList(req, res, next) {
+    try {
+      const categoryList = await categoryService.getCategoryList();
+      return res.status(200).json(categoryList);
+    } catch (e) {
+      next(e);
+    }
   }
 
-  async getCategoryById(req, res) {
+  async getCategoryById(req, res, next) {
     const { cid } = req.params;
 
-    const Category = await categoryService.getCategoryById(cid);
-    res.status(200).json(Category);
+    try {
+      const Category = await categoryService.getCategoryById(cid);
+      return res.status(200).json(Category);
+    } catch (e) {
+      next(e);
+    }
   }
 
-  async getCategoryByName(req, res) {
+  async getCategoryByName(req, res, next) {
     const name = req.query.category;
 
-    const Category = await categoryService.getCategoryByName(name);
-    res.status(200).json(Category);
+    try {
+      const Category = await categoryService.getCategoryByName(name);
+      res.status(200).json(Category);
+    } catch (e) {
+      next(e);
+    }
   }
 
-  async editCategory(req, res) {
+  async editCategory(req, res, next) {
     const { cid } = req.params;
     const { name } = req.body;
 
     if (!name) {
-      return res.status(200).json("입력 데이터 부족");
+      return res.status(400).json("입력 데이터 부족");
     }
 
-    const updatedCategory = await categoryService.editCategory(cid, {
-      name,
-    });
+    try {
+      const updatedCategory = await categoryService.editCategory(cid, {
+        name,
+      });
 
-    return res.status(200).json(updatedCategory);
+      return res.status(200).json(updatedCategory);
+    } catch (e) {
+      next(e);
+    }
   }
 
   async removeCategory(req, res, next) {
