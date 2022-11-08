@@ -158,3 +158,7 @@ h2.order-detail__title {
 #shipping-cancel {
   color: #ed4c67;
 }
+
+.address__search {
+  margin: 5px;
+}
