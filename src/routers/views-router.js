@@ -12,6 +12,9 @@ viewsRouter.use("/", serveStatic("home"));
 viewsRouter.use("/join", serveStatic("join"));
 viewsRouter.use("/cart", serveStatic("cart"));
 
+// admin
+viewsRouter.use("/admin-page", serveStatic("admin-page"))
+
 // users
 viewsRouter.use("/users/mypage", serveStatic("user-mypage"));
 viewsRouter.use("/users/:uid/edit", serveStatic("user-edit"));

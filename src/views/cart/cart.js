@@ -9,10 +9,11 @@ const total__sum = document.querySelector(".total__sum");
 const order__button__container = document.querySelector(
   ".order__button__container"
 );
-const orderButton__User = `<button type="button" class="order__button__user"><a href="/orders?write=true">주문서 작성</a></button>`;
+const orderButton__User = `<button type="button" class="order__button__user"><a href="/orders/create">주문서 작성</a></button>`;
 const orderButton__Any = `  <button data-bs-toggle="modal" data-bs-target="#modalLogin">
     주문서 작성
   </button>`;
+// const idObject = { id: id, amount: productAmountNum };
 
 if (loggedInUser) {
   order__button__container.innerHTML = orderButton__User;
@@ -24,6 +25,8 @@ const DATABASE_NAME = "cartDB";
 const version = 1;
 const objectStore = "cartStorage";
 let checkedCount = 0;
+let totalAmount = 0;
+let totalPrice = 0;
 /* 데이터 렌더링 */
 getAllIndexedDB(DATABASE_NAME, version, objectStore, function (dataList) {
   //dataList === response.target.result
@@ -53,7 +56,6 @@ function getAllIndexedDB(DATABASE_NAME, version, objectStore, cb) {
 }
 /* 해당 indexedDB에 존재하는 모든 key 조회하기 */
 function getAllKeysIndexedDB(DATABASE_NAME, version, objectStore, cb) {
-  // getAllKeysIndexedDB 함수를 완성해주세요.
   if (window.indexedDB) {
     const request = indexedDB.open(DATABASE_NAME, version);
     request.onerror = function (event) {
@@ -112,16 +114,16 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
     const cart__amount__btn__container = document.querySelector(
       ".cart__amount__btn__container"
     );
-    /* cart__plus__button  button */
-    cartPlusBtn.classList.add("cart__plus__button");
-    cart__amount__btn__container.prepend(cartPlusBtn);
-    const cart__plus__button = document.querySelector(".cart__plus__button");
-    cart__plus__button.textContent = "-";
-    /* cart__minus__button button */
+    /* cart__minus__button  button */
     cartMinusBtn.classList.add("cart__minus__button");
-    cart__amount__btn__container.appendChild(cartMinusBtn);
+    cart__amount__btn__container.prepend(cartMinusBtn);
     const cart__minus__button = document.querySelector(".cart__minus__button");
-    cart__minus__button.textContent = "+";
+    cart__minus__button.textContent = "-";
+    /* cart__plus__button button */
+    cartPlusBtn.classList.add("cart__plus__button");
+    cart__amount__btn__container.appendChild(cartPlusBtn);
+    const cart__plus__button = document.querySelector(".cart__plus__button");
+    cart__plus__button.textContent = "+";
 
     /* cart__delete__button 컨테이너 button */
     cartDeleteBtn.classList.add("cart__delete__button");
@@ -146,18 +148,20 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
     cart__detail.appendChild(cartPrice);
     /* 수량 */
     cartAmount.classList.add("cart__amount");
-    cart__amount__btn__container.insertBefore(cartAmount, cart__minus__button);
+    cart__amount__btn__container.insertBefore(cartAmount, cart__plus__button);
 
     getAllKeysIndexedDB(DATABASE_NAME, version, objectStore, function (keys) {
-      const cartProductId = keys[i]; // posts ObjectStore에 있는 Key를 id로 사용해보세요.
+      const cartProductId = keys[i];
+
       /* 상품 상제정보 불러오기*/
       fetch(`/api/products/${cartProductId}`)
         .then((res) => res.json())
         .then((product) => {
-          addProduct(product, i, cartProductId);
+          addProduct(product, i, cartProductId, dataList[i]);
         })
         .catch((err) => alert(err.message));
     });
+
     /* 장바구니 상품 삭제 버튼 클릭 이벤트 */
     cart__delete__button.addEventListener("click", (e) => {
       const targetId = e.target.id;
@@ -213,8 +217,6 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
         }
       });
 
-      // console.log(deleteTarget);
-
       /* indexedDB와 화면에서 삭제함*/
       deleteTarget.forEach((target) => {
         const deleteTarget = `container-${target}`;
@@ -222,10 +224,62 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
         document.querySelector(`#${deleteTarget}`).remove();
       });
     });
+    /* 상품 수량 +, - 클릭 이벤트*/
+    /* 수량 증가 클릭 이벤트 */
+    cart__plus__button.addEventListener("click", (e) => {
+      const targetId = e.target.id;
+      const productId = targetId.substring(5);
+      let productAmountNum = parseInt(cartAmount.textContent);
+      productAmountNum += 1;
+      cartAmount.textContent = productAmountNum;
+      const plus = "plus";
+      updateIndexedDB(
+        DATABASE_NAME,
+        version,
+        objectStore,
+        productId,
+        plus,
+        cartAmount,
+        productAmountNum
+      );
+    });
+    /* 수량 감소 버튼 클릭 이벤트 */
+    cart__minus__button.addEventListener("click", (e) => {
+      const targetId = e.target.id;
+      const productId = targetId.substring(6);
+      let productAmountNum = parseInt(cartAmount.textContent);
+      productAmountNum -= 1;
+      if (productAmountNum <= 1) {
+        productAmountNum = 1;
+      }
+      cartAmount.textContent = productAmountNum;
+      const minus = "minus";
+      updateIndexedDB(
+        DATABASE_NAME,
+        version,
+        objectStore,
+        productId,
+        minus,
+        cartAmount,
+        productAmountNum
+      );
+    });
+
+    /* 결제 금액 컨테이너 */
+    /* total__amount 총 수량 */
+    let amountValue = dataList[i].amount;
+    totalAmount += amountValue;
+    total__amount.textContent = totalAmount;
+    /* total__amount 총 수량 */
+    // let priceValue = dataList[i].price;
+    // console.log(priceValue);
+    // totalPrice += priceValue;
+    // total__price.textContent = totalPrice;
   }
 }
+
 // home에서 클릭한 제품의 상세 내용 html에 렌더링하는 함수
-function addProduct(product, idx, cartProductId) {
+function addProduct(product, idx, cartProductId, data) {
   //리팩토링! 한 번만 호출할 수 있도록 for문 위에다 선언하고 불러올수 있게 고쳐보자.
   const cartImage = document.querySelectorAll(".cart__detail__image");
   const cartName = document.querySelectorAll(".cart__detail__name");
@@ -236,6 +290,8 @@ function addProduct(product, idx, cartProductId) {
   const cart__delete__button = document.querySelectorAll(
     ".cart__delete__button"
   );
+  const cart__plus__button = document.querySelectorAll(".cart__plus__button");
+  const cart__minus__button = document.querySelectorAll(".cart__minus__button");
   /* 상품 컨테이너 */
   cart__list__top[idx].id = `container-${cartProductId}`;
   /* 삭제 체크박스 */
@@ -249,8 +305,13 @@ function addProduct(product, idx, cartProductId) {
   cartName[idx].innerHTML = product.name;
   /* 가격 */
   cartPrice[idx].innerHTML = `${product.price} 원`;
+  /* plus 버튼 */
+  cart__plus__button[idx].id = `plus-${cartProductId}`;
+  /* minus 버튼 */
+  cart__minus__button[idx].id = `minus-${cartProductId}`;
   /* 수량 */
-  cartAmount[idx].textContent = 1;
+  cartAmount[idx].textContent = data.amount;
+
   cartImage.src = product.smallImageURL;
 }
 
@@ -271,5 +332,89 @@ function deleteIndexedDBdata(DATABASE_NAME, version, objectStore, targetId) {
     };
   } else {
     alert("해당 브라우저에서는 indexedDB를 지원하지 않습니다.");
+  }
+}
+
+/* 해당 indexedDB에 존재하는 특정 데이터 조회하기 */
+
+function getIndexedDB(DATABASE_NAME, version, objectStore, productId, cb) {
+  if (window.indexedDB) {
+    const request = indexedDB.open(DATABASE_NAME, version);
+    const key = productId;
+    request.onerror = function (event) {
+      console.log(event.target.errorCode);
+      alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
+    };
+    request.onsuccess = function () {
+      const db = request.result;
+      const transaction = db.transaction(objectStore, "readonly");
+      const store = transaction.objectStore(objectStore);
+      store.get(key).onsuccess = function (response) {
+        const resultData = response.target.result;
+        cb(response.target.result);
+      };
+
+      store.get(key).onerror = function () {
+        alert("indexedDB의 key를 가져오는데 실패했습니다.");
+      };
+    };
+  } else {
+    alert("해당 브라우저에서는 indexedDB를 지원하지 않습니다.");
+  }
+}
+
+/* 수량 증감에 따른 indexedDB amonut 수정 */
+function updateIndexedDB(
+  DATABASE_NAME,
+  version,
+  objectStore,
+  productId,
+  operation,
+  cartAmount,
+  productAmountNum
+) {
+  if (window.indexedDB) {
+    const request = indexedDB.open(DATABASE_NAME, version);
+    const key = productId;
+    getIndexedDB(DATABASE_NAME, version, objectStore, key, function (data) {
+      if (data.id === key) {
+        cartAmount.textContent = data.amount;
+        productAmountNum = parseInt(cartAmount.textContent);
+      }
+    });
+
+    request.onerror = function (event) {
+      console.log(event.target.errorCode);
+      alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
+    };
+    request.onsuccess = function () {
+      const db = request.result;
+      const transaction = db.transaction(objectStore, "readwrite");
+      transaction.onerror = function (e) {
+        console.log("fail");
+      };
+      transaction.oncomplete = function (e) {
+        console.log("success");
+      };
+      const store = transaction.objectStore(objectStore);
+
+      store.get(key).onsuccess = function (response) {
+        const value = response.target.result;
+        value.amount = parseInt(cartAmount.textContent);
+        store.put(value).onsuccess = function () {
+          //cartAmount.textContent = value.amount;
+          if (operation === "plus") {
+            productAmountNum -= 1;
+            cartAmount.textContent = productAmountNum;
+          } else if (operation === "minus") {
+            productAmountNum += 1;
+            cartAmount.textContent = productAmountNum;
+          }
+        };
+      };
+      store.get(key).onerror = function () {
+        alert("indexedDB의 key를 가져오는데 실패했습니다.");
+      };
+    };
   }
 }

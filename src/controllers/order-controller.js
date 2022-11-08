@@ -2,7 +2,7 @@ import { orderService } from "../services";
 
 class OrderController {
   async addOrder(req, res, next) {
-    const {
+    let {
       buyer,
       productList,
       countList,
@@ -16,6 +16,12 @@ class OrderController {
       recipientPhoneNumber,
     } = req.body;
 
+    productList = productList.split(",")
+    countList = countList.split(",")
+
+    console.log("req.body");
+    console.log(req.body);
+
     if (
       !buyer ||
       !productList ||
@@ -24,7 +30,6 @@ class OrderController {
       !shippingPostCode ||
       !shippingStreetAddress ||
       !shippingExtraAddress ||
-      !shippingRequestMessage ||
       !totalAmount ||
       !recipientName ||
       !recipientPhoneNumber
@@ -90,7 +95,6 @@ class OrderController {
       !shippingPostCode ||
       !shippingStreetAddress ||
       !shippingExtraAddress ||
-      !shippingRequestMessage ||
       !recipientName ||
       !recipientPhoneNumber
     ) {
