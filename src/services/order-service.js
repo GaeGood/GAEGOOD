@@ -7,11 +7,18 @@ class OrderService {
       productList,
       countList,
       shippingStatus,
-      shippingAddress,
+      shippingPostCode,
+      shippingStreetAddress,
+      shippingExtraAddress,
+      shippingRequestMessage,
       totalAmount,
       recipientName,
       recipientPhoneNumber,
     } = orderInfo;
+
+    if (productList.length !== countList.length) {
+      throw new Error("상품의 갯수와 수량의 갯수가 다릅니다.");
+    }
 
     const createdNewOrder = await orderModel.create(orderInfo);
     return createdNewOrder;
@@ -33,7 +40,14 @@ class OrderService {
   }
 
   async editOrder(oid, orderInfo) {
-    const { shippingAddress, recipientName, recipientPhoneNumber } = orderInfo;
+    const {
+      shippingPostCode,
+      shippingStreetAddress,
+      shippingExtraAddress,
+      shippingRequestMessage,
+      recipientName,
+      recipientPhoneNumber,
+    } = orderInfo;
 
     const updatedNewOrder = await orderModel.update(oid, orderInfo);
     return updatedNewOrder;

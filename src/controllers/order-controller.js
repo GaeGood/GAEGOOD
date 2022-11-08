@@ -1,13 +1,16 @@
 import { orderService } from "../services";
 
 class OrderController {
-  async addOrder(req, res) {
+  async addOrder(req, res, next) {
     const {
       buyer,
       productList,
       countList,
       shippingStatus,
-      shippingAddress,
+      shippingPostCode,
+      shippingStreetAddress,
+      shippingExtraAddress,
+      shippingRequestMessage,
       totalAmount,
       recipientName,
       recipientPhoneNumber,
@@ -18,7 +21,10 @@ class OrderController {
       !productList ||
       !countList ||
       !shippingStatus ||
-      !shippingAddress ||
+      !shippingPostCode ||
+      !shippingStreetAddress ||
+      !shippingExtraAddress ||
+      !shippingRequestMessage ||
       !totalAmount ||
       !recipientName ||
       !recipientPhoneNumber
@@ -26,18 +32,24 @@ class OrderController {
       return res.json("입력 데이터 부족");
     }
 
-    const createdNewOrder = await orderService.addOrder({
-      buyer,
-      productList,
-      countList,
-      shippingStatus,
-      shippingAddress,
-      totalAmount,
-      recipientName,
-      recipientPhoneNumber,
-    });
-
-    return res.json(createdNewOrder);
+    try {
+      const createdNewOrder = await orderService.addOrder({
+        buyer,
+        productList,
+        countList,
+        shippingStatus,
+        shippingPostCode,
+        shippingStreetAddress,
+        shippingExtraAddress,
+        shippingRequestMessage,
+        totalAmount,
+        recipientName,
+        recipientPhoneNumber,
+      });
+      return res.status(200).json(createdNewOrder);
+    } catch (e) {
+      next(e);
+    }
   }
 
   async getOrderList(req, res) {
@@ -65,14 +77,31 @@ class OrderController {
 
   async editOrder(req, res) {
     const { oid } = req.params;
-    const { shippingAddress, recipientName, recipientPhoneNumber } = req.body;
+    const {
+      shippingPostCode,
+      shippingStreetAddress,
+      shippingExtraAddress,
+      shippingRequestMessage,
+      recipientName,
+      recipientPhoneNumber,
+    } = req.body;
 
-    if (!shippingAddress || !recipientName || !recipientPhoneNumber) {
+    if (
+      !shippingPostCode ||
+      !shippingStreetAddress ||
+      !shippingExtraAddress ||
+      !shippingRequestMessage ||
+      !recipientName ||
+      !recipientPhoneNumber
+    ) {
       return res.json("입력 데이터 부족");
     }
 
     const updatedOrder = await orderService.editOrder(oid, {
-      shippingAddress,
+      shippingPostCode,
+      shippingStreetAddress,
+      shippingExtraAddress,
+      shippingRequestMessage,
       recipientName,
       recipientPhoneNumber,
     });
