@@ -293,25 +293,25 @@ function payBtnClick() {
       return Promise.reject(json);
     })
     .then((data) => {
-      // data.productList.forEach((product) => {
-      //   deleteIndexedDBdata(DATABASE_NAME, version, objectStore, product)
-      // })
+      data.productList.forEach((product) => {
+        deleteIndexedDBdata(DATABASE_NAME, version, objectStore, product)
+      })
 
       alert("결제 및 주문이 정상적으로 완료되었습니다.\n감사합니다.");
-      // window.location.href = "/"
+      window.location.href = "/"
       console.log('post보내기전 data',{
-  buyer: `${_id}`,
-  productList: `${productAllIdArr}`,
-  countList: `${productAllAmountArr}`,
-  shippingStatus: "배송전",
-  shippingPostCode: `${userPostCode.value}`,
-  shippingStreetAddress: `${userStreetAddress.value}`,
-  shippingExtraAddress: `${userExterAddress.value}`,
-  shippingRequestMessage: `${request}`,
-  totalAmount: `${totalPriceHTML.innerHTML}`,
-  recipientName: `${userName.value}`,
-  recipientPhoneNumber: `${userPhoneNumber.value}`,
-})
+          buyer: `${_id}`,
+          productList: `${productAllIdArr}`,
+          countList: `${productAllAmountArr}`,
+          shippingStatus: "배송전",
+          shippingPostCode: `${userPostCode.value}`,
+          shippingStreetAddress: `${userStreetAddress.value}`,
+          shippingExtraAddress: `${userExterAddress.value}`,
+          shippingRequestMessage: `${request}`,
+          totalAmount: `${totalPriceHTML.innerHTML}`,
+          recipientName: `${userName.value}`,
+          recipientPhoneNumber: `${userPhoneNumber.value}`,
+        })
       console.log('post보낸 후 data',data)
 
     })
