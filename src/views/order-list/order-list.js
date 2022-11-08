@@ -22,7 +22,11 @@ orderList.forEach((order) => {
   const orderDay = order.createdAt.split("T")[0];
   const shippingStatus = order.shippingStatus;
 
-  console.log("order : ", order);
+  orderContents.innerHTML += `<a href="/orders/${orderId}" >
+        <div class="card-header">${orderDay} 주문</div>
+        <div class="order__${orderId}" style='display:flex'></div>
+        </a>`;
+
   for (let i = 0; i < countList.length; i++) {
     fetch(`/api/products/${productIdList[i]}`)
       .then(async (res) => {
@@ -36,14 +40,12 @@ orderList.forEach((order) => {
         const productName = product.name;
         const productImg = product.smallImageURL;
         const productPrice = product.price;
-        console.log("fetch안 ");
-
-        orderContents.innerHTML += `<a href="/orders/${orderId}" class="order__${orderId}">
-        <div class="card-header">${orderDay} 주문</div>
-        </a>`;
+        // 여기서부터 복붙
 
         const dateOrder = document.querySelector(`.order__${orderId}`);
+
         dateOrder.innerHTML += `
+        <div>
                 <span class="card-body">
                   <div class="product__picture">
                     <img src=${productImg} class="product__image"/>
@@ -53,13 +55,16 @@ orderList.forEach((order) => {
                     <span class="card-text">${productPrice}원</span>
                     <span class="card-text">${countList[i]}개</span>
                   </div>
-                  <div class="etc__zone">
-                    <div>${shippingStatus}</div>
-                    <button href="#" class="btn btn-primary">
-                    주문취소
-                    </button>
-                  </div>
-                </span>`;
+                </span>
+        </div>`;
+        //<div>
+        // <div class="etc__zone">
+        //   <div>${shippingStatus}</div>
+        //   <button href="#" class="btn btn-primary">
+        //     주문상세
+        //   </button>
+        // </div>
+        //</div>
 
         //   orderContents.innerHTML += `<a href="/orders/${orderId}" class="order">
         //   <div class="card-header">${orderDay} 주문</div>
@@ -83,6 +88,17 @@ orderList.forEach((order) => {
       })
       .catch((err) => alert(err));
   }
+  const dateOrder = document.querySelector(`.order__${orderId}`);
+  dateOrder.innerHTML += `
+        <div>
+        <div class="etc__zone">
+          <div>${shippingStatus}</div>
+          <button href="#" class="btn btn-primary">
+            주문상세
+          </button>
+        </div>
+        </div>
+  `;
 });
 
 const deleteUserBtn = document.querySelector(".user__delete");
