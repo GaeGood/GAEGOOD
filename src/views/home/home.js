@@ -7,9 +7,7 @@ const categoryWrap = document.getElementById("category__wrap");
 const createCategory = (category) => {
   return `
         <li class="nav-item category">
-          <button class="btn__${category.name}">
-            <a class="nav-link" href="#">${category.name}</a>
-          </button>
+          <a class="nav-link" href="#">${category.name}</a>
         </li>`;
 };
 
@@ -69,19 +67,16 @@ fetch("/api/products")
     return productList;
   }) //카테고리를 누르는것에 따라서 카테고리별 상품 이미지 띄우기
   .then((productList) => {
-    const categoryList = document.querySelectorAll(".nav-item.category");
-    console.log("categoryList");
-    console.log(categoryList);
-    categoryList.forEach((category) => {
-      category.addEventListener("click", (event) => {
+    const categoryLiList = document.querySelectorAll(".nav-item.category");
+    categoryLiList.forEach((categoryLi) => {
+      categoryLi.addEventListener("click", (event) => {
+        categoryLiList.forEach((categoryLi) => {
+          categoryLi.children[0].classList.remove("active");
+        });
+        categoryLi.children[0].classList.add("active");
+
         cards.textContent = "";
         productList.forEach((product) => {
-          console.log("product.category.name");
-          console.log(product.category.name);
-          console.log("event.target.text");
-          console.log(event.target.text);
-          console.log("event.target");
-          console.log(event.target);
           if (product.category.name === event.target.text) {
             const newCard = createCard(product);
             cards.innerHTML += newCard;
