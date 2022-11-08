@@ -19,9 +19,6 @@ class OrderController {
     productList = productList.split(",");
     countList = countList.split(",");
 
-    console.log("req.body");
-    console.log(req.body);
-
     if (
       !buyer ||
       !productList ||
@@ -95,6 +92,15 @@ class OrderController {
 
   async editOrder(req, res, next) {
     const { oid } = req.params;
+    let { buyer, productList, countList, totalAmount } = req.body;
+
+    if (buyer || productList || countList || totalAmount) {
+      return res
+        .status(400)
+        .json(
+          "주문 정보에 대해서 변경할 수 없는 값에 대해 변경을 시도하여 거절되었습니다."
+        );
+    }
 
     try {
       const updatedOrder = await orderService.editOrder(oid, req.body);
