@@ -3,8 +3,6 @@ const { loggedInUser } = await main();
 import {
   deleteIndexedDBdata,
   getAllIndexedDB,
-  getIndexedDB,
-  getAllKeysIndexedDB,
 } from "/indexedDB.js";
 
 const DATABASE_NAME = "cartDB";
@@ -21,10 +19,6 @@ const orderProductList = await getAllIndexedDB(
   }
 );
 
-if (!orderProductList) {
-  alert("장바구니에 상품이 없습니다.");
-  window.location.href = "/cart";
-}
 
 // db에 있는 기존 유저정보 화면에 띄우기
 const { email, name, phoneNumber, postCode, streetAddress, extraAddress, _id } = loggedInUser;
@@ -260,10 +254,13 @@ function payBtnClick() {
       return Promise.reject(json);
     })
     .then((data) => {
-      // deleteIndexedDBdata(DATABASE_NAME, version, objectStore, orderProduct)
+      data.productList.forEach((product) => {
+        deleteIndexedDBdata(DATABASE_NAME, version, objectStore, product)
+      })
+
       alert("결제 및 주문이 정상적으로 완료되었습니다.\n감사합니다.");
-      // window.location.href = "/"
-      console.log(data);
+      window.location.href = "/"
+      
     })
     .catch((err) => {
       alert(`에러가 발생했습니다. 관리자에게 문의하세요. \n에러내용: ${err}`);
@@ -271,6 +268,8 @@ function payBtnClick() {
 }
 
 payBtn.addEventListener("click", payBtnClick);
+
+
 
 // 기존에 휴대폰번호와 주소가 없다면 주문할 때 배송지와 휴대폰번호로 기존 유저정보 업데이트
 
