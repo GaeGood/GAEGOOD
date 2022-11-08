@@ -6,7 +6,7 @@ const User = model("User", UserSchema);
 export class UserModel {
   async findByEmail(email) {
     try {
-      const user = await User.findOne({ email });
+      const user = await User.findOne({ email }).populate("orderList");
       return user;
     } catch (err) {
       const error = new Error("User 검색 도중 에러가 발생하였습니다.");
@@ -17,7 +17,7 @@ export class UserModel {
 
   async findById(uid) {
     try {
-      const user = await User.findOne({ _id: uid });
+      const user = await User.findOne({ _id: uid }).populate("orderList");
       return user;
     } catch (err) {
       const error = new Error("User 검색 도중 에러가 발생하였습니다.");
@@ -39,7 +39,7 @@ export class UserModel {
 
   async findAll() {
     try {
-      const users = await User.find({});
+      const users = await User.find({}).populate("orderList");
       return users;
     } catch (err) {
       const error = new Error("User 전체검색 도중 에러가 발생하였습니다.");
@@ -52,7 +52,11 @@ export class UserModel {
     const filter = { _id: userId };
     const option = { returnOriginal: false };
     try {
-      const updatedUser = await User.findOneAndUpdate(filter, userInfo, option);
+      const updatedUser = await User.findOneAndUpdate(
+        filter,
+        userInfo,
+        option
+      ).populate("orderList");
       return updatedUser;
     } catch (err) {
       const error = new Error("User 수정 도중 에러가 발생하였습니다.");

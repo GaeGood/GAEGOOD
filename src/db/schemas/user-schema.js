@@ -36,6 +36,13 @@ const UserSchema = new Schema(
       type: String,
       required: false,
     },
+    orderList: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Order",
+        required: true,
+      },
+    ],
   },
   {
     timestamps: true,
