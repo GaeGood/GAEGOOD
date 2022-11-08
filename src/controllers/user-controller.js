@@ -41,6 +41,15 @@ class UserContoller {
     }
   }
 
+  async getUserList(req, res, next) {
+    try {
+      const userList = await userService.getUserList();
+      return res.status(200).json(userList);
+    } catch (err) {
+      next(err);
+    }
+  }
+
   async editUser(req, res, next) {
     const { userId } = req.params;
     try {

@@ -1,8 +1,17 @@
-import { orderModel } from "../db";
+import { orderModel, userModel } from "../db";
 
 class OrderService {
   async addOrder(orderInfo) {
-    const { productList, countList, totalAmount } = orderInfo;
+    const { buyer, productList, countList, totalAmount } = orderInfo;
+
+    let buyerFromDB;
+    try {
+      buyerFromDB = await userModel.findById(buyer);
+    } catch (e) {
+      const error = new Error("구매자가 DB에 존재하지 않습니다.");
+      error.statusCode = 400;
+      throw error;
+    }
 
     if (productList.length !== countList.length) {
       const error = new Error("상품의 갯수와 수량의 갯수가 다릅니다.");
@@ -15,7 +24,7 @@ class OrderService {
       error.statusCode = 401;
       throw error;
     }
-    const createdNewOrder = await orderModel.create(orderInfo);
+    const createdNewOrder = await orderModel.create(orderInfo, buyerFromDB);
     return createdNewOrder;
   }
 

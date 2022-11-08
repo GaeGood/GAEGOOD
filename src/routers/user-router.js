@@ -1,9 +1,10 @@
 import { Router } from "express";
 import { userController } from "../controllers";
-import { bodyEmptyChecker, loginRequired } from "../middlewares";
+import { adminRequired, bodyEmptyChecker, loginRequired } from "../middlewares";
 import { checkOwner } from "../middlewares";
 const userRouter = Router();
 
+userRouter.get("/", loginRequired, adminRequired, userController.getUserList);
 userRouter.get("/:userId", loginRequired, checkOwner, userController.getUser);
 userRouter.post("/", userController.addUser);
 userRouter.put(
