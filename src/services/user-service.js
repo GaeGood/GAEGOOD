@@ -31,25 +31,23 @@ class UserService {
   }
 
   async getUserById(uid) {
-    try {
-      const user = await userModel.findById(uid);
-      return user;
-    } catch (err) {
-      const error = new Error(" ID로 유저 검색 과정중 에러가 발생하였습니다.");
-      error.statusCode = 400;
-      throw error;
-    }
+    const user = await userModel.findById(uid);
+    return user;
   }
 
   async editUser(uid, userInfo) {
-    const { password, name, address, phoneNumber, postCode, extraAddress } = userInfo;
+    const { password, name, address, phoneNumber, postCode, extraAddress } =
+      userInfo;
     const saltRound = parseInt(process.env.SALT_ROUND) || 10;
     try {
       const hashPassword = await bcrypt.hash(password, saltRound);
       const updatedUser = await userModel.update(uid, {
-        name: name,
+        name,
         password: hashPassword,
-        address: address,
+        address,
+        phoneNumber,
+        postCode,
+        extraAddress,
       });
       return updatedUser;
     } catch (err) {
@@ -62,13 +60,7 @@ class UserService {
   }
 
   async removeUser(uid) {
-    try {
-      await userModel.delete(uid);
-    } catch (err) {
-      const error = new Error(" 회원탈퇴 도중 에러가 발생하였습니다.");
-      error.statusCode = 400;
-      throw error;
-    }
+    await userModel.delete(uid);
   }
 }
 
