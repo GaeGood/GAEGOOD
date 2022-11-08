@@ -13,6 +13,8 @@ const orderButton__User = `<button type="button" class="order__button__user"><a 
 const orderButton__Any = `  <button data-bs-toggle="modal" data-bs-target="#modalLogin">
     주문서 작성
   </button>`;
+
+const cart__whole__check = document.querySelector('input[name="wholeCheck"]');
 // const idObject = { id: id, amount: productAmountNum };
 
 if (loggedInUser) {
@@ -96,6 +98,8 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
     const cartPlusBtn = document.createElement("button");
     const cartMinusBtn = document.createElement("button");
     const cartDeleteBtn = document.createElement("button");
+
+    cart__whole__check.setAttribute("checked", true);
     /* 맨처음 화면에서 결제 금액란 렌더링 해줌 */
     totalAmount += dataList[i].amount;
     totalPrice += dataList[i].amount * dataList[i].price;
@@ -197,13 +201,54 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
       // 전체 체크박스
       const checkboxes = document.querySelectorAll('input[name="singleCheck"]');
       // 선택된 체크박스
-      const checked = document.querySelectorAll(
+      const singlechecked = document.querySelectorAll(
         'input[name="singleCheck"]:checked'
       );
       // 전체 선택 체크박스
       const selectAll = document.querySelector('input[name="wholeCheck"]');
-      selectAll.checked = checkboxes.length === checked.length;
+
+      selectAll.checked = checkboxes.length === singlechecked.length;
+      checkedDateRender();
     }
+
+    function checkedDateRender() {
+      // 전체 체크박스 하는중
+      const checkboxes = document.querySelectorAll('input[name="singleCheck"]');
+      // 선택된 체크박스
+      const singlechecked = document.querySelectorAll(
+        'input[name="singleCheck"]:checked'
+      );
+      let amount = 0;
+      let price = 0;
+      if (singlechecked.length === 0) {
+        total__amount.textContent = 0;
+        total__price.textContent = 0;
+        deliveryFee.textContent = 0;
+        total__sum.textContent = 0;
+      } else {
+        checkboxes.forEach((checkbox) => {
+          if (checkbox.checked) {
+            const key = checkbox.value;
+            total__amount.textContent = 0;
+            total__price.textContent = 0;
+            deliveryFee.textContent = 0;
+            total__sum.textContent = 0;
+
+            dataList.forEach((elem) => {
+              if (elem.id === key) {
+                amount += elem.amount;
+                price += elem.amount * elem.price;
+              }
+            });
+            total__amount.textContent = amount;
+            total__price.textContent = price;
+            deliveryFee.textContent = 3000;
+            total__sum.textContent = price + parseInt(deliveryFee.textContent);
+          }
+        });
+      }
+    }
+
     /* 체크박스 - 전체 선택 클릭 이벤트 */
     const wholeCheck = document.querySelector('input[name="wholeCheck"]');
     wholeCheck.addEventListener("click", selectAll);
@@ -308,6 +353,7 @@ function addProduct(product, idx, cartProductId, data) {
   const cartPrice = document.querySelectorAll(".cart__detail__price");
   const cartAmount = document.querySelectorAll(".cart__amount");
   const cart__list__top = document.querySelectorAll(".cart__list__top");
+
   const cart__detail__check = document.querySelectorAll(".cart__detail__check");
   const cart__delete__button = document.querySelectorAll(
     ".cart__delete__button"
@@ -319,6 +365,8 @@ function addProduct(product, idx, cartProductId, data) {
   /* 삭제 체크박스 */
   cart__detail__check[idx].setAttribute("value", cartProductId);
   cart__detail__check[idx].setAttribute("name", "singleCheck");
+  cart__detail__check[idx].setAttribute("checked", true);
+
   /* 삭제(휴지통) 버튼 */
   cart__delete__button[idx].id = `btn-${cartProductId}`;
   /*이미지*/
@@ -392,26 +440,17 @@ function deleteIndexedDBdata(DATABASE_NAME, version, objectStore, targetId) {
               parseInt(total__price.textContent) +
               parseInt(deliveryFee.textContent);
           };
+          store.getAll().onerror = function () {
+            alert("indexedDB의 Data를 가져오는데 실패했습니다.");
+          };
         }
-        store.getAll().onerror = function () {
-          alert("indexedDB의 Data를 가져오는데 실패했습니다.");
-        };
-        // totalAmount -= resultAmount;
-        // totalPrice -= resultAmount * resultPrice;
-        // total__amount.textContent = totalAmount;
-        // total__price.textContent = totalPrice;
-        // if (parseInt(total__amount.textContent) === 0) {
-        //   deliveryFee.textContent = 3000;
-        // } else {
-        //   deliveryFee.textContent = 0;
-        // }
       };
+      store.get(key).onerror = function () {
+        alert("indexedDB의 key를 가져오는데 실패했습니다.");
+      };
+      //키값으로 삭제
+      store.delete(key);
     };
-    store.get(key).onerror = function () {
-      alert("indexedDB의 key를 가져오는데 실패했습니다.");
-    };
-    //키값으로 삭제
-    store.delete(key);
   } else {
     alert("해당 브라우저에서는 indexedDB를 지원하지 않습니다.");
   }
