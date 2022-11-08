@@ -29,6 +29,7 @@ let totalPrice = 0;
 let totalAmountCurrent = 0;
 let totalPriceCurrent = 0;
 let totalAmount = 0;
+let totalSumAmount = 0;
 /* 데이터 렌더링 */
 getAllIndexedDB(DATABASE_NAME, version, objectStore, function (dataList) {
   //dataList === response.target.result
@@ -98,7 +99,6 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
     /* 맨처음 화면에서 결제 금액란 렌더링 해줌 */
     totalAmount += dataList[i].amount;
     totalPrice += dataList[i].amount * dataList[i].price;
-
     /* cart__list__top 컨테이너 div */
     cartList.classList.add("cart__list__top");
     cart__container.prepend(cartList);
@@ -339,6 +339,14 @@ function addProduct(product, idx, cartProductId, data) {
 
   total__amount.textContent = totalAmount;
   total__price.textContent = totalPrice;
+  if (parseInt(total__amount.textContent) !== 0) {
+    deliveryFee.textContent = 3000;
+  } else {
+    deliveryFee.textContent = 0;
+  }
+
+  total__sum.textContent =
+    parseInt(total__price.textContent) + parseInt(deliveryFee.textContent);
 }
 
 /* indexedDB에 추가한 데이터 삭제하는 함수(기준: key) */
@@ -360,18 +368,50 @@ function deleteIndexedDBdata(DATABASE_NAME, version, objectStore, targetId) {
         let resultAmount = response.target.result.amount;
         let resultPrice = response.target.result.price;
         if (resultId === key) {
-          totalAmount -= resultAmount;
-          totalPrice -= resultAmount * resultPrice;
-          total__amount.textContent = totalAmount;
-          total__price.textContent = totalPrice;
+          store.getAll().onsuccess = function (response) {
+            const resultArray = response.target.result;
+            totalAmountCurrent = 0;
+            totalPriceCurrent = 0;
+            resultArray.forEach((result) => {
+              /* 총 수량 */
+              totalAmountCurrent += parseInt(result.amount);
+              /* 총 가격 */
+              totalPriceCurrent +=
+                parseInt(result.amount) * parseInt(result.price);
+            });
+            total__amount.textContent = totalAmountCurrent;
+            total__price.textContent = totalPriceCurrent;
+            /* 배송비 */
+            if (parseInt(total__amount.textContent) !== 0) {
+              deliveryFee.textContent = 3000;
+            } else {
+              deliveryFee.textContent = 0;
+            }
+            /* 합계 */
+            total__sum.textContent =
+              parseInt(total__price.textContent) +
+              parseInt(deliveryFee.textContent);
+          };
         }
+        store.getAll().onerror = function () {
+          alert("indexedDB의 Data를 가져오는데 실패했습니다.");
+        };
+        // totalAmount -= resultAmount;
+        // totalPrice -= resultAmount * resultPrice;
+        // total__amount.textContent = totalAmount;
+        // total__price.textContent = totalPrice;
+        // if (parseInt(total__amount.textContent) === 0) {
+        //   deliveryFee.textContent = 3000;
+        // } else {
+        //   deliveryFee.textContent = 0;
+        // }
       };
-      store.get(key).onerror = function () {
-        alert("indexedDB의 key를 가져오는데 실패했습니다.");
-      };
-      //키값으로 삭제
-      store.delete(key);
     };
+    store.get(key).onerror = function () {
+      alert("indexedDB의 key를 가져오는데 실패했습니다.");
+    };
+    //키값으로 삭제
+    store.delete(key);
   } else {
     alert("해당 브라우저에서는 indexedDB를 지원하지 않습니다.");
   }
@@ -456,6 +496,16 @@ function updateIndexedDB(
             });
             total__amount.textContent = totalAmountCurrent;
             total__price.textContent = totalPriceCurrent;
+            /* 배송비 */
+            if (parseInt(total__amount.textContent) !== 0) {
+              deliveryFee.textContent = 3000;
+            } else {
+              deliveryFee.textContent = 0;
+            }
+            /* 합계 */
+            total__sum.textContent =
+              parseInt(total__price.textContent) +
+              parseInt(deliveryFee.textContent);
           };
           store.getAll().onerror = function () {
             alert("indexedDB의 Data를 가져오는데 실패했습니다.");
