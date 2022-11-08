@@ -21,7 +21,7 @@ const orderProductList = await getAllIndexedDB(
 
 
 // db에 있는 기존 유저정보 화면에 띄우기
-const { email, name, phoneNumber, postCode, streetAddress, extraAddress, _id } = loggedInUser;
+const { name, phoneNumber, postCode, streetAddress, extraAddress, _id } = loggedInUser;
 console.log(loggedInUser);
 
 const [
@@ -30,17 +30,16 @@ const [
   userPostCode,
   userStreetAddress,
   userExterAddress,
-  userRequestMessage,
 ] = document.querySelectorAll(".user");
 const [productsPriceHTML, deliveryFeeHTML, totalPriceHTML] =
   document.querySelectorAll(".pay");
 
-if (!phoneNumber && !postCode && !extraAddress) {
+if (!phoneNumber) {
   userName.value = name;
   userPhoneNumber.value = "";
-  userPostCode.value = "";
+  userPostCode.value = postCode;
   userStreetAddress.value = streetAddress;
-  userExterAddress.value = "";
+  userExterAddress.value = extraAddress;
 } else {
   userName.value = name;
   userPhoneNumber.value = phoneNumber;
@@ -49,6 +48,7 @@ if (!phoneNumber && !postCode && !extraAddress) {
   userExterAddress.value = extraAddress;
 }
 
+console.log('phoneNumber', phoneNumber)
 // 아래 변수는 post시에 사용될 상품 id들, 수량들의 객체를 위해 선언
 
 /*
@@ -213,8 +213,7 @@ function payBtnClick() {
 
   // 기존에 휴대폰번호와 주소가 없다면 주문할 때 배송지와 휴대폰번호로 기존 유저정보 업데이트
 
-  if (!phoneNumber && !postCode && !extraAddress) {
-
+  if (!phoneNumber) {
     // 전화번호
     if (userPhoneNumber.value !== "") {
       // 숫자만 매칭
@@ -242,9 +241,6 @@ function payBtnClick() {
     },
     body: JSON.stringify({
       phoneNumber: `${userPhoneNumber.value}`,
-      postCode: `${userPostCode.value}`,
-      streetAddress: `${userStreetAddress.value}`,
-      extraAddress: `${userExterAddress.value}`,
     }),
   })
     .then(async (res) => {
@@ -293,12 +289,12 @@ function payBtnClick() {
       return Promise.reject(json);
     })
     .then((data) => {
-      data.productList.forEach((product) => {
-        deleteIndexedDBdata(DATABASE_NAME, version, objectStore, product)
-      })
+      // data.productList.forEach((product) => {
+      //   deleteIndexedDBdata(DATABASE_NAME, version, objectStore, product)
+      // })
 
       alert("결제 및 주문이 정상적으로 완료되었습니다.\n감사합니다.");
-      window.location.href = "/"
+      // window.location.href = "/"
       console.log('post보내기전 data',{
           buyer: `${_id}`,
           productList: `${productAllIdArr}`,
