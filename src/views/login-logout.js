@@ -21,18 +21,26 @@ function addEventListenerOnLoginBtn(loggedInUser) {
           password: password.value,
         }),
       })
-        .then((res) => res.json())
-        .then((data) => {
-          const resultMassage = data.resMsg.msg;
-          if (data.resCode === "200") {
-            //모달창이 닫히는 기능
-            document.getElementsByTagName("body")[0].className = "";
-            document.getElementsByTagName("body")[0].style = "none";
-            document.querySelector("#modalLogin").style = "display: none";
-            document.querySelector(".modal-backdrop").remove();
+        .then(async (res) => {
+          const json = await res.json();
+
+          if (res.ok) {
+            return json;
           }
-          alert(resultMassage);
+
+          return Promise.reject(json);
+        })
+        .then((success) => {
+          alert(success);
+          //모달창이 닫히는 기능
+          document.getElementsByTagName("body")[0].className = "";
+          document.getElementsByTagName("body")[0].style = "none";
+          document.querySelector("#modalLogin").style = "display: none";
+          document.querySelector(".modal-backdrop").remove();
           location.reload();
+        })
+        .catch((e) => {
+          alert(e);
         });
     });
     console.log("-------- login button에 이벤트 리스너 연결 완료 --------");
@@ -49,11 +57,21 @@ function addEventListenerOnLogoutBtn(loggedInUser) {
       fetch("/api/auth/logout", {
         method: "GET",
       })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          alert(data.resMsg.msg);
+        .then(async (res) => {
+          const json = await res.json();
+
+          if (res.ok) {
+            return json;
+          }
+
+          return Promise.reject(json);
+        })
+        .then((success) => {
+          alert(success);
           location.reload();
+        })
+        .catch((e) => {
+          alert(e);
         });
     });
     console.log("-------- logout button에 이벤트 리스너 연결 완료 --------");

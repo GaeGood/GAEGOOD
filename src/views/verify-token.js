@@ -15,23 +15,17 @@ async function verifyToken() {
       })
       .then((result) => {
         // 로그인 성공 확인용 코드 (추후 삭제 예정)
+        alert("토큰 검증 성공!");
         console.log("로그인 성공 시 받게 되는 result");
         console.log(result);
-        alert(result.resMsg.msg);
 
-        // verifyToken API로부터 돌려 받은 유저 정보를 사용 (로그인 한 유저라고 판단)
-        console.log("로그인 성공 한 유저 정보 result.resMsg.user;");
-        console.log(result.resMsg.user);
-
-        const loggedInUser = result.resMsg.user;
+        const loggedInUser = result;
 
         return { verifySucceed: true, loggedInUser };
       })
-      .catch((result) => {
+      .catch((e) => {
         // 로그인 실패 확인용 코드 (추후 삭제 예정)
-        console.log("로그인 실패 시 받게 되는 result");
-        console.log(result);
-        alert(result.resMsg.msg);
+        alert(e);
 
         return { verifySucceed: false };
       });

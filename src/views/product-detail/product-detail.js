@@ -59,12 +59,20 @@ const idObject = {
   stock: stockValue,
 };
 fetch(`/api/products/${id}`)
-  .then((res) => res.json())
+  .then(async (res) => {
+    const json = await res.json();
+
+    if (res.ok) {
+      return json;
+    }
+
+    return Promise.reject(json);
+  })
   .then((product) => {
     addproduct(product);
     insertIndexedDB(DATABASE_NAME, version, objectStore, idObject, product);
   })
-  .catch((err) => alert(err.message));
+  .catch((err) => alert(err));
 
 // home에서 클릭한 제품의 상세 내용 html에 렌더링하는 함수
 function addproduct(product) {

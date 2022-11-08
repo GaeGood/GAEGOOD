@@ -194,10 +194,21 @@ orderDeleteBtn.addEventListener("click", (e) => {
   fetch(`/api/orders/${oid}`, {
     method: "DELETE",
   })
-    .then((res) => res.json())
+    .then(async (res) => {
+      const json = await res.json();
+
+      if (res.ok) {
+        return json;
+      }
+
+      return Promise.reject(json);
+    })
     .then((data) => {
       alert("주문 삭제 완료");
       location.href = "/orders/list/";
+    })
+    .catch((e) => {
+      alert(e);
     });
 });
 

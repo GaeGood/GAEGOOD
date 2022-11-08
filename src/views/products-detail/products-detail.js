@@ -1,7 +1,7 @@
 import { addCommas } from "/useful-functions.js";
 
 const html = window.location.href;
-const productUrl = html.split('/products/detail/');
+const productUrl = html.split("/products/detail/");
 const productId = productUrl[1];
 
 console.log(productId); // 결과가 상품 id가 나와야 정상
@@ -17,27 +17,37 @@ console.log(productId); // 결과가 상품 id가 나와야 정상
 // }
 
 fetch(`/api/products/${productId}`)
-    .then((res) => { return res.json() })
-    .then(data => {
-        addproduct(data)
-    })
+  .then(async (res) => {
+    const json = await res.json();
+
+    if (res.ok) {
+      return json;
+    }
+
+    return Promise.reject(json);
+  })
+  .then((data) => {
+    addproduct(data);
+  })
+  .catch((e) => {
+    alert(e);
+  });
 // HTML Template 사용하여 댓글 화면에 표시하기
 function addproduct(data) {
+  document.querySelector(".product-category").innerHTML = data.category;
+  document.querySelector(".product-name").innerHTML = data.name;
+  document.querySelector(".product-desc").innerHTML = data.longDesc;
+  document.querySelector(".product-price").innerHTML = data.price;
 
-    document.querySelector('.product-category').innerHTML = data.category;
-    document.querySelector('.product-name').innerHTML = data.name;
-    document.querySelector('.product-desc').innerHTML = data.longDesc;
-    document.querySelector('.product-price').innerHTML = data.price;
-
-    // return `
-    //         <div class="product-container">
-    //         <div class="product-category">${product.category}</div>
-    //         <img src="#" class="product-img">
-    //         <div class="product-name">${product.name}</div>
-    //         <div class="product-desc">${product.shortDesc}</div>
-    //         <div class="product-price">${product.price}</div>
-    //     </div>
-    // `
+  // return `
+  //         <div class="product-container">
+  //         <div class="product-category">${product.category}</div>
+  //         <img src="#" class="product-img">
+  //         <div class="product-name">${product.name}</div>
+  //         <div class="product-desc">${product.shortDesc}</div>
+  //         <div class="product-price">${product.price}</div>
+  //     </div>
+  // `
 }
 //추후 리팩토링 할 경우 사용
 // function addproductComponent(product) {

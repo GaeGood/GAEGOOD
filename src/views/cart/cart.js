@@ -155,11 +155,19 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
 
       /* 상품 상제정보 불러오기*/
       fetch(`/api/products/${cartProductId}`)
-        .then((res) => res.json())
+        .then(async (res) => {
+          const json = await res.json();
+
+          if (res.ok) {
+            return json;
+          }
+
+          return Promise.reject(json);
+        })
         .then((product) => {
           addProduct(product, i, cartProductId, dataList[i]);
         })
-        .catch((err) => alert(err.message));
+        .catch((err) => alert(err));
     });
 
     /* 장바구니 상품 삭제 버튼 클릭 이벤트 */

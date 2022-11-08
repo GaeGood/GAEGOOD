@@ -22,8 +22,14 @@ const createCard = (item) => {
 };
 
 fetch("/api/products")
-  .then((res) => {
-    return res.json();
+  .then(async (res) => {
+    const json = await res.json();
+
+    if (res.ok) {
+      return json;
+    }
+
+    return Promise.reject(json);
   })
   .then((productList) => {
     productList.forEach((product) => {
@@ -47,4 +53,7 @@ fetch("/api/products")
         });
       });
     });
+  })
+  .catch((e) => {
+    alert(e);
   });

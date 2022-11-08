@@ -5,9 +5,7 @@ import { createTable } from "./admin-class.js";
 
 const mainTag = document.getElementById("main__container");
 
-const adminPageList = document.querySelectorAll(
-  ".admin__page__list > button"
-);
+const adminPageList = document.querySelectorAll(".admin__page__list > button");
 
 const adminBtnOder = document.querySelector(".btn__admin__oder");
 const adminBtnUser = document.querySelector(".btn__admin__user");
@@ -23,13 +21,7 @@ const oderAdmin = [
   "취소",
 ];
 const userAdmin = ["가입날짜", "이메일", "이름", "권한", "관리"];
-const categoryAdmin = [
-  "생성날짜",
-  "카테고리 이름",
-  "수정날짜",
-  "수정",
-  "삭제",
-];
+const categoryAdmin = ["생성날짜", "카테고리 이름", "수정날짜", "수정", "삭제"];
 const productAdmin = [
   "생성날짜",
   "이름",
@@ -61,22 +53,34 @@ for (let i = 0; i < adminPageList.length; i++) {
     newHtml.className = `bd-example ${listNameEn}`;
     if (listName === "주문관리") {
       fetch("/api/orders")
-        .then((res) => res.json())
+        .then(async (res) => {
+          const json = await res.json();
+
+          if (res.ok) {
+            return json;
+          }
+
+          return Promise.reject(json);
+        })
         .then((data) => {
           const newData = data.map((e) => {
             return {
               date: e.createdAt,
               name: e.recipientName,
-              products: e.productList.map(e => e.name),
+              products: e.productList.map((e) => e.name),
               total: e.totalAmount,
               shopStatus: e.shippingStatus,
               cancle: false,
-            }});
+            };
+          });
           return newData;
         })
-        .then(newData => {
-          createTable(newData)
+        .then((newData) => {
+          createTable(newData);
         })
+        .catch((e) => {
+          alert(e);
+        });
       newHtml.innerHTML = innerOderManagement(listName);
     } else if (listName === "회원관리") {
       newHtml.innerHTML = innerUserManagement(listName);

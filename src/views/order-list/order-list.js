@@ -4,9 +4,9 @@ const { loggedInUser } = await main();
 const orderListTable = document.querySelector(".orderlist-table");
 const deleteUserBtn = document.querySelector(".user__delete");
 
-console.log(loggedInUser)
+console.log(loggedInUser);
 // 유저 불러오기
-let { _id } = loggedInUser
+let { _id } = loggedInUser;
 
 // 상품 불러오기
 // fetch("/api/orders") // /api/orders 로 get요청
@@ -15,8 +15,8 @@ let { _id } = loggedInUser
 //   })
 //   .then((orderLists) => {
 //     orderLists.forEach(orderList)
-//     const createOrderContent = (orderList) => 
-// 	{                
+//     const createOrderContent = (orderList) =>
+// 	{
 // 		`<div>
 // 			<div>${orderLists.date}</div>
 // 			<table class="orderlist-table" id="order-${_id}">
@@ -32,17 +32,14 @@ let { _id } = loggedInUser
 // 					</td>
 // 				</tr>
 // 			</table>
-// 		</div>`		
+// 		</div>`
 // 				}
-
 
 //     orderList.forEach((orderContent) => {
 //       const newOrderContent = createOrderContent(orderContent);
 //       orderListTable.innerHTML += newOrderContent;
 //     });
 //   });
-
-
 
 // 주문 취소 버튼 눌렀을 때 발생 로직
 // const orderCancelBtn = document.querySelector(".order-cancel");
@@ -69,25 +66,36 @@ let { _id } = loggedInUser
 // 				}
 // 			}
 // 		}
-    
+
 // orderCancelBtn.addEventListener('click', orderCancel);
 
+// 회원탈퇴 기능
 
-// 회원탈퇴 기능 
+function deleteUser() {
+  const answer = confirm(
+    "회원 탈퇴 하시겠습니까? \n탈퇴즉시 정보가 삭제됩니다."
+  );
+  if (answer) {
+    fetch(`/api/users/${_id}`, {
+      method: "DELETE",
+    })
+      .then(async (res) => {
+        const json = await res.json();
 
-function deleteUser(){
-	const answer = confirm("회원 탈퇴 하시겠습니까? \n탈퇴즉시 정보가 삭제됩니다.");
-	  if(answer){
-      fetch(`/api/users/${_id}`,{
-      method:"DELETE"
+        if (res.ok) {
+          return json;
+        }
+
+        return Promise.reject(json);
       })
-      .then(response=>response.json())
-      .then(data => {
-        alert("회원 정보가 삭제되었습니다.")
-        window.location.href = "/"
+      .then((data) => {
+        alert("회원 정보가 삭제되었습니다.");
+        window.location.href = "/";
       })
-      .catch( err => alert(`회원정보 삭제 과정에서 오류가 발생하였습니다: ${err}`));
-    }
+      .catch((err) =>
+        alert(`회원정보 삭제 과정에서 오류가 발생하였습니다: ${err}`)
+      );
+  }
 }
 
-deleteUserBtn.addEventListener('click', deleteUser);
+deleteUserBtn.addEventListener("click", deleteUser);
