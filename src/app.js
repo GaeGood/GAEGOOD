@@ -3,7 +3,6 @@ import express from "express";
 import {
   userRouter,
   authRouter,
-  globalRouter,
   orderRouter,
   productRouter,
   categoryRouter,
@@ -29,7 +28,6 @@ app.use("/api/auth", authRouter);
 app.use("/api/products", productRouter);
 app.use("/api/categories", categoryRouter);
 app.use("/api/orders", orderRouter);
-app.use("/api/", globalRouter);
 
 app.use(errorHandler);
 

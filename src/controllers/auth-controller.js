@@ -4,53 +4,42 @@ class AuthController {
   async loginUser(req, res, next) {
     const { email, password } = req.body;
     if (!email || !password) {
-      return res.json({
-        resCode: "404",
-        resMsg: {
-          msg: "email,password 입력 필요!",
-        },
-      });
+      return res.status(404).json("email,password 입력 필요!");
     }
 
     try {
-      const result = await authService.login(email, password);
-      if (result.token) {
-        res.cookie("jwt_token", result.token);
+      const token = await authService.login(email, password);
+      if (token) {
+        res.cookie("jwt_token", token);
       }
-      return res.json(result.message);
+      return res.status(200).json("로그인 성공, 토큰발급!");
     } catch (e) {
       next(e);
     }
-    next();
   }
 
   async logoutUser(req, res, next) {
     try {
-      const result = await authService.logout();
       res.clearCookie("jwt_token");
-      return res.json(result.message);
-    } catch (err) {
-      next(err);
+      return res.status(200).json("로그아웃 되었습니다.");
+    } catch (e) {
+      next(e);
     }
-    next();
   }
 
   async verifyToken(req, res, next) {
     const token = req.cookies.jwt_token;
     if (!token) {
-      return res.status(401).json({
-        resMsg: {
-          msg: "토큰이 존재하지 않습니다. 로그인이 되어있지 않습니다.",
-        },
-      });
+      return res
+        .status(401)
+        .json("토큰이 존재하지 않습니다. 로그인이 되어있지 않습니다.");
     }
     try {
       const result = await authService.verifyToken(token);
-      return res.json(result.message);
-    } catch (err) {
-      next(err);
+      return res.status(200).json(result);
+    } catch (e) {
+      next(e);
     }
-    next();
   }
 }
 

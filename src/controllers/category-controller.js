@@ -5,51 +5,67 @@ class CategoryContoller {
     const { name } = req.body;
 
     if (!name) {
-      return res.json("name을 입력하세요");
+      return res.status(400).json("name을 입력하세요");
     }
 
     try {
       const createdNewCategory = await categoryService.addCategory({
         name,
       });
-      return res.json(createdNewCategory);
+      return res.status(200).json(createdNewCategory);
     } catch (e) {
       next(e);
     }
   }
 
-  async getCategoryList(req, res) {
-    const categoryList = await categoryService.getCategoryList();
-    return res.json(categoryList);
+  async getCategoryList(req, res, next) {
+    try {
+      const categoryList = await categoryService.getCategoryList();
+      return res.status(200).json(categoryList);
+    } catch (e) {
+      next(e);
+    }
   }
 
-  async getCategoryById(req, res) {
+  async getCategoryById(req, res, next) {
     const { cid } = req.params;
 
-    const Category = await categoryService.getCategoryById(cid);
-    res.json(Category);
+    try {
+      const Category = await categoryService.getCategoryById(cid);
+      return res.status(200).json(Category);
+    } catch (e) {
+      next(e);
+    }
   }
 
-  async getCategoryByName(req, res) {
+  async getCategoryByName(req, res, next) {
     const name = req.query.category;
 
-    const Category = await categoryService.getCategoryByName(name);
-    res.json(Category);
+    try {
+      const Category = await categoryService.getCategoryByName(name);
+      res.status(200).json(Category);
+    } catch (e) {
+      next(e);
+    }
   }
 
-  async editCategory(req, res) {
+  async editCategory(req, res, next) {
     const { cid } = req.params;
     const { name } = req.body;
 
     if (!name) {
-      return res.json("입력 데이터 부족");
+      return res.status(400).json("입력 데이터 부족");
     }
 
-    const updatedCategory = await categoryService.editCategory(cid, {
-      name,
-    });
+    try {
+      const updatedCategory = await categoryService.editCategory(cid, {
+        name,
+      });
 
-    return res.json(updatedCategory);
+      return res.status(200).json(updatedCategory);
+    } catch (e) {
+      next(e);
+    }
   }
 
   async removeCategory(req, res, next) {
@@ -57,7 +73,7 @@ class CategoryContoller {
 
     try {
       await categoryService.removeCategory(cid);
-      res.json(`카테고리 삭제 완료(ID : ${cid})`);
+      res.status(200).json(`카테고리 삭제 완료(ID : ${cid})`);
     } catch (e) {
       next(e);
     }

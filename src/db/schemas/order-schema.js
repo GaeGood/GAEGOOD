@@ -42,6 +42,18 @@ const OrderSchema = new Schema(
     },
     shippingRequestMessage: {
       type: String,
+      required: true,
+    },
+    shippingStreetAddress: {
+      type: String,
+      required: true,
+    },
+    shippingExtraAddress: {
+      type: String,
+      required: true,
+    },
+    shippingRequestMessage: {
+      type: String,
       required: false,
     },
     totalAmount: {

@@ -16,8 +16,8 @@ class OrderController {
       recipientPhoneNumber,
     } = req.body;
 
-    productList = productList.split(",")
-    countList = countList.split(",")
+    productList = productList.split(",");
+    countList = countList.split(",");
 
     console.log("req.body");
     console.log(req.body);
@@ -34,7 +34,7 @@ class OrderController {
       !recipientName ||
       !recipientPhoneNumber
     ) {
-      return res.json("입력 데이터 부족");
+      return res.status(400).json("입력 데이터 부족");
     }
 
     try {
@@ -57,60 +57,51 @@ class OrderController {
     }
   }
 
-  async getOrderList(req, res) {
+  async getOrderList(req, res, next) {
     if (Object.keys(req.query).length === 0) {
       const orderList = await orderService.getOrderList();
-      return res.json(orderList);
+      return res.status(200).json(orderList);
     } else {
       const { oid } = req.query;
 
       if (!oid) {
-        return res.json("에러, 쿼리 스트링에 oid이 존재해야 함");
+        return res.status(400).json("에러, 쿼리 스트링에 oid이 존재해야 함");
       }
-      const oidArr = oid.split(",");
-      const orderList = await orderService.getOrderList(oidArr);
-      return res.json(orderList);
+
+      try {
+        const oidArr = oid.split(",");
+        const orderList = await orderService.getOrderList(oidArr);
+        return res.status(200).json(orderList);
+      } catch (e) {
+        next(e);
+      }
     }
   }
 
-  async getOrder(req, res) {
+  async getOrder(req, res, next) {
     const { oid } = req.params;
 
-    const order = await orderService.getOrderById(oid);
-    res.json(order);
-  }
-
-  async editOrder(req, res) {
-    const { oid } = req.params;
-    const {
-      shippingPostCode,
-      shippingStreetAddress,
-      shippingExtraAddress,
-      shippingRequestMessage,
-      recipientName,
-      recipientPhoneNumber,
-    } = req.body;
-
-    if (
-      !shippingPostCode ||
-      !shippingStreetAddress ||
-      !shippingExtraAddress ||
-      !recipientName ||
-      !recipientPhoneNumber
-    ) {
-      return res.json("입력 데이터 부족");
+    if (!oid) {
+      return res.status(400).json("입력 값이 부족합니다.");
     }
 
-    const updatedOrder = await orderService.editOrder(oid, {
-      shippingPostCode,
-      shippingStreetAddress,
-      shippingExtraAddress,
-      shippingRequestMessage,
-      recipientName,
-      recipientPhoneNumber,
-    });
+    try {
+      const order = await orderService.getOrderById(oid);
+      return res.status(200).json(order);
+    } catch (e) {
+      next(e);
+    }
+  }
 
-    return res.json(updatedOrder);
+  async editOrder(req, res, next) {
+    const { oid } = req.params;
+
+    try {
+      const updatedOrder = await orderService.editOrder(oid, req.body);
+      return res.status(200).json(updatedOrder);
+    } catch (e) {
+      next(e);
+    }
   }
 
   async removeOrder(req, res, next) {
@@ -118,7 +109,7 @@ class OrderController {
 
     try {
       await orderService.removeOrder(oid);
-      res.json(`상품 삭제 완료(ID : ${oid})`);
+      return res.status(200).json(`상품 삭제 완료(ID : ${oid})`);
     } catch (e) {
       next(e);
     }

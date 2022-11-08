@@ -2,24 +2,19 @@ import { orderModel } from "../db";
 
 class OrderService {
   async addOrder(orderInfo) {
-    const {
-      buyer,
-      productList,
-      countList,
-      shippingStatus,
-      shippingPostCode,
-      shippingStreetAddress,
-      shippingExtraAddress,
-      shippingRequestMessage,
-      totalAmount,
-      recipientName,
-      recipientPhoneNumber,
-    } = orderInfo;
+    const { productList, countList, totalAmount } = orderInfo;
 
-    // if (productList.length !== countList.length) {
-    //   throw new Error("상품의 갯수와 수량의 갯수가 다릅니다.");
-    // }
+    if (productList.length !== countList.length) {
+      const error = new Error("상품의 갯수와 수량의 갯수가 다릅니다.");
+      error.statusCode = 400;
+      throw error;
+    }
 
+    if (totalAmount < 0) {
+      const error = new Error("가격이 올바르지 않습니다.");
+      error.statusCode = 401;
+      throw error;
+    }
     const createdNewOrder = await orderModel.create(orderInfo);
     return createdNewOrder;
   }
@@ -40,15 +35,6 @@ class OrderService {
   }
 
   async editOrder(oid, orderInfo) {
-    const {
-      shippingPostCode,
-      shippingStreetAddress,
-      shippingExtraAddress,
-      shippingRequestMessage,
-      recipientName,
-      recipientPhoneNumber,
-    } = orderInfo;
-
     const updatedNewOrder = await orderModel.update(oid, orderInfo);
     return updatedNewOrder;
   }
