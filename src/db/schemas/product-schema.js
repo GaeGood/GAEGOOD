@@ -6,7 +6,11 @@ const ProductSchema = new Schema(
       type: String,
       required: true,
     },
-    category: { type: Schema.Types.ObjectId, ref: "Category", required: true },
+    category: {
+      type: Schema.Types.ObjectId,
+      ref: "Category",
+      required: true,
+    },
     shortDesc: {
       type: String,
       required: true,
