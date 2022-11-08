@@ -23,13 +23,13 @@ const orderProductList = await getAllIndexedDB(
 
 if (!orderProductList) {
   alert("장바구니에 상품이 없습니다.");
-  window.location.href = "/";
+  window.location.href = "/cart";
 }
 
 // db에 있는 기존 유저정보 화면에 띄우기
-const { email, name, phoneNumber, postCode, address, extraAddress, _id } =
-  loggedInUser;
+const { email, name, phoneNumber, postCode, streetAddress, extraAddress, _id } = loggedInUser;
 console.log(loggedInUser);
+
 const [
   userName,
   userPhoneNumber,
@@ -45,13 +45,13 @@ if (!phoneNumber && !postCode && !extraAddress) {
   userName.value = name;
   userPhoneNumber.value = "";
   userPostCode.value = "";
-  userStreetAddress.value = address;
+  userStreetAddress.value = streetAddress;
   userExterAddress.value = "";
 } else {
   userName.value = name;
   userPhoneNumber.value = phoneNumber;
   userPostCode.value = postCode;
-  userStreetAddress.value = address;
+  userStreetAddress.value = streetAddress;
   userExterAddress.value = extraAddress;
 }
 
@@ -178,6 +178,9 @@ function handleRequestChange(e) {
     userRequestMessage.focus();
   }
 }
+
+
+requestSelectBox.addEventListener("change", handleRequestChange);
 
 const shippingInformationList = {
   buyer: `${_id}`,
