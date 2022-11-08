@@ -1,12 +1,117 @@
 import { main } from "/main.js";
 const { loggedInUser } = await main();
 
+const { orderList } = loggedInUser;
+
+console.log(orderList);
+// orderList에서 뽑아올 내용
+// countList
+// productList
+// createdAt(상품주문시간)
+// shippingStatus
+
+// 상품에서 뽑아올 내용
+// fetch통해 상품이름, 상품 가격, 상품 사진
+
+const orderContents = document.querySelector(".order__contents");
+
+orderList.forEach((order) => {
+  const orderId = order._id;
+  const countList = order.countList;
+  const productIdList = order.productList;
+  const orderDay = order.createdAt.split("T")[0];
+  const orderTime = order.createdAt.split("T")[1].slice(0, 8);
+  const shippingStatus = order.shippingStatus;
+
+  productIdList.forEach((productId) => {
+    countList.forEach((count) => {
+      /* 상품 상세정보 불러오기*/
+      fetch(`/api/products/${productId}`)
+        .then(async (res) => {
+          const json = await res.json();
+
+          if (res.ok) {
+            return json;
+          }
+
+          return Promise.reject(json);
+        })
+        .then((product) => {
+          const productName = product.name;
+          const productImg = product.smallImageURL;
+          const productPrice = product.price;
+
+          orderContents.innerHTML += `<a href="/orders/${orderId}">
+            <div class="card-header">${orderDay} 주문</div>
+            <span class="card-body">
+              <div class="product__picture">
+                <img src=${productImg} class="product__image"/>
+              </div>
+              <div class="product__information">
+                <h5 class="card-title">${productName}</h5>
+                <span class="card-text">${productPrice}원</span>
+                <span class="card-text">${count}개</span>
+              </div>
+              <div class="etc__zone">
+                <div>${shippingStatus}</div>
+                <button href="#" class="btn btn-primary">
+                주문취소
+                </button>
+              </div>
+            </span>
+          </a>`;
+        })
+        .catch((err) => alert(err));
+    });
+  });
+});
+
 const orderListTable = document.querySelector(".orderlist-table");
 const deleteUserBtn = document.querySelector(".user__delete");
 
-console.log(loggedInUser);
-// 유저 불러오기
-let { _id } = loggedInUser;
+/*
+createdAt: "2022-11-08T11:59:20.516Z"
+email: "maymaymay@naver.com"
+extraAddress: "상세 주소"
+name: "imay"
+orderList: Array(2)
+  0: {_id: '636a5b18392e60ba131f6484', buyer: '636a4498404007c6e61cee89', productList: Array(2), countList: Array(2), shippingStatus: '배송전', …}
+  1: {_id: '636a5cab920248f1e57da9eb', buyer: '636a4498404007c6e61cee89', productList: Array(3), countList: Array(3), shippingStatus: '배송전', …}
+
+password: "$2b$10$xbtHEanKhMDfMgIVxd.v..PrnmvVdxhI8meA6AP6U5bNVbWWYSG56"
+phoneNumber: "1234567890"
+postCode: "우편번호"
+role: "basic-user"
+streetAddress: "도로명"
+updatedAt: "2022-11-08T13:42:03.209Z"
+__v: 2
+_id: "636a4498404007c6e61cee89"
+
+*/
+
+/*
+오더정보
+
+buyer: "636a4498404007c6e61cee89"
+countList: (2) [1, 1]
+createdAt: "2022-11-08T13:35:20.530Z"
+productList: Array(2)
+  0: "63654ee0faa3aa6363ad18bc"
+  1: "63654f3ffaa3aa6363ad18e8"
+
+recipientName: "imay"
+recipientPhoneNumber: "1234567890"
+shippingExtraAddress: "상세 주소"
+shippingPostCode: "우편번호"
+shippingRequestMessage: "부재 시 문 앞에 놓아주세요."
+shippingStatus: "배송전"
+shippingStreetAddress: "도로명"
+totalAmount: "33000"
+updatedAt: "2022-11-08T13:35:20.530Z"
+__v: 0
+_id: "636a5b18392e60ba131f6484"
+
+*/
 
 // 상품 불러오기
 // fetch("/api/orders") // /api/orders 로 get요청
