@@ -1,57 +1,50 @@
-class List {
-  constructor(className){
-    document.querySelector()
-    this.name = className.replace()
+function createTop(listArr) {
+  const top = document.createElement("table");
+  top.className = "table text-center";
+  const addHtml = [];
+  addHtml.push(`
+  <thead>
+  <tr>
+    <th scope="col"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">${name}</font></font></th>
+  </tr>
+    </thead>
+    <thead class="table-light">
+      <tr>`);
+  4;
+  for (let list = 0; list < listArr.length(); list++) {
+    if (list < listArr.length - 2) {
+      addHtml.push(`
+    <th scope="col">
+        <font style="vertical-align: inherit;">
+          <font style="vertical-align: inherit;">${list}</font>
+        </font>
+    </th>`);
+    } else {
+      addHtml.push(`
+      <th scope="col">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">상태관리</font>
+          </font>
+        </th>
+        <th scope="col">
+          <font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">취소</font>
+          </font>
+        </th>`);
+    }
   }
-  date(){
+  addHtml.push(`</tr></thead>`);
 
-  }
-  name(){
-
-  }
-  totlaprice(){
-
-  }
-  edit(){
-
-  }
-  delete(){
-
-  }
+  top.innerHTML += addHtml.join("");
+  return top;
 }
 
+function createMiddle(data){
+  
+}
 
-const addCategoryHTML = `
-<div class="bd-example">
-<table class="table">
-  <thead class="table-light">
-    <tr>
-      <th scope="col"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">#</font></font></th>
-      <th scope="col"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">첫 번째</font></font></th>
-      <th scope="col"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">마지막</font></font></th>
-      <th scope="col"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">핸들</font></font></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">1</font></font></th>
-      <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">표시</font></font></td>
-      <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">장미유</font></font></td>
-      <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">@mdo</font></font></td>
-    </tr>
-    <tr>
-      <th scope="row"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">2</font></font></th>
-      <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">야곱</font></font></td>
-      <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">손튼</font></font></td>
-      <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">@지방</font></font></td>
-    </tr>
-  </tbody>
-</table>
-</div>`;
-// adminBtnCategory.addEventListener("click",(e) => {
-//   mainContainer.innerHTML += addCategoryHTML
+function createTable(datas) {
+  createTop();
+}
 
-// })
-
-//btn__admin__addProduct
-const addProductHYML = ``;
+export { createTable };
