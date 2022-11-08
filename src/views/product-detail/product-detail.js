@@ -62,7 +62,7 @@ fetch(`/api/products/${id}`)
   .then((res) => res.json())
   .then((product) => {
     addproduct(product);
-    insertIndexedDB(DATABASE_NAME, version, objectStore, idObject, product);
+    //insertIndexedDB(DATABASE_NAME, version, objectStore, idObject, product);
   })
   .catch((err) => alert(err.message));
 
@@ -74,6 +74,7 @@ function addproduct(product) {
 
   productDescription.innerHTML = product.shortDesc;
   productPrice.innerHTML = product.price;
+
   getAllIndexedDB(DATABASE_NAME, version, objectStore, id, function (result) {
     result.forEach((data) => {
       if (id === data.id) {
@@ -82,7 +83,7 @@ function addproduct(product) {
     });
 
     productAmountNum = parseInt(productAmount.textContent);
-  }); //장바구니에 수량이 이미 있는경우 indexedDB에서 조회, 렌더링함
+  });
 }
 
 /*indexedDB 함수*/
@@ -314,13 +315,15 @@ function getAllKeysIndexedDB(DATABASE_NAME, version, objectStore) {
 button__cart.addEventListener("click", () => {
   let operation = "none";
   getIndexedDB(DATABASE_NAME, version, objectStore, idObject, operation);
-  if (idObject.id) {
-    //alert("이미 장바구니에 담겨있는 상품입니다.");
-    updateIndexedDB(DATABASE_NAME, version, objectStore, id);
-  } else {
-    insertIndexedDB(DATABASE_NAME, version, objectStore, idObject);
-    alert("상품을 장바구니에 담았습니다.");
-  }
+  console.log(`idObject.id : ${idObject.id}, id : ${id}`);
+  console.log(productImg.src);
+  // if (idObject.id) {
+  //   alert("이미 장바구니에 담겨있는 상품입니다.");
+  //   updateIndexedDB(DATABASE_NAME, version, objectStore, id);
+  // } else {
+  //insertIndexedDB(DATABASE_NAME, version, objectStore, idObject);
+  //   alert("상품을 장바구니에 담았습니다.");
+  // }
 });
 
 /* 상품 수량 +, - 클릭 이벤트*/
