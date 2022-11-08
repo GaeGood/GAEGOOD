@@ -71,9 +71,9 @@ fetch("/api/products")
     categoryLiList.forEach((categoryLi) => {
       categoryLi.addEventListener("click", (event) => {
         categoryLiList.forEach((categoryLi) => {
-          categoryLi.children[0].classList.remove("active");
+          categoryLi.children[0].classList.remove("clicked");
         });
-        categoryLi.children[0].classList.add("active");
+        categoryLi.children[0].classList.add("clicked");
 
         cards.textContent = "";
         productList.forEach((product) => {
