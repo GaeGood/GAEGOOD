@@ -2,8 +2,7 @@ import { categoryModel } from "../db";
 
 class CategoryService {
   async addCategory(categoryInfo) {
-    const { name } = categoryInfo;
-
+    const { name } = categoryInfo; //PEPE가 name으로 구조분해할당 한 의도 모르겠음. 일단 에러처리 적용하겠음.
     const createdNewCategory = await categoryModel.create(categoryInfo);
     return createdNewCategory;
   }
@@ -24,8 +23,6 @@ class CategoryService {
   }
 
   async editCategory(cid, categoryInfo) {
-    const { name } = categoryInfo;
-
     const updatedcategory = await categoryModel.update(cid, categoryInfo);
     return updatedcategory;
   }

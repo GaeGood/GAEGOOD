@@ -23,7 +23,6 @@ class ProductService {
 
   async editProduct(pid, productInfo) {
     const updatedProduct = await productModel.update(pid, productInfo);
-
     return updatedProduct;
   }
 

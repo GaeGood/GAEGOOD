@@ -14,7 +14,6 @@ class OrderService {
     } = orderInfo;
 
     if (productList.length !== countList.length) {
-
       const error = new Error("상품의 갯수와 수량의 갯수가 다릅니다.");
       error.statusCode = 400;
       throw error;
@@ -25,7 +24,6 @@ class OrderService {
       error.statusCode = 401;
       throw error;
     }
-
     const createdNewOrder = await orderModel.create(orderInfo);
     return createdNewOrder;
   }
@@ -46,8 +44,7 @@ class OrderService {
   }
 
   async editOrder(oid, orderInfo) {
-    const { shippingAddress, recipientName, recipientPhoneNumber } = orderInfo;
-
+    //const { shippingAddress, recipientName, recipientPhoneNumber } = orderInfo;
     const updatedNewOrder = await orderModel.update(oid, orderInfo);
     return updatedNewOrder;
   }

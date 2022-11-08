@@ -47,9 +47,12 @@ class UserService {
     try {
       const hashPassword = await bcrypt.hash(password, saltRound);
       const updatedUser = await userModel.update(uid, {
-        name: name,
+        name,
         password: hashPassword,
-        address: address,
+        address,
+        phoneNumber,
+        postCode,
+        extraAddress,
       });
       return updatedUser;
     } catch (err) {
