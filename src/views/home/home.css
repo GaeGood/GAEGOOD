@@ -11,27 +11,6 @@ html {
   height: 100vh;
 }
 
-.div-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-}
-
-.landing {
-  cursor: pointer;
-  border: 1px solid red;
-  padding: 10px;
-  font-size: 3rem;
-}
-
-.greeting {
-  cursor: pointer;
-  border: 1px solid blue;
-  padding: 10px;
-  margin-left: 3rem;
-}
-
 /* main */
 #main__container {
   width: 100%;
