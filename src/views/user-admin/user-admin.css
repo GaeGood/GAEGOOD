@@ -65,13 +65,13 @@ a {
 }
 
 
-
-
-
-
-
-
-
+/*user-admin*/
+.btn__admin__addCategory{
+  display: none;
+} 
+.btn__admin__addProduct {
+  display: none;
+}
 
 
 /*footer*/

@@ -1,7 +1,12 @@
-//import { addCommas } from "/useful-functions.js";
-//import { main } from "/main.js";
-//const { loggedInUser } = await main();
-import { createTable } from "./admin-class.js";
+import { addCommas } from "/useful-functions.js";
+import { main } from "/main.js";
+const { loggedInUser } = await main();
+import {
+  createOderTable,
+  createUserTable,
+  createCategoryTable,
+  createProductTable,
+} from "./user-admin-module.js";
 
 const mainTag = document.getElementById("main__container");
 
@@ -47,7 +52,7 @@ function compareEnglish(lsName) {
   return "add__product";
 }
 
-for (let i = 0; i < adminPageList.length; i++) {
+for (let i = 0; i < adminPageList.length - 2; i++) {
   const listBtn = adminPageList[i];
   listBtn.addEventListener("click", (element) => {
     //지금 table이 있는지 확인하고 있다면 다 지우기
@@ -60,65 +65,129 @@ for (let i = 0; i < adminPageList.length; i++) {
     const newHtml = document.createElement("div");
     newHtml.className = `bd-example ${listNameEn}`;
     if (listName === "주문관리") {
+      document.querySelector(".btn__admin__addCategory").style =
+        "display:none";
+      document.querySelector(".btn__admin__addProduct").style =
+        "display:none";
       fetch("/api/orders")
         .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          const newData = data.map((e) => {
+        .then((datas) => {
+          console.log(datas);
+          const newDatas = datas.map((data) => {
             return {
-              _id: e._id,
-              date: e.createdAt.slice(0, 10),
-              name: e.recipientName,
-              products: e.productList.map((e) => e.name),
-              total: e.totalAmount,
-              shopStatus: e.shippingStatus,
-              cancle: false,
+              _id: data._id,
+              date: data.createdAt.slice(0, 10),
+              name: data.recipientName,
+              products: data.productList.map((data) => data.name),
+              total: Number(data.totalAmount).toLocaleString(),
+              shopStatus: data.shippingStatus,
             };
           });
-          return newData;
+          return newDatas;
         })
-        .then((newData) => {
-          newHtml.appendChild(createTable(oderAdmin, newData));
+        .then((newDatas) => {
+          console.log(newDatas);
+          newHtml.appendChild(createOderTable(oderAdmin, newDatas));
           mainTag.append(newHtml);
         })
         .then(() => {
           oderManagementEdit();
           oderManagementDelete();
         });
-      //     newHtml.innerHTML = innerOderManagement(listName);
-      //   } else if (listName === "회원관리") {
-      //     newHtml.innerHTML = innerUserManagement(listName);
-      //   } else if (listName === "카테고리 관리") {
-      //     newHtml.innerHTML = innerAddCategory(listName);
-      //   } else {
-      //     newHtml.innerHTML = innerAddProduct(listName);
-      //   }
+    } else if (listName === "회원관리") {
+      document.querySelector(".btn__admin__addCategory").style =
+        "display:none";
+      document.querySelector(".btn__admin__addProduct").style =
+        "display:none";
+      fetch("/api/users")
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        });
+      //   const newData = data.map((e) => {
+      //     return {
+      //       _id: e._id,
+      //       date: e.createdAt.slice(0, 10),
+      //       name: e.recipientName,
+      //       products: e.productList.map((e) => e.name),
+      //       total: e.totalAmount,
+      //       shopStatus: e.shippingStatus,
+      //       cancle: false,
+      //     };
+      //   });
+      //   return newData;
+      // })
+      // .then((newData) => {
+      //   newHtml.appendChild(createTable(oderAdmin, newData));
       //   mainTag.append(newHtml);
+      // })
+      // .then(() => {
+      //   oderManagementEdit();
+      //   oderManagementDelete();
       // });
+    } else if (listName === "카테고리 관리") {
+      //상품추가와 카테고리추가 없애기
+      document.querySelector(".btn__admin__addCategory").style =
+        "display:inline";
+      document.querySelector(".btn__admin__addProduct").style =
+        "display:none";
+
+      fetch("/api/categories")
+        .then((res) => res.json())
+        .then((datas) => {
+          const newDatas = datas.map((data) => {
+            return {
+              _id: data._id,
+              date: data.createdAt.slice(0, 10),
+              name: data.name,
+              updateDate: data.updatedAt.slice(0, 10),
+            };
+          });
+          return newDatas;
+        })
+        .then((newDatas) => {
+          newHtml.appendChild(createCategoryTable(categoryAdmin, newDatas));
+          mainTag.append(newHtml);
+        })
+        .then(() => {
+          categoryManagementCreate();
+          categoryManagementEdit();
+          categoryManagementDelete();
+        });
+    } else {
+      //상품추가와 카테고리추가 없애기
+      document.querySelector(".btn__admin__addCategory").style =
+        "display:none";
+      document.querySelector(".btn__admin__addProduct").style =
+        "display:inline";
+      newHtml.innerHTML = innerAddProduct(listName);
     }
   });
 }
 
+//============ 주문관련 =====================
 function oderManagementEdit() {
   const editBtns = document.querySelectorAll(".dropdown-item");
   //버튼클릭 => 배송준비 => 랜더링화면바꾸기 => fetch 수정 =>
   for (let count = 0; count < editBtns.length; count++) {
     editBtns[count].addEventListener("click", (e) => {
       //아래 기능이 없으면 배송상태가 바뀌면 최상단으로 화면이 이동한다
-      e.preventDefault()
-      const btnValue = e.target.text
+      e.preventDefault();
+      const btnValue = e.target.text;
       const btnId =
         e.target.parentElement.parentElement.parentElement.parentElement
           .parentElement.id;
       //배송상태가 바뀐 값(배송중 => 배송완료)으로 현재 버튼이 배송완료 바뀌는 기능
-      e.target.parentElement.parentElement.parentElement.querySelector("a").innerText = `${btnValue}`
+      e.target.parentElement.parentElement.parentElement.querySelector(
+        "a"
+      ).innerText = `${btnValue}`;
       fetch(`http://localhost:5000/api/orders/${btnId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          "shippingStatus": `${btnValue}`,
+          shippingStatus: `${btnValue}`,
         }),
       })
         .then((res) => res.json())
@@ -128,6 +197,81 @@ function oderManagementEdit() {
 }
 
 function oderManagementDelete() {
+  const deleteBtns = document.querySelectorAll(".btn__delete");
+  for (let count = 0; count < deleteBtns.length; count++) {
+    deleteBtns[count].addEventListener("click", (e) => {
+      const btnId = e.target.parentElement.parentElement.id;
+      document.getElementById(`${btnId}`).remove();
+      fetch(`http://localhost:5000/api/orders/${btnId}`, {
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then((alt) => alert(alt));
+    });
+  }
+}
+
+//============== 카테고리관련 ===============
+function categoryManagementEdit() {
+  const editCategoryBtns = document.querySelectorAll(
+    ".btn__admin__editCategory"
+  );
+  for (let count = 0; count < editCategoryBtns.length; count++) {
+    editCategoryBtns[count].addEventListener("click", (e) => {
+      const nameValue =
+        document.querySelectorAll(".current__name")[count].innerText;
+      const categoryId = e.target.parentElement.parentElement.id;
+      const inputCategoryName = document.querySelector("#edit-category-name");
+      inputCategoryName.setAttribute("value", nameValue);
+      document
+        .querySelector(".submit__edit__category")
+        .addEventListener("click", (e) => {
+          const newValue = inputCategoryName.value;
+          console.log(newValue);
+          console.log(categoryId);
+          fetch(`http://localhost:5000/api/orders/${categoryId}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: `${newValue}`,
+            }),
+          })
+            .then((res) => {
+              return res.json();
+            })
+            .then((data) => console.log(data));
+        });
+    });
+  }
+}
+
+function categoryManagementCreate() {
+  const addCategoryBtn = document.querySelector(".submit__category");
+  addCategoryBtn.addEventListener("click", (e) => {
+    //category-name
+    fetch("/api/categories", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: `${document.querySelector("#category-name").value}`,
+      }),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        alert(`${data.name} 이(가) 카테고리에 추가되었습니다.`);
+        //모달숨기기
+        bootstrap.Modal.getInstance("#btn__admin__addCategory").hide();
+      });
+  });
+}
+
+function categoryManagementDelete() {
   const deleteBtns = document.querySelectorAll(".btn__delete");
   for (let count = 0; count < deleteBtns.length; count++) {
     deleteBtns[count].addEventListener("click", (e) => {

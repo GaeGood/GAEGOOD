@@ -16,9 +16,8 @@ function createTop(listArr) {
   return top;
 }
 
-function createMiddle(dataArr) {
+function createOderMiddle(dataArr) {
   const middle = document.createElement("tbody");
-  //middle.className = "table text-center";
   const addHtml = [];
   for (let count = 0; count < dataArr.length; count++) {
     addHtml.push(
@@ -73,13 +72,80 @@ function createMiddle(dataArr) {
   return middle;
 }
 
-function createTable(listArr, datasArr) {
+function createOderTable(listArr, datasArr) {
   //datas 는 필요한 데이터만 받아온 객체들의 배열
   const table = document.createElement("table");
   table.className = "table text-center";
   table.prepend(createTop(listArr));
-  table.append(createMiddle(datasArr));
+  table.append(createOderMiddle(datasArr));
   return table;
 }
 
-export { createTable };
+function createUserTable(listArr, datasArr) {
+  //datas 는 필요한 데이터만 받아온 객체들의 배열
+  const table = document.createElement("table");
+  table.className = "table text-center";
+  table.prepend(createTop(listArr));
+  table.append(createCategoryMiddle(datasArr));
+  return table;
+}
+
+function createCategoryMiddle(dataArr) {
+  const middle = document.createElement("tbody");
+  const addHtml = [];
+  for (let count = 0; count < dataArr.length; count++) {
+    addHtml.push(
+      `<tr id="${dataArr[count]._id}">
+          <th scope="row">
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">${dataArr[count].date}</font>
+            </font>
+          </th>
+          <td>
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;" class="current__name">${dataArr[count].name}</font>
+            </font>
+          </td>
+          <td>
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">${dataArr[count].updateDate}</font>
+            </font>
+          </td>
+          <td>
+          <button type="button" class="btn btn-outline-primary ms-auto p-2 bd-highlight btn__admin__editCategory" data-bs-toggle="modal"
+      data-bs-target="#btn__admin__editCategory">수정하기</button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-outline-danger btn__delete">삭제하기</button>
+          </td>
+        </tr>`
+    );
+  }
+  middle.innerHTML += addHtml.join("");
+  return middle;
+}
+
+function createCategoryTable(listArr, datasArr) {
+  //datas 는 필요한 데이터만 받아온 객체들의 배열
+  const table = document.createElement("table");
+  table.className = "table text-center";
+  table.prepend(createTop(listArr));
+  table.append(createCategoryMiddle(datasArr));
+  return table;
+}
+
+function createProductTable(listArr, datasArr) {
+  //datas 는 필요한 데이터만 받아온 객체들의 배열
+  const table = document.createElement("table");
+  table.className = "table text-center";
+  table.prepend(createTop(listArr));
+  table.append(createCategoryMiddle(datasArr));
+  return table;
+}
+
+export {
+  createOderTable,
+  createUserTable,
+  createCategoryTable,
+  createProductTable,
+};
