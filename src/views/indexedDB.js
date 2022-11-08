@@ -45,24 +45,28 @@ async function deleteIndexedDBdata(
 }
 
 /* 해당 indexedDB에 존재하는 모든 데이터 조회하기 */
-function getAllIndexedDB(DATABASE_NAME, version, objectStore, cb) {
-  if (window.indexedDB) {
-    const request = indexedDB.open(DATABASE_NAME, version);
-    request.onerror = function (event) {
-      console.log(event.target.errorCode);
-      alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
-    };
-    request.onsuccess = function () {
-      const db = request.result;
-      const transaction = db.transaction(objectStore, "readonly");
-      const store = transaction.objectStore(objectStore);
-      store.getAll().onsuccess = function (response) {
-        cb(response.target.result);
+async function getAllIndexedDB(DATABASE_NAME, version, objectStore, cb) {
+  return new Promise((resolve, reject) => {
+    if (window.indexedDB) {
+      const request = indexedDB.open(DATABASE_NAME, version);
+      request.onerror = function (event) {
+        console.log(event.target.errorCode);
+        alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
       };
-    };
-  } else {
-    alert("해당 브라우저에서는 indexedDB를 지원하지 않습니다.");
-  }
+      request.onsuccess = function () {
+        const db = request.result;
+        const transaction = db.transaction(objectStore, "readonly");
+        const store = transaction.objectStore(objectStore);
+        store.getAll().onsuccess = function (response) {
+          const orderProductList = cb(response.target.result);
+          resolve(orderProductList);
+        };
+      };
+    } else {
+      alert("해당 브라우저에서는 indexedDB를 지원하지 않습니다.");
+    }
+  })
+  
 }
 
 

@@ -45,7 +45,7 @@ const OrderSchema = new Schema(
       required: false,
     },
     totalAmount: {
-      type: Number,
+      type: String,
       required: true,
     },
     recipientName: {

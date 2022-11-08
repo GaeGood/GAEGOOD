@@ -11,107 +11,111 @@ const DATABASE_NAME = "cartDB";
 const version = 1;
 const objectStore = "cartStorage";
 
-const { name, phoneNumber, postCode, address, extraAddress, _id } = loggedInUser
+// 장바구니 상품 여부 확인
+const orderProductList = await getAllIndexedDB(DATABASE_NAME, version, objectStore, 
+  function(orderProductDBList) {
+    return orderProductDBList;
+  })
+
+  if(!orderProductList){
+    alert('장바구니에 상품이 없습니다.')
+    window.location.href = "/"
+  }
+
+
+// db에 있는 기존 유저정보 화면에 띄우기 
+const { email, name, phoneNumber, postCode, address, extraAddress, _id } = loggedInUser
+console.log(loggedInUser)
 const [ userName, userPhoneNumber, userPostCode, userStreetAddress, userExterAddress, userRequestMessage ] = document.querySelectorAll('.user')
+const [ productsPriceHTML , deliveryFeeHTML, totalPriceHTML ] = document.querySelectorAll('.pay')
 
-console.log(_id)
-console.log( userName, userPhoneNumber, userPostCode, userStreetAddress, userExterAddress, userRequestMessage )
-
-userName.value = name
-userPhoneNumber.value = phoneNumber
-userPostCode.value = postCode
-userStreetAddress.value = address
-userExterAddress.value = extraAddress
-
-
-
-
-
-// 장바구니 정보 가져오기
-const orderProductTable = document.querySelector('.product__list')
-//[ orderProductId, orderProductPicture, orderProductInfo, orderdeliveryFee, orderProductAmount, orderProductPrice ]
-
-await getAllIndexedDB(DATABASE_NAME, version, objectStore, 
-  function(orderProductList) {
-  
-    orderProductList.forEach((orderProduct) => { // 상품 아이디, 이미지, 개수, 수량, 
- 
-      fetch(`/api/products/${orderProduct.id}`)
-      .then((res) => {
-        return res.json();
-      })
-      .then((productList) => {
+if (!phoneNumber && !postCode && !extraAddress){
+  userName.value = name
+  userPhoneNumber.value = ""
+  userPostCode.value = ""
+  userStreetAddress.value = address
+  userExterAddress.value = ""
+} else {
+  userName.value = name
+  userPhoneNumber.value = phoneNumber
+  userPostCode.value = postCode
+  userStreetAddress.value = address
+  userExterAddress.value = extraAddress
+}
 
 
 
-        let deliveryFee = 0
-        if(orderProduct.id){
-          deliveryFee = 3000
-        }
-      orderProductTable.innerHTML += `
-            <tr>
-              <td>
-                  <span class="order product__id hidden">${orderProduct.id}</span>
-              </td>
-              <td>
-                  <img src="${productList.smallImageURL}" class="order product__picture" />
-              </td>
-              <td>
-                  <span class="order product__info">
-                    <div>${productList.name}</div>
-                    <div>${productList.shortDesc}</div>
-                  </span>
-              </td>
-              <td>
-                  <span class="order product__amount">${orderProduct.amount}</span>
-              </td>
-              <td>
-                  <span class="order product__price">${productList.price}</span>
-              </td>
-            </tr>  
-            `
-        })
-      .catch((err) => alert('상품 불러오는데 에러가 났습니다'));
+
+
+
+
+
+// 아래 변수는 post시에 사용될 상품 id들, 수량들의 객체를 위해 선언
 
 
 /*
+orderProductList
+amount: 1
 bigImageURL: "/public/images/product-images/자유형-개발자-스티커.png"
-category: {_id: '63654e94faa3aa6363ad18b3', name: '스티커/지류', createdAt: '2022-11-04T17:40:36.745Z', updatedAt: '2022-11-04T17:40:36.745Z', __v: 0}
-createdAt: "2022-11-04T17:41:53.130Z"
+category: 
+ createdAt: "2022-11-04T17:40:36.745Z"
+ name: "스티커/지류"
+ updatedAt: "2022-11-04T17:40:36.745Z"
+ __v: 0
+ _id: "63654e94faa3aa6363ad18b3"
+
+id: "63654ee2faa3aa6363ad18c8" // 상품ID
 longDesc: "스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. "
 name: "스티커/지류"
 price: 15000
 shortDesc: "스티커/지류 짧은 설명입니다."
 smallImageURL: "/public/images/product-images/말풍선-개발자-스티커.png"
 stock: 10
-updatedAt: "2022-11-04T17:41:53.130Z"
-__v: 0
-_id: "63654ee1faa3aa6363ad18bf"
 */
+
+const orderProductTable = document.querySelector('.product__list')
+
+const productAllIdArr = []
+const productAllAmountArr = []
+let productsPrice = 0
+orderProductList.forEach((orderProduct) => {
+
+        // 장바구니 각각의 상품마다 표 생성될 수 있도록 템플릿리터럴 진행~
+        orderProductTable.innerHTML += `
+            <tr>
+              <td>
+                  <span class="order product__id hidden">${orderProduct.id}</span>
+              </td>
+              <td>
+                  <img src="${orderProduct.smallImageURL}" class="order product__picture" />
+              </td>
+              <td>
+                  <span class="order product__info">
+                    <div>${orderProduct.name}</div>
+                    <div>${orderProduct.shortDesc}</div>
+                  </span>
+              </td>
+              <td>
+                  <span class="order product__amount">${orderProduct.amount}</span>
+              </td>
+              <td>
+                  <span class="order product__price">${orderProduct.price}원</span>
+              </td>
+            </tr>  
+            `
+
+        productAllIdArr.push(orderProduct.id)
+        productAllAmountArr.push(orderProduct.amount)
+
+        productsPrice += orderProduct.price * orderProduct.amount;
+        productsPriceHTML.innerHTML = productsPrice
+        deliveryFeeHTML.innerHTML = 3000
+        totalPriceHTML.innerHTML = productsPrice + 3000
+
+
 
     })
-  })
 
-// console.log(orderProductId)
-// const test = document.querySelectorAll('.order')
-
-// 기존 DB의 사용자 정보 가져오기
-
-/*
-address: "d"
-createdAt: "2022-11-06T14:50:43.961Z"
-email: "test3@naver.com"
-extraAddress: "d"
-name: "may"
-password: "$2b$10$kiCMxMBhgu5XN4esa7i./OprjomKxlIeRice2vNBrJUb4QVEiD0wO"
-phoneNumber: "01012345678"
-postCode: "d"
-role: "basic-user"
-updatedAt: "2022-11-07T02:23:07.974Z"
-__v: 0
-_id: "6367c9c386545678e88c4bbf"
-
-*/
 
 
 // 주소찾기 
@@ -178,116 +182,94 @@ function handleRequestChange(e) {
 
 }
 
-requestSelectBox.addEventListener("change", handleRequestChange);
 
-// const productAllId = document.querySelector('.secret__productallid')
-//       const productAllIdArr = []
-//       const productAllAmount = []
-    
-
-// await getAllIndexedDB(DATABASE_NAME, version, objectStore, 
-//   function(orderProductList) {
-
-
-
-
-//     orderProductList.forEach((orderProduct) => {
-      
-//     fetch(`/api/products/${orderProduct.id}`)
-//     .then((res) => {
-//       return res.json();
-//     })
-//     .then((productList) => {
-
-//       productAllIdArr.push(orderProduct.id)
-//       productAllAmount.push(orderProduct.amount)
-      
-//        totalAmount += productList.price * orderProduct.amount
-//       // console.log(productList.price * orderProduct.amount)
-
-      
-//     })
-
-//   }) 
-//         console.log(totalAmount)
-//       console.log(productAllAmount)
-//   })
-
-// 받아온 정보를 배송정보로 POST
-
-/*
-스키마
-*/
-
-// const shippingInformationList =
-// {
-//     "buyer": ${_id},
-//     "productList":${productAllId},
-//     "countList":${productAllAmount},
-//     "shippingStatus":"배송전",
-//     "shippingPostCode" : ${userPostCode.value},
-//     "shippingStreetAddress":${userStreetAddress.value},
-//     "shippingExtraAddress":`${userExterAddress.value}`,
-//     "shippingRequestMessage":`${userRequestMessage.value}`,
-//     "totalAmount":"300000",
-//     "recipientName":"홍길동",
-//     "recipientPhoneNumber":"010-1234-5678"
-// }
-
-
-//       console.log(shippingInformationList)
-
-// post시 빈칸 있으면 return alert 진행
-// 결제 완료 된다음에 indexedDB에서 값 지울건지도 상의해봐야겠네(즉 장바구니를 비울지?)
-
-// fetch(`api/orders`, {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify(shippingInformationList),
-//     })
-//     .then((response) => response.json())
-//     .then(() => {
-//       alert('회원정보가 변경되었습니다.')
-//       // window.location.href = "/users/mypage";
-//     })
-//     .catch((err) => {
-//       alert(`에러가 발생했습니다. 관리자에게 문의하세요. \n에러내용: ${err}`)
-//     });
-
-
-
-const [ productsPrice, deliveryFee, totalPrice ] = document.querySelectorAll('.pay')
-
-productsPrice.innerHTML = "여긴 상품 곱하기 수량 "
-
+const shippingInformationList =
+{
+    "buyer": `${_id}`,
+    "productList":`${productAllIdArr}`,
+    "countList":`${productAllAmountArr}`,
+    "shippingStatus":"배송전",
+    "shippingPostCode" : `${userPostCode.value}`,
+    "shippingStreetAddress":`${userStreetAddress.value}`,
+    "shippingExtraAddress":`${userExterAddress.value}`,
+    "shippingRequestMessage":`${userRequestMessage.value}`,
+    "totalAmount":`${productsPrice.innerHTML}`,
+    "recipientName":`${userName.value}`,
+    "recipientPhoneNumber":`${userPhoneNumber.value}`,
+}
 
 // 결제하기 버튼 눌렀을 때
+
 const payBtn = document.querySelector('.pay__button')
 
 function payBtnClick(){
-    deleteIndexedDBdata(DATABASE_NAME, version, objectStore, orderProduct)
+    if( !userName.value || !userPhoneNumber.value || !userPostCode.value || !userStreetAddress.value || !userExterAddress.value ){
+        return alert('배송지 정보를 정확하게 채워주세요')
+    }
 
-    alert("결제 및 주문이 정상적으로 완료되었습니다.\n감사합니다.");
-    window.location.href = "/"
+    // 기존에 휴대폰번호와 주소가 없다면 주문할 때 배송지와 휴대폰번호로 기존 유저정보 업데이트 
+
+    // if (!phoneNumber && !postCode && !extraAddress){
+
+    //   fetch(`/api/users/${_id}`, {
+    //     method: "PUT",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //       "_id" : `${_id}`,
+    //       "email": `${email}`,
+    //       "password" : `${password}`,
+    //       "phoneNumber" : `${userPhoneNumber.value}`,
+    //       "createdAt" : `${createdAt}`,
+    //       "name": `${userName.value}`,
+    //       "role": `${role}`,
+    //       "postCode": `${userPostCode.value}`,
+    //       "address": `${userAddressOne.value}`,
+    //       "extraAddress": `${userExtraAddress.value}`
+    //     }),
+    //   })
+    //   .then((response) => response.json())
+    //   .then((userInfoChange) => {
+    //     alert('회원정보가 변경되었습니다.')
+    //     // window.location.href = "/users/mypage";
+    //   })
+    //   .catch((err) => {
+    //     alert(`에러가 발생했습니다. 관리자에게 문의하세요. \n에러내용: ${err}`)
+    //   });      
+    // }
+
+
+    fetch(`/api/orders`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(shippingInformationList),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        // deleteIndexedDBdata(DATABASE_NAME, version, objectStore, orderProduct)
+        alert("결제 및 주문이 정상적으로 완료되었습니다.\n감사합니다.");
+        // window.location.href = "/"
+        console.log(data)
+    })
+    .catch((err) => {
+      alert(`에러가 발생했습니다. 관리자에게 문의하세요. \n에러내용: ${err}`)
+    });
+
+
 }
 
 payBtn.addEventListener('click', payBtnClick)
 
-/*
 
-// 결제하기 버튼 눌렀을 때
-const payBtn = document.querySelector('.pay__button')
+// 기존에 휴대폰번호와 주소가 없다면 주문할 때 배송지와 휴대폰번호로 기존 유저정보 업데이트 
 
-function payBtnClick(){
-    deleteIndexedDBdata(DATABASE_NAME, version, objectStore, {id: '63654f3bfaa3aa6363ad18d3', amount: 1}
-)
+if (!phoneNumber && !postCode && !extraAddress){
+  
 
-    alert("결제 및 주문이 정상적으로 완료되었습니다.\n감사합니다.");
-    window.location.href = "/"
+
+
 }
 
-payBtn.addEventListener('click', payBtnClick)
-
-*/
