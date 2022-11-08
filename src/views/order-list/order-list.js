@@ -22,12 +22,12 @@ orderList.forEach((order) => {
   const orderDay = order.createdAt.split("T")[0];
   const shippingStatus = order.shippingStatus;
 
-  orderContents.innerHTML += `<a href="/orders/${orderId}" >
+  orderContents.innerHTML += `<div>
         <div class="card-header">${orderDay} 주문</div>
         <div class="test__${orderId}" style="display:flex;align-items: center;justify-content: space-between;"">
           <div class="order__${orderId}"></div>
         </div>
-        </a>`;
+        </div>`;
 
   for (let i = 0; i < countList.length; i++) {
     fetch(`/api/products/${productIdList[i]}`)
@@ -42,13 +42,14 @@ orderList.forEach((order) => {
         const productName = product.name;
         const productImg = product.smallImageURL;
         const productPrice = product.price;
+        console.log(product);
         // 여기서부터 복붙
 
         const dateOrder = document.querySelector(`.order__${orderId}`);
 
         dateOrder.innerHTML += `
-        <div>
-                <span class="card-body">
+        
+                <a href="/products/${productIdList[i]}" class="card-body">
                   <div class="product__picture">
                     <img src=${productImg} class="product__image"/>
                   </div>
@@ -57,8 +58,8 @@ orderList.forEach((order) => {
                     <span class="card-text">${productPrice}원</span>
                     <span class="card-text">${countList[i]}개</span>
                   </div>
-                </span>
-        </div>`;
+                </a>
+       `;
         //<div>
         // <div class="etc__zone">
         //   <div>${shippingStatus}</div>
@@ -95,8 +96,8 @@ orderList.forEach((order) => {
         <div>
         <div class="etc__zone">
           <div>${shippingStatus}</div>
-          <button href="#" class="btn btn-primary">
-            주문상세
+          <button class="btn btn-primary"><a href="/orders/${orderId}">
+            주문상세</a>
           </button>
         </div>
         </div>
