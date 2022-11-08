@@ -32,7 +32,6 @@ const version = 1;
 const objectStore = "cartStorage";
 const pathArray = window.location.pathname.split("/");
 const productId = pathArray[2];
-let cartCount = 0;
 let productAmountNum = parseInt(productAmount.textContent);
 /* 상품 상제정보 불러오기*/
 // home에서 클릭한 제품의 상세 내용
@@ -202,7 +201,6 @@ function getIndexedDB(
   if (window.indexedDB) {
     const request = indexedDB.open(DATABASE_NAME, version);
     const key = idObject.id;
-    let validate__value = 0;
     request.onerror = function (event) {
       console.log(event.target.errorCode);
       alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
@@ -212,39 +210,37 @@ function getIndexedDB(
       const transaction = db.transaction(objectStore, "readonly");
       const store = transaction.objectStore(objectStore);
       store.get(key).onsuccess = function (response) {
-        if (response.target.result) {
-          if (
-            !confirm(
-              "이미 장바구니에 담겨있는 상품입니다.\n장바구니에서 수량을 변경해주세요."
-            )
-          ) {
-            // 취소(아니오) 버튼 클릭 시 이벤트
-            if (operation === "plus") {
-              productAmountNum -= 1;
-              productAmount.textContent = productAmountNum;
-            } else if (operation === "minus") {
-              productAmountNum += 1;
-              productAmount.textContent = productAmountNum;
-            }
-          } else {
-            // 확인(예) 버튼 클릭 시 이벤트
-            if (operation === "plus") {
-              productAmountNum -= 1;
-              productAmount.textContent = productAmountNum;
-            } else if (operation === "minus") {
-              productAmountNum += 1;
-              productAmount.textContent = productAmountNum;
-            }
-          }
-          validate__value += 1;
-        }
+        // if (response.target.result && operation !== "none") {
+        //   if (
+        //     !confirm(
+        //       "이미 장바구니에 담겨있는 상품입니다. \n장바구니에서 수량을 변경해주세요."
+        //     )
+        //   ) {
+        //     // 취소(아니오) 버튼 클릭 시 이벤트
+        //     if (operation === "plus") {
+        //       productAmountNum -= 1;
+        //       productAmount.textContent = productAmountNum;
+        //     } else if (operation === "minus") {
+        //       productAmountNum += 1;
+        //       productAmount.textContent = productAmountNum;
+        //     }
+        //   } else {
+        //     // 확인(예) 버튼 클릭 시 이벤트
+        //     if (operation === "plus") {
+        //       productAmountNum -= 1;
+        //       productAmount.textContent = productAmountNum;
+        //     } else if (operation === "minus") {
+        //       productAmountNum += 1;
+        //       productAmount.textContent = productAmountNum;
+        //     }
+        //   }
+        // }
       };
 
       store.get(key).onerror = function () {
         alert("indexedDB의 key를 가져오는데 실패했습니다.");
       };
     };
-    return validate__value;
   } else {
     alert("해당 브라우저에서는 indexedDB를 지원하지 않습니다.");
   }
@@ -316,24 +312,14 @@ function getAllKeysIndexedDB(DATABASE_NAME, version, objectStore) {
 }
 /* 장바구니 버튼 클릭 이벤트 */
 button__cart.addEventListener("click", () => {
-  getAllIndexedDB(DATABASE_NAME, version, objectStore, id, function (result) {
-    if (result) {
-      cartCount += 1;
-      return cartCount;
-    }
-  });
-
-  console.log(`cartCount : ${cartCount}`);
-  insertIndexedDB(DATABASE_NAME, version, objectStore, idObject, cartCount);
-  if (cartCount === 0) {
+  let operation = "none";
+  getIndexedDB(DATABASE_NAME, version, objectStore, idObject, operation);
+  if (idObject.id) {
+    alert("이미 장바구니에 담겨있는 상품입니다.");
+  } else {
+    insertIndexedDB(DATABASE_NAME, version, objectStore, idObject);
     alert("상품을 장바구니에 담았습니다.");
   }
-  cartCount += 1;
-  if (cartCount > 1) {
-    let operation = "none";
-    getIndexedDB(DATABASE_NAME, version, objectStore, idObject, operation);
-  }
-  // console.log(cartCount);
 });
 
 /* 상품 수량 +, - 클릭 이벤트*/
@@ -341,16 +327,9 @@ let validation = 0;
 button__plus.addEventListener("click", function plusAmount() {
   productAmountNum += 1;
   productAmount.textContent = productAmountNum;
-  let plus = "plus";
-  validation = getIndexedDB(
-    DATABASE_NAME,
-    version,
-    objectStore,
-    idObject,
-    plus
-  );
-  console.log(validation);
-  if (validation > 0) {
+  let operation = "plus";
+  getIndexedDB(DATABASE_NAME, version, objectStore, idObject, operation);
+  if (idObject.id) {
     updateIndexedDB(DATABASE_NAME, version, objectStore, id);
   }
 });
@@ -360,16 +339,9 @@ button__minus.addEventListener("click", function minusAmount() {
     productAmountNum = 1;
   }
   productAmount.textContent = productAmountNum;
-  let minus = "minus";
-  validation = getIndexedDB(
-    DATABASE_NAME,
-    version,
-    objectStore,
-    idObject,
-    minus
-  );
-  console.log(validation);
-  if (validation > 0) {
+  let operation = "minus";
+  getIndexedDB(DATABASE_NAME, version, objectStore, idObject, operation);
+  if (idObject.id) {
     updateIndexedDB(DATABASE_NAME, version, objectStore, id);
   }
 });
