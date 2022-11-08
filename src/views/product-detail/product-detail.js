@@ -210,31 +210,31 @@ function getIndexedDB(
       const transaction = db.transaction(objectStore, "readonly");
       const store = transaction.objectStore(objectStore);
       store.get(key).onsuccess = function (response) {
-        // if (response.target.result && operation !== "none") {
-        //   if (
-        //     !confirm(
-        //       "이미 장바구니에 담겨있는 상품입니다. \n장바구니에서 수량을 변경해주세요."
-        //     )
-        //   ) {
-        //     // 취소(아니오) 버튼 클릭 시 이벤트
-        //     if (operation === "plus") {
-        //       productAmountNum -= 1;
-        //       productAmount.textContent = productAmountNum;
-        //     } else if (operation === "minus") {
-        //       productAmountNum += 1;
-        //       productAmount.textContent = productAmountNum;
-        //     }
-        //   } else {
-        //     // 확인(예) 버튼 클릭 시 이벤트
-        //     if (operation === "plus") {
-        //       productAmountNum -= 1;
-        //       productAmount.textContent = productAmountNum;
-        //     } else if (operation === "minus") {
-        //       productAmountNum += 1;
-        //       productAmount.textContent = productAmountNum;
-        //     }
-        //   }
-        // }
+        if (response.target.result && operation !== "none") {
+          if (
+            !confirm(
+              "이미 장바구니에 담겨있는 상품입니다. \n장바구니에서 수량을 변경해주세요."
+            )
+          ) {
+            // 취소(아니오) 버튼 클릭 시 이벤트
+            if (operation === "plus") {
+              productAmountNum -= 1;
+              productAmount.textContent = productAmountNum;
+            } else if (operation === "minus") {
+              productAmountNum += 1;
+              productAmount.textContent = productAmountNum;
+            }
+          } else {
+            // 확인(예) 버튼 클릭 시 이벤트
+            if (operation === "plus") {
+              productAmountNum -= 1;
+              productAmount.textContent = productAmountNum;
+            } else if (operation === "minus") {
+              productAmountNum += 1;
+              productAmount.textContent = productAmountNum;
+            }
+          }
+        }
       };
 
       store.get(key).onerror = function () {
@@ -315,7 +315,8 @@ button__cart.addEventListener("click", () => {
   let operation = "none";
   getIndexedDB(DATABASE_NAME, version, objectStore, idObject, operation);
   if (idObject.id) {
-    alert("이미 장바구니에 담겨있는 상품입니다.");
+    //alert("이미 장바구니에 담겨있는 상품입니다.");
+    updateIndexedDB(DATABASE_NAME, version, objectStore, id);
   } else {
     insertIndexedDB(DATABASE_NAME, version, objectStore, idObject);
     alert("상품을 장바구니에 담았습니다.");
@@ -329,9 +330,6 @@ button__plus.addEventListener("click", function plusAmount() {
   productAmount.textContent = productAmountNum;
   let operation = "plus";
   getIndexedDB(DATABASE_NAME, version, objectStore, idObject, operation);
-  if (idObject.id) {
-    updateIndexedDB(DATABASE_NAME, version, objectStore, id);
-  }
 });
 button__minus.addEventListener("click", function minusAmount() {
   productAmountNum -= 1;
@@ -341,9 +339,6 @@ button__minus.addEventListener("click", function minusAmount() {
   productAmount.textContent = productAmountNum;
   let operation = "minus";
   getIndexedDB(DATABASE_NAME, version, objectStore, idObject, operation);
-  if (idObject.id) {
-    updateIndexedDB(DATABASE_NAME, version, objectStore, id);
-  }
 });
 /* 장바구니 내용 삭제 버튼 클릭 이벤트 */
 button__remove.addEventListener("click", () => {
