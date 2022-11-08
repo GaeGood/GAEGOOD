@@ -30,6 +30,11 @@ class UserService {
     }
   }
 
+  async getUserList() {
+    const userList = await userModel.findAll();
+    return userList;
+  }
+
   async getUserById(uid) {
     const user = await userModel.findById(uid);
     return user;

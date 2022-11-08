@@ -1,6 +1,5 @@
 import { model } from "mongoose";
 import { OrderSchema } from "../schemas/order-schema";
-import { productModel } from "../index";
 
 const Order = model("Order", OrderSchema);
 
@@ -51,12 +50,14 @@ class OrderModel {
     }
   }
 
-  async create(orderInfo) {
-    //PEPE의 정확한 의도를 모르겠음. scope 참조못하던 부분 일단 에러처리내에 묶겠음.
+  async create(orderInfo, buyerFromDB) {
     try {
       let createdNewOrder = await Order.create(orderInfo);
+      await buyerFromDB.orderList.push(createdNewOrder);
+      await buyerFromDB.save();
       createdNewOrder = await createdNewOrder.populate("buyer");
       createdNewOrder = await createdNewOrder.populate("productList");
+
       return createdNewOrder;
     } catch (e) {
       e.message = "상품 생성 실패 DB 오류";

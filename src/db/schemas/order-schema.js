@@ -2,7 +2,11 @@ import { Schema } from "mongoose";
 
 const OrderSchema = new Schema(
   {
-    buyer: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    buyer: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     productList: [
       {
         type: Schema.Types.ObjectId,
@@ -10,7 +14,12 @@ const OrderSchema = new Schema(
         required: true,
       },
     ],
-    countList: [{ type: Number, required: true }],
+    countList: [
+      {
+        type: Number,
+        required: true,
+      },
+    ],
     // productList: [
     //   {
     //     type: Schema.Types.ObjectId,
