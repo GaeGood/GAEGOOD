@@ -77,29 +77,30 @@ const productAllIdArr = [];
 const productAllAmountArr = [];
 let productsPrice = 0;
 orderProductList.forEach((orderProduct) => {
-  // 장바구니 각각의 상품마다 표 생성될 수 있도록 템플릿리터럴 진행~
+
+  // 장바구니 각각의 상품마다 표 생성될 수 있도록 템플릿리터럴 진행
   orderProductTable.innerHTML += `
-            <tr>
-              <td>
-                  <span class="order product__id hidden">${orderProduct.id}</span>
-              </td>
-              <td>
-                  <img src="${orderProduct.smallImageURL}" class="order product__picture" />
-              </td>
-              <td>
-                  <span class="order product__info">
-                    <div>${orderProduct.name}</div>
-                    <div>${orderProduct.shortDesc}</div>
-                  </span>
-              </td>
-              <td>
-                  <span class="order product__amount">${orderProduct.amount}</span>
-              </td>
-              <td>
-                  <span class="order product__price">${orderProduct.price}원</span>
-              </td>
-            </tr>  
-            `;
+    <tr>
+      <td>
+          <span class="order product__id hidden">${orderProduct.id}</span>
+      </td>
+      <td>
+          <img src="${orderProduct.smallImageURL}" class="order product__picture" />
+      </td>
+      <td>
+          <span class="order product__info">
+            <div>${orderProduct.name}</div>
+            <div>${orderProduct.shortDesc}</div>
+          </span>
+      </td>
+      <td>
+          <span class="order product__amount">${orderProduct.amount}</span>
+      </td>
+      <td>
+          <span class="order product__price">${orderProduct.price}원</span>
+      </td>
+    </tr>  
+    `;
 
   productAllIdArr.push(orderProduct.id);
   productAllAmountArr.push(orderProduct.amount);
@@ -109,6 +110,7 @@ orderProductList.forEach((orderProduct) => {
   deliveryFeeHTML.innerHTML = 3000;
   totalPriceHTML.innerHTML = productsPrice + 3000;
 });
+
 
 // 주소찾기
 const addressSearchBtn = document.querySelector(".address__search");
@@ -150,45 +152,37 @@ function searchAddress(e) {
 
 addressSearchBtn.addEventListener("click", searchAddress);
 
-// 요청사항
+
+
+const customRequestContainer = document.querySelector(".customRequestContainer");
+const customRequestInput = document.querySelector(".customRequest");
+const requestSelectBox = document.querySelector("#request__Select__Box");
+
+
+const requestOption = {
+  1: "배송 전 연락바랍니다.",
+  2: "부재 시 경비실에 맡겨주세요.",
+  3: "부재 시 문 앞에 놓아주세요.",
+  4: "부재 시 택배함에 넣어주세요.",
+  5: "직접 입력",
+};
+
 
 // "직접 입력" 선택 시 input칸 보이게 함
-const requestSelectBox = document.querySelector("#request__Select__Box");
-const selectOptions = document.querySelectorAll(".select__option");
-
 function handleRequestChange(e) {
   const type = e.target.value;
-  console.log(type);
-  if (type !== "5") {
-    // type이 5이 아니면
-    if (type === "0") {
-      userRequestMessage.value = "";
-    } else {
-      userRequestMessage.value = selectOptions[parseInt(type)].innerHTML.trim();
-    }
+
+  if (type === "5") {
+    customRequestContainer.style.display = "flex";
+    customRequestInput.focus();
   } else {
-    userRequestMessage.value = "";
-    userRequestMessage.placeholder = "최대 50자 입력가능";
-    userRequestMessage.focus();
+    customRequestContainer.style.display = "none";
   }
 }
 
-
 requestSelectBox.addEventListener("change", handleRequestChange);
 
-const shippingInformationList = {
-  buyer: `${_id}`,
-  productList: `${productAllIdArr}`,
-  countList: `${productAllAmountArr}`,
-  shippingStatus: "배송전",
-  shippingPostCode: `${userPostCode.value}`,
-  shippingStreetAddress: `${userStreetAddress.value}`,
-  shippingExtraAddress: `${userExterAddress.value}`,
-  shippingRequestMessage: `${userRequestMessage.value}`,
-  totalAmount: `${productsPrice.innerHTML}`,
-  recipientName: `${userName.value}`,
-  recipientPhoneNumber: `${userPhoneNumber.value}`,
-};
+
 
 // 결제하기 버튼 눌렀을 때
 
@@ -205,44 +199,89 @@ function payBtnClick() {
     return alert("배송지 정보를 정확하게 채워주세요");
   }
 
+  const requestType = requestSelectBox.value;
+  let request;
+  // 요청사항의 종류에 따라 request 문구가 달라짐
+  if (requestType === "0") {
+    request = "요청사항 없음.";
+  } else if (requestType === "5") {
+    request = customRequestInput.value;
+  } else {
+    request = requestOption[requestType];
+  }
+
+
   // 기존에 휴대폰번호와 주소가 없다면 주문할 때 배송지와 휴대폰번호로 기존 유저정보 업데이트
 
-  // if (!phoneNumber && !postCode && !extraAddress){
+  if (!phoneNumber && !postCode && !extraAddress) {
 
-  //   fetch(`/api/users/${_id}`, {
-  //     method: "PUT",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       "_id" : `${_id}`,
-  //       "email": `${email}`,
-  //       "password" : `${password}`,
-  //       "phoneNumber" : `${userPhoneNumber.value}`,
-  //       "createdAt" : `${createdAt}`,
-  //       "name": `${userName.value}`,
-  //       "role": `${role}`,
-  //       "postCode": `${userPostCode.value}`,
-  //       "address": `${userAddressOne.value}`,
-  //       "extraAddress": `${userExtraAddress.value}`
-  //     }),
-  //   })
-  //   .then((response) => response.json())
-  //   .then((userInfoChange) => {
-  //     alert('회원정보가 변경되었습니다.')
-  //     // window.location.href = "/users/mypage";
-  //   })
-  //   .catch((err) => {
-  //     alert(`에러가 발생했습니다. 관리자에게 문의하세요. \n에러내용: ${err}`)
-  //   });
-  // }
+    // 전화번호
+    if (userPhoneNumber.value !== "") {
+      // 숫자만 매칭
+      const numberCheck = userPhoneNumber.value.split("");
+      let result = [];
+      numberCheck.forEach((number) => {
+        const pattern = /[0-9]/g;
+        result.push(number.match(pattern));
+      });
+
+      // 숫자가 아닌 다른값이 들어가 있을 경우
+      if (result.includes(null)) {
+        return alert("잘못 입력하셨습니다. 숫자만 입력하세요.");
+      }
+      // 길이가 아닐 경우
+      if (!(numberCheck.length >= 10 && numberCheck.length <= 11)) {
+        return alert("잘못 입력하셨습니다. 알맞은 번호를 입력하세요.");
+      }
+    }
+
+  fetch(`/api/users/${_id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      phoneNumber: `${userPhoneNumber.value}`,
+      postCode: `${userPostCode.value}`,
+      streetAddress: `${userStreetAddress.value}`,
+      extraAddress: `${userExterAddress.value}`,
+    }),
+  })
+    .then(async (res) => {
+      const json = await res.json();
+
+      if (res.ok) {
+        return json;
+      }
+
+      return Promise.reject(json);
+    })
+    .then((userInfoChange) => {
+      console.log('회원정보 업데이트 완료');
+    })
+    .catch((err) => {
+      alert(`에러가 발생했습니다. 관리자에게 문의하세요. \n에러내용: ${err}`);
+    });
+}
 
   fetch(`/api/orders`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(shippingInformationList),
+    body: JSON.stringify({
+      buyer: `${_id}`,
+      productList: `${productAllIdArr}`,
+      countList: `${productAllAmountArr}`,
+      shippingStatus: "배송전",
+      shippingPostCode: `${userPostCode.value}`,
+      shippingStreetAddress: `${userStreetAddress.value}`,
+      shippingExtraAddress: `${userExterAddress.value}`,
+      shippingRequestMessage: `${request}`,
+      totalAmount: `${totalPriceHTML.innerHTML}`,
+      recipientName: `${userName.value}`,
+      recipientPhoneNumber: `${userPhoneNumber.value}`,
+    }),
   })
     .then(async (res) => {
       const json = await res.json();
@@ -254,13 +293,27 @@ function payBtnClick() {
       return Promise.reject(json);
     })
     .then((data) => {
-      data.productList.forEach((product) => {
-        deleteIndexedDBdata(DATABASE_NAME, version, objectStore, product)
-      })
+      // data.productList.forEach((product) => {
+      //   deleteIndexedDBdata(DATABASE_NAME, version, objectStore, product)
+      // })
 
       alert("결제 및 주문이 정상적으로 완료되었습니다.\n감사합니다.");
-      window.location.href = "/"
-      
+      // window.location.href = "/"
+      console.log('post보내기전 data',{
+  buyer: `${_id}`,
+  productList: `${productAllIdArr}`,
+  countList: `${productAllAmountArr}`,
+  shippingStatus: "배송전",
+  shippingPostCode: `${userPostCode.value}`,
+  shippingStreetAddress: `${userStreetAddress.value}`,
+  shippingExtraAddress: `${userExterAddress.value}`,
+  shippingRequestMessage: `${request}`,
+  totalAmount: `${totalPriceHTML.innerHTML}`,
+  recipientName: `${userName.value}`,
+  recipientPhoneNumber: `${userPhoneNumber.value}`,
+})
+      console.log('post보낸 후 data',data)
+
     })
     .catch((err) => {
       alert(`에러가 발생했습니다. 관리자에게 문의하세요. \n에러내용: ${err}`);
@@ -272,6 +325,3 @@ payBtn.addEventListener("click", payBtnClick);
 
 
 // 기존에 휴대폰번호와 주소가 없다면 주문할 때 배송지와 휴대폰번호로 기존 유저정보 업데이트
-
-if (!phoneNumber && !postCode && !extraAddress) {
-}

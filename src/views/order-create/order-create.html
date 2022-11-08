@@ -96,33 +96,40 @@
                             </td>
                         </tr>
                         <tr>
-                            <th>요청사항</th>
+                            <th>
+                                <div class="field is-horizontal">
+                                    <div class="field-label is-normal">
+                                        <label class="label" for="requestSelectBox">요청사항</label>
+                                    </div>
+                                </div>
+                            </th>
                             <td>
                                 <select id="request__Select__Box">
-                                    <option value="0" class="select__option">
+                                    <option value="0">
                                         배송시 요청사항을 선택해 주세요.
                                     </option>
-                                    <option value="1" class="select__option">
+                                    <option value="1" class="select-option">
                                         배송 전 연락바랍니다.
                                     </option>
-                                    <option value="2" class="select__option">
+                                    <option value="2" class="select-option">
                                         부재 시 경비실에 맡겨주세요.
                                     </option>
-                                    <option value="3" class="select__option">
+                                    <option value="3" class="select-option">
                                         부재 시 문 앞에 놓아주세요.
                                     </option>
-                                    <option value="4" class="select__option">
+                                    <option value="4" class="select-option">
                                         부재 시 택배함에 넣어주세요.
                                     </option>
-                                    <option value="5" class="select__option">직접 입력</option>
+                                    <option value="5" class="select-option">직접 입력</option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <th></th>
                             <td>
-                                <div>
-                                    <input class="user request__message" type="text" maxlength="50" placeholder="배송시 요청사항을 선택해 주세요." />
+                                <div class="customRequestContainer hidden">
+                                        <input class="customRequest" type="text" maxlength="50" placeholder="최대 50자 입력이 가능합니다." 
+                                        />
                                 </div>
                             </td>
                         </tr>
