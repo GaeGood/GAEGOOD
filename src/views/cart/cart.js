@@ -26,6 +26,8 @@ const version = 1;
 const objectStore = "cartStorage";
 let checkedCount = 0;
 let totalPrice = 0;
+let totalAmountCurrent = 0;
+let totalPriceCurrent = 0;
 let totalAmount = 0;
 /* 데이터 렌더링 */
 getAllIndexedDB(DATABASE_NAME, version, objectStore, function (dataList) {
@@ -93,7 +95,10 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
     const cartPlusBtn = document.createElement("button");
     const cartMinusBtn = document.createElement("button");
     const cartDeleteBtn = document.createElement("button");
+    /* 맨처음 화면에서 결제 금액란 렌더링 해줌 */
     totalAmount += dataList[i].amount;
+    totalPrice += dataList[i].amount * dataList[i].price;
+
     /* cart__list__top 컨테이너 div */
     cartList.classList.add("cart__list__top");
     cart__container.prepend(cartList);
@@ -146,6 +151,7 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
     /* 가격 */
     cartPrice.classList.add("cart__detail__price");
     cart__detail.appendChild(cartPrice);
+
     /* 수량 */
     cartAmount.classList.add("cart__amount");
     cart__amount__btn__container.insertBefore(cartAmount, cart__plus__button);
@@ -240,17 +246,15 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
       let productAmountNum = parseInt(cartAmount.textContent);
       productAmountNum += 1;
       cartAmount.textContent = productAmountNum;
-      const plus = "plus";
       updateIndexedDB(
         DATABASE_NAME,
         version,
         objectStore,
         productId,
-        plus,
         cartAmount,
         productAmountNum
       );
-      totalPayment(plus);
+      // totalPayment(plus);
     });
     /* 수량 감소 버튼 클릭 이벤트 */
     cart__minus__button.addEventListener("click", (e) => {
@@ -262,35 +266,37 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
         productAmountNum = 1;
       }
       cartAmount.textContent = productAmountNum;
-      const minus = "minus";
+      //total__price.textContent = totalPrice;
       updateIndexedDB(
         DATABASE_NAME,
         version,
         objectStore,
         productId,
-        minus,
         cartAmount,
         productAmountNum
       );
-      totalPayment(minus);
+      // totalPayment(minus);
     });
 
     /* 결제 금액 컨테이너 */
-    function totalPayment(operation) {
-      /* total__amount 총 수량 */
-      let amountValue = dataList[i].amount;
-      if (operation === "plus") {
-        totalAmount += 1;
-      } else if (operation === "minus") {
-        totalAmount -= 1;
-      }
-      total__amount.textContent = totalAmount;
-      /* total__amount 총 수량 */
-      // let priceValue = dataList[i].price;
-      // console.log(priceValue);
-      // totalPrice += priceValue;
-      // total__price.textContent = totalPrice;
-    }
+    // function totalPayment(operation) {
+    //   /* total__amount 총 수량 */
+    //   let amountValue = dataList[i].amount;
+    //   /* total__price 가격 */
+
+    //   if (operation === "plus") {
+    //     totalAmount += 1;
+    //   } else if (operation === "minus") {
+    //     if (!(amountValue === 1)) {
+    //       totalAmount -= 1;
+    //     }
+    //     if (totalAmount <= 0) {
+    //       totalAmount === 0;
+    //     }
+    //   }
+    //   total__amount.textContent = totalAmount;
+    //   //total__price.textContent = totalPrice;
+    // }
   }
 }
 
@@ -329,8 +335,10 @@ function addProduct(product, idx, cartProductId, data) {
   cartAmount[idx].textContent = data.amount;
 
   cartImage.src = product.smallImageURL;
+  /* 초기 화면에서 결제 금액란 렌더링 해줌 */
 
   total__amount.textContent = totalAmount;
+  total__price.textContent = totalPrice;
 }
 
 /* indexedDB에 추가한 데이터 삭제하는 함수(기준: key) */
@@ -346,6 +354,22 @@ function deleteIndexedDBdata(DATABASE_NAME, version, objectStore, targetId) {
       const db = request.result;
       const transaction = db.transaction(objectStore, "readwrite");
       const store = transaction.objectStore(objectStore);
+      // 삭제 하기전에 타겟 아이디를 이용해서 해당 아이디의 amount를 가져와 총 수량에서 빼고 렌더링도 해줌.
+      store.get(key).onsuccess = function (response) {
+        let resultId = response.target.result.id;
+        let resultAmount = response.target.result.amount;
+        let resultPrice = response.target.result.price;
+        if (resultId === key) {
+          totalAmount -= resultAmount;
+          totalPrice -= resultAmount * resultPrice;
+          total__amount.textContent = totalAmount;
+          total__price.textContent = totalPrice;
+        }
+      };
+      store.get(key).onerror = function () {
+        alert("indexedDB의 key를 가져오는데 실패했습니다.");
+      };
+      //키값으로 삭제
       store.delete(key);
     };
   } else {
@@ -387,7 +411,6 @@ function updateIndexedDB(
   version,
   objectStore,
   productId,
-  operation,
   cartAmount,
   productAmountNum
 ) {
@@ -420,16 +443,26 @@ function updateIndexedDB(
         const value = response.target.result;
         value.amount = parseInt(cartAmount.textContent);
         store.put(value).onsuccess = function () {
-          //cartAmount.textContent = value.amount;
-          if (operation === "plus") {
-            productAmountNum -= 1;
-            cartAmount.textContent = productAmountNum;
-          } else if (operation === "minus") {
-            productAmountNum += 1;
-            cartAmount.textContent = productAmountNum;
-          }
+          store.getAll().onsuccess = function (response) {
+            const resultArray = response.target.result;
+            totalAmountCurrent = 0;
+            totalPriceCurrent = 0;
+            resultArray.forEach((result) => {
+              /* 총 수량 */
+              totalAmountCurrent += parseInt(result.amount);
+              /* 총 가격 */
+              totalPriceCurrent +=
+                parseInt(result.amount) * parseInt(result.price);
+            });
+            total__amount.textContent = totalAmountCurrent;
+            total__price.textContent = totalPriceCurrent;
+          };
+          store.getAll().onerror = function () {
+            alert("indexedDB의 Data를 가져오는데 실패했습니다.");
+          };
         };
       };
+
       store.get(key).onerror = function () {
         alert("indexedDB의 key를 가져오는데 실패했습니다.");
       };
