@@ -2,7 +2,6 @@ import { authService } from "../services";
 
 class AuthController {
   async loginUser(req, res, next) {
-    const { email, password } = req.body;
     if (!email || !password) {
       return res.status(404).json("email,password 입력 필요!");
     }

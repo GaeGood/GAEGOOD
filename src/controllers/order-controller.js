@@ -46,7 +46,7 @@ class OrderController {
   async getOrderList(req, res, next) {
     if (Object.keys(req.query).length === 0) {
       const orderList = await orderService.getOrderList();
-      return res.json(orderList);
+      return res.status(200).json(orderList);
     } else {
       const { oid } = req.query;
 
