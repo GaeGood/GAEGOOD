@@ -108,20 +108,27 @@ function renderOrderProduct(order, productInfo) {
     );
     productInfo.appendChild(productItem);
 
+    const productItemLink = document.createElement("a");
+    productItemLink.classList.add(
+      "order-detail__order-content__product-info__product-item__link"
+    );
+    productItemLink.href = `/products/${order.productList[i]._id}`;
+    productItem.appendChild(productItemLink);
+
     const productItemSmallImageURL = document.createElement("img");
     productItemSmallImageURL.classList.add(
       "order-detail__order-content__product-info__product-item__product-content"
     );
     productItemSmallImageURL.setAttribute("id", "order-detail__product-image");
     productItemSmallImageURL.src = order.productList[i].smallImageURL;
-    productItem.appendChild(productItemSmallImageURL);
+    productItemLink.appendChild(productItemSmallImageURL);
 
     const productItemName = document.createElement("div");
     productItemName.classList.add(
       "order-detail__order-content__product-info__product-item__product-content"
     );
     productItemName.innerText = `${order.productList[i].name} ${order.countList[i]} 개`;
-    productItem.appendChild(productItemName);
+    productItemLink.appendChild(productItemName);
 
     const productItemPrice = document.createElement("div");
     productItemPrice.classList.add(
@@ -132,7 +139,7 @@ function renderOrderProduct(order, productInfo) {
     ).toLocaleString()} 원 x ${order.countList[i]} = ${(
       Number(order.productList[i].price) * Number(order.countList[i])
     ).toLocaleString()} 원`;
-    productItem.appendChild(productItemPrice);
+    productItemLink.appendChild(productItemPrice);
   }
 }
 

@@ -82,7 +82,9 @@ h2.order-detail__title {
   margin-left: 0px;
 }
 
-.order-detail__order-content__product-info__product-item {
+.order-detail__order-content__product-info__product-item__link {
+  width: 90%;
+  height: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -90,9 +92,16 @@ h2.order-detail__title {
   margin: 0 50px;
   box-sizing: border-box;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  text-decoration: none;
 }
 
-.order-detail__order-content__product-info__product-item:last-child {
+.order-detail__order-content__product-info__product-item__link:hover
+  .order-detail__order-content__product-info__product-item__product-content {
+  color: #18dcff;
+}
+
+.order-detail__order-content__product-info__product-item:last-child
+  .order-detail__order-content__product-info__product-item__link {
   border-bottom: none;
 }
 
