@@ -160,6 +160,10 @@ function checkOrderShippingStatus(order) {
     } else if (shippingStatus === "배송완료") {
       document.getElementById("shipping-finished").style.color = "black";
       document.getElementById("shipping-finished").style.fontSize = "32px";
+    } else if (shippingStatus === "취소완료") {
+      document.getElementById(
+        "order-detail__order-content__shipping-status__wrap"
+      ).innerHTML = `<h2 id="shipping-cancel" class="shipping-status">취소완료</h2>`;
     }
   }
 }
@@ -263,9 +267,14 @@ const orderCancelBtn = document.getElementById(
 
 orderCancelBtn.addEventListener("click", (e) => {
   console.log("주문 취소 버튼 클릭");
+
   if (window.confirm("주문을 취소하시겠습니까?")) {
     fetch(`/api/orders/${oid}`, {
-      method: "DELETE",
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ shippingStatus: "취소완료" }),
     })
       .then(async (res) => {
         const json = await res.json();
@@ -276,12 +285,15 @@ orderCancelBtn.addEventListener("click", (e) => {
 
         return Promise.reject(json);
       })
-      .then((data) => {
+      .then((order) => {
         alert("주문 취소가 완료되었습니다.");
-        location.href = "/orders/list/";
-      })
-      .catch((e) => {
-        alert(e);
+
+        const productInfo = document.getElementById(
+          "order-detail__order-content__product-info"
+        );
+
+        renderOrderProduct(order, productInfo);
+        checkOrderShippingStatus(order);
       });
   }
 });
