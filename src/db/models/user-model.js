@@ -42,7 +42,9 @@ export class UserModel {
       const users = await User.find({}).populate("orderList");
       return users;
     } catch (err) {
-      const error = new Error("User 전체검색 도중 에러가 발생하였습니다.");
+      const error = new Error(
+        "전체 User를 불러오는 과정에서 에러가 발생하였습니다."
+      );
       error.statusCode = 404;
       throw error;
     }
@@ -64,6 +66,7 @@ export class UserModel {
       throw error;
     }
   }
+
   async delete(uid) {
     try {
       await User.deleteOne({ _id: uid });
