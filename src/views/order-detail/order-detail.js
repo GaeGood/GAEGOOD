@@ -33,7 +33,7 @@ fetch(`/api/orders/${oid}`)
 
     fillOrderEditModalInput(order);
   })
-  .then((error) => {
+  .catch((error) => {
     alert(error);
   });
 
