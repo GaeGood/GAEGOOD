@@ -188,3 +188,7 @@ footer {
 .hidden {
   display: none;
 }
+
+.disabled {
+  background-color: gray;
+}

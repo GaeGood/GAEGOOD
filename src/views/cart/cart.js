@@ -10,18 +10,13 @@ const order__button__container = document.querySelector(
   ".order__button__container"
 );
 const orderButton__User = `<button type="button" class="order__button__user"><a href="/orders/create">주문서 작성</a></button>`;
-const orderButton__Any = `  <button data-bs-toggle="modal" data-bs-target="#modalLogin">
+const orderButton__User_Disabled = `<button type="button" class="order__button__user" disabled>주문서 작성</button>`;
+const orderButton__Any = `<button data-bs-toggle="modal" data-bs-target="#modalLogin">
     주문서 작성
   </button>`;
-
+const order__button__user = document.querySelector(".order__button__userr");
 const cart__whole__check = document.querySelector('input[name="wholeCheck"]');
 // const idObject = { id: id, amount: productAmountNum };
-
-if (loggedInUser) {
-  order__button__container.innerHTML = orderButton__User;
-} else {
-  order__button__container.innerHTML = orderButton__Any;
-}
 
 const DATABASE_NAME = "cartDB";
 const version = 1;
@@ -37,6 +32,13 @@ getAllIndexedDB(DATABASE_NAME, version, objectStore, function (dataList) {
   //dataList === response.target.result
   if (dataList.length !== 0) {
     dataRender(dataList, DATABASE_NAME, version, objectStore);
+    if (loggedInUser) {
+      order__button__container.innerHTML = orderButton__User;
+    } else {
+      order__button__container.innerHTML = orderButton__Any;
+    }
+  } else {
+    order__button__container.innerHTML = orderButton__User_Disabled;
   }
 });
 
