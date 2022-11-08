@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>개굿</title>
+  <!-- 아이콘 -->
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-32x32.png" />
+
+  <!-- CSS only Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+  <!-- JavaScript Bundle with Popper Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+    crossorigin="anonymous"></script>
+  <!-- 폰트 어썸: 아이콘 -->
+  <script defer src="https://kit.fontawesome.com/9daa42bcef.js" crossorigin="anonymous"></script>
+  <!-- 커스텀 css, js -->
+  <link rel="stylesheet" href="admin-page.css" />
+  <script src="admin-page.js" type="module" defer></script>
+</head>
+
+<body>
+  <!-- TEST -->
+
+
+  <!-- HEADER -->
+  <nav class="navbar">
+    <!-- <div class="container-fluid"> -->
+    <a class="navbar-brand" href="/">GAEGOOD</a>
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="/auth/login">로그인</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/auth/join">회원가입</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cart">장바구니
+          <span class="icon">
+            <i class="fas fa-cart-shopping"></i>
+          </span>
+        </a>
+      </li>
+    </ul>
+    <!-- </div> -->
+  </nav>
+
+  <!-- 메인 컨테이너 -->
+  <main id="main__container" role="main">
+    <div class="admin__page__list">
+      <button type="button" class="btn btn-success btn__admin__oder" data-bs-toggle="modal"
+        data-bs-target="#btn__admin__oder">주문관리</button>
+      <button type="button" class="btn btn-danger btn__admin__user" data-bs-toggle="modal"
+        data-bs-target="#btn__admin__user">회원관리</button>
+      <button type="button" class="btn btn-warning btn__admin__addCategory" data-bs-toggle="modal"
+        data-bs-target="#btn__admin__addCategory">카테고리 관리</button>
+      <button type="button" class="btn btn-info btn__admin__addProduct" data-bs-toggle="modal"
+        data-bs-target="#btn__admin__addProduct">상품 관리</button>
+    </div>
+
+  </main>
+
+  <!--카테고리 추가-->
+  <div class="modal fade" id="btn__admin__addCategory" tabindex="-1"
+    aria-labelledby="btn__admin__addCategory__ModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="btn__admin__addCategory__ModalLabel">카테고리 추가하기</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">카테고리 이름</label>
+              <input type="text" class="form-control" id="recipient-name" placeholder="문구">
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">카테고리 설명</label>
+              <input type="text" class="form-control" id="recipient-name" placeholder="문구류가 들어가있는 카테고리">
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">카테고리 테마</label>
+              <select class="form-select" id="inputGroupSelect01">
+                <option selected>카테고리를 선택하세요</option>
+                <option value="1">의류</option>
+                <option value="2">패션잡화</option>
+                <option value="3">폰케이스/테크</option>
+                <option value="4">홈데코/리빙</option>
+                <option value="5">스티커/지류</option>
+                <option value="6">문구/오피스</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="formFile" class="form-label">카테고리 사진</label>
+              <input class="form-control" type="file" id="formFile">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary col submit__category">카테고리 추가하기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--제품 추가-->
+  <div class="modal fade" id="btn__admin__addProduct" tabindex="-1" aria-labelledby="btn__admin__addProduct__ModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="btn__admin__category__ModalLabel">제품을 판매해 보세요</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">제품 이름</label>
+              <input type="text" class="form-control" id="recipient-name" placeholder="파이썬 뱀 인형">
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">카테고리</label>
+              <select class="form-select" id="inputGroupSelect01">
+                <option selected>카테고리를 선택하세요</option>
+                <option value="1">의류</option>
+                <option value="2">패션잡화</option>
+                <option value="3">폰케이스/테크</option>
+                <option value="4">홈데코/리빙</option>
+                <option value="5">스티커/지류</option>
+                <option value="6">문구/오피스</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">제조사</label>
+              <input type="text" class="form-control" id="recipient-name" placeholder="파이썬 주식회사">
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">요약 설명</label>
+              <textarea class="form-control" id="message-text" placeholder="귀여운 파이썬 뱀 인형입니다."></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">상세 설명</label>
+              <textarea class="form-control" id="message-text" style="height: 200px"
+                placeholder="화려한 무늬에 귀여움을 동시에가진 개발자라면 놓칠 수 없는 파이썬 뱀 인형입니다."></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="formFile" class="form-label">제품 사진</label>
+              <input class="form-control" type="file" id="formFile">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">재고수</label>
+              <input type="text" class="form-control" id="recipient-name" placeholder="10">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">가격</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="recipient-name" placeholder="10000">
+                <span class="input-group-text">원</span>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary col submit__product">제품 추가하기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Footer -->
+  <footer class="text-center text-white" style="background-color: blanchedalmond">
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+      <p>© 2022 개굿개굿</p>
+      <p>저작권 yalco</p>
+    </div>
+    <!-- Copyright -->
+  </footer>
+</body>
+
+</html>
