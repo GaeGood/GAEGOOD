@@ -25,8 +25,8 @@ const DATABASE_NAME = "cartDB";
 const version = 1;
 const objectStore = "cartStorage";
 let checkedCount = 0;
-let totalAmount = 0;
 let totalPrice = 0;
+let totalAmount = 0;
 /* 데이터 렌더링 */
 getAllIndexedDB(DATABASE_NAME, version, objectStore, function (dataList) {
   //dataList === response.target.result
@@ -93,7 +93,7 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
     const cartPlusBtn = document.createElement("button");
     const cartMinusBtn = document.createElement("button");
     const cartDeleteBtn = document.createElement("button");
-
+    totalAmount += dataList[i].amount;
     /* cart__list__top 컨테이너 div */
     cartList.classList.add("cart__list__top");
     cart__container.prepend(cartList);
@@ -242,6 +242,7 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
         cartAmount,
         productAmountNum
       );
+      totalPayment(plus);
     });
     /* 수량 감소 버튼 클릭 이벤트 */
     cart__minus__button.addEventListener("click", (e) => {
@@ -263,18 +264,25 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
         cartAmount,
         productAmountNum
       );
+      totalPayment(minus);
     });
 
     /* 결제 금액 컨테이너 */
-    /* total__amount 총 수량 */
-    let amountValue = dataList[i].amount;
-    totalAmount += amountValue;
-    total__amount.textContent = totalAmount;
-    /* total__amount 총 수량 */
-    // let priceValue = dataList[i].price;
-    // console.log(priceValue);
-    // totalPrice += priceValue;
-    // total__price.textContent = totalPrice;
+    function totalPayment(operation) {
+      /* total__amount 총 수량 */
+      let amountValue = dataList[i].amount;
+      if (operation === "plus") {
+        totalAmount += 1;
+      } else if (operation === "minus") {
+        totalAmount -= 1;
+      }
+      total__amount.textContent = totalAmount;
+      /* total__amount 총 수량 */
+      // let priceValue = dataList[i].price;
+      // console.log(priceValue);
+      // totalPrice += priceValue;
+      // total__price.textContent = totalPrice;
+    }
   }
 }
 
@@ -313,6 +321,8 @@ function addProduct(product, idx, cartProductId, data) {
   cartAmount[idx].textContent = data.amount;
 
   cartImage.src = product.smallImageURL;
+
+  total__amount.textContent = totalAmount;
 }
 
 /* indexedDB에 추가한 데이터 삭제하는 함수(기준: key) */
