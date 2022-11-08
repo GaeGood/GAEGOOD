@@ -24,7 +24,9 @@ orderList.forEach((order) => {
 
   orderContents.innerHTML += `<a href="/orders/${orderId}" >
         <div class="card-header">${orderDay} 주문</div>
-        <div class="order__${orderId}" style='display:flex'></div>
+        <div class="test__${orderId}" style="display:flex;align-items: center;justify-content: space-between;"">
+          <div class="order__${orderId}"></div>
+        </div>
         </a>`;
 
   for (let i = 0; i < countList.length; i++) {
@@ -88,8 +90,8 @@ orderList.forEach((order) => {
       })
       .catch((err) => alert(err));
   }
-  const dateOrder = document.querySelector(`.order__${orderId}`);
-  dateOrder.innerHTML += `
+  const test = document.querySelector(`.test__${orderId}`);
+  test.innerHTML += `
         <div>
         <div class="etc__zone">
           <div>${shippingStatus}</div>
