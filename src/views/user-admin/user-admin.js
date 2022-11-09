@@ -257,7 +257,7 @@ function userManagementDelete() {
         method: "DELETE",
       })
         .then((res) => res.json())
-        .then((alt) => alert(alt));
+        .then((idData) => alert(`${idData}이 삭제되었습니다.`));
     });
   }
 }
