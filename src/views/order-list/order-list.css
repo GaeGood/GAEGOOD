@@ -86,16 +86,19 @@ a {
   width: 85%;
 }
 
+.card-header {
+  height: 40px;
+  padding: 13px;
+}
+
 .card-body {
   display: flex;
   align-items: center;
+  gap: 30px;
   box-sizing: border-box;
 }
 
-/* .card.order__contents {
-  margin-bottom: 20px;
-} */
-
+/* 상품정보존 */
 .product__image {
   width: 70px;
   height: 70px;
@@ -105,13 +108,24 @@ a {
   width: 80%;
 }
 
+.card-text {
+  font-size: small;
+  color: #707070;
+}
+
+/* 기타존 */
 .etc__zone {
-  margin: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
+  justify-content: center;
+  gap: 10px;
 
+  margin: 10px;
+
+  width: 100px;
+  height: 80px;
+}
 .order {
   display: flex;
 }

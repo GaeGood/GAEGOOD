@@ -1,5 +1,6 @@
 import { main } from "/main.js";
 const { loggedInUser } = await main();
+import { addCommas } from "/useful-functions.js";
 
 const { orderList, name } = loggedInUser;
 
@@ -49,7 +50,8 @@ orderList.forEach((order) => {
                   </div>
                   <div class="product__information">
                     <h5 class="card-title">${productName}</h5>
-                    <span class="card-text">${productPrice}원</span>
+                    <span class="card-text">${addCommas(productPrice)}원</span>
+                    <span class="card-text"> / </span>
                     <span class="card-text">${countList[i]}개</span>
                   </div>
                 </a>
