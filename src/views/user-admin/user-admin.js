@@ -36,7 +36,7 @@ const categoryAdmin = [
 ];
 const productAdmin = [
   "생성날짜",
-  "이름",
+  "상품명",
   "카테고리",
   "가격",
   "재고수량",
@@ -156,7 +156,6 @@ for (let i = 0; i < adminPageList.length - 2; i++) {
           categoryManagementDelete();
         });
     } else {
-      //상품추가와 카테고리추가 없애기
       document.querySelector(".btn__admin__addCategory").style =
         "display:none";
       document.querySelector(".btn__admin__addProduct").style =
@@ -297,6 +296,7 @@ function categoryManagementEdit() {
       productId = e.target.parentElement.parentElement.id;
       const inputCategoryName = document.querySelector("#edit-category-name");
       inputCategoryName.value = nameValue;
+
       //inputCategoryName.setAttribute("value", nameValue);
     });
   }
@@ -353,8 +353,8 @@ function categoryManagementCreate() {
         //모달숨기기
         document.getElementById("category-name").value = "";
         bootstrap.Modal.getInstance("#btn__admin__addCategory").hide();
-        document.querySelector(".btn__admin__category").click()
-      })
+        document.querySelector(".btn__admin__category").click();
+      });
   });
 }
 
@@ -419,30 +419,45 @@ function productManagementEdit() {
 }
 
 function productManagementCreate() {
-  const addProdcutBtn = document.querySelector(".submit__product");
-  addProdcutBtn.addEventListener("click", (e) => {
+  //카테고리의 리스트를 불러오는 작업
+  const addCategoryList = document.querySelector(".btn__admin__addProduct");
+  addCategoryList.addEventListener("click", (e) => {
+    fetch("/api/categories")
+      .then((res) => res.json())
+      .then((datas) => {
+        datas.forEach((element) => {
+          document.getElementById("product-category").innerHTML += `
+        <option>${element.name}</option>`;
+        });
+      });
+  });
+  //추가하기 버튼을 클릭했을 때
+  const addProductBtn = document.querySelector(".submit__product");
+  addProductBtn.addEventListener("click", (e) => {
+    e.preventDefault();
     fetch("/api/products", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      //`${document.querySelector("#category-name").value}`,
       body: JSON.stringify({
-        name: "개발자 버튼 코스터 2Set",
-        category: "홈데코/리빙",
-        shortDesc: "개발자 버튼 코스터 2Set 짧은 설명입니다.",
-        longDesc:
-          "개발자 버튼 코스터 2Set 긴 설명입니다. 개발자 버튼 코스터 2Set 긴 설명입니다. 개발자 버튼 코스터 2Set 긴 설명입니다. 개발자 버튼 코스터 2Set 긴 설명입니다. 개발자 버튼 코스터 2Set 긴 설명입니다. 개발자 버튼 코스터 2Set 긴 설명입니다. 개발자 버튼 코스터 2Set 긴 설명입니다. 개발자 버튼 코스터 2Set 긴 설명입니다. 개발자 버튼 코스터 2Set 긴 설명입니다. ",
-        price: 21000,
-        smallImageURL:
-          "/public/images/product-images/개발자-버튼-코스터-2Set.png",
-        bigImageURL:
-          "/public/images/product-images/개발자-버튼-코스터-2Set.png",
-        stock: "100",
+        name: document.getElementById("product-name").value,
+        category: document.getElementById("product-category").value,
+        shortDesc: document.getElementById("short-description").value,
+        longDesc: document.getElementById("long-description").value,
+        price: document.getElementById("product-price").value,
+        smallImageURL: `/public/images/product-images/${
+          document.getElementById("product-img").value
+        }`,
+        bigImageURL: `/public/images/product-images/${
+          document.getElementById("product-img").value
+        }`,
+        stock: document.getElementById("product-stock").value,
       }),
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         const newData = {
           _id: data._id,
           date: data.createdAt.slice(0, 10),
@@ -450,36 +465,18 @@ function productManagementCreate() {
           updateDate: data.updatedAt.slice(0, 10),
         };
         alert(`${newData.name} 이(가) 상품에 추가되었습니다.`);
-        //모달숨기기
+        //form 안의 input값 전부 초기화하기
+        document.getElementById("product-name").value = ""
+        document.getElementById("product-category").value = ""
+        document.getElementById("short-description").value = ""
+        document.getElementById("long-description").value = ""
+        document.getElementById("product-price").value = ""
+        document.getElementById("product-img").value = ""
+        document.getElementById("product-img").value = ""
+        document.getElementById("product-stock").value = ""
+        
         bootstrap.Modal.getInstance("#btn__admin__addProduct").hide();
-        //table의 맨 앞에 새로 추가된 데이터를 그려주는 기능
-        document.querySelector(".table > tbody").insertAdjacentHTML(
-          "afterbegin",
-          `<tr id="${newData._id}">
-                  <th scope="row">
-                    <font style="vertical-align: inherit;">
-                      <font style="vertical-align: inherit;">${newData.date}</font>
-                    </font>
-                  </th>
-                  <td>
-                    <font style="vertical-align: inherit;">
-                      <font style="vertical-align: inherit;" class="current__name">${newData.name}</font>
-                    </font>
-                  </td>
-                  <td>
-                    <font style="vertical-align: inherit;">
-                      <font style="vertical-align: inherit;">${newData.updateDate}</font>
-                    </font>
-                  </td>
-                  <td>
-                  <button type="button" class="btn btn-outline-primary ms-auto p-2 bd-highlight btn__admin__editProduct" data-bs-toggle="modal"
-              data-bs-target="#btn__admin__editProduct">수정하기</button>
-                  </td>
-                  <td>
-                    <button type="button" class="btn btn-outline-danger btn__delete">삭제하기</button>
-                  </td>
-                </tr>`
-        );
+        document.querySelector(".btn__admin__Product").click();
       });
   });
 }
