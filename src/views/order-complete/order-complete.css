@@ -1,5 +1,5 @@
-@import "../reset.css";
-@import "../navbar.css";
+@import "/../reset.css";
+@import "/../navbar.css";
 * {
   padding: 0px;
   margin: 0px;
@@ -36,23 +36,98 @@ body {
 #main__container {
   width: 100%;
   height: 100%;
-  padding: 100px;
+  padding: 50px 100px;
+  box-sizing: border-box;
+  color: rgb(58, 58, 58);
+}
+
+/* border line*/
+.border__line__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 100px;
+  margin-top: 20px;
+}
+.border__line {
+  width: 100%;
+  height: 1px;
+  background-color: rgb(180, 180, 180);
+}
+
+/* card */
+.card__container {
+  display: flex;
+  width: 100%;
+  height: 80%;
+  justify-content: center;
   box-sizing: border-box;
 }
-
-.process__bar {
-  width: 30%;
+.card {
   display: flex;
+  justify-content: center;
+  width: 65%;
+  height: 70%;
+  box-sizing: border-box;
+  padding: 10px;
+}
+.card-body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+.card__common {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 30px;
+}
+.card-title {
+  height: 20%;
+}
+
+.card-subtitle > i {
+  color: #48c78e;
+  font-size: 100px;
+}
+.card-text {
+  font-size: 20px;
+}
+.other__link {
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
-.process__bar p:nth-child(2) {
+.card-link {
+  text-decoration-line: none;
+  color: #48c78e;
+}
+.card-link:hover {
+  color: #2f7a57;
+}
+/* process bar */
+.process__bar {
+  width: 30%;
+  height: 10%;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 20px;
+  align-items: center;
+}
+.process__bar p {
   margin-left: 10px;
-  font-size: 45px;
+}
+.process__bar p:last-child {
+  font-size: 30px;
   font-weight: 500;
 }
-/*footer*/
 
+/*footer*/
 .footer {
   background-color: #f8f8f8;
   width: 100%;
