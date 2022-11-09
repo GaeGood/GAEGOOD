@@ -1,0 +1,69 @@
+@import "../reset.css";
+@import "../navbar.css";
+* {
+  padding: 0px;
+  margin: 0px;
+}
+
+/*body*/
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
+.div-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.landing {
+  cursor: pointer;
+  border: 1px solid red;
+  padding: 10px;
+  font-size: 3rem;
+}
+
+.greeting {
+  cursor: pointer;
+  border: 1px solid blue;
+  padding: 10px;
+  margin-left: 3rem;
+}
+
+/* main */
+#main__container {
+  width: 100%;
+  height: 100%;
+  padding: 100px;
+  box-sizing: border-box;
+}
+
+.process__bar {
+  width: 30%;
+  display: flex;
+  font-size: 30px;
+  align-items: center;
+}
+.process__bar p:nth-child(2) {
+  margin-left: 10px;
+  font-size: 45px;
+  font-weight: 500;
+}
+/*footer*/
+
+.footer {
+  background-color: #f8f8f8;
+  width: 100%;
+  height: 10%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*display:none*/
+.hidden {
+  display: none;
+}
