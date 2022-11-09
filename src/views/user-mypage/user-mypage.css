@@ -37,6 +37,53 @@ a {
   display: flex;
 }
 
+.nav-item {
+  width: 150px;
+  margin: 10px;
+}
+
+.information__zone {
+  display: flex;
+  margin-top: 20px;
+  width: 500px;
+  flex-direction: column;
+}
+
+.table {
+  margin: 10px;
+}
+
+td {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.password__zone {
+  height: 100px;
+}
+
+.address__zone {
+  height: 140px;
+}
+.address__zone__input {
+  display: flex;
+  justify-content: space-between;
+}
+.postalcode__input {
+  width: 230px;
+}
+
+.btn {
+  width: 100px;
+}
+
+.edit__button {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
 /*footer*/
 
 .footer {
