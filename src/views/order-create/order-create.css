@@ -1,4 +1,6 @@
 @import "../reset.css";
+@import "../navbar.css";
+
 * {
   padding: 0px;
   margin: 0px;
@@ -20,39 +22,6 @@ a {
   align-items: center;
   justify-content: center;
   height: 100vh;
-}
-
-/* HEADER 카테고리 */
-
-.navbar {
-  width: 100vw;
-  height: 100px;
-  padding: 50px 100px 0px 100px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: nowrap;
-}
-
-.navbar-nav {
-  width: 400px;
-
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.navbar-brand {
-  font-size: 3rem;
-  font-weight: 1000;
-  font-style: italic;
-  letter-spacing: -4px;
-}
-
-.nav-item {
-  margin: 10px;
 }
 
 /* main */
