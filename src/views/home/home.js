@@ -87,7 +87,7 @@ fetch("/api/products")
 
         productList.forEach((product) => {
           if (
-            clickedCategoryName === product.category.name ||
+            clickedCategoryName === product.category ||
             clickedCategoryName === "전체"
           ) {
             searchByCategoryProductList.push(product);

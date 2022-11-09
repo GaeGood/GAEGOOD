@@ -107,7 +107,7 @@ const [
   userPhoneNumber,
   userPostCode,
   userStreetAddress,
-  userExterAddress,
+  userExtraAddress,
 ] = document.querySelectorAll(".user");
 const [productsPriceHTML, deliveryFeeHTML, totalPriceHTML] =
   document.querySelectorAll(".pay");
@@ -115,18 +115,16 @@ const [productsPriceHTML, deliveryFeeHTML, totalPriceHTML] =
 if (!phoneNumber) {
   userName.value = name;
   userPhoneNumber.value = "";
-  userPostCode.value = postCode;
-  userStreetAddress.value = streetAddress;
-  userExterAddress.value = extraAddress;
+  userPostCode.value = "";
+  userStreetAddress.value = "";
+  userExtraAddress.value = "";
 } else {
   userName.value = name;
   userPhoneNumber.value = phoneNumber;
   userPostCode.value = postCode;
   userStreetAddress.value = streetAddress;
-  userExterAddress.value = extraAddress;
+  userExtraAddress.value = extraAddress;
 }
-
-console.log("phoneNumber", phoneNumber);
 
 const orderProductTable = document.querySelector(".product__list");
 
@@ -135,7 +133,9 @@ const productAllAmountArr = [];
 let productsPrice = 0;
 orderProductList.forEach((orderProduct) => {
   // 장바구니 각각의 상품마다 표 생성될 수 있도록 템플릿리터럴 진행
-  orderProductTable.innerHTML += `
+  // 주의, 장바구니에 체크된 상품들만 주문서로 이동.
+  if (orderProduct.checked) {
+    orderProductTable.innerHTML += `
     <tr>
       <td>
           <span class="order product__id hidden">${orderProduct.id}</span>
@@ -158,13 +158,14 @@ orderProductList.forEach((orderProduct) => {
     </tr>  
     `;
 
-  productAllIdArr.push(orderProduct.id);
-  productAllAmountArr.push(orderProduct.amount);
+    productAllIdArr.push(orderProduct.id);
+    productAllAmountArr.push(orderProduct.amount);
 
-  productsPrice += orderProduct.price * orderProduct.amount;
-  productsPriceHTML.innerHTML = productsPrice;
-  deliveryFeeHTML.innerHTML = 3000;
-  totalPriceHTML.innerHTML = productsPrice + 3000;
+    productsPrice += orderProduct.price * orderProduct.amount;
+    productsPriceHTML.innerHTML = productsPrice;
+    deliveryFeeHTML.innerHTML = 3000;
+    totalPriceHTML.innerHTML = productsPrice + 3000;
+  }
 });
 
 // 주소찾기
@@ -199,8 +200,8 @@ function searchAddress(e) {
       }
       userPostCode.value = `${data.zonecode}`;
       userStreetAddress.value = `${addr} ${extraAddr}`;
-      userExterAddress.value = "";
-      userExterAddress.focus();
+      userExtraAddress.value = "";
+      userExtraAddress.focus();
     },
   }).open();
 }
@@ -246,9 +247,9 @@ function payBtnClick() {
     !userPhoneNumber.value ||
     !userPostCode.value ||
     !userStreetAddress.value ||
-    !userExterAddress.value
+    !userExtraAddress.value
   ) {
-    return alert("배송지 정보를 정확하게 채워주세요");
+    return alert("배송지 정보를 정확하게 입력해주세요");
   }
 
   const requestType = requestSelectBox.value;
@@ -264,7 +265,7 @@ function payBtnClick() {
 
   // 기존에 휴대폰번호와 주소가 없다면 주문할 때 배송지와 휴대폰번호로 기존 유저정보 업데이트
 
-  if (!phoneNumber) {
+  if (!phoneNumber && !postCode) {
     // 전화번호
     if (userPhoneNumber.value !== "") {
       // 숫자만 매칭
@@ -277,11 +278,11 @@ function payBtnClick() {
 
       // 숫자가 아닌 다른값이 들어가 있을 경우
       if (result.includes(null)) {
-        return alert("잘못 입력하셨습니다. 숫자만 입력하세요.");
+        return alert("휴대폰번호를 잘못 입력하셨습니다. 숫자만 입력하세요.");
       }
       // 길이가 아닐 경우
       if (!(numberCheck.length >= 10 && numberCheck.length <= 11)) {
-        return alert("잘못 입력하셨습니다. 알맞은 번호를 입력하세요.");
+        return alert("휴대폰번호를 잘못 입력하셨습니다. 다시 입력해주세요.");
       }
     }
 
@@ -292,6 +293,9 @@ function payBtnClick() {
       },
       body: JSON.stringify({
         phoneNumber: `${userPhoneNumber.value}`,
+        postCode: `${userPostCode.value}`,
+        streetAddress: `${userStreetAddress.value}`,
+        extraAddress: `${userExtraAddress.value}`,
       }),
     })
       .then(async (res) => {
@@ -311,11 +315,6 @@ function payBtnClick() {
       });
   }
 
-  console.log("productAllIdArr");
-  console.log(productAllIdArr);
-  console.log("productAllAmountArr");
-  console.log(productAllAmountArr);
-
   fetch(`/api/orders`, {
     method: "POST",
     headers: {
@@ -328,7 +327,7 @@ function payBtnClick() {
       shippingStatus: "배송전",
       shippingPostCode: `${userPostCode.value}`,
       shippingStreetAddress: `${userStreetAddress.value}`,
-      shippingExtraAddress: `${userExterAddress.value}`,
+      shippingExtraAddress: `${userExtraAddress.value}`,
       shippingRequestMessage: `${request}`,
       totalAmount: `${totalPriceHTML.innerHTML}`,
       recipientName: `${userName.value}`,
@@ -358,7 +357,7 @@ function payBtnClick() {
         shippingStatus: "배송전",
         shippingPostCode: `${userPostCode.value}`,
         shippingStreetAddress: `${userStreetAddress.value}`,
-        shippingExtraAddress: `${userExterAddress.value}`,
+        shippingExtraAddress: `${userExtraAddress.value}`,
         shippingRequestMessage: `${request}`,
         totalAmount: `${totalPriceHTML.innerHTML}`,
         recipientName: `${userName.value}`,

@@ -35,168 +35,110 @@
   <body>
     <!-- 메인 컨테이너 -->
     <main id="main__container" role="main">
-      <div class="main-title">
-        <span class="main-mypage">MYPAGE</span>
+      <div class="main__title">
+        <div class="main__title__zone">
+          <span class="main__mypage__header"></span>
+        </div>
 
         <!-- 구분선 -->
         <hr class="my-2" />
       </div>
+
       <div class="main-contents">
-        <ul class="mypage-category">
-          <li><a href="/users/mypage">회원정보수정</a></li>
-          <li><a href="/orders/list">주문/배송조회</a></li>
-          <input type="button" class="user__delete" value="회원탈퇴" />
-          <!-- <button class="user__delete">회원탈퇴</button> -->
+        <ul class="mypage-category nav flex-column">
+          <li class="mypage__category nav-item">
+            <a class="mypage__category__a" href="/users/mypage">회원정보수정</a>
+          </li>
+          <li class="mypage__category nav-item">
+            <a class="mypage__category__a" href="/orders/list">주문/배송조회</a>
+          </li>
+          <li class="mypage__category nav-item">
+            <a class="user__delete mypage__category__a" href="#">회원탈퇴</a>
+          </li>
         </ul>
-        <div>
-          <div class="table-header">고객정보</div>
-          <!-- 구분선 -->
-          <hr class="my-2" />
 
-          <table>
-            <tr>
-              <th>이메일</th>
-              <td>
-                <span class="user email">이메일</span>
-              </td>
-            </tr>
-            <tr>
-              <th>
-                <span>비밀번호 변경</span>
-              </th>
-              <td>
-                <span>비밀번호</span>
-              </td>
-              <td>
-                <input
-                  class="user password__first"
-                  type="password"
-                  placeholder="비밀번호를 입력해주세요."
-                />
-              </td>
-            </tr>
-            <tr>
-              <th></th>
-              <td>
-                <span>비밀번호 확인</span>
-              </td>
-              <td>
-                <input
-                  class="user password__second"
-                  type="password"
-                  placeholder="비밀번호를 재입력해주세요."
-                />
-              </td>
-            </tr>
-            <tr>
-              <th>이름</th>
-              <td>
-                <input class="user name" />
-              </td>
-            </tr>
-            <tr>
-              <th>휴대폰번호</th>
-              <td>
-                <input
-                  type="text"
-                  placeholder="- 제외 입력해주세요"
-                  class="user phonenumber"
-                  value="휴대폰번호"
-                />
-              </td>
-            </tr>
-            <tr>
-              <th>배송지</th>
-              <td>
-                <div>
+        <div class="information__zone">
+          <div class="table-header">기본정보</div>
+          <table class="table">
+            <tbody>
+              <tr>
+                <th scope="row">
+                  <label>이메일</label>
+                </th>
+                <td>
+                  <span class="user_info email form-control-plaintext"></span>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  <label>비밀번호</label>
+                </th>
+                <td class="password__zone">
+                  <input
+                    type="password"
+                    id="hi"
+                    class="user_info password__first form-control"
+                    placeholder="비밀번호를 입력해주세요."
+                  />
+                  <input
+                    type="password"
+                    class="user_info password__second form-control"
+                    placeholder="비밀번호를 재입력해주세요."
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  <label>이름</label>
+                </th>
+                <td>
+                  <input type="text" class="user_info name form-control" />
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  <label>휴대폰번호</label>
+                </th>
+                <td>
                   <input
                     type="text"
-                    class="user postalcode__input"
-                    value="우편번호"
+                    class="user_info phonenumber form-control"
+                    placeholder="- 제외 입력해주세요"
                   />
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <th></th>
-              <td>
-                <div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  <label>배송지</label>
+                </th>
+                <td class="address__zone">
+                  <div class="address__zone__input">
+                    <input
+                      type="text"
+                      class="user_info postalcode__input form-control"
+                      readonly
+                    />
+                    <button type="button" class="address__search btn btn-light">
+                      주소검색
+                    </button>
+                  </div>
                   <input
                     type="text"
-                    class="user address__input__1"
-                    value="도로명주소"
+                    class="user_info address__input__1 form-control"
+                    readonly
                   />
-                  <!-- <button type="button" class="address__search">주소검색</button> -->
-                  <input
-                    type="button"
-                    class="address__search"
-                    value="주소검색"
-                  />
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <th></th>
-              <td>
-                <div>
                   <input
                     type="text"
-                    placeholder="상세주소를 입력해주세요."
-                    class="user address__input__2"
-                    value="상세주소"
+                    class="user_info address__input__2 form-control"
                   />
-                </div>
-              </td>
-            </tr>
+                </td>
+              </tr>
+            </tbody>
           </table>
-          <input type="button" class="userinfo__change" value="변경하기" />
-          <!-- <button type="button" class="userinfo__change">변경하기</button> -->
-
-          <div class="mb-3 row">
-            <label for="staticEmail" class="col-sm-2 col-form-label"
-              >이메일</label
-            >
-            <div class="col-sm-10">
-              <input
-                type="text"
-                readonly
-                class="form-control-plaintext"
-                id="staticEmail"
-                value="email@example.com"
-              />
-            </div>
-          </div>
-          <div class="mb-3 row">
-            <label for="inputPassword" class="col-sm-2 col-form-label"
-              >비밀번호</label
-            >
-            <div class="col-sm-10">
-              <input type="password" class="form-control" id="inputPassword" />
-            </div>
-          </div>
-          <div class="mb-3 row">
-            <label for="inputPassword" class="col-sm-2 col-form-label"
-              >이름</label
-            >
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputPassword" />
-            </div>
-          </div>
-          <div class="mb-3 row">
-            <label for="inputPassword" class="col-sm-2 col-form-label"
-              >휴대폰번호</label
-            >
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputPassword" />
-            </div>
-          </div>
-          <div class="mb-3 row">
-            <label for="inputPassword" class="col-sm-2 col-form-label"
-              >이름</label
-            >
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputPassword" />
-            </div>
+          <div class="edit__button">
+            <button type="button" class="userinfo__change btn btn-secondary">
+              수정
+            </button>
           </div>
         </div>
       </div>
