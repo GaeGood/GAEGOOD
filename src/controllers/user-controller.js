@@ -9,11 +9,7 @@ class UserContoller {
     }
 
     try {
-      const result = await userService.addUser({
-        name,
-        password,
-        email,
-      });
+      const result = await userService.addUser(req.body);
       return res.status(200).json(result);
     } catch (err) {
       next(err);
