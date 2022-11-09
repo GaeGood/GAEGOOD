@@ -10,7 +10,7 @@ const [
   userPostCode,
   userStreetAddress,
   userExtraAddress,
-] = document.querySelectorAll(".user");
+] = document.querySelectorAll(".user_info");
 
 const deleteUserBtn = document.querySelector(".user__delete");
 const userInfoChangeBtn = document.querySelector(".userinfo__change");
@@ -123,14 +123,18 @@ function saveUserData(e) {
 
     // 숫자가 아닌 다른값이 들어가 있을 경우
     if (result.includes(null)) {
-      return alert("잘못 입력하셨습니다. 숫자만 입력하세요.");
+      return alert("휴대폰번호를 잘못 입력하셨습니다. 숫자만 입력하세요.");
     }
     // 길이가 아닐 경우
     if (!(numberCheck.length >= 10 && numberCheck.length <= 11)) {
-      return alert("잘못 입력하셨습니다. 알맞은 번호를 입력하세요.");
+      return alert("휴대폰번호를 잘못 입력하셨습니다. 다시 입력해주세요.");
     }
   } else {
     userPhoneNumber.value = phoneNumber;
+  }
+
+  if (!userName.value) {
+    return alert("이름을 입력해주세요");
   }
 
   fetch(`/api/users/${_id}`, {
