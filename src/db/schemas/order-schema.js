@@ -20,19 +20,6 @@ const OrderSchema = new Schema(
         required: true,
       },
     ],
-    // productList: [
-    //   {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Product",
-    //     required: true,
-    //   },
-    // ],
-    // countList: [
-    //   {
-    //     type: Number,
-    //     required: true,
-    //   },
-    // ],
     shippingStatus: {
       type: String,
       default: "배송준비중",
@@ -80,6 +67,7 @@ const OrderSchema = new Schema(
   },
   {
     timestamps: true,
+    collection: "orders",
   }
 );
 
