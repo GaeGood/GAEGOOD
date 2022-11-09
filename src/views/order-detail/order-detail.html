@@ -37,15 +37,27 @@
     <div id="order-detail__wrap"></div>
 
     <!-- 주문 수정 / 삭제 옵션 -->
-    <div id="order__options__wrap">
-      <button data-bs-toggle="modal" data-bs-target="#order-edit__modal">
-        수정하기
+    <div
+      id="order__options__wrap"
+      class="btn-group"
+      role="group"
+      aria-label="Basic example"
+    >
+      <button
+        id="order__options__option__edit-btn"
+        type="button"
+        class="btn btn-warning order__options__option"
+        data-bs-toggle="modal"
+        data-bs-target="#order-edit__modal"
+      >
+        주문 정보 수정
       </button>
       <button
-        class="order__options__option"
-        id="order__options__option__delete-btn"
+        id="order__options__option__cancel-btn"
+        type="button"
+        class="btn btn-danger order__options__option"
       >
-        삭제하기
+        주문 취소
       </button>
     </div>
 
@@ -76,7 +88,33 @@
               method=""
               class="order-edit__modal__shipping-address"
             >
-              <input type="button" class="address__search" value="주소검색" />
+              <div class="mb-3">
+                <label for="" class="form-label">요청사항</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="order-edit__modal__input__shipping-request-message"
+                  placeholder=""
+                />
+              </div>
+              <div class="mb-3">
+                <label for="" class="form-label">받는사람 이름</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="order-edit__modal__input__recipient-name"
+                  placeholder=""
+                />
+              </div>
+              <div class="mb-3">
+                <label for="" class="form-label">연락처</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="order-edit__modal__input__recipient-phone-number"
+                  placeholder=""
+                />
+              </div>
               <div class="mb-3">
                 <label for="" class="form-label">우편주소</label>
                 <input
@@ -104,34 +142,7 @@
                   placeholder=""
                 />
               </div>
-
-              <div class="mb-3">
-                <label for="" class="form-label">수령인 이름</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="order-edit__modal__input__recipient-name"
-                  placeholder=""
-                />
-              </div>
-              <div class="mb-3">
-                <label for="" class="form-label">수령인 연락처</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="order-edit__modal__input__recipient-phone-number"
-                  placeholder=""
-                />
-              </div>
-              <div class="mb-3">
-                <label for="" class="form-label">요청사항</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="order-edit__modal__input__shipping-request-message"
-                  placeholder=""
-                />
-              </div>
+              <input type="button" class="address__search" value="주소검색" />
             </form>
           </div>
           <div class="modal-footer">

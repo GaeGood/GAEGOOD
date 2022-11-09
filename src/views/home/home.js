@@ -2,8 +2,16 @@ import { addCommas } from "/useful-functions.js";
 import { main } from "/main.js";
 const { loggedInUser } = await main();
 
+const categoryWrap = document.getElementById("category__wrap");
+
+const createCategory = (category) => {
+  return `
+        <li class="nav-item category">
+          <a class="nav-link" href="#">${category.name}</a>
+        </li>`;
+};
+
 const cards = document.querySelector(".cards");
-const categories = document.querySelectorAll(".nav-item.category");
 
 const createCard = (item) => {
   return `<div class="card ${item.category.name}">
@@ -20,6 +28,26 @@ const createCard = (item) => {
     </div>
   </div>`;
 };
+
+fetch("/api/categories")
+  .then(async (res) => {
+    const json = await res.json();
+
+    if (res.ok) {
+      return json;
+    }
+
+    return new Promise.reject(json);
+  })
+  .then((categoryList) => {
+    categoryList.forEach((category) => {
+      const categoryDiv = createCategory(category);
+      categoryWrap.innerHTML += categoryDiv;
+    });
+  })
+  .catch((e) => {
+    alert(e);
+  });
 
 fetch("/api/products")
   .then(async (res) => {
@@ -39,8 +67,14 @@ fetch("/api/products")
     return productList;
   }) //카테고리를 누르는것에 따라서 카테고리별 상품 이미지 띄우기
   .then((productList) => {
-    categories.forEach((category) => {
-      category.addEventListener("click", (event) => {
+    const categoryLiList = document.querySelectorAll(".nav-item.category");
+    categoryLiList.forEach((categoryLi) => {
+      categoryLi.addEventListener("click", (event) => {
+        categoryLiList.forEach((categoryLi) => {
+          categoryLi.children[0].classList.remove("clicked");
+        });
+        categoryLi.children[0].classList.add("clicked");
+
         cards.textContent = "";
         productList.forEach((product) => {
           if (product.category.name === event.target.text) {

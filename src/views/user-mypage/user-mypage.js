@@ -171,8 +171,6 @@ function saveUserData(e) {
 
 userInfoChangeBtn.addEventListener("click", saveUserData);
 
-
-
 // 회원탈퇴 기능
 
 function deleteUser() {
