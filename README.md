@@ -1,10 +1,19 @@
-# 쇼핑몰 웹 서비스 - 기본 코드
+# 개굿(GAEGOOD) : 개발자 굿즈 판매 쇼핑몰 Project
 
-<div>
+## 프로젝트 주제
 
-<img alt="쇼핑-데모 로고" src="https://i.ibb.co/xSZHxmy/image.png">
+- 목적 : 개발자 굿즈가 갖고싶은 개발자들에게 **개발자 굿즈**를 판매하는 사이트
+- 목표
+    - 홈에서 굿즈 정보를 확인할 수 있습니다.
+    - 회원 가입을 하지 않아도 상품을 구경하고 장바구니에 넣을 수 있습니다.
+    - 최소한의 클릭으로 상품을 구매하거나 판매할 수 있습니다.
 
-</div>
+## 페르소나 (유닉스토발즈)
+![developer](https://user-images.githubusercontent.com/59651691/200745685-f62a5f22-36cd-4669-8554-739fd1b94201.png)
+
+💡 윤익수 (파평윤씨, UNIX Torvalds)  : <strong>"오프라인에서 개발자 굿즈를 안팔아서 온라인에서 구매하려고요"</strong>
+
+
 
 <br />
 
@@ -20,17 +29,35 @@
 
 <br />
 
-### 1-1. API 문서
+## 데모 사이트
+ - http://gaegood.com/
+ <div>
 
-### https://documenter.getpostman.com/view/23952739/2s847JrX6f
+<img alt="쇼핑-데모 로고" src="https://i.ibb.co/xSZHxmy/image.png">
 
-<br>
+</div>
+
+### 1-1. API 설계 문서
+
+- https://regular-ketchup-337.notion.site/bf94faeda3144c16884d47d1b1d99b41?v=85f4de506d71431fb30b58f85d42d00d
+
+## Tech Stack
+
+![gaegood_tech_stack drawio](https://user-images.githubusercontent.com/59651691/200760088-1ddbf681-e147-44eb-adf4-f4f1f26a40ac.png)
+
+  
+<br/>
+
+## Infra
+![gaegood drawio (1)](https://user-images.githubusercontent.com/59651691/200761385-c02accc6-8638-4b7e-a5bd-cf4f20cf51ac.png)
+
+
+<br/>
 
 ### 1-2. 데모 영상
 
 <details><summary>사용자 회원가입, 로그인</summary>
 
-![image](https://user-images.githubusercontent.com/91174156/172159634-1e105633-9948-464e-a540-5429200a1353.gif)
 
 </details>
 
@@ -194,4 +221,4 @@ npm start
 ---
 
 본 프로젝트에서 제공하는 모든 코드 등의는 저작권법에 의해 보호받는 ㈜엘리스의 자산이며, 무단 사용 및 도용, 복제 및 배포를 금합니다.
-Copyright 2022 엘리스 Inc. All rights reserved.
+Copyright 2022 엘리스 Inc. All rights reserved.
