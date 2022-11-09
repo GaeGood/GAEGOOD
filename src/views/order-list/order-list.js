@@ -3,7 +3,6 @@ const { loggedInUser } = await main();
 
 const { orderList } = loggedInUser;
 
-console.log(orderList);
 // orderList에서 뽑아올 내용
 // countList
 // productList
@@ -12,22 +11,25 @@ console.log(orderList);
 
 // 상품에서 뽑아올 내용
 // fetch통해 상품이름, 상품 가격, 상품 사진
-
-const orderContents = document.querySelector(".order__contents");
+const orderNone = document.querySelector(".order__none");
 
 orderList.forEach((order) => {
+  // 주문내역 없음 지우기
+  orderNone.className = "order__none hidden";
+
   const orderId = order._id;
   const countList = order.countList;
   const productIdList = order.productList;
   const orderDay = order.createdAt.split("T")[0];
   const shippingStatus = order.shippingStatus;
+  const orderListZone = document.querySelector(".order__list");
 
-  orderContents.innerHTML += `<div>
+  orderListZone.innerHTML += `<div class="card order__contents">
         <div class="card-header">${orderDay} 주문</div>
-        <div class="test__${orderId}" style="display:flex;align-items: center;justify-content: space-between;"">
+        <div class="orderzone__${orderId}" style="display:flex;align-items: center;justify-content: space-between;">
           <div class="order__${orderId}"></div>
         </div>
-        </div>`;
+  `;
 
   for (let i = 0; i < countList.length; i++) {
     fetch(`/api/products/${productIdList[i]}`)
@@ -42,13 +44,10 @@ orderList.forEach((order) => {
         const productName = product.name;
         const productImg = product.smallImageURL;
         const productPrice = product.price;
-        console.log(product);
-        // 여기서부터 복붙
 
+        // 상품정보 삽입
         const dateOrder = document.querySelector(`.order__${orderId}`);
-
         dateOrder.innerHTML += `
-        
                 <a href="/products/${productIdList[i]}" class="card-body">
                   <div class="product__picture">
                     <img src=${productImg} class="product__image"/>
@@ -60,39 +59,13 @@ orderList.forEach((order) => {
                   </div>
                 </a>
        `;
-        //<div>
-        // <div class="etc__zone">
-        //   <div>${shippingStatus}</div>
-        //   <button href="#" class="btn btn-primary">
-        //     주문상세
-        //   </button>
-        // </div>
-        //</div>
-
-        //   orderContents.innerHTML += `<a href="/orders/${orderId}" class="order">
-        //   <div class="card-header">${orderDay} 주문</div>
-        //   <span class="card-body">
-        //     <div class="product__picture">
-        //       <img src=${productImg} class="product__image"/>
-        //     </div>
-        //     <div class="product__information">
-        //       <h5 class="card-title">${productName}</h5>
-        //       <span class="card-text">${productPrice}원</span>
-        //       <span class="card-text">${countList[i]}개</span>
-        //     </div>
-        //     <div class="etc__zone">
-        //       <div>${shippingStatus}</div>
-        //       <button href="#" class="btn btn-primary">
-        //       주문취소
-        //       </button>
-        //     </div>
-        //   </span>
-        // </a>`;
       })
       .catch((err) => alert(err));
   }
-  const test = document.querySelector(`.test__${orderId}`);
-  test.innerHTML += `
+
+  // 배송상태와 주문상세버튼 날짜별로 1개씩 추가
+  const orderZone = document.querySelector(`.orderzone__${orderId}`);
+  orderZone.innerHTML += `
         <div>
         <div class="etc__zone">
           <div>${shippingStatus}</div>
@@ -105,34 +78,6 @@ orderList.forEach((order) => {
 });
 
 const deleteUserBtn = document.querySelector(".user__delete");
-
-// 주문 취소 버튼 눌렀을 때 발생 로직
-// const orderCancelBtn = document.querySelector(".order-cancel");
-
-// function orderCancel(){
-//       // 배송상태 확인해서 상품준비중 혹은 배송 전 상태일때만 취소 가능하게 진행
-//   if() {
-
-//   }
-// 		const answer = confirm("주문 취소 시 복구할 수 없습니다. \n 정말로 취소하시겠습니까?");
-// 		if(answer){
-
-// 			// db에서 주문정보 삭제
-// 				try {
-// 					// 삭제 성공
-// 					alert("주문 정보가 삭제되었습니다.");
-
-// 					// 삭제한 아이템 화면에서 지우기
-// 					// const deletedItem = document.querySelector(`#order-${id}`);
-// 					// deletedItem.remove();
-
-// 				} catch (err) {
-// 					alert(`주문정보 삭제 과정에서 오류가 발생하였습니다 \n: ${err}`);
-// 				}
-// 			}
-// 		}
-
-// orderCancelBtn.addEventListener('click', orderCancel);
 
 // 회원탈퇴 기능
 function deleteUser() {
