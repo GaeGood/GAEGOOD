@@ -260,18 +260,16 @@ button__cart.addEventListener("click", () => {
           "이미 장바구니에 담겨있는 상품입니다.\n수량이 변경되었습니다.\n장바구니로 이동하시겠습니까?"
         )
       ) {
-        button__cart.setAttribute("href", "/cart");
+        location.href = "/cart";
       } else {
-        button__cart.setAttribute("href", "");
       }
     } else {
       insertIndexedDB(DATABASE_NAME, version, objectStore, idObject);
       if (
         confirm("상품을 장바구니에 담았습니다.\n장바구니로 이동하시겠습니까?")
       ) {
-        button__cart.setAttribute("href", "/cart");
+        location.href = "/cart";
       } else {
-        button__cart.setAttribute("href", "");
       }
     }
   });
