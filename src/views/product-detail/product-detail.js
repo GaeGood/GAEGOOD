@@ -40,7 +40,7 @@ let productAmountNum = parseInt(productAmount.textContent);
 /* 상품 상제정보 불러오기*/
 // home에서 클릭한 제품의 상세 내용
 let nameValue = "";
-let checkedValue = true;
+let checkedValue = false;
 let categoryValue = "";
 let shortDescValue = "";
 let longDescValue = "";
@@ -161,7 +161,7 @@ function insertIndexedDB(DATABASE_NAME, version, objectStore, idObject) {
       const store = transaction.objectStore(objectStore);
       // 상품 수량 담기 (최초)
       idObject.amount = parseInt(productAmount.textContent);
-      idObject.checked = true;
+      idObject.checked = false;
       idObject.name = productName.textContent;
       idObject.category = productCategory.textContent;
       idObject.shortDesc = productDescription.textContent;
@@ -254,10 +254,25 @@ button__cart.addEventListener("click", () => {
   getAllKeysIndexedDB(DATABASE_NAME, version, objectStore, function (result) {
     if (result.includes(id)) {
       updateIndexedDB(DATABASE_NAME, version, objectStore, id);
-      alert("이미 장바구니에 담겨있는 상품입니다.\n수량이 변경되었습니다.");
+      if (
+        // 테스트 해볼 부분
+        confirm(
+          "이미 장바구니에 담겨있는 상품입니다.\n수량이 변경되었습니다.\n장바구니로 이동하시겠습니까?"
+        )
+      ) {
+        button__cart.setAttribute("href", "/cart");
+      } else {
+        button__cart.setAttribute("href", "");
+      }
     } else {
       insertIndexedDB(DATABASE_NAME, version, objectStore, idObject);
-      alert("상품을 장바구니에 담았습니다.");
+      if (
+        confirm("상품을 장바구니에 담았습니다.\n장바구니로 이동하시겠습니까?")
+      ) {
+        button__cart.setAttribute("href", "/cart");
+      } else {
+        button__cart.setAttribute("href", "");
+      }
     }
   });
 });
