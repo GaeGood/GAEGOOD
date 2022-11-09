@@ -59,6 +59,7 @@ function createOderMiddle(dataArr) {
                 <li><a class="dropdown-item" href="#">배송전</a></li>
                 <li><a class="dropdown-item" href="#">배송중</a></li>
                 <li><a class="dropdown-item" href="#">배송완료</a></li>
+                <li><a class="dropdown-item" href="#">취소완료</a></li>
               </ul>
             </div>
           </td>
@@ -86,9 +87,52 @@ function createUserTable(listArr, datasArr) {
   const table = document.createElement("table");
   table.className = "table text-center";
   table.prepend(createTop(listArr));
-  table.append(createCategoryMiddle(datasArr));
+  table.append(createUserMiddle(datasArr));
   return table;
 }
+
+function createUserMiddle(dataArr) {
+  const middle = document.createElement("tbody");
+  const addHtml = [];
+  for (let count = 0; count < dataArr.length; count++) {
+    addHtml.push(
+      `<tr id="${dataArr[count]._id}">
+          <th scope="row">
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">${dataArr[count].date}</font>
+            </font>
+          </th>
+          <td>
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">${dataArr[count].email}</font>
+            </font>
+          </td>
+          <td>
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">${dataArr[count].name}</font>
+            </font>
+          </td>
+          <td>
+            <div class="dropdown">
+              <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                ${dataArr[count].role}
+              </a>
+              <ul class="dropdown-menu btn__edit">
+                <li><a class="dropdown-item" href="#">일반유저</a></li>
+                <li><a class="dropdown-item" href="#">관리자</a></li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <button type="button" class="btn btn-outline-danger btn__delete">삭제하기</button>
+          </td>
+        </tr>`
+    );
+  }
+  middle.innerHTML += addHtml.join("");
+  return middle;
+}
+
 
 function createCategoryMiddle(dataArr) {
   const middle = document.createElement("tbody");
@@ -124,6 +168,7 @@ function createCategoryMiddle(dataArr) {
   middle.innerHTML += addHtml.join("");
   return middle;
 }
+
 
 function createCategoryTable(listArr, datasArr) {
   //datas 는 필요한 데이터만 받아온 객체들의 배열

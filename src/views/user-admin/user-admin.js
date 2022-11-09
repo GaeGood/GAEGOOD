@@ -103,24 +103,22 @@ for (let i = 0; i < adminPageList.length - 2; i++) {
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
-        });
-      //   const newData = data.map((e) => {
-      //     return {
-      //       _id: e._id,
-      //       date: e.createdAt.slice(0, 10),
-      //       name: e.recipientName,
-      //       products: e.productList.map((e) => e.name),
-      //       total: e.totalAmount,
-      //       shopStatus: e.shippingStatus,
-      //       cancle: false,
-      //     };
-      //   });
-      //   return newData;
-      // })
-      // .then((newData) => {
-      //   newHtml.appendChild(createTable(oderAdmin, newData));
-      //   mainTag.append(newHtml);
-      // })
+          const newData = data.map((e) => {
+            return {
+              _id: e._id,
+              date: e.createdAt.slice(0, 10),
+              name: e.name,
+              email: e.email,
+              role: e.role,
+            };
+          });
+          return newData;
+        })
+      .then((newData) => {
+        console.log((newData));
+        newHtml.appendChild(createUserTable(userAdmin, newData));
+        mainTag.append(newHtml);
+      })
       // .then(() => {
       //   oderManagementEdit();
       //   oderManagementDelete();
@@ -247,6 +245,7 @@ function categoryManagementEdit() {
   }
 }
 
+//페이지를 어떻게 다시 불러오지?????
 function categoryManagementCreate() {
   const addCategoryBtn = document.querySelector(".submit__category");
   addCategoryBtn.addEventListener("click", (e) => {
