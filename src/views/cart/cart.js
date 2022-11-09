@@ -1,5 +1,4 @@
-import { main } from "/main.js";
-import { addCommas, convertToNumber } from "/useful-functions.js";
+import { main, addCommas, convertToNumber } from "/public/js/main.js";
 const { loggedInUser } = await main();
 
 const cart__container = document.querySelector(".cart__container");

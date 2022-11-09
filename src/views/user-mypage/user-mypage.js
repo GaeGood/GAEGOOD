@@ -1,4 +1,4 @@
-import { main } from "/main.js";
+import { main } from "/public/js/main.js";
 const { loggedInUser } = await main();
 
 const [

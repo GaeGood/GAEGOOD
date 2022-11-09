@@ -1,4 +1,4 @@
-@import "../reset.css";
+@import "/public/css/main.css";
 * {
   padding: 0px;
   margin: 0px;
@@ -12,7 +12,7 @@ html {
 
 a {
   text-decoration: none;
-  color:black
+  color: black;
 }
 
 .div-container {
@@ -20,35 +20,6 @@ a {
   align-items: center;
   justify-content: center;
   height: 100vh;
-}
-
-/* HEADER 카테고리 */
-
-.navbar {
-  width: 100vw;
-  height: 100px;
-  padding: 50px 100px 0px 100px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: nowrap;
-}
-
-.navbar-nav {
-  width: 250px;
-
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.navbar-brand {
-  font-size: 3rem;
-  font-weight: 1000;
-  font-style: italic;
-  letter-spacing: -4px;
 }
 
 /* main */
@@ -61,18 +32,16 @@ a {
 }
 
 .main-contents {
-    display: flex;
+  display: flex;
 }
 
-
 /*user-admin*/
-.btn__admin__addCategory{
+.btn__admin__addCategory {
   display: none;
-} 
+}
 .btn__admin__addProduct {
   display: none;
 }
-
 
 /*footer*/
 
