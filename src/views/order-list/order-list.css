@@ -69,7 +69,10 @@ a {
 .information__zone {
   display: flex;
   flex-direction: column;
+  gap: 20px;
+
   margin-top: 20px;
+
   width: 500px;
 }
 
@@ -89,9 +92,9 @@ a {
   box-sizing: border-box;
 }
 
-.card.order__contents {
+/* .card.order__contents {
   margin-bottom: 20px;
-}
+} */
 
 .product__image {
   width: 70px;
