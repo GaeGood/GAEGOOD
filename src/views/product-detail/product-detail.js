@@ -2,8 +2,12 @@ import { addCommas } from "/useful-functions.js";
 import { main } from "/main.js";
 const { loggedInUser } = await main();
 
+const html = window.location.href;
+const sp = html.split("products/");
+const id = sp[1].replace("/", "");
+
 const button__container = document.querySelector(".button__container");
-const orderButton__User = `<button type="button" class="order__button__user"><a href="/orders/create">바로 구매하기</a></button>`;
+const orderButton__User = `<button type="button" class="order__button__user"><a href="/orders/create?pid=${id}&count=1" id="direct-buy__link">바로 구매하기</a></button>`;
 const orderButton__Any = `  <button data-bs-toggle="modal" data-bs-target="#modalLogin">
     바로 구매하기
   </button>`;
@@ -35,10 +39,8 @@ const productId = pathArray[2];
 let productAmountNum = parseInt(productAmount.textContent);
 /* 상품 상제정보 불러오기*/
 // home에서 클릭한 제품의 상세 내용
-const html = window.location.href;
-const sp = html.split("products/");
-const id = sp[1].replace("/", "");
 let nameValue = "";
+let checkedValue = true;
 let categoryValue = "";
 let shortDescValue = "";
 let longDescValue = "";
@@ -49,6 +51,7 @@ let stockValue = 10;
 const idObject = {
   id: id,
   amount: productAmountNum,
+  checked: checkedValue,
   name: nameValue,
   category: categoryValue,
   shortDesc: shortDescValue,
@@ -86,6 +89,7 @@ function addproduct(product) {
     result.forEach((data) => {
       if (id === data.id) {
         productAmount.textContent = data.amount;
+        changeDirectBuyLink(data.amount);
       }
     });
 
@@ -157,6 +161,7 @@ function insertIndexedDB(DATABASE_NAME, version, objectStore, idObject) {
       const store = transaction.objectStore(objectStore);
       // 상품 수량 담기 (최초)
       idObject.amount = parseInt(productAmount.textContent);
+      idObject.checked = true;
       idObject.name = productName.textContent;
       idObject.category = productCategory.textContent;
       idObject.shortDesc = productDescription.textContent;
@@ -262,6 +267,7 @@ let validation = 0;
 button__plus.addEventListener("click", function plusAmount() {
   productAmountNum += 1;
   productAmount.textContent = productAmountNum;
+  changeDirectBuyLink(productAmountNum);
 });
 button__minus.addEventListener("click", function minusAmount() {
   productAmountNum -= 1;
@@ -269,9 +275,16 @@ button__minus.addEventListener("click", function minusAmount() {
     productAmountNum = 1;
   }
   productAmount.textContent = productAmountNum;
+  changeDirectBuyLink(productAmountNum);
 });
 /* 장바구니 내용 삭제 버튼 클릭 이벤트 */
 button__remove.addEventListener("click", () => {
   deleteIndexedDBdata(DATABASE_NAME, version, objectStore, idObject);
   alert("상품을 장바구니에서 삭제했습니다.");
 });
+
+function changeDirectBuyLink(amount) {
+  const directBuyLink = document.getElementById("direct-buy__link");
+
+  directBuyLink.href = `/orders/create?pid=${id}&count=${amount}`;
+}
