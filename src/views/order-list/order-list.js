@@ -10,9 +10,9 @@ const mainMypageHeader = document.querySelector(".main__mypage__header");
 mainMypageHeader.innerHTML = `안녕하세요, ${name}님!`;
 
 orderList.forEach((order) => {
-  // 주문내역 없음 지우기
+  // 주문내역이 있으면 주문내역 없다는 안내멘트 지우기
   orderNone.className = "order__none hidden";
-  console.log(order);
+
   const orderId = order._id;
   const countList = order.countList;
   const productIdList = order.productList;
@@ -67,12 +67,20 @@ orderList.forEach((order) => {
   orderZone.innerHTML += `
         <div>
         <div class="etc__zone">
-          <div>${shippingStatus}</div>
+          <div class="shipping__status__${orderId}">${shippingStatus}</div>
           <a type="button" class="btn btn-outline-secondary" href="/orders/${orderId}">
             주문상세</a>
         </div>
         </div>
   `;
+
+  // 배송현황 취소완료시 글씨 색 red로 변경
+  if (shippingStatus === "취소완료") {
+    const shippingStatusMessage = document.querySelector(
+      `.shipping__status__${orderId}`
+    );
+    shippingStatusMessage.style.color = "red";
+  }
 });
 
 const deleteUserBtn = document.querySelector(".user__delete");
