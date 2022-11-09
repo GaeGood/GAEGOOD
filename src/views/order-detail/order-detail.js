@@ -151,7 +151,7 @@ function checkOrderShippingStatus(order) {
   const shippingStatus = order.shippingStatus;
   if (shippingStatus === "배송전") {
     document.getElementById("shipping-ready").style.color = "black";
-    document.getElementById("shipping-ready").style.fontSize = "32px";
+    document.getElementById("shipping-ready").style.fontSize = "36px";
   } else {
     const orderEditBtn = document.getElementById(
       "order__options__option__edit-btn"
@@ -167,10 +167,10 @@ function checkOrderShippingStatus(order) {
 
     if (shippingStatus === "배송중") {
       document.getElementById("shipping-ongoing").style.color = "black";
-      document.getElementById("shipping-ongoing").style.fontSize = "32px";
+      document.getElementById("shipping-ongoing").style.fontSize = "36px";
     } else if (shippingStatus === "배송완료") {
       document.getElementById("shipping-finished").style.color = "black";
-      document.getElementById("shipping-finished").style.fontSize = "32px";
+      document.getElementById("shipping-finished").style.fontSize = "36px";
     } else if (shippingStatus === "취소완료") {
       document.getElementById(
         "order-detail__order-content__shipping-status__wrap"
