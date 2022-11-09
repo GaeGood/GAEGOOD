@@ -41,7 +41,12 @@
         <div class="border__line"></div>
       </div>
       <div class="checkbox__container">
-        <input type="checkbox" name="wholeCheck" value="wholeCheck" />
+        <input
+          class="checkbox__all"
+          type="checkbox"
+          name="wholeCheck"
+          value="wholeCheck"
+        />
         <label for="wholeCheck">전체 선택</label>
         <button id="checked__delete">선택 삭제</button>
       </div>
@@ -79,7 +84,7 @@
 
       <!-- 결제 금액 -->
       <div class="pay__container">
-        <div>결제 금액</div>
+        <div id="total__price">결제 금액</div>
         <div class="pay__list">
           <div class="pay__detail__container">
             <div>총 수량</div>
