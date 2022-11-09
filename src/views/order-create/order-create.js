@@ -1,6 +1,5 @@
-import { main } from "/main.js";
+import { main, deleteIndexedDBdata, getAllIndexedDB } from "/public/js/main.js";
 const { loggedInUser } = await main();
-import { deleteIndexedDBdata, getAllIndexedDB } from "/indexedDB.js";
 
 let orderProductList = [];
 

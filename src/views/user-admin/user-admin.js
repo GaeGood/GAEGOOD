@@ -1,5 +1,4 @@
-import { addCommas } from "/useful-functions.js";
-import { main } from "/main.js";
+import { main } from "/public/js/main.js";
 const { loggedInUser } = await main();
 import {
   createOderTable,
@@ -10,9 +9,7 @@ import {
 
 const mainTag = document.getElementById("main__container");
 
-const adminPageList = document.querySelectorAll(
-  ".admin__page__list > button"
-);
+const adminPageList = document.querySelectorAll(".admin__page__list > button");
 
 const adminBtnOder = document.querySelector(".btn__admin__oder");
 const adminBtnUser = document.querySelector(".btn__admin__user");
@@ -28,13 +25,7 @@ const oderAdmin = [
   "취소",
 ];
 const userAdmin = ["가입날짜", "이메일", "이름", "권한", "관리"];
-const categoryAdmin = [
-  "생성날짜",
-  "카테고리 이름",
-  "수정날짜",
-  "수정",
-  "삭제",
-];
+const categoryAdmin = ["생성날짜", "카테고리 이름", "수정날짜", "수정", "삭제"];
 const productAdmin = [
   "생성날짜",
   "이름",
@@ -67,10 +58,8 @@ for (let i = 0; i < adminPageList.length - 2; i++) {
 
     //주문관리 기능 구현
     if (listName === "주문관리") {
-      document.querySelector(".btn__admin__addCategory").style =
-        "display:none";
-      document.querySelector(".btn__admin__addProduct").style =
-        "display:none";
+      document.querySelector(".btn__admin__addCategory").style = "display:none";
+      document.querySelector(".btn__admin__addProduct").style = "display:none";
       fetch("/api/orders")
         .then((res) => res.json())
         .then((datas) => {
@@ -100,10 +89,8 @@ for (let i = 0; i < adminPageList.length - 2; i++) {
 
     //회원관리 기능구현
     else if (listName === "회원관리") {
-      document.querySelector(".btn__admin__addCategory").style =
-        "display:none";
-      document.querySelector(".btn__admin__addProduct").style =
-        "display:none";
+      document.querySelector(".btn__admin__addCategory").style = "display:none";
+      document.querySelector(".btn__admin__addProduct").style = "display:none";
 
       fetch("/api/users")
         .then((res) => res.json())
@@ -133,8 +120,7 @@ for (let i = 0; i < adminPageList.length - 2; i++) {
       //상품추가와 카테고리추가 없애기
       document.querySelector(".btn__admin__addCategory").style =
         "display:inline";
-      document.querySelector(".btn__admin__addProduct").style =
-        "display:none";
+      document.querySelector(".btn__admin__addProduct").style = "display:none";
 
       fetch("/api/categories")
         .then((res) => res.json())
@@ -160,8 +146,7 @@ for (let i = 0; i < adminPageList.length - 2; i++) {
         });
     } else {
       //상품추가와 카테고리추가 없애기
-      document.querySelector(".btn__admin__addCategory").style =
-        "display:none";
+      document.querySelector(".btn__admin__addCategory").style = "display:none";
       document.querySelector(".btn__admin__addProduct").style =
         "display:inline";
       newHtml.innerHTML = innerAddProduct(listName);
