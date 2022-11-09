@@ -40,6 +40,7 @@ let productAmountNum = parseInt(productAmount.textContent);
 /* 상품 상제정보 불러오기*/
 // home에서 클릭한 제품의 상세 내용
 let nameValue = "";
+let checkedValue = true;
 let categoryValue = "";
 let shortDescValue = "";
 let longDescValue = "";
@@ -50,6 +51,7 @@ let stockValue = 10;
 const idObject = {
   id: id,
   amount: productAmountNum,
+  checked: checkedValue,
   name: nameValue,
   category: categoryValue,
   shortDesc: shortDescValue,
@@ -159,6 +161,7 @@ function insertIndexedDB(DATABASE_NAME, version, objectStore, idObject) {
       const store = transaction.objectStore(objectStore);
       // 상품 수량 담기 (최초)
       idObject.amount = parseInt(productAmount.textContent);
+      idObject.checked = true;
       idObject.name = productName.textContent;
       idObject.category = productCategory.textContent;
       idObject.shortDesc = productDescription.textContent;
