@@ -127,3 +127,79 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+
+body {
+  margin: auto;
+}
+
+@media (max-width: 3900px) {
+  body {
+    width: 45vw;
+  }
+}
+
+@media (max-width: 3600px) {
+  body {
+    width: 50vw;
+  }
+}
+
+@media (max-width: 3300px) {
+  body {
+    width: 55vw;
+  }
+}
+
+@media (max-width: 3000px) {
+  body {
+    width: 60vw;
+  }
+}
+
+@media (max-width: 2700px) {
+  body {
+    width: 65vw;
+  }
+}
+
+@media (max-width: 2400px) {
+  body {
+    width: 70vw;
+  }
+}
+
+@media (max-width: 2100px) {
+  body {
+    width: 75vw;
+  }
+}
+
+@media (max-width: 1800px) {
+  body {
+    width: 80vw;
+  }
+}
+
+@media (max-width: 1500px) {
+  body {
+    width: 85vw;
+  }
+}
+
+@media (max-width: 1200px) {
+  body {
+    width: 90vw;
+  }
+}
+
+@media (max-width: 900px) {
+  body {
+    width: 95vw;
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    width: 100vw;
+  }
+}
