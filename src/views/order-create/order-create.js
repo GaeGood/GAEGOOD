@@ -142,35 +142,37 @@ orderProductList.forEach((orderProduct) => {
   // 주의, 장바구니에 체크된 상품들만 주문서로 이동.
   if (orderProduct.checked) {
     orderProductTable.innerHTML += `
-    <tr>
-      <td>
-          <span class="order product__id hidden">${orderProduct.id}</span>
-      </td>
-      <td>
-          <img src="${
-            orderProduct.smallImageURL
-          }" class="order product__picture" />
-      </td>
-      <td>
-          <span class="order product__info">
-            <div>${orderProduct.name}</div>
-            <div>${orderProduct.shortDesc}</div>
-          </span>
-      </td>
-      <td>
-          <span class="order product__amount">${orderProduct.amount}</span>
-      </td>
-      <td>
-          <span class="order product__price">${addCommas(
-            orderProduct.price
-          )}원</span>
-      </td>
-      <td>
-          <span class="order product__all__price">${addCommas(
-            orderProduct.price * orderProduct.amount
-          )}원</span>
-      </td>
-    </tr>  
+        <tr class='order product__information'>
+          <td>
+              <div class="order product__id hidden">${orderProduct.id}</div>
+          </td>
+          <td>
+              <img src="${
+                orderProduct.smallImageURL
+              }" class="order product__picture" />
+          </td>
+          <td>
+              <div class="order product__info">
+                <div class="order product__name">${orderProduct.name}</div>
+                <div class="order product__shortdesc">${
+                  orderProduct.shortDesc
+                }</div>
+              </div>
+          </td>
+          <td>
+              <div class="order product__amount">${orderProduct.amount}</div>
+          </td>
+          <td>
+              <div class="order product__price">${addCommas(
+                orderProduct.price
+              )}원</div>
+          </td>
+          <td>
+              <div class="order product__all__price">${addCommas(
+                orderProduct.price * orderProduct.amount
+              )}원</div>
+          </td>
+        </tr>  
     `;
 
     productAllIdArr.push(orderProduct.id);

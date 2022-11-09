@@ -37,7 +37,11 @@
     <main id="main__container" role="main">
       <div class="main__title">
         <div class="main__title__zone">
-          <span class="main__mypage__header">주문 & 결제</span>
+          <div class="process__bar">
+            <p>장바구니 ></p>
+            <p>주문결제</p>
+            <p>> 주문완료</p>
+          </div>
         </div>
 
         <!-- 구분선 -->
@@ -45,24 +49,17 @@
       </div>
       <section class="main-contents">
         <div class="table-header">주문 상품 정보</div>
-        <!-- 구분선 -->
-        <hr class="my-2" />
         <div>
-          <table class="product__list">
-            <tr>
-              <td colspan="3">
-                <span>상품정보</span>
-              </td>
-              <td>
-                <span>수량</span>
-              </td>
-              <td>
-                <span>단가</span>
-              </td>
-              <td>
-                <span>총 금액</span>
-              </td>
-            </tr>
+          <table>
+            <thead>
+              <tr>
+                <th scope="col" colspan="3">상품정보</th>
+                <th scope="col">수량</th>
+                <th scope="col">단가</th>
+                <th scope="col">총 금액</th>
+              </tr>
+            </thead>
+            <tbody class="table product__list table-group-divider"></tbody>
           </table>
         </div>
       </section>
