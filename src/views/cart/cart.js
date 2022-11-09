@@ -1,4 +1,5 @@
 import { main } from "/main.js";
+import { addCommas, convertToNumber } from "/useful-functions.js";
 const { loggedInUser } = await main();
 
 const cart__container = document.querySelector(".cart__container");
@@ -18,6 +19,17 @@ const order__button__user = document.querySelector(".order__button__userr");
 const cart__whole__check = document.querySelector('input[name="wholeCheck"]');
 // const idObject = { id: id, amount: productAmountNum };
 
+/* defaultImage 컨테이너 div */
+const defaultImage = document.createElement("div");
+defaultImage.classList.add("default__image");
+cart__container.prepend(defaultImage);
+const default__Image = document.querySelector(".default__image");
+/* defaultText 컨테이너 div */
+const defaultText = document.createElement("div");
+defaultText.classList.add("default__text");
+cart__container.appendChild(defaultText);
+const default__Text = document.querySelector(".default__text");
+
 const DATABASE_NAME = "cartDB";
 const version = 1;
 const objectStore = "cartStorage";
@@ -31,6 +43,8 @@ let totalSumAmount = 0;
 getAllIndexedDB(DATABASE_NAME, version, objectStore, function (dataList) {
   //dataList === response.target.result
   if (dataList.length !== 0) {
+    default__Image.remove();
+    default__Text.remove();
     dataRender(dataList, DATABASE_NAME, version, objectStore);
     if (loggedInUser) {
       order__button__container.innerHTML = orderButton__User;
@@ -38,6 +52,14 @@ getAllIndexedDB(DATABASE_NAME, version, objectStore, function (dataList) {
       order__button__container.innerHTML = orderButton__Any;
     }
   } else {
+    //장바구니가 비었을 경우
+    default__Image.innerHTML = `<i class="fa-solid fa-cart-shopping"></i>`;
+    default__Text.textContent = "장바구니가 비었습니다. 상품을 추가해보세요!";
+    total__amount.textContent = `${0}개`;
+    total__price.textContent = `${0}원`;
+    deliveryFee.textContent = `${0}원`;
+    total__sum.textContent = `${0}원`;
+
     order__button__container.innerHTML = orderButton__User_Disabled;
   }
 });
@@ -84,6 +106,7 @@ function getAllKeysIndexedDB(DATABASE_NAME, version, objectStore, cb) {
     alert("해당 브라우저에서는 indexedDB를 지원하지 않습니다.");
   }
 }
+
 /* 데이터 렌더링 */
 function dataRender(dataList, DATABASE_NAME, version, objectStore) {
   const cart__container = document.querySelector(".cart__container");
@@ -100,8 +123,23 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
     const cartPlusBtn = document.createElement("button");
     const cartMinusBtn = document.createElement("button");
     const cartDeleteBtn = document.createElement("button");
+    /* 맨처음 화면에서 아무것도 안담을 경우 세팅 */
 
-    cart__whole__check.setAttribute("checked", true);
+    // if (dataList.length === 0) {
+    //   /* defaultImage 컨테이너 div */
+    //   defaultImage.classList.add("default__image");
+    //   cart__container.prepend(defaultImage);
+    //   const default__Image = document.querySelector(".default__image");
+    //   /* defaultImage 컨테이너 div */
+    //   defaultText.classList.add("default__text");
+    //   cart__container.appendChild(defaultText);
+    //   const default__Text = document.querySelector(".default__text");
+    //   default__Image.textContent = `<i class="fa-solid fa-cart-shopping"></i>`;
+    //   default__Text.textContent = "장바구니가 비었습니다. 상품을 추가해보세요!";
+    // } else {
+    //   document.querySelector(".default__image").remove();
+    //   document.querySelector(".default__Text").remove();
+    // }
     /* 맨처음 화면에서 결제 금액란 렌더링 해줌 */
     totalAmount += dataList[i].amount;
     totalPrice += dataList[i].amount * dataList[i].price;
@@ -182,8 +220,28 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
         .catch((err) => alert(err));
     });
 
+    /* 맨 처음 체크박스 초기세팅 */
+    checkedDateRender();
+
+    /* 체크된 상품 없거나 전부 삭제되면 주문서 작성하기 비활성화 */
+    function disabledOrderButton(dataList) {
+      if (
+        convertToNumber(total__amount.textContent) === 0 ||
+        dataList.length === 0
+      ) {
+        order__button__container.innerHTML = orderButton__User_Disabled;
+      } else {
+        if (loggedInUser) {
+          order__button__container.innerHTML = orderButton__User;
+        } else {
+          order__button__container.innerHTML = orderButton__Any;
+        }
+      }
+    }
     /* 장바구니 상품 삭제 버튼 클릭 이벤트 */
     cart__delete__button.addEventListener("click", (e) => {
+      //   if (confirm("선택한 상품들을 삭제하시겠습니까?")) {
+      // 확인(예) 버튼 클릭 시 이벤트
       const targetId = e.target.id;
       const deleteTarget = `container-${targetId.substring(4)}`;
       deleteIndexedDBdata(
@@ -193,13 +251,53 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
         targetId.substring(4)
       );
       document.querySelector(`#${deleteTarget}`).remove();
+
+      disabledOrderButton(dataList);
+      //db에 데이터 없으면 전체삭제 체크박스 비워주기.
+      getAllIndexedDB(DATABASE_NAME, version, objectStore, function (dataList) {
+        if (dataList.length !== 0) {
+          default__Image.remove();
+          default__Text.remove();
+          if (loggedInUser) {
+            order__button__container.innerHTML = orderButton__User;
+          } else {
+            order__button__container.innerHTML = orderButton__Any;
+          }
+        } else {
+          //장바구니가 비었을 경우
+          /* 삭제한 DOM요소는 새로 그려줘야 함 */
+          /* defaultImage 컨테이너 div */
+          const defaultImage = document.createElement("div");
+          defaultImage.classList.add("default__image");
+          cart__container.prepend(defaultImage);
+          const default__Image = document.querySelector(".default__image");
+          /* defaultText 컨테이너 div */
+          const defaultText = document.createElement("div");
+          defaultText.classList.add("default__text");
+          cart__container.appendChild(defaultText);
+          const default__Text = document.querySelector(".default__text");
+          wholeCheck.checked = false;
+          default__Image.innerHTML = `<i class="fa-solid fa-cart-shopping"></i>`;
+          default__Text.textContent =
+            "장바구니가 비었습니다. 상품을 추가해보세요!";
+          total__amount.textContent = `${0}개`;
+          total__price.textContent = `${0}원`;
+          deliveryFee.textContent = `${0}원`;
+          total__sum.textContent = `${0}원`;
+
+          order__button__container.innerHTML = orderButton__User_Disabled;
+        }
+      });
+      //   } else {
+      // 취소(아니오) 버튼 클릭 시 이벤트
+      //   }
     });
 
     /* 체크박스 - 부분 선택 클릭 이벤트 */
     const singleCheck = document.querySelector(".cart__detail__check");
-    singleCheck.addEventListener("click", checkSelectAll);
+    singleCheck.addEventListener("click", (e) => checkSelectAll(e));
 
-    function checkSelectAll() {
+    function checkSelectAll(e) {
       // 전체 체크박스
       const checkboxes = document.querySelectorAll('input[name="singleCheck"]');
       // 선택된 체크박스
@@ -211,6 +309,21 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
 
       selectAll.checked = checkboxes.length === singlechecked.length;
       checkedDateRender();
+      disabledOrderButton(dataList);
+      checkedStatusUpdate(e);
+      renderCheckedValues();
+    }
+
+    function checkedStatusUpdate(e) {
+      const productId = e.target.value;
+      let checkStatus = e.target.checked;
+      updateCheckedIndexedDB(
+        DATABASE_NAME,
+        version,
+        objectStore,
+        productId,
+        checkStatus
+      );
     }
 
     function checkedDateRender() {
@@ -223,18 +336,18 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
       let amount = 0;
       let price = 0;
       if (singlechecked.length === 0) {
-        total__amount.textContent = 0;
-        total__price.textContent = 0;
-        deliveryFee.textContent = 0;
-        total__sum.textContent = 0;
+        total__amount.textContent = `${0}개`;
+        total__price.textContent = `${0}원`;
+        deliveryFee.textContent = `${0}원`;
+        total__sum.textContent = `${0}원`;
       } else {
         checkboxes.forEach((checkbox) => {
           if (checkbox.checked) {
             const key = checkbox.value;
-            total__amount.textContent = 0;
-            total__price.textContent = 0;
-            deliveryFee.textContent = 0;
-            total__sum.textContent = 0;
+            total__amount.textContent = `${0}개`;
+            total__price.textContent = `${0}원`;
+            deliveryFee.textContent = `${0}원`;
+            total__sum.textContent = `${0}원`;
 
             dataList.forEach((elem) => {
               if (elem.id === key) {
@@ -242,10 +355,12 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
                 price += elem.amount * elem.price;
               }
             });
-            total__amount.textContent = amount;
-            total__price.textContent = price;
-            deliveryFee.textContent = 3000;
-            total__sum.textContent = price + parseInt(deliveryFee.textContent);
+            total__amount.textContent = `${addCommas(amount)}개`;
+            total__price.textContent = `${addCommas(price)}원`;
+            deliveryFee.textContent = `${addCommas(3000)}원`;
+            total__sum.textContent = `${addCommas(
+              price + convertToNumber(deliveryFee.textContent)
+            )}원`;
           }
         });
       }
@@ -260,6 +375,8 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
       checkboxes.forEach((checkbox) => {
         checkbox.checked = wholeCheck.checked;
       });
+      checkedDateRender();
+      disabledOrderButton(dataList);
     }
 
     /* 선택 삭제 버튼 클릭 이벤트 */
@@ -267,6 +384,8 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
 
     /* 선택 삭제 이벤트 */
     checked__delete.addEventListener("click", () => {
+      // if (confirm("선택한 상품들을 삭제하시겠습니까?")) {
+      // 확인(예) 버튼 클릭 시 이벤트
       // 전체 체크박스
       const checkboxes = document.querySelectorAll('input[name="singleCheck"]');
       // 삭제할 대상의 value(=key) 수집하는 배열
@@ -284,66 +403,204 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
         deleteIndexedDBdata(DATABASE_NAME, version, objectStore, target);
         document.querySelector(`#${deleteTarget}`).remove();
       });
+
+      disabledOrderButton(dataList);
+      //db에 데이터 없으면 전체삭제 체크박스 비워주기.
+      getAllIndexedDB(DATABASE_NAME, version, objectStore, function (dataList) {
+        if (dataList.length !== 0) {
+          default__Image.remove();
+          default__Text.remove();
+          if (loggedInUser) {
+            order__button__container.innerHTML = orderButton__User;
+          } else {
+            order__button__container.innerHTML = orderButton__Any;
+          }
+        } else {
+          //장바구니가 비었을 경우
+          /* 삭제한 DOM요소는 새로 그려줘야 함 */
+          /* defaultImage 컨테이너 div */
+          const defaultImage = document.createElement("div");
+          defaultImage.classList.add("default__image");
+          cart__container.prepend(defaultImage);
+          const default__Image = document.querySelector(".default__image");
+          /* defaultText 컨테이너 div */
+          const defaultText = document.createElement("div");
+          defaultText.classList.add("default__text");
+          cart__container.appendChild(defaultText);
+          const default__Text = document.querySelector(".default__text");
+          wholeCheck.checked = false;
+          default__Image.innerHTML = `<i class="fa-solid fa-cart-shopping"></i>`;
+          default__Text.textContent =
+            "장바구니가 비었습니다. 상품을 추가해보세요!";
+          total__amount.textContent = `${0}개`;
+          total__price.textContent = `${0}원`;
+          deliveryFee.textContent = `${0}원`;
+          total__sum.textContent = `${0}원`;
+
+          order__button__container.innerHTML = orderButton__User_Disabled;
+        }
+      });
+      // } else {
+      //   // 취소(아니오) 버튼 클릭 시 이벤트
+      // }
     });
     /* 상품 수량 +, - 클릭 이벤트*/
     /* 수량 증가 클릭 이벤트 */
     cart__plus__button.addEventListener("click", (e) => {
       const targetId = e.target.id;
       const productId = targetId.substring(5);
-      let productAmountNum = parseInt(cartAmount.textContent);
+      let productAmountNum = convertToNumber(cartAmount.textContent);
       productAmountNum += 1;
-      cartAmount.textContent = productAmountNum;
+      cartAmount.textContent = addCommas(productAmountNum);
+      const targetChecked = document.querySelector(
+        `input[value="${productId}"]`
+      );
+
+      let checkStatus = targetChecked.checked;
       updateIndexedDB(
         DATABASE_NAME,
         version,
         objectStore,
         productId,
         cartAmount,
+        checkStatus,
         productAmountNum
       );
-      // totalPayment(plus);
+      renderCheckedValues();
     });
     /* 수량 감소 버튼 클릭 이벤트 */
     cart__minus__button.addEventListener("click", (e) => {
       const targetId = e.target.id;
       const productId = targetId.substring(6);
-      let productAmountNum = parseInt(cartAmount.textContent);
+      let productAmountNum = convertToNumber(cartAmount.textContent);
       productAmountNum -= 1;
       if (productAmountNum <= 1) {
         productAmountNum = 1;
       }
-      cartAmount.textContent = productAmountNum;
-      //total__price.textContent = totalPrice;
+      cartAmount.textContent = addCommas(productAmountNum);
+      const targetChecked = document.querySelector(
+        `input[value="${productId}"]`
+      );
+      let checkStatus = targetChecked.checked;
       updateIndexedDB(
         DATABASE_NAME,
         version,
         objectStore,
         productId,
         cartAmount,
+        checkStatus,
         productAmountNum
       );
-      // totalPayment(minus);
+      renderCheckedValues();
     });
 
-    /* 결제 금액 컨테이너 */
-    // function totalPayment(operation) {
-    //   /* total__amount 총 수량 */
-    //   let amountValue = dataList[i].amount;
-    //   /* total__price 가격 */
+    /* 수량 증감에 따른 indexedDB amonut 수정 */
+    function updateIndexedDB(
+      DATABASE_NAME,
+      version,
+      objectStore,
+      productId,
+      cartAmount,
+      checkStatus,
+      productAmountNum
+    ) {
+      if (window.indexedDB) {
+        const request = indexedDB.open(DATABASE_NAME, version);
+        const key = productId;
 
-    //   if (operation === "plus") {
-    //     totalAmount += 1;
-    //   } else if (operation === "minus") {
-    //     if (!(amountValue === 1)) {
-    //       totalAmount -= 1;
-    //     }
-    //     if (totalAmount <= 0) {
-    //       totalAmount === 0;
-    //     }
-    //   }
-    //   total__amount.textContent = totalAmount;
-    //   //total__price.textContent = totalPrice;
-    // }
+        getIndexedDB(DATABASE_NAME, version, objectStore, key, function (data) {
+          if (data.id === key) {
+            cartAmount.textContent = addCommas(data.amount);
+            productAmountNum = convertToNumber(cartAmount.textContent);
+          }
+        });
+
+        request.onerror = function (event) {
+          console.log(event.target.errorCode);
+          alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
+        };
+        request.onsuccess = function () {
+          const db = request.result;
+          const transaction = db.transaction(objectStore, "readwrite");
+          transaction.onerror = function (e) {
+            console.log("fail");
+          };
+          transaction.oncomplete = function (e) {
+            console.log("success");
+          };
+          const store = transaction.objectStore(objectStore);
+
+          store.get(key).onsuccess = function (response) {
+            const value = response.target.result;
+            value.amount = convertToNumber(cartAmount.textContent);
+            if (checkStatus) {
+              value.checked = true;
+            } else {
+              value.checked = false;
+            }
+
+            store.put(value).onsuccess = function () {};
+          };
+          store.get(key).onerror = function () {
+            alert("indexedDB의 key를 가져오는데 실패했습니다.");
+          };
+        };
+      }
+    }
+
+    function renderCheckedValues() {
+      getAllKeysIndexedDB(DATABASE_NAME, version, objectStore, function (keys) {
+        let ischeckedId = keys[i];
+        const request = indexedDB.open(DATABASE_NAME, version);
+        request.onerror = function (event) {
+          console.log(event.target.errorCode);
+          alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
+        };
+        request.onsuccess = function () {
+          const db = request.result;
+          const transaction = db.transaction(objectStore, "readwrite");
+          transaction.onerror = function (e) {
+            console.log("fail");
+          };
+          transaction.oncomplete = function (e) {
+            console.log("success");
+          };
+          const store = transaction.objectStore(objectStore);
+
+          store.getAll().onsuccess = function (response) {
+            let resultArray = response.target.result;
+
+            totalAmountCurrent = 0;
+            totalPriceCurrent = 0;
+            resultArray.forEach((result) => {
+              if (result.checked) {
+                /* 총 수량 */
+                totalAmountCurrent += parseInt(result.amount);
+                /* 총 가격 */
+                totalPriceCurrent +=
+                  parseInt(result.amount) * parseInt(result.price);
+              }
+            });
+            total__amount.textContent = `${addCommas(totalAmountCurrent)}개`;
+            total__price.textContent = `${addCommas(totalPriceCurrent)}원`;
+            /* 배송비 */
+            if (convertToNumber(total__amount.textContent) !== 0) {
+              deliveryFee.textContent = `${addCommas(3000)}원`;
+            } else {
+              deliveryFee.textContent = `${0}원`;
+            }
+            /* 합계 */
+            total__sum.textContent = `${addCommas(
+              convertToNumber(total__price.textContent) +
+                convertToNumber(deliveryFee.textContent)
+            )}원`;
+          };
+          store.get(ischeckedId).onerror = function () {
+            alert("indexedDB의 Data를 가져오는데 실패했습니다.");
+          };
+        };
+      });
+    }
   }
 }
 
@@ -354,6 +611,7 @@ function addProduct(product, idx, cartProductId, data) {
   const cartName = document.querySelectorAll(".cart__detail__name");
   const cartPrice = document.querySelectorAll(".cart__detail__price");
   const cartAmount = document.querySelectorAll(".cart__amount");
+  const defaultImage = document.querySelector("#defaultImage");
   const cart__list__top = document.querySelectorAll(".cart__list__top");
 
   const cart__detail__check = document.querySelectorAll(".cart__detail__check");
@@ -367,7 +625,7 @@ function addProduct(product, idx, cartProductId, data) {
   /* 삭제 체크박스 */
   cart__detail__check[idx].setAttribute("value", cartProductId);
   cart__detail__check[idx].setAttribute("name", "singleCheck");
-  cart__detail__check[idx].setAttribute("checked", true);
+  // cart__detail__check[idx].setAttribute("checked", true);
 
   /* 삭제(휴지통) 버튼 */
   cart__delete__button[idx].id = `btn-${cartProductId}`;
@@ -376,27 +634,29 @@ function addProduct(product, idx, cartProductId, data) {
   /* 이름 */
   cartName[idx].innerHTML = product.name;
   /* 가격 */
-  cartPrice[idx].innerHTML = `${product.price} 원`;
+  cartPrice[idx].innerHTML = `${addCommas(product.price)}원`;
   /* plus 버튼 */
   cart__plus__button[idx].id = `plus-${cartProductId}`;
   /* minus 버튼 */
   cart__minus__button[idx].id = `minus-${cartProductId}`;
   /* 수량 */
-  cartAmount[idx].textContent = data.amount;
+  cartAmount[idx].textContent = addCommas(data.amount);
 
   cartImage.src = product.smallImageURL;
   /* 초기 화면에서 결제 금액란 렌더링 해줌 */
 
-  total__amount.textContent = totalAmount;
-  total__price.textContent = totalPrice;
-  if (parseInt(total__amount.textContent) !== 0) {
-    deliveryFee.textContent = 3000;
-  } else {
-    deliveryFee.textContent = 0;
-  }
+  // total__amount.textContent = `${addCommas(totalAmount)}개`;
+  // total__price.textContent = `${addCommas(totalPrice)}원`;
+  // if (convertToNumber(total__amount.textContent) !== 0) {
+  //   deliveryFee.textContent = `${addCommas(3000)}원`;
+  // } else {
+  //   deliveryFee.textContent = `${0}원`;
+  // }
 
-  total__sum.textContent =
-    parseInt(total__price.textContent) + parseInt(deliveryFee.textContent);
+  // total__sum.textContent = `${addCommas(
+  //   convertToNumber(total__price.textContent) +
+  //     convertToNumber(deliveryFee.textContent)
+  // )}원`;
 }
 
 /* indexedDB에 추가한 데이터 삭제하는 함수(기준: key) */
@@ -429,18 +689,19 @@ function deleteIndexedDBdata(DATABASE_NAME, version, objectStore, targetId) {
               totalPriceCurrent +=
                 parseInt(result.amount) * parseInt(result.price);
             });
-            total__amount.textContent = totalAmountCurrent;
-            total__price.textContent = totalPriceCurrent;
+            total__amount.textContent = `${addCommas(totalAmountCurrent)}개`;
+            total__price.textContent = `${addCommas(totalPriceCurrent)}원`;
             /* 배송비 */
-            if (parseInt(total__amount.textContent) !== 0) {
-              deliveryFee.textContent = 3000;
+            if (convertToNumber(total__amount.textContent) !== 0) {
+              deliveryFee.textContent = `${addCommas(3000)}원`;
             } else {
-              deliveryFee.textContent = 0;
+              deliveryFee.textContent = `${0}원`;
             }
             /* 합계 */
-            total__sum.textContent =
-              parseInt(total__price.textContent) +
-              parseInt(deliveryFee.textContent);
+            total__sum.textContent = `${addCommas(
+              convertToNumber(total__price.textContent) +
+                convertToNumber(deliveryFee.textContent)
+            )}원`;
           };
           store.getAll().onerror = function () {
             alert("indexedDB의 Data를 가져오는데 실패했습니다.");
@@ -486,25 +747,17 @@ function getIndexedDB(DATABASE_NAME, version, objectStore, productId, cb) {
   }
 }
 
-/* 수량 증감에 따른 indexedDB amonut 수정 */
-function updateIndexedDB(
+/* 체크 여부에 따른 indexedDB checked 수정 */
+function updateCheckedIndexedDB(
   DATABASE_NAME,
   version,
   objectStore,
   productId,
-  cartAmount,
-  productAmountNum
+  checkStatus
 ) {
   if (window.indexedDB) {
     const request = indexedDB.open(DATABASE_NAME, version);
     const key = productId;
-    getIndexedDB(DATABASE_NAME, version, objectStore, key, function (data) {
-      if (data.id === key) {
-        cartAmount.textContent = data.amount;
-        productAmountNum = parseInt(cartAmount.textContent);
-      }
-    });
-
     request.onerror = function (event) {
       console.log(event.target.errorCode);
       alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
@@ -519,41 +772,20 @@ function updateIndexedDB(
         console.log("success");
       };
       const store = transaction.objectStore(objectStore);
-
       store.get(key).onsuccess = function (response) {
         const value = response.target.result;
-        value.amount = parseInt(cartAmount.textContent);
+        if (checkStatus) {
+          value.checked = true;
+        } else {
+          value.checked = false;
+        }
         store.put(value).onsuccess = function () {
-          store.getAll().onsuccess = function (response) {
-            const resultArray = response.target.result;
-            totalAmountCurrent = 0;
-            totalPriceCurrent = 0;
-            resultArray.forEach((result) => {
-              /* 총 수량 */
-              totalAmountCurrent += parseInt(result.amount);
-              /* 총 가격 */
-              totalPriceCurrent +=
-                parseInt(result.amount) * parseInt(result.price);
-            });
-            total__amount.textContent = totalAmountCurrent;
-            total__price.textContent = totalPriceCurrent;
-            /* 배송비 */
-            if (parseInt(total__amount.textContent) !== 0) {
-              deliveryFee.textContent = 3000;
-            } else {
-              deliveryFee.textContent = 0;
-            }
-            /* 합계 */
-            total__sum.textContent =
-              parseInt(total__price.textContent) +
-              parseInt(deliveryFee.textContent);
-          };
-          store.getAll().onerror = function () {
-            alert("indexedDB의 Data를 가져오는데 실패했습니다.");
-          };
+          const targetCheckbox = document.querySelector(
+            `input[value="${key}"]`
+          );
+          targetCheckbox.checked = value.checked;
         };
       };
-
       store.get(key).onerror = function () {
         alert("indexedDB의 key를 가져오는데 실패했습니다.");
       };
