@@ -7,11 +7,12 @@ const categoryWrap = document.getElementById("category__wrap");
 const createCategory = (category) => {
   return `
         <li class="nav-item category">
-          <a class="nav-link" draggable="false">${category.name}</a>
+          <div class="nav-link">${category.name}</div>
         </li>`;
 };
 
 const cards = document.querySelector(".cards");
+const productCounter = document.getElementById("product-counter");
 
 const createCard = (item) => {
   return `<div class="card ${item.category.name}">
@@ -40,6 +41,8 @@ fetch("/api/categories")
     return new Promise.reject(json);
   })
   .then((categoryList) => {
+    console.log("categoryList");
+    console.log(categoryList);
     categoryList.forEach((category) => {
       const categoryDiv = createCategory(category);
       categoryWrap.innerHTML += categoryDiv;
@@ -60,6 +63,7 @@ fetch("/api/products")
     return Promise.reject(json);
   })
   .then((productList) => {
+    productCounter.textContent = `전체 (${productList.length})`;
     productList.forEach((product) => {
       const newCard = createCard(product);
       cards.innerHTML += newCard;
@@ -79,14 +83,18 @@ fetch("/api/products")
 
         const searchByCategoryProductList = [];
 
+        const clickedCategoryName = event.target.textContent;
+
         productList.forEach((product) => {
           if (
-            product.category.name === event.target.text ||
-            event.target.text === "전체"
+            clickedCategoryName === product.category.name ||
+            clickedCategoryName === "전체"
           ) {
             searchByCategoryProductList.push(product);
           }
         });
+
+        productCounter.textContent = `${clickedCategoryName} (${searchByCategoryProductList.length})`;
 
         if (searchByCategoryProductList.length === 0) {
           cards.classList.add("empty");

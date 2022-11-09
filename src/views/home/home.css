@@ -57,6 +57,17 @@ html {
   background-color: #00bcd4;
 }
 
+#product-counter {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 22px;
+  font-weight: 600;
+  margin-left: 10px;
+}
+
 /*상품*/
 
 .cards {
