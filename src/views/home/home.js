@@ -7,7 +7,7 @@ const categoryWrap = document.getElementById("category__wrap");
 const createCategory = (category) => {
   return `
         <li class="nav-item category">
-          <a class="nav-link" href="#">${category.name}</a>
+          <a class="nav-link" draggable="false">${category.name}</a>
         </li>`;
 };
 
@@ -76,15 +76,31 @@ fetch("/api/products")
         categoryLi.children[0].classList.add("clicked");
 
         cards.textContent = "";
+
+        const searchByCategoryProductList = [];
+
         productList.forEach((product) => {
-          if (product.category.name === event.target.text) {
-            const newCard = createCard(product);
-            cards.innerHTML += newCard;
-          } else if (event.target.text === "전체") {
-            const newCard = createCard(product);
-            cards.innerHTML += newCard;
+          if (
+            product.category.name === event.target.text ||
+            event.target.text === "전체"
+          ) {
+            searchByCategoryProductList.push(product);
           }
         });
+
+        if (searchByCategoryProductList.length === 0) {
+          cards.classList.add("empty");
+          cards.innerHTML = `
+          <div></div>
+            <div id="empty-product-list">상품이 없습니다.</div>
+          `;
+        } else {
+          cards.classList.remove("empty");
+          searchByCategoryProductList.forEach((product) => {
+            const newCard = createCard(product);
+            cards.innerHTML += newCard;
+          });
+        }
       });
     });
   })

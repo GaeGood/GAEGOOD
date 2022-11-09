@@ -36,7 +36,12 @@ html {
   margin: 20px 0px;
 }
 
+.nav-item.category {
+  margin: 10px;
+}
+
 .nav-item.category .nav-link {
+  cursor: pointer;
   color: white;
 }
 
@@ -53,6 +58,7 @@ html {
 }
 
 /*상품*/
+
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(20%, auto));
@@ -79,6 +85,20 @@ html {
 .card-text-title {
   font-weight: bold;
 }
+
+.cards.empty {
+  display: block;
+}
+
+#empty-product-list {
+  height: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.3);
+}
+
 /*footer*/
 
 .footer {
@@ -94,4 +114,28 @@ html {
 /*display:none*/
 .hidden {
   display: none;
+}
+
+@media (max-width: 1500px) {
+  .cards {
+    grid-template-columns: repeat(auto-fill, minmax(25%, auto));
+  }
+}
+
+@media (max-width: 1200px) {
+  .cards {
+    grid-template-columns: repeat(auto-fill, minmax(33%, auto));
+  }
+}
+
+@media (max-width: 900px) {
+  .cards {
+    grid-template-columns: repeat(auto-fill, minmax(50%, auto));
+  }
+}
+
+@media (max-width: 600px) {
+  .cards {
+    grid-template-columns: repeat(auto-fill, minmax(100%, auto));
+  }
 }
