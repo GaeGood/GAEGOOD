@@ -42,12 +42,13 @@ a {
 }
 
 .process__bar {
-  width: 30%;
+  width: 100%;
   height: 10%;
   display: flex;
   flex-wrap: wrap;
   font-size: 20px;
   align-items: center;
+  margin-top: 50px;
 }
 .process__bar p {
   margin-left: 10px;
@@ -62,7 +63,7 @@ a {
   margin: 10px 0;
 }
 
-table {
+.order__product__table {
   width: 700px;
 }
 
@@ -79,7 +80,7 @@ td {
 .product__information {
   align-items: center;
   margin: 10px;
-  height: 105px;
+  height: 130px;
 }
 
 .product__picture {
