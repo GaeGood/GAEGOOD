@@ -286,7 +286,6 @@ function userManagementDelete() {
 
 //============== 카테고리관련 ===============
 function categoryManagementEdit() {
-  //모든 수정버튼 선택 -> 각 수정버튼 클릭할 때 마다 해당 name을 불러온다. => 제출하기 버튼 ->
   const editCategoryBtns = document.querySelectorAll(
     ".btn__admin__editCategory"
   );
@@ -414,7 +413,6 @@ function productManagementEdit() {
       productId = e.target.parentElement.parentElement.id;
       const inputCProductName = document.querySelector("#edit-product-name");
       inputCProductName.value = nameValue;
-      //inputCategoryName.setAttribute("value", nameValue);
     });
   }
   //수정하기 버튼을 클릭했을 때
@@ -441,7 +439,7 @@ function productManagementEdit() {
           document
             .getElementById(`${data._id}`)
             .querySelector(".current__name").innerText = `${data.name}`;
-          bootstrap.Modal.getInstance("#btn__admin__editCategory").hide();
+          bootstrap.Modal.getInstance("#btn__admin__editProduct").hide();
         });
     });
 }
@@ -449,7 +447,6 @@ function productManagementEdit() {
 function productManagementCreate() {
   const addProdcutBtn = document.querySelector(".submit__product");
   addProdcutBtn.addEventListener("click", (e) => {
-    //category-name
     fetch("/api/products", {
       method: "POST",
       headers: {
@@ -478,9 +475,9 @@ function productManagementCreate() {
           name: data.name,
           updateDate: data.updatedAt.slice(0, 10),
         };
-        alert(`${newData.name} 이(가) 카테고리에 추가되었습니다.`);
+        alert(`${newData.name} 이(가) 상품에 추가되었습니다.`);
         //모달숨기기
-        bootstrap.Modal.getInstance("#btn__admin__addCategory").hide();
+        bootstrap.Modal.getInstance("#btn__admin__addProduct").hide();
         //table의 맨 앞에 새로 추가된 데이터를 그려주는 기능
         document.querySelector(".table > tbody").insertAdjacentHTML(
           "afterbegin",
@@ -501,8 +498,8 @@ function productManagementCreate() {
                     </font>
                   </td>
                   <td>
-                  <button type="button" class="btn btn-outline-primary ms-auto p-2 bd-highlight btn__admin__editCategory" data-bs-toggle="modal"
-              data-bs-target="#btn__admin__editCategory">수정하기</button>
+                  <button type="button" class="btn btn-outline-primary ms-auto p-2 bd-highlight btn__admin__editProduct" data-bs-toggle="modal"
+              data-bs-target="#btn__admin__editProduct">수정하기</button>
                   </td>
                   <td>
                     <button type="button" class="btn btn-outline-danger btn__delete">삭제하기</button>
