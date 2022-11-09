@@ -178,12 +178,58 @@ function createCategoryTable(listArr, datasArr) {
   return table;
 }
 
+function createProductMiddle(dataArr) {
+  const middle = document.createElement("tbody");
+  const addHtml = [];
+  for (let count = 0; count < dataArr.length; count++) {
+    addHtml.push(
+      `<tr id="${dataArr[count]._id}">
+          <th scope="row">
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">${dataArr[count].date}</font>
+            </font>
+          </th>
+          <td>
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;" class="current__name">${dataArr[count].name}</font>
+            </font>
+          </td>
+          <td>
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">${dataArr[count].category}</font>
+            </font>
+          </td>
+          <td>
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">${dataArr[count].price}</font>
+            </font>
+          </td>
+          <td>
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">${dataArr[count].stock}</font>
+            </font>
+          </td>
+          <td>
+          <button type="button" class="btn btn-outline-primary ms-auto p-2 bd-highlight btn__admin__editProduct" data-bs-toggle="modal"
+      data-bs-target="#btn__admin__editProduct">수정하기</button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-outline-danger btn__delete">삭제하기</button>
+          </td>
+        </tr>`
+    );
+  }
+  middle.innerHTML += addHtml.join("");
+  return middle;
+}
+
+
 function createProductTable(listArr, datasArr) {
   //datas 는 필요한 데이터만 받아온 객체들의 배열
   const table = document.createElement("table");
   table.className = "table text-center";
   table.prepend(createTop(listArr));
-  table.append(createCategoryMiddle(datasArr));
+  table.append(createProductMiddle(datasArr));
   return table;
 }
 

@@ -1,4 +1,5 @@
 @import "../reset.css";
+
 * {
   padding: 0px;
   margin: 0px;
@@ -89,4 +90,8 @@ a {
 /*display:none*/
 .hidden {
   display: none;
+}
+
+textarea {
+  resize: none;
 }
