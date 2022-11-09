@@ -16,7 +16,6 @@ const orderButton__Any = `<button data-bs-toggle="modal" data-bs-target="#modalL
     주문서 작성
   </button>`;
 const order__button__user = document.querySelector(".order__button__userr");
-const checkboxes = document.querySelectorAll('input[name="singleCheck"]');
 const cart__whole__check = document.querySelector('input[name="wholeCheck"]');
 // const idObject = { id: id, amount: productAmountNum };
 
@@ -318,13 +317,23 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
       let productAmountNum = convertToNumber(cartAmount.textContent);
       productAmountNum += 1;
       cartAmount.textContent = addCommas(productAmountNum);
+      const checkboxes = document.querySelectorAll('input[name="singleCheck"]');
+      const checkboxesArray = [...checkboxes];
+
+      let checkedProduct = checkboxesArray.map((checkbox) => {
+        if (checkbox.checked) {
+          return checkbox.value;
+        }
+      });
+      let newArr = checkedProduct.filter((elem) => elem !== undefined);
       updateIndexedDB(
         DATABASE_NAME,
         version,
         objectStore,
         productId,
         cartAmount,
-        productAmountNum
+        productAmountNum,
+        newArr
       );
     });
     /* 수량 감소 버튼 클릭 이벤트 */
@@ -338,13 +347,23 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
       }
       cartAmount.textContent = addCommas(productAmountNum);
       //total__price.textContent = totalPrice;
+      const checkboxes = document.querySelectorAll('input[name="singleCheck"]');
+      const checkboxesArray = [...checkboxes];
+
+      let checkedProduct = checkboxesArray.map((checkbox) => {
+        if (checkbox.checked) {
+          return checkbox.value;
+        }
+      });
+      let newArr = checkedProduct.filter((elem) => elem !== undefined);
       updateIndexedDB(
         DATABASE_NAME,
         version,
         objectStore,
         productId,
         cartAmount,
-        productAmountNum
+        productAmountNum,
+        newArr
       );
     });
   }
@@ -499,7 +518,8 @@ function updateIndexedDB(
   objectStore,
   productId,
   cartAmount,
-  productAmountNum
+  productAmountNum,
+  newArr
 ) {
   if (window.indexedDB) {
     const request = indexedDB.open(DATABASE_NAME, version);
@@ -530,7 +550,7 @@ function updateIndexedDB(
         const value = response.target.result;
         value.amount = convertToNumber(cartAmount.textContent);
         store.put(value).onsuccess = function () {
-          store.getAll().onsuccess = function (response) {
+          store.getAll(newArr).onsuccess = function (response) {
             const resultArray = response.target.result;
             totalAmountCurrent = 0;
             totalPriceCurrent = 0;
