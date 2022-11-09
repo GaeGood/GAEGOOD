@@ -2,17 +2,9 @@ import { userService } from "../services";
 
 class UserContoller {
   async addUser(req, res, next) {
-    const { email, password, name, postCode, streetAddress, extraAddress } =
-      req.body;
+    const { email, password, name } = req.body;
 
-    if (
-      !email ||
-      !password ||
-      !name ||
-      !postCode ||
-      !streetAddress ||
-      !extraAddress
-    ) {
+    if (!email || !password || !name) {
       return res.status(400).json("입력되지 않은 값이 있습니다!");
     }
 
@@ -21,9 +13,6 @@ class UserContoller {
         name,
         password,
         email,
-        postCode,
-        streetAddress,
-        extraAddress,
       });
       return res.status(200).json(result);
     } catch (err) {

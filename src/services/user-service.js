@@ -2,8 +2,7 @@ import { userModel } from "../db";
 import bcrypt from "bcrypt";
 class UserService {
   async addUser(userInfo) {
-    const { email, name, password, postCode, streetAddress, extraAddress } =
-      userInfo;
+    const { email, password } = userInfo;
 
     const isDuplicate = await userModel.findByEmail(email);
     if (isDuplicate) {
@@ -14,15 +13,9 @@ class UserService {
     try {
       const saltRound = parseInt(process.env.SALT_ROUND) || 10;
       const hashPassword = await bcrypt.hash(password, saltRound);
-      const userInfo = await userModel.create({
-        email,
-        name,
-        password: hashPassword,
-        postCode,
-        streetAddress,
-        extraAddress,
-      });
-      return userInfo;
+      userInfo.password = hashPassword;
+      const user = await userModel.create(userInfo);
+      return user;
     } catch (err) {
       const error = new Error(" 회원가입 도중 에러가 발생했습니다.");
       error.statusCode = 400;
