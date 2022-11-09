@@ -39,7 +39,7 @@ fetch(`/api/orders/${oid}`)
 // order-content 렌더
 function renderOrderContent(order) {
   return `
-    <h2 class="order-detail__title">주문상세</h2>
+    <h2 class="order-detail__title" id="order-detail__main-title">주문상세</h2>
     <div class="order-detail__order-content__outer-wrap card">
       <div class="order-detail__order-content__wrap">
         <div class="order-detail__order-content order-detail__underline"><h6>
@@ -57,6 +57,12 @@ function renderOrderContent(order) {
           class="order-detail__order-content card"
           id="order-detail__order-content__product-info"
         ></div>
+      </div>
+      <div class="order-detail__order-content__wrap">
+        <label class="order-detail__order-content__label">배송비</label>
+        <div class="order-detail__order-content">
+          3,000 원
+        </div>
       </div>
       <div class="order-detail__order-content__wrap">
         <label class="order-detail__order-content__label">총 결제금액</label>
