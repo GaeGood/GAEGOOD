@@ -264,41 +264,48 @@ function userManagementDelete() {
 
 //============== 카테고리관련 ===============
 function categoryManagementEdit() {
+  //모든 수정버튼 선택 -> 각 수정버튼 클릭할 때 마다 해당 name을 불러온다. => 제출하기 버튼 ->
   const editCategoryBtns = document.querySelectorAll(
     ".btn__admin__editCategory"
   );
+  let categoryId;
+  let nameValue;
   for (let count = 0; count < editCategoryBtns.length; count++) {
     editCategoryBtns[count].addEventListener("click", (e) => {
-      const nameValue =
-        document.querySelectorAll(".current__name")[count].innerText;
-      const categoryId = e.target.parentElement.parentElement.id;
+      nameValue = document.querySelectorAll(".current__name")[count].innerText;
+      categoryId = e.target.parentElement.parentElement.id;
       const inputCategoryName = document.querySelector("#edit-category-name");
-      inputCategoryName.setAttribute("value", nameValue);
-      document
-        .querySelector(".submit__edit__category")
-        .addEventListener("click", (e) => {
-          const newValue = inputCategoryName.value;
-          console.log(newValue);
-          console.log(categoryId);
-          fetch(`http://localhost:5000/api/orders/${categoryId}`, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              name: `${newValue}`,
-            }),
-          })
-            .then((res) => {
-              return res.json();
-            })
-            .then((data) => console.log(data));
-        });
+      inputCategoryName.value = nameValue
+      //inputCategoryName.setAttribute("value", nameValue);
     });
   }
+  //수정하기 버튼을 클릭했을 때
+  document
+    .querySelector(".submit__edit__category")
+    .addEventListener("click", (e) => {
+      e.preventDefault();
+      const newValue = document.querySelector("#edit-category-name").value;
+      fetch(`http://localhost:5000/api/categories/${categoryId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: `${newValue}`,
+        }),
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          alert(`"${nameValue}"이(가) "${data.name}" 으로 변경되었습니다.`);
+          //기존에 있던 table 내의 카테고리 이름을 바뀐 카테고리 이름으로 바꾸어 그려줌
+          document.getElementById(`${data._id}`).querySelector(".current__name").innerText = `${data.name}`
+          bootstrap.Modal.getInstance("#btn__admin__editCategory").hide();
+        });
+    });
 }
 
-//페이지를 어떻게 다시 불러오지?????
 function categoryManagementCreate() {
   const addCategoryBtn = document.querySelector(".submit__category");
   addCategoryBtn.addEventListener("click", (e) => {
@@ -312,13 +319,45 @@ function categoryManagementCreate() {
         name: `${document.querySelector("#category-name").value}`,
       }),
     })
-      .then((res) => {
-        return res.json();
-      })
+      .then((res) => res.json())
       .then((data) => {
-        alert(`${data.name} 이(가) 카테고리에 추가되었습니다.`);
+        const newData = {
+          _id: data._id,
+          date: data.createdAt.slice(0, 10),
+          name: data.name,
+          updateDate: data.updatedAt.slice(0, 10),
+        };
+        alert(`${newData.name} 이(가) 카테고리에 추가되었습니다.`);
         //모달숨기기
         bootstrap.Modal.getInstance("#btn__admin__addCategory").hide();
+        //table의 맨 앞에 새로 추가된 데이터를 그려주는 기능
+        document.querySelector(".table > tbody").insertAdjacentHTML(
+          "afterbegin",
+          `<tr id="${newData._id}">
+                  <th scope="row">
+                    <font style="vertical-align: inherit;">
+                      <font style="vertical-align: inherit;">${newData.date}</font>
+                    </font>
+                  </th>
+                  <td>
+                    <font style="vertical-align: inherit;">
+                      <font style="vertical-align: inherit;" class="current__name">${newData.name}</font>
+                    </font>
+                  </td>
+                  <td>
+                    <font style="vertical-align: inherit;">
+                      <font style="vertical-align: inherit;">${newData.updateDate}</font>
+                    </font>
+                  </td>
+                  <td>
+                  <button type="button" class="btn btn-outline-primary ms-auto p-2 bd-highlight btn__admin__editCategory" data-bs-toggle="modal"
+              data-bs-target="#btn__admin__editCategory">수정하기</button>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-outline-danger btn__delete">삭제하기</button>
+                  </td>
+                </tr>`
+        );
       });
   });
 }
@@ -329,7 +368,7 @@ function categoryManagementDelete() {
     deleteBtns[count].addEventListener("click", (e) => {
       const btnId = e.target.parentElement.parentElement.id;
       document.getElementById(`${btnId}`).remove();
-      fetch(`http://localhost:5000/api/orders/${btnId}`, {
+      fetch(`http://localhost:5000/api/categories/${btnId}`, {
         method: "DELETE",
       })
         .then((res) => res.json())
@@ -338,7 +377,7 @@ function categoryManagementDelete() {
   }
 }
 
-// ====admin-class 모듈화 전 코드(기록용)=====
+// ====admin-class 모듈화 전 코드(레거시코드)=====
 // function innerOderManagement(name) {
 //   return `<!--${name}리스트-->
 //   <table class="table text-center">
@@ -449,91 +488,91 @@ function categoryManagementDelete() {
 //   </table>`;
 // }
 
-function innerUserManagement(name) {
-  return `<!--${name}리스트-->
-  <table class="table text-center">
-  <thead>
-  <tr>
-    <th scope="col"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">${name}</font></font></th>
-  </tr>
-</thead>
-    <thead class="table-light">
-      <tr>
-        <th scope="col">
-          <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">가입날짜</font>
-          </font>
-        </th>
-        <th scope="col">
-          <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">이메일</font>
-          </font>
-        </th>
-        <th scope="col">
-          <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">이름</font>
-          </font>
-        </th>
-        <th scope="col">
-          <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">권한</font>
-          </font>
-        </th>
-        <th scope="col">
-          <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">관리</font>
-          </font>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">
-          <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">1</font>
-          </font>
-        </th>
-        <td>
-          <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">표시</font>
-          </font>
-        </td>
-        <td>
-          <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">장미유</font>
-          </font>
-        </td>
-        <td>
-          <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">@mdo</font>
-          </font>
-        </td>
-      </tr>
-      <tr>
-        <th scope="row">
-          <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">2</font>
-          </font>
-        </th>
-        <td>
-          <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">야곱</font>
-          </font>
-        </td>
-        <td>
-          <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">손튼</font>
-          </font>
-        </td>
-        <td>
-          <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">@지방</font>
-          </font>
-        </td>
-      </tr>
-    </tbody>
-  </table>`;
-}
+// function innerUserManagement(name) {
+//   return `<!--${name}리스트-->
+//   <table class="table text-center">
+//   <thead>
+//   <tr>
+//     <th scope="col"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">${name}</font></font></th>
+//   </tr>
+// </thead>
+//     <thead class="table-light">
+//       <tr>
+//         <th scope="col">
+//           <font style="vertical-align: inherit;">
+//             <font style="vertical-align: inherit;">가입날짜</font>
+//           </font>
+//         </th>
+//         <th scope="col">
+//           <font style="vertical-align: inherit;">
+//             <font style="vertical-align: inherit;">이메일</font>
+//           </font>
+//         </th>
+//         <th scope="col">
+//           <font style="vertical-align: inherit;">
+//             <font style="vertical-align: inherit;">이름</font>
+//           </font>
+//         </th>
+//         <th scope="col">
+//           <font style="vertical-align: inherit;">
+//             <font style="vertical-align: inherit;">권한</font>
+//           </font>
+//         </th>
+//         <th scope="col">
+//           <font style="vertical-align: inherit;">
+//             <font style="vertical-align: inherit;">관리</font>
+//           </font>
+//         </th>
+//       </tr>
+//     </thead>
+//     <tbody>
+//       <tr>
+//         <th scope="row">
+//           <font style="vertical-align: inherit;">
+//             <font style="vertical-align: inherit;">1</font>
+//           </font>
+//         </th>
+//         <td>
+//           <font style="vertical-align: inherit;">
+//             <font style="vertical-align: inherit;">표시</font>
+//           </font>
+//         </td>
+//         <td>
+//           <font style="vertical-align: inherit;">
+//             <font style="vertical-align: inherit;">장미유</font>
+//           </font>
+//         </td>
+//         <td>
+//           <font style="vertical-align: inherit;">
+//             <font style="vertical-align: inherit;">@mdo</font>
+//           </font>
+//         </td>
+//       </tr>
+//       <tr>
+//         <th scope="row">
+//           <font style="vertical-align: inherit;">
+//             <font style="vertical-align: inherit;">2</font>
+//           </font>
+//         </th>
+//         <td>
+//           <font style="vertical-align: inherit;">
+//             <font style="vertical-align: inherit;">야곱</font>
+//           </font>
+//         </td>
+//         <td>
+//           <font style="vertical-align: inherit;">
+//             <font style="vertical-align: inherit;">손튼</font>
+//           </font>
+//         </td>
+//         <td>
+//           <font style="vertical-align: inherit;">
+//             <font style="vertical-align: inherit;">@지방</font>
+//           </font>
+//         </td>
+//       </tr>
+//     </tbody>
+//   </table>`;
+// }
 
 function innerAddCategory(name) {
   return `<!--${name}리스트-->

@@ -169,7 +169,6 @@ function createCategoryMiddle(dataArr) {
   return middle;
 }
 
-
 function createCategoryTable(listArr, datasArr) {
   //datas 는 필요한 데이터만 받아온 객체들의 배열
   const table = document.createElement("table");
