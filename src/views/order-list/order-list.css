@@ -37,6 +37,48 @@ a {
   display: flex;
 }
 
+.main__title__zone {
+  margin: 20px;
+
+  font-size: 20px;
+}
+
+.mypage__category.nav {
+  gap: 8px;
+  padding: 6px 15px 6px 6px;
+}
+
+.mypage__category.nav-item {
+  width: 150px;
+  margin: 15px 0;
+}
+
+.mypage__category__a {
+  text-decoration: none;
+  color: black;
+  padding: 10px;
+  transition: all 0.2s;
+}
+
+.mypage__category__a:hover {
+  color: #252525;
+  background-color: #efefef;
+  border-radius: 5px;
+}
+
+.information__zone {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  width: 500px;
+}
+
+.table-header {
+  font-size: 25px;
+}
+
+/* 주문정보 카드존 */
+
 .order__list {
   width: 85%;
 }

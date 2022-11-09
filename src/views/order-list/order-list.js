@@ -1,22 +1,17 @@
 import { main } from "/main.js";
 const { loggedInUser } = await main();
 
-const { orderList } = loggedInUser;
+const { orderList, name } = loggedInUser;
 
-// orderList에서 뽑아올 내용
-// countList
-// productList
-// createdAt(상품주문시간)
-// shippingStatus
-
-// 상품에서 뽑아올 내용
-// fetch통해 상품이름, 상품 가격, 상품 사진
 const orderNone = document.querySelector(".order__none");
+
+const mainMypageHeader = document.querySelector(".main__mypage__header");
+mainMypageHeader.innerHTML = `안녕하세요, ${name}님!`;
 
 orderList.forEach((order) => {
   // 주문내역 없음 지우기
   orderNone.className = "order__none hidden";
-
+  console.log(order);
   const orderId = order._id;
   const countList = order.countList;
   const productIdList = order.productList;
