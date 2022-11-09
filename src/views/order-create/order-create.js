@@ -1,4 +1,9 @@
-import { main, deleteIndexedDBdata, getAllIndexedDB } from "/public/js/main.js";
+import {
+  main,
+  deleteIndexedDBdata,
+  getAllIndexedDB,
+  addCommas,
+} from "/public/js/main.js";
 const { loggedInUser } = await main();
 
 let orderProductList = [];
@@ -142,7 +147,9 @@ orderProductList.forEach((orderProduct) => {
           <span class="order product__id hidden">${orderProduct.id}</span>
       </td>
       <td>
-          <img src="${orderProduct.smallImageURL}" class="order product__picture" />
+          <img src="${
+            orderProduct.smallImageURL
+          }" class="order product__picture" />
       </td>
       <td>
           <span class="order product__info">
@@ -154,7 +161,14 @@ orderProductList.forEach((orderProduct) => {
           <span class="order product__amount">${orderProduct.amount}</span>
       </td>
       <td>
-          <span class="order product__price">${orderProduct.price}원</span>
+          <span class="order product__price">${addCommas(
+            orderProduct.price
+          )}원</span>
+      </td>
+      <td>
+          <span class="order product__all__price">${addCommas(
+            orderProduct.price * orderProduct.amount
+          )}원</span>
       </td>
     </tr>  
     `;
@@ -163,9 +177,9 @@ orderProductList.forEach((orderProduct) => {
     productAllAmountArr.push(orderProduct.amount);
 
     productsPrice += orderProduct.price * orderProduct.amount;
-    productsPriceHTML.innerHTML = productsPrice;
-    deliveryFeeHTML.innerHTML = 3000;
-    totalPriceHTML.innerHTML = productsPrice + 3000;
+    productsPriceHTML.innerHTML = addCommas(productsPrice);
+    deliveryFeeHTML.innerHTML = addCommas(3000);
+    totalPriceHTML.innerHTML = addCommas(productsPrice + 3000);
   }
 });
 
