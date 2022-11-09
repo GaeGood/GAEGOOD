@@ -550,8 +550,9 @@ function updateIndexedDB(
         const value = response.target.result;
         value.amount = convertToNumber(cartAmount.textContent);
         store.put(value).onsuccess = function () {
-          store.getAll(newArr).onsuccess = function (response) {
+          store.getAll().onsuccess = function (response) {
             const resultArray = response.target.result;
+            console.log(resultArray);
             totalAmountCurrent = 0;
             totalPriceCurrent = 0;
             resultArray.forEach((result) => {
