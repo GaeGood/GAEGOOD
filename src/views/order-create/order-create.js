@@ -2,19 +2,100 @@ import { main } from "/main.js";
 const { loggedInUser } = await main();
 import { deleteIndexedDBdata, getAllIndexedDB } from "/indexedDB.js";
 
+let orderProductList = [];
+
+// 쿼리스트링 가져오기
+const html = window.location.href;
+const sp = html.split("orders/create/");
+const queryString = sp[1].replace("/", "");
+
+// 쿼리스트링의 값을 확인하여 directBuy 여부 확인
+let directBuy = true;
+
+if (queryString === "") {
+  directBuy = false;
+}
+
 const DATABASE_NAME = "cartDB";
 const version = 1;
 const objectStore = "cartStorage";
 
-// 장바구니 상품 여부 확인
-const orderProductList = await getAllIndexedDB(
-  DATABASE_NAME,
-  version,
-  objectStore,
-  function (orderProductDBList) {
-    return orderProductDBList;
-  }
-);
+if (directBuy) {
+  // 다이렉트 구매
+  alert("다이렉트 구매입니다.");
+
+  // 쿼리스트링에서 pid, count 값을 가져옴
+  let params = new URLSearchParams(queryString);
+  const directProductPid = params.get("pid");
+  const directProductCount = params.get("count");
+
+  // pid를 이용해 DB에서 상품 정보 fetch
+  const directProduct = await getDirectBuyProductInfo(directProductPid);
+
+  // 주문 생성 로직에 맞춰 directProduct에 id, amount 프로퍼티 추가
+  directProduct.id = directProduct._id;
+  directProduct.amount = directProductCount;
+
+  // orderProductList에 directProduct를 넣음
+  orderProductList.push(directProduct); // 무조건 1개
+} else {
+  // 장바구니 구매
+  alert("장바구니 구매입니다.");
+
+  // 장바구니 상품 여부 확인
+  orderProductList = await getAllIndexedDB(
+    // indexedDB에 들어간 만큼
+    DATABASE_NAME,
+    version,
+    objectStore,
+    function (orderProductDBList) {
+      return orderProductDBList;
+    }
+  );
+}
+
+async function getDirectBuyProductInfo(directProductPid) {
+  return new Promise((resolve, reject) => {
+    fetch(`/api/products/${directProductPid}`, {
+      method: "GET",
+    })
+      .then(async (res) => {
+        const json = await res.json();
+
+        if (res.ok) {
+          return json;
+        }
+
+        return Promise.reject(json);
+      })
+      .then((product) => {
+        resolve(product);
+      })
+      .catch((error) => alert(error));
+  });
+}
+
+// 아래 변수는 post시에 사용될 상품 id들, 수량들의 객체를 위해 선언
+
+/*
+orderProductList
+amount: 1
+bigImageURL: "/public/images/product-images/자유형-개발자-스티커.png"
+category: 
+ createdAt: "2022-11-04T17:40:36.745Z"
+ name: "스티커/지류"
+ updatedAt: "2022-11-04T17:40:36.745Z"
+ __v: 0
+ _id: "63654e94faa3aa6363ad18b3"
+
+id: "63654ee2faa3aa6363ad18c8" // 상품ID
+longDesc: "스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. "
+name: "스티커/지류"
+price: 15000
+shortDesc: "스티커/지류 짧은 설명입니다."
+smallImageURL: "/public/images/product-images/말풍선-개발자-스티커.png"
+stock: 10
+*/
 
 // db에 있는 기존 유저정보 화면에 띄우기
 const { name, phoneNumber, postCode, streetAddress, extraAddress, _id } =
@@ -46,27 +127,6 @@ if (!phoneNumber) {
 }
 
 console.log("phoneNumber", phoneNumber);
-// 아래 변수는 post시에 사용될 상품 id들, 수량들의 객체를 위해 선언
-
-/*
-orderProductList
-amount: 1
-bigImageURL: "/public/images/product-images/자유형-개발자-스티커.png"
-category: 
- createdAt: "2022-11-04T17:40:36.745Z"
- name: "스티커/지류"
- updatedAt: "2022-11-04T17:40:36.745Z"
- __v: 0
- _id: "63654e94faa3aa6363ad18b3"
-
-id: "63654ee2faa3aa6363ad18c8" // 상품ID
-longDesc: "스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. "
-name: "스티커/지류"
-price: 15000
-shortDesc: "스티커/지류 짧은 설명입니다."
-smallImageURL: "/public/images/product-images/말풍선-개발자-스티커.png"
-stock: 10
-*/
 
 const orderProductTable = document.querySelector(".product__list");
 
@@ -250,6 +310,11 @@ function payBtnClick() {
         alert(`에러가 발생했습니다. 관리자에게 문의하세요. \n에러내용: ${err}`);
       });
   }
+
+  console.log("productAllIdArr");
+  console.log(productAllIdArr);
+  console.log("productAllAmountArr");
+  console.log(productAllAmountArr);
 
   fetch(`/api/orders`, {
     method: "POST",
