@@ -28,7 +28,7 @@ async function deleteIndexedDBdata(
 ) {
   if (window.indexedDB) {
     const request = indexedDB.open(DATABASE_NAME, version);
-    const key = idObject.id;
+    const key = idObject._id;
     request.onerror = function (event) {
       console.log(event.target.errorCode);
       alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");

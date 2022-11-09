@@ -27,34 +27,18 @@
       crossorigin="anonymous"
     ></script>
     <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="order-list.css" />
-    <script src="order-list.js" type="module" defer></script>
+    <link rel="stylesheet" href="order-complete.css" />
+    <script src="order-complete.js" type="module" defer></script>
   </head>
 
   <body>
     <!-- 메인 컨테이너 -->
     <main id="main__container" role="main">
-      <div class="main-title">
-        <span class="main-mypage">MYPAGE</span>
-
-        <!-- 구분선 -->
-        <hr class="my-2" />
+      <div class="process__bar">
+        <p>장바구니 > 주문결제 ></p>
+        <p>주문완료</p>
       </div>
-
-      <div class="main-contents">
-        <ul class="mypage-category">
-          <li><a href="/users/mypage">회원정보수정</a></li>
-          <li><a href="/orders/list">주문/배송조회</a></li>
-          <input type="button" class="user__delete" value="회원탈퇴" />
-          <!-- <button class="user__delete">회원탈퇴</button> -->
-        </ul>
-        <div class="order__list">
-          <div class="table-header">주문/배송 조회</div>
-          <!-- 구분선 -->
-          <hr class="my-2" />
-          <div class="order__none">주문내역이 없습니다.</div>
-        </div>
-      </div>
+      <div class="result-container">주문이 완료되었습니다!</div>
     </main>
 
     <!-- Footer -->
