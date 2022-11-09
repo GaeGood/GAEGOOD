@@ -126,8 +126,6 @@ if (!phoneNumber) {
   userExtraAddress.value = extraAddress;
 }
 
-console.log("phoneNumber", phoneNumber);
-
 const orderProductTable = document.querySelector(".product__list");
 
 const productAllIdArr = [];
@@ -135,7 +133,9 @@ const productAllAmountArr = [];
 let productsPrice = 0;
 orderProductList.forEach((orderProduct) => {
   // 장바구니 각각의 상품마다 표 생성될 수 있도록 템플릿리터럴 진행
-  orderProductTable.innerHTML += `
+  // 주의, 장바구니에 체크된 상품들만 주문서로 이동.
+  if (orderProduct.checked) {
+    orderProductTable.innerHTML += `
     <tr>
       <td>
           <span class="order product__id hidden">${orderProduct.id}</span>
@@ -158,13 +158,14 @@ orderProductList.forEach((orderProduct) => {
     </tr>  
     `;
 
-  productAllIdArr.push(orderProduct.id);
-  productAllAmountArr.push(orderProduct.amount);
+    productAllIdArr.push(orderProduct.id);
+    productAllAmountArr.push(orderProduct.amount);
 
-  productsPrice += orderProduct.price * orderProduct.amount;
-  productsPriceHTML.innerHTML = productsPrice;
-  deliveryFeeHTML.innerHTML = 3000;
-  totalPriceHTML.innerHTML = productsPrice + 3000;
+    productsPrice += orderProduct.price * orderProduct.amount;
+    productsPriceHTML.innerHTML = productsPrice;
+    deliveryFeeHTML.innerHTML = 3000;
+    totalPriceHTML.innerHTML = productsPrice + 3000;
+  }
 });
 
 // 주소찾기
