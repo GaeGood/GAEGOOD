@@ -22,19 +22,19 @@ const UserSchema = new Schema(
     },
     phoneNumber: {
       type: String,
-      required: false,
+      default: "",
     },
     postCode: {
       type: String,
-      required: false,
+      default: "",
     },
     streetAddress: {
       type: String,
-      required: false,
+      default: "",
     },
     extraAddress: {
       type: String,
-      required: false,
+      default: "",
     },
     orderList: [
       {
@@ -46,6 +46,7 @@ const UserSchema = new Schema(
   },
   {
     timestamps: true,
+    collection: "users",
   }
 );
 
