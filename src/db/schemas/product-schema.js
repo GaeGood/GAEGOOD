@@ -7,8 +7,7 @@ const ProductSchema = new Schema(
       required: true,
     },
     category: {
-      type: Schema.Types.ObjectId,
-      ref: "Category",
+      type: String,
       required: true,
     },
     shortDesc: {
@@ -39,6 +38,7 @@ const ProductSchema = new Schema(
   },
   {
     timestamps: true,
+    collection: "products",
   }
 );
 

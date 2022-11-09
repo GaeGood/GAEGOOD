@@ -10,11 +10,12 @@ const [
   userPostCode,
   userStreetAddress,
   userExtraAddress,
-] = document.querySelectorAll(".user");
+] = document.querySelectorAll(".user_info");
 
 const deleteUserBtn = document.querySelector(".user__delete");
 const userInfoChangeBtn = document.querySelector(".userinfo__change");
 const addressSearchBtn = document.querySelector(".address__search");
+const mainMypageHeader = document.querySelector(".main__mypage__header");
 
 // 유저 불러오기
 let {
@@ -29,6 +30,8 @@ let {
   _id,
   phoneNumber,
 } = loggedInUser;
+
+mainMypageHeader.innerHTML = `안녕하세요, ${name}님!`;
 
 userEmail.innerHTML = email;
 userName.value = name;
@@ -89,6 +92,10 @@ function searchAddress(e) {
 
 addressSearchBtn.addEventListener("click", searchAddress);
 
+// 우편번호, 도로명주소 input칸 클릭 시 주소검색 나타나게 구현
+userPostCode.addEventListener("click", searchAddress);
+userStreetAddress.addEventListener("click", searchAddress);
+
 // 유저변경
 function saveUserData(e) {
   e.preventDefault();
@@ -108,7 +115,7 @@ function saveUserData(e) {
 
   // 주소를 변경했는데, 덜 입력한 경우(상세주소 칸이 비어있을 때)
   if (userStreetAddress.value === "" || userExtraAddress.value === "") {
-    return alert("주소를 다시 입력해주세요.");
+    return alert("주소를 정확하게 입력해주세요.");
   }
 
   // 전화번호
@@ -123,14 +130,18 @@ function saveUserData(e) {
 
     // 숫자가 아닌 다른값이 들어가 있을 경우
     if (result.includes(null)) {
-      return alert("잘못 입력하셨습니다. 숫자만 입력하세요.");
+      return alert("휴대폰번호를 잘못 입력하셨습니다. 숫자만 입력하세요.");
     }
     // 길이가 아닐 경우
     if (!(numberCheck.length >= 10 && numberCheck.length <= 11)) {
-      return alert("잘못 입력하셨습니다. 알맞은 번호를 입력하세요.");
+      return alert("휴대폰번호를 잘못 입력하셨습니다. 다시 입력해주세요.");
     }
   } else {
     userPhoneNumber.value = phoneNumber;
+  }
+
+  if (!userName.value) {
+    return alert("이름을 입력해주세요");
   }
 
   fetch(`/api/users/${_id}`, {

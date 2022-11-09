@@ -12,11 +12,9 @@
 }
 
 .navbar-nav {
-  min-width: 500px;
-  width: 600px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
 }
 
@@ -27,6 +25,12 @@
   letter-spacing: -4px;
 }
 
-.nav-item {
+.navbar-nav .nav-item {
   margin: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.navbar-nav .nav-item {
+  cursor: pointer;
 }

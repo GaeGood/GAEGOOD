@@ -299,6 +299,8 @@ orderCancelBtn.addEventListener("click", (e) => {
           "order-detail__order-content__product-info"
         );
 
+        productInfo.innerHTML = "";
+
         renderOrderProduct(order, productInfo);
         checkOrderShippingStatus(order);
       });
