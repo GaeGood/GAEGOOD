@@ -147,6 +147,7 @@ function searchAddress(e) {
 
 addressSearchBtn.addEventListener("click", searchAddress);
 
+// 요청사항
 const customRequestContainer = document.querySelector(
   ".customRequestContainer"
 );
@@ -284,7 +285,7 @@ function payBtnClick() {
       });
 
       alert("결제 및 주문이 정상적으로 완료되었습니다.\n감사합니다.");
-      window.location.href = "/";
+      window.location.href = "/orders/complete";
       console.log("post보내기전 data", {
         buyer: `${_id}`,
         productList: `${productAllIdArr}`,
@@ -306,5 +307,3 @@ function payBtnClick() {
 }
 
 payBtn.addEventListener("click", payBtnClick);
-
-// 기존에 휴대폰번호와 주소가 없다면 주문할 때 배송지와 휴대폰번호로 기존 유저정보 업데이트
