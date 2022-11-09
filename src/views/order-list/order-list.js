@@ -21,9 +21,11 @@ orderList.forEach((order) => {
   const orderListZone = document.querySelector(".order__list");
 
   orderListZone.innerHTML += `<div class="card order__contents">
+        <a href="/orders/${orderId}">
         <div class="card-header">${orderDay} 주문</div>
         <div class="orderzone__${orderId}" style="display:flex;align-items: center;justify-content: space-between;">
           <div class="order__${orderId}"></div>
+          </a>
         </div>
   `;
 
@@ -44,7 +46,7 @@ orderList.forEach((order) => {
         // 상품정보 삽입
         const dateOrder = document.querySelector(`.order__${orderId}`);
         dateOrder.innerHTML += `
-                <a href="/products/${productIdList[i]}" class="card-body">
+                <div class="card-body">
                   <div class="product__picture">
                     <img src=${productImg} class="product__image"/>
                   </div>
@@ -54,7 +56,7 @@ orderList.forEach((order) => {
                     <span class="card-text"> / </span>
                     <span class="card-text">${countList[i]}개</span>
                   </div>
-                </a>
+                </div>
        `;
       })
       .catch((err) => alert(err));

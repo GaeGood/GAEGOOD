@@ -94,14 +94,14 @@ a {
 .card-body {
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 22px;
   box-sizing: border-box;
 }
 
 /* 상품정보존 */
 .product__image {
-  width: 70px;
-  height: 70px;
+  width: 100px;
+  height: 100px;
 }
 
 .product__information {
