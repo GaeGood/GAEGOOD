@@ -115,15 +115,9 @@
 <br />
 
 
-## 2. 기술 스택
-
-![image](https://i.ibb.co/N34mXzy/image.png)
-
-<br />
-
 ### 2-1. 프론트엔드
 
-- **Vanilla javascript**, html, css (**Bulma css**)
+- **Vanilla javascript**, html, css (**Bootstrap css**)
 - Font-awesome 
 - Daum 도로명 주소 api 
 - 이외
@@ -136,11 +130,6 @@
 - 이외
 
 
-
-## 3. 인프라 구조
-
-![image](https://i.ibb.co/9tGxmx0/image.png)<br />
-
 ### 3-1. 폴더 구조
 - 프론트: `src/views` 폴더 
 - 백: src/views 이외 폴더 전체
@@ -148,75 +137,43 @@
 
 <br />
 
-## 4. 제작자
 
-| 이름 | 담당 업무 |
+## 👪 구성원 역할
+<br />
+
+| 별칭(이름) | 담당 업무 |  
 | ------ | ------ |
-| 엘리스 | 팀장/개발 |
+|  :rabbit: MAY(민영)   |  FE (팀장)   |
+|  :snowflake: MANDY(규리)   |  FE   |
+|  :snowman: HUNI(재훈)   |  BE   |
+|  :penguin: SIAN(시안)   |  FE   |
+|  :leopard: PEPE(종훈)   |  BE   |
+
 
 <br />
 
 ## 5. 실행 방법
 
-1. 레포지토리를 클론하고자 하는 디렉토리에서 아래 명령어를 수행
-
 ```bash
-git clone <레포지토리 주소>
-```
-
-
-2. 클론한 디렉토리에서 backend 디렉토리로 들어가 아래 명령어를 통해 backend에서 필요한 module 설치
-
-```bash
+git clone {.....repository_name}.git
+cd {repository_name}
 npm install
+npm run start
 ```
 
 
-3. backend에서 필요한 `.env` 설정
-
-```bash
-MONGODB_URL=<몽고DB URL>
-PORT=5000
-JWT_SECERT_KEY=<랜덤 문자열>
+### .env 설정
+```
+PORT = {PORT}
+JWT_SECRET_KEY = {YOUR_JWT_SECRET_KEY}
+SALT_ROUND = {SALT_ROUND}
+MONGODB_URL = {YOUR_MONGODB_URL}
 ```
 
-  앱을 테스트하고 싶은 경우 다음의 몽고DB URL을 이용하세요.
 
-  - mongodb+srv://elice:W8RsZsSX2Xs1ydE4@cluster0.4gz9ij3.mongodb.net/?retryWrites=true&w=majority
-
-  단, 해당 URL은 READ만 가능하며 회원 가입을 하거나 상품 정보를 추가하는 등의 동작은 할 수 없습니다. <br>
-  주어진 URL은 테스트 용이므로 실제 개발을 할 때는 해당 URL을 사용하지 않고, 반드시 직접 설치한 몽고DB의 URL을 사용하시기를 바랍니다.
-
-
-
-4. express 앱을 실행
-
-```bash
-npm start
-```
-
-<br>
-
-## 6. 버전
-### 1.0.0
-
-<br>
-
-## 7. FAQ
-<details><summary>1. 배포된 페이지는 어디에서 확인할 수 있나요?</summary>
-
-  <p>
-    프로젝트 기본 코드는 따로 배포하지 않았습니다, 레포지토리를 클론하여 직접 실행해보세요.
-  </p>
-
-</details>
-<details><summary>2. env 파일이 보이지 않습니다.</summary>
-
-  <p>
-    해당 파일은 직접 만들어서 코드를 작성해야 합니다, DB를 비롯한 서비스의 계정 정보는 <b>절대로</b> Git에 함부로 공유하면 안되기 때문에 유의 바랍니다.
-  </p>
-
-</details>
+### Image Copyright
+Copyrightⓒ2022 by Yalco (https://marpple.shop/kr/yalco)  
+All pictures cannot be copied without permission.
 
 ---
 
