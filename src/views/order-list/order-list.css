@@ -12,7 +12,7 @@ html {
 
 a {
   text-decoration: none;
-  color:black
+  color: black;
 }
 
 .div-container {
@@ -50,7 +50,7 @@ a {
   font-style: italic;
   letter-spacing: -4px;
 }
-	
+
 .nav-item {
   margin: 10px;
 }
@@ -65,13 +65,42 @@ a {
 }
 
 .main-contents {
-    display: flex;
+  display: flex;
 }
 
+.order__list {
+  width: 85%;
+}
 
+.card-body {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
 
+.card.order__contents {
+  margin-bottom: 20px;
+}
 
+.product__image {
+  width: 70px;
+  height: 70px;
+}
 
+.product__information {
+  width: 80%;
+}
+
+.etc__zone {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.order {
+  display: flex;
+}
 
 /*footer*/
 
