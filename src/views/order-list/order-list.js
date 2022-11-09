@@ -68,9 +68,8 @@ orderList.forEach((order) => {
         <div>
         <div class="etc__zone">
           <div>${shippingStatus}</div>
-          <button class="btn btn-primary"><a href="/orders/${orderId}">
+          <a type="button" class="btn btn-outline-secondary" href="/orders/${orderId}">
             주문상세</a>
-          </button>
         </div>
         </div>
   `;

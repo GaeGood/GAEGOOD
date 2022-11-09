@@ -17,6 +17,10 @@ a {
   color: black;
 }
 
+a:hover {
+  color: black;
+}
+
 .div-container {
   display: flex;
   align-items: center;
@@ -126,6 +130,7 @@ a {
   width: 100px;
   height: 80px;
 }
+
 .order {
   display: flex;
 }
