@@ -35,8 +35,10 @@
   <body>
     <!-- 메인 컨테이너 -->
     <main id="main__container" role="main">
-      <div class="main-title">
-        <span class="main-mypage">MYPAGE</span>
+      <div class="main__title">
+        <div class="main__title__zone">
+          <span class="main__mypage__header"></span>
+        </div>
 
         <!-- 구분선 -->
         <hr class="my-2" />
@@ -44,19 +46,19 @@
 
       <div class="main-contents">
         <ul class="mypage-category nav flex-column">
-          <li class="mypage nav-item">
-            <a href="/users/mypage">회원정보수정</a>
+          <li class="mypage__category nav-item">
+            <a class="mypage__category__a" href="/users/mypage">회원정보수정</a>
           </li>
-          <li class="mypage nav-item">
-            <a href="/orders/list">주문/배송조회</a>
+          <li class="mypage__category nav-item">
+            <a class="mypage__category__a" href="/orders/list">주문/배송조회</a>
           </li>
-          <li class="mypage nav-item">
-            <a class="user__delete" href="#">회원탈퇴</a>
+          <li class="mypage__category nav-item">
+            <a class="user__delete mypage__category__a" href="#">회원탈퇴</a>
           </li>
         </ul>
 
         <div class="information__zone">
-          <div class="table-header">고객정보</div>
+          <div class="table-header">기본정보</div>
           <table class="table">
             <tbody>
               <tr>
@@ -74,6 +76,7 @@
                 <td class="password__zone">
                   <input
                     type="password"
+                    id="hi"
                     class="user_info password__first form-control"
                     placeholder="비밀번호를 입력해주세요."
                   />
@@ -113,6 +116,7 @@
                     <input
                       type="text"
                       class="user_info postalcode__input form-control"
+                      readonly
                     />
                     <button type="button" class="address__search btn btn-light">
                       주소검색
@@ -121,6 +125,7 @@
                   <input
                     type="text"
                     class="user_info address__input__1 form-control"
+                    readonly
                   />
                   <input
                     type="text"

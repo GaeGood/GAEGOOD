@@ -58,10 +58,10 @@ function renderNavbar(loggedInUser) {
      <a class="navbar-brand" href="/">GAEGOOD</a>
      <ul class="navbar-nav">
        <li class="nav-item login">
-         <a class="nav-link active" data-bs-toggle="modal" data-bs-target="#modalLogin" aria-current="page">로그인</a>
+         <a class="nav-link" data-bs-toggle="modal" data-bs-target="#modalLogin" aria-current="page">로그인</a>
        </li>
-       <li class="nav-item join__btn">
-        <a class="nav-link active" data-bs-toggle="modal" data-bs-target="#modalJoin" href="#none">회원가입</a>
+       <li class="nav-item join">
+        <a class="nav-link" data-bs-toggle="modal" data-bs-target="#modalJoin" href="#none">회원가입</a>
        </li>
        <li class="nav-item cart">
          <a class="nav-link" href="/cart">장바구니

@@ -4,17 +4,13 @@
 * {
   padding: 0px;
   margin: 0px;
+  color: #252525;
 }
 
 /*html*/
 html {
   width: 100vw;
   height: 100vh;
-}
-
-a {
-  text-decoration: none;
-  color: black;
 }
 
 .div-container {
@@ -37,20 +33,50 @@ a {
   display: flex;
 }
 
-.mypage.nav-item {
+.main__title__zone {
+  margin: 20px;
+
+  font-size: 20px;
+}
+
+.mypage__category.nav {
+  gap: 8px;
+  padding: 6px 15px 6px 6px;
+}
+
+.mypage__category.nav-item {
   width: 150px;
-  margin: 10px;
+  margin: 15px 0;
+}
+
+.mypage__category__a {
+  text-decoration: none;
+  color: black;
+  padding: 10px;
+  transition: all 0.2s;
+}
+
+.mypage__category__a:hover {
+  color: #252525;
+  background-color: #efefef;
+  border-radius: 5px;
 }
 
 .information__zone {
   display: flex;
+  flex-direction: column;
   margin-top: 20px;
   width: 500px;
-  flex-direction: column;
 }
 
+.table-header {
+  font-size: 25px;
+}
+
+/* 고객정보 입력칸 */
+
 .table {
-  margin: 10px;
+  margin: 15px 10px;
 }
 
 td {
@@ -82,6 +108,8 @@ td {
   display: flex;
   align-items: center;
   flex-direction: column;
+
+  margin-top: 20px;
 }
 
 /*footer*/
