@@ -1,4 +1,5 @@
 import { main } from "/main.js";
+import { addCommas, convertToNumber } from "/useful-functions.js";
 const { loggedInUser } = await main();
 
 const cart__container = document.querySelector(".cart__container");
@@ -15,6 +16,7 @@ const orderButton__Any = `<button data-bs-toggle="modal" data-bs-target="#modalL
     주문서 작성
   </button>`;
 const order__button__user = document.querySelector(".order__button__userr");
+const checkboxes = document.querySelectorAll('input[name="singleCheck"]');
 const cart__whole__check = document.querySelector('input[name="wholeCheck"]');
 // const idObject = { id: id, amount: productAmountNum };
 
@@ -181,7 +183,21 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
         })
         .catch((err) => alert(err));
     });
-
+    /* 체크된 상품 없거나 전부 삭제되면 주문서 작성하기 비활성화 */
+    function disabledOrderButton(dataList) {
+      if (
+        convertToNumber(total__amount.textContent) === 0 ||
+        dataList.length === 0
+      ) {
+        order__button__container.innerHTML = orderButton__User_Disabled;
+      } else {
+        if (loggedInUser) {
+          order__button__container.innerHTML = orderButton__User;
+        } else {
+          order__button__container.innerHTML = orderButton__Any;
+        }
+      }
+    }
     /* 장바구니 상품 삭제 버튼 클릭 이벤트 */
     cart__delete__button.addEventListener("click", (e) => {
       const targetId = e.target.id;
@@ -193,6 +209,8 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
         targetId.substring(4)
       );
       document.querySelector(`#${deleteTarget}`).remove();
+
+      disabledOrderButton(dataList);
     });
 
     /* 체크박스 - 부분 선택 클릭 이벤트 */
@@ -211,6 +229,7 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
 
       selectAll.checked = checkboxes.length === singlechecked.length;
       checkedDateRender();
+      disabledOrderButton(dataList);
     }
 
     function checkedDateRender() {
@@ -223,18 +242,18 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
       let amount = 0;
       let price = 0;
       if (singlechecked.length === 0) {
-        total__amount.textContent = 0;
-        total__price.textContent = 0;
-        deliveryFee.textContent = 0;
-        total__sum.textContent = 0;
+        total__amount.textContent = `${0}개`;
+        total__price.textContent = `${0}원`;
+        deliveryFee.textContent = `${0}원`;
+        total__sum.textContent = `${0}원`;
       } else {
         checkboxes.forEach((checkbox) => {
           if (checkbox.checked) {
             const key = checkbox.value;
-            total__amount.textContent = 0;
-            total__price.textContent = 0;
-            deliveryFee.textContent = 0;
-            total__sum.textContent = 0;
+            total__amount.textContent = `${0}개`;
+            total__price.textContent = `${0}원`;
+            deliveryFee.textContent = `${0}원`;
+            total__sum.textContent = `${0}원`;
 
             dataList.forEach((elem) => {
               if (elem.id === key) {
@@ -242,10 +261,12 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
                 price += elem.amount * elem.price;
               }
             });
-            total__amount.textContent = amount;
-            total__price.textContent = price;
-            deliveryFee.textContent = 3000;
-            total__sum.textContent = price + parseInt(deliveryFee.textContent);
+            total__amount.textContent = `${addCommas(amount)}개`;
+            total__price.textContent = `${addCommas(price)}원`;
+            deliveryFee.textContent = `${addCommas(3000)}원`;
+            total__sum.textContent = `${addCommas(
+              price + convertToNumber(deliveryFee.textContent)
+            )}원`;
           }
         });
       }
@@ -260,6 +281,8 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
       checkboxes.forEach((checkbox) => {
         checkbox.checked = wholeCheck.checked;
       });
+      checkedDateRender();
+      disabledOrderButton(dataList);
     }
 
     /* 선택 삭제 버튼 클릭 이벤트 */
@@ -284,15 +307,17 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
         deleteIndexedDBdata(DATABASE_NAME, version, objectStore, target);
         document.querySelector(`#${deleteTarget}`).remove();
       });
+
+      disabledOrderButton(dataList);
     });
     /* 상품 수량 +, - 클릭 이벤트*/
     /* 수량 증가 클릭 이벤트 */
     cart__plus__button.addEventListener("click", (e) => {
       const targetId = e.target.id;
       const productId = targetId.substring(5);
-      let productAmountNum = parseInt(cartAmount.textContent);
+      let productAmountNum = convertToNumber(cartAmount.textContent);
       productAmountNum += 1;
-      cartAmount.textContent = productAmountNum;
+      cartAmount.textContent = addCommas(productAmountNum);
       updateIndexedDB(
         DATABASE_NAME,
         version,
@@ -301,18 +326,17 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
         cartAmount,
         productAmountNum
       );
-      // totalPayment(plus);
     });
     /* 수량 감소 버튼 클릭 이벤트 */
     cart__minus__button.addEventListener("click", (e) => {
       const targetId = e.target.id;
       const productId = targetId.substring(6);
-      let productAmountNum = parseInt(cartAmount.textContent);
+      let productAmountNum = convertToNumber(cartAmount.textContent);
       productAmountNum -= 1;
       if (productAmountNum <= 1) {
         productAmountNum = 1;
       }
-      cartAmount.textContent = productAmountNum;
+      cartAmount.textContent = addCommas(productAmountNum);
       //total__price.textContent = totalPrice;
       updateIndexedDB(
         DATABASE_NAME,
@@ -322,28 +346,7 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
         cartAmount,
         productAmountNum
       );
-      // totalPayment(minus);
     });
-
-    /* 결제 금액 컨테이너 */
-    // function totalPayment(operation) {
-    //   /* total__amount 총 수량 */
-    //   let amountValue = dataList[i].amount;
-    //   /* total__price 가격 */
-
-    //   if (operation === "plus") {
-    //     totalAmount += 1;
-    //   } else if (operation === "minus") {
-    //     if (!(amountValue === 1)) {
-    //       totalAmount -= 1;
-    //     }
-    //     if (totalAmount <= 0) {
-    //       totalAmount === 0;
-    //     }
-    //   }
-    //   total__amount.textContent = totalAmount;
-    //   //total__price.textContent = totalPrice;
-    // }
   }
 }
 
@@ -376,27 +379,29 @@ function addProduct(product, idx, cartProductId, data) {
   /* 이름 */
   cartName[idx].innerHTML = product.name;
   /* 가격 */
-  cartPrice[idx].innerHTML = `${product.price} 원`;
+  cartPrice[idx].innerHTML = `${addCommas(product.price)}원`;
   /* plus 버튼 */
   cart__plus__button[idx].id = `plus-${cartProductId}`;
   /* minus 버튼 */
   cart__minus__button[idx].id = `minus-${cartProductId}`;
   /* 수량 */
-  cartAmount[idx].textContent = data.amount;
+  cartAmount[idx].textContent = addCommas(data.amount);
 
   cartImage.src = product.smallImageURL;
   /* 초기 화면에서 결제 금액란 렌더링 해줌 */
 
-  total__amount.textContent = totalAmount;
-  total__price.textContent = totalPrice;
-  if (parseInt(total__amount.textContent) !== 0) {
-    deliveryFee.textContent = 3000;
+  total__amount.textContent = `${addCommas(totalAmount)}개`;
+  total__price.textContent = `${addCommas(totalPrice)}원`;
+  if (convertToNumber(total__amount.textContent) !== 0) {
+    deliveryFee.textContent = `${addCommas(3000)}원`;
   } else {
-    deliveryFee.textContent = 0;
+    deliveryFee.textContent = `${0}원`;
   }
 
-  total__sum.textContent =
-    parseInt(total__price.textContent) + parseInt(deliveryFee.textContent);
+  total__sum.textContent = `${addCommas(
+    convertToNumber(total__price.textContent) +
+      convertToNumber(deliveryFee.textContent)
+  )}원`;
 }
 
 /* indexedDB에 추가한 데이터 삭제하는 함수(기준: key) */
@@ -429,18 +434,19 @@ function deleteIndexedDBdata(DATABASE_NAME, version, objectStore, targetId) {
               totalPriceCurrent +=
                 parseInt(result.amount) * parseInt(result.price);
             });
-            total__amount.textContent = totalAmountCurrent;
-            total__price.textContent = totalPriceCurrent;
+            total__amount.textContent = `${addCommas(totalAmountCurrent)}개`;
+            total__price.textContent = `${addCommas(totalPriceCurrent)}원`;
             /* 배송비 */
-            if (parseInt(total__amount.textContent) !== 0) {
-              deliveryFee.textContent = 3000;
+            if (convertToNumber(total__amount.textContent) !== 0) {
+              deliveryFee.textContent = `${addCommas(3000)}원`;
             } else {
-              deliveryFee.textContent = 0;
+              deliveryFee.textContent = `${0}원`;
             }
             /* 합계 */
-            total__sum.textContent =
-              parseInt(total__price.textContent) +
-              parseInt(deliveryFee.textContent);
+            total__sum.textContent = `${addCommas(
+              convertToNumber(total__price.textContent) +
+                convertToNumber(deliveryFee.textContent)
+            )}원`;
           };
           store.getAll().onerror = function () {
             alert("indexedDB의 Data를 가져오는데 실패했습니다.");
@@ -500,8 +506,8 @@ function updateIndexedDB(
     const key = productId;
     getIndexedDB(DATABASE_NAME, version, objectStore, key, function (data) {
       if (data.id === key) {
-        cartAmount.textContent = data.amount;
-        productAmountNum = parseInt(cartAmount.textContent);
+        cartAmount.textContent = addCommas(data.amount);
+        productAmountNum = convertToNumber(cartAmount.textContent);
       }
     });
 
@@ -522,7 +528,7 @@ function updateIndexedDB(
 
       store.get(key).onsuccess = function (response) {
         const value = response.target.result;
-        value.amount = parseInt(cartAmount.textContent);
+        value.amount = convertToNumber(cartAmount.textContent);
         store.put(value).onsuccess = function () {
           store.getAll().onsuccess = function (response) {
             const resultArray = response.target.result;
@@ -535,18 +541,19 @@ function updateIndexedDB(
               totalPriceCurrent +=
                 parseInt(result.amount) * parseInt(result.price);
             });
-            total__amount.textContent = totalAmountCurrent;
-            total__price.textContent = totalPriceCurrent;
+            total__amount.textContent = `${addCommas(totalAmountCurrent)}개`;
+            total__price.textContent = `${addCommas(totalPriceCurrent)}원`;
             /* 배송비 */
-            if (parseInt(total__amount.textContent) !== 0) {
-              deliveryFee.textContent = 3000;
+            if (convertToNumber(total__amount.textContent) !== 0) {
+              deliveryFee.textContent = `${addCommas(3000)}원`;
             } else {
-              deliveryFee.textContent = 0;
+              deliveryFee.textContent = `${0}원`;
             }
             /* 합계 */
-            total__sum.textContent =
-              parseInt(total__price.textContent) +
-              parseInt(deliveryFee.textContent);
+            total__sum.textContent = `${addCommas(
+              convertToNumber(total__price.textContent) +
+                convertToNumber(deliveryFee.textContent)
+            )}원`;
           };
           store.getAll().onerror = function () {
             alert("indexedDB의 Data를 가져오는데 실패했습니다.");
