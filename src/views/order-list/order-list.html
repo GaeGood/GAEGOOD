@@ -34,40 +34,35 @@
   <body>
     <!-- 메인 컨테이너 -->
     <main id="main__container" role="main">
-      <div class="main-title">
-        <span class="main-mypage">MYPAGE</span>
+      <div class="main__title">
+        <div class="main__title__zone">
+          <span class="main__mypage__header"></span>
+        </div>
 
         <!-- 구분선 -->
         <hr class="my-2" />
       </div>
 
       <div class="main-contents">
-        <ul class="mypage-category">
-          <li><a href="/users/mypage">회원정보수정</a></li>
-          <li><a href="/orders/list">주문/배송조회</a></li>
-          <input type="button" class="user__delete" value="회원탈퇴" />
-          <!-- <button class="user__delete">회원탈퇴</button> -->
+        <ul class="mypage-category nav flex-column">
+          <li class="mypage__category nav-item">
+            <a class="mypage__category__a" href="/users/mypage">회원정보수정</a>
+          </li>
+          <li class="mypage__category nav-item">
+            <a class="mypage__category__a" href="/orders/list">주문/배송조회</a>
+          </li>
+          <li class="mypage__category nav-item">
+            <a class="user__delete mypage__category__a" href="#">회원탈퇴</a>
+          </li>
         </ul>
-        <div class="order__list">
-          <div class="table-header">주문/배송 조회</div>
-          <!-- 구분선 -->
-          <hr class="my-2" />
+        <!-- <div class="order__list"> -->
+        <div class="information__zone order__list">
+          <div class="table-header">주문정보</div>
           <div class="order__none">주문내역이 없습니다.</div>
         </div>
       </div>
     </main>
 
-    <!-- Footer -->
-    <footer
-      class="text-center text-white"
-      style="background-color: blanchedalmond"
-    >
-      <!-- Copyright -->
-      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-        <p>© 2022 개굿개굿</p>
-        <p>저작권 yalco</p>
-      </div>
-      <!-- Copyright -->
-    </footer>
+    <footer></footer>
   </body>
 </html>

@@ -1,4 +1,4 @@
-@import "../reset.css";
+@import "/public/css/main.css";
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap");
 
 * {
@@ -10,34 +10,6 @@
 body {
   width: 100vw;
   height: 100vh;
-}
-/* HEADER 카테고리 */
-
-.navbar {
-  width: 100vw;
-  height: 100px;
-  padding: 50px 100px 100px 100px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: nowrap;
-}
-
-.navbar-nav {
-  width: 250px;
-
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.navbar-brand {
-  font-size: 3rem;
-  font-weight: 1000;
-  font-style: italic;
-  letter-spacing: -4px;
 }
 
 .border__line__container {

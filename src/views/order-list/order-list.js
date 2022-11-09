@@ -1,22 +1,17 @@
-import { main } from "/main.js";
+import { main, addCommas } from "/public/js/main.js";
 const { loggedInUser } = await main();
 
-const { orderList } = loggedInUser;
+const { orderList, name } = loggedInUser;
 
-// orderList에서 뽑아올 내용
-// countList
-// productList
-// createdAt(상품주문시간)
-// shippingStatus
-
-// 상품에서 뽑아올 내용
-// fetch통해 상품이름, 상품 가격, 상품 사진
 const orderNone = document.querySelector(".order__none");
+
+const mainMypageHeader = document.querySelector(".main__mypage__header");
+mainMypageHeader.innerHTML = `안녕하세요, ${name}님!`;
 
 orderList.forEach((order) => {
   // 주문내역 없음 지우기
   orderNone.className = "order__none hidden";
-
+  console.log(order);
   const orderId = order._id;
   const countList = order.countList;
   const productIdList = order.productList;
@@ -25,9 +20,11 @@ orderList.forEach((order) => {
   const orderListZone = document.querySelector(".order__list");
 
   orderListZone.innerHTML += `<div class="card order__contents">
+        <a href="/orders/${orderId}">
         <div class="card-header">${orderDay} 주문</div>
         <div class="orderzone__${orderId}" style="display:flex;align-items: center;justify-content: space-between;">
           <div class="order__${orderId}"></div>
+          </a>
         </div>
   `;
 
@@ -48,16 +45,17 @@ orderList.forEach((order) => {
         // 상품정보 삽입
         const dateOrder = document.querySelector(`.order__${orderId}`);
         dateOrder.innerHTML += `
-                <a href="/products/${productIdList[i]}" class="card-body">
+                <div class="card-body">
                   <div class="product__picture">
                     <img src=${productImg} class="product__image"/>
                   </div>
                   <div class="product__information">
                     <h5 class="card-title">${productName}</h5>
-                    <span class="card-text">${productPrice}원</span>
+                    <span class="card-text">${addCommas(productPrice)}원</span>
+                    <span class="card-text"> / </span>
                     <span class="card-text">${countList[i]}개</span>
                   </div>
-                </a>
+                </div>
        `;
       })
       .catch((err) => alert(err));
@@ -69,9 +67,8 @@ orderList.forEach((order) => {
         <div>
         <div class="etc__zone">
           <div>${shippingStatus}</div>
-          <button class="btn btn-primary"><a href="/orders/${orderId}">
+          <a type="button" class="btn btn-outline-secondary" href="/orders/${orderId}">
             주문상세</a>
-          </button>
         </div>
         </div>
   `;

@@ -1,6 +1,5 @@
-import { main } from "/main.js";
+import { main, deleteIndexedDBdata, getAllIndexedDB } from "/public/js/main.js";
 const { loggedInUser } = await main();
-import { deleteIndexedDBdata, getAllIndexedDB } from "/indexedDB.js";
 
 let orderProductList = [];
 
@@ -35,6 +34,7 @@ if (directBuy) {
   // 주문 생성 로직에 맞춰 directProduct에 id, amount 프로퍼티 추가
   directProduct.id = directProduct._id;
   directProduct.amount = directProductCount;
+  directProduct.checked = true;
 
   // orderProductList에 directProduct를 넣음
   orderProductList.push(directProduct); // 무조건 1개
@@ -131,6 +131,7 @@ const orderProductTable = document.querySelector(".product__list");
 const productAllIdArr = [];
 const productAllAmountArr = [];
 let productsPrice = 0;
+
 orderProductList.forEach((orderProduct) => {
   // 장바구니 각각의 상품마다 표 생성될 수 있도록 템플릿리터럴 진행
   // 주의, 장바구니에 체크된 상품들만 주문서로 이동.

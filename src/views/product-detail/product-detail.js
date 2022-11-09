@@ -1,5 +1,4 @@
-import { addCommas } from "/useful-functions.js";
-import { main } from "/main.js";
+import { main } from "/public/js/main.js";
 const { loggedInUser } = await main();
 
 const html = window.location.href;
@@ -78,7 +77,7 @@ fetch(`/api/products/${id}`)
 
 // home에서 클릭한 제품의 상세 내용 html에 렌더링하는 함수
 function addproduct(product) {
-  productCategory.innerHTML = product.category.name;
+  productCategory.innerHTML = product.category;
   productName.innerHTML = product.name;
   productImg.src = product.smallImageURL;
 

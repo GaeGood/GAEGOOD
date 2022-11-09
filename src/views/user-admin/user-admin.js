@@ -1,5 +1,4 @@
-import { addCommas } from "/useful-functions.js";
-import { main } from "/main.js";
+import { main } from "/public/js/main.js";
 const { loggedInUser } = await main();
 import {
   createOderTable,
@@ -352,38 +351,13 @@ function categoryManagementCreate() {
         };
         alert(`${newData.name} 이(가) 카테고리에 추가되었습니다.`);
         //모달숨기기
+        document.getElementById("category-name").value = "";
         bootstrap.Modal.getInstance("#btn__admin__addCategory").hide();
-        //table의 맨 앞에 새로 추가된 데이터를 그려주는 기능
-        document.querySelector(".table > tbody").insertAdjacentHTML(
-          "afterbegin",
-          `<tr id="${newData._id}">
-                  <th scope="row">
-                    <font style="vertical-align: inherit;">
-                      <font style="vertical-align: inherit;">${newData.date}</font>
-                    </font>
-                  </th>
-                  <td>
-                    <font style="vertical-align: inherit;">
-                      <font style="vertical-align: inherit;" class="current__name">${newData.name}</font>
-                    </font>
-                  </td>
-                  <td>
-                    <font style="vertical-align: inherit;">
-                      <font style="vertical-align: inherit;">${newData.updateDate}</font>
-                    </font>
-                  </td>
-                  <td>
-                  <button type="button" class="btn btn-outline-primary ms-auto p-2 bd-highlight btn__admin__editCategory" data-bs-toggle="modal"
-              data-bs-target="#btn__admin__editCategory">수정하기</button>
-                  </td>
-                  <td>
-                    <button type="button" class="btn btn-outline-danger btn__delete">삭제하기</button>
-                  </td>
-                </tr>`
-        );
-      });
+        document.querySelector(".btn__admin__category").click()
+      })
   });
 }
+
 function categoryManagementDelete() {
   const deleteBtns = document.querySelectorAll(".btn__delete");
   for (let count = 0; count < deleteBtns.length; count++) {
