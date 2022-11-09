@@ -15,15 +15,15 @@ const cards = document.querySelector(".cards");
 const productCounter = document.getElementById("product-counter");
 
 const createCard = (item) => {
-  return `<div class="card ${item.category.name}">
-    <a href='/products/${item._id}'>
+  return `<div class="card">
+    <a class="card-link" href='/products/${item._id}'>
       <img src="${item.smallImageURL}" class="card-img-top" alt="${
     item.name
   }" />
-      <div class="card-body ${item.category.name}">
-      <div class="card-text card-text-title">${item.name}</div>
+      <div class="card-body">
+      <div class="card-text card-title">${item.name}</div>
       <div class="card-text card-spec">${item.shortDesc}</div>
-      <div class="card-text">${addCommas(item.price)}</div>
+      <div class="card-text card-price">₩ ${addCommas(item.price)}</div>
       </div>
     </a>
     </div>
