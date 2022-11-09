@@ -118,8 +118,8 @@ function createUserMiddle(dataArr) {
                 ${dataArr[count].role}
               </a>
               <ul class="dropdown-menu btn__edit">
-                <li><a class="dropdown-item" href="#">일반유저</a></li>
-                <li><a class="dropdown-item" href="#">관리자</a></li>
+                <li><a class="dropdown-item" href="#">basic-user</a></li>
+                <li><a class="dropdown-item" href="#">admin</a></li>
               </ul>
             </div>
           </td>

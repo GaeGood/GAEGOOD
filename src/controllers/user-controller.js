@@ -50,7 +50,9 @@ class UserContoller {
 
     try {
       await userService.removeUser(userId);
-      res.clearCookie("jwt_token");
+      if (req.loggedInUser.role === "basic-user") {
+        res.clearCookie("jwt_token");
+      }
       return res.status(200).json(`유저 삭제 완료(ID : ${userId})`);
     } catch (e) {
       next(e);

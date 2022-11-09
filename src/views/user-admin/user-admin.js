@@ -64,6 +64,8 @@ for (let i = 0; i < adminPageList.length - 2; i++) {
 
     const newHtml = document.createElement("div");
     newHtml.className = `bd-example ${listNameEn}`;
+
+    //주문관리 기능 구현
     if (listName === "주문관리") {
       document.querySelector(".btn__admin__addCategory").style =
         "display:none";
@@ -94,35 +96,39 @@ for (let i = 0; i < adminPageList.length - 2; i++) {
           oderManagementEdit();
           oderManagementDelete();
         });
-    } else if (listName === "회원관리") {
+    }
+
+    //회원관리 기능구현
+    else if (listName === "회원관리") {
       document.querySelector(".btn__admin__addCategory").style =
         "display:none";
       document.querySelector(".btn__admin__addProduct").style =
         "display:none";
+
       fetch("/api/users")
         .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          const newData = data.map((e) => {
+        .then((datas) => {
+          console.log(datas);
+          const newDatas = datas.map((data) => {
             return {
-              _id: e._id,
-              date: e.createdAt.slice(0, 10),
-              name: e.name,
-              email: e.email,
-              role: e.role,
+              _id: data._id,
+              date: data.createdAt.slice(0, 10),
+              name: data.name,
+              email: data.email,
+              role: data.role,
             };
           });
-          return newData;
+          return newDatas;
         })
-      .then((newData) => {
-        console.log((newData));
-        newHtml.appendChild(createUserTable(userAdmin, newData));
-        mainTag.append(newHtml);
-      })
-      // .then(() => {
-      //   oderManagementEdit();
-      //   oderManagementDelete();
-      // });
+        .then((newData) => {
+          console.log(newData);
+          newHtml.appendChild(createUserTable(userAdmin, newData));
+          mainTag.append(newHtml);
+        })
+        .then(() => {
+          userManagementEdit();
+          userManagementDelete();
+        });
     } else if (listName === "카테고리 관리") {
       //상품추가와 카테고리추가 없애기
       document.querySelector(".btn__admin__addCategory").style =
@@ -201,6 +207,53 @@ function oderManagementDelete() {
       const btnId = e.target.parentElement.parentElement.id;
       document.getElementById(`${btnId}`).remove();
       fetch(`http://localhost:5000/api/orders/${btnId}`, {
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then((alt) => alert(alt));
+    });
+  }
+}
+
+//============== 유저관련 ===============
+function userManagementEdit() {
+  const editBtns = document.querySelectorAll(".dropdown-item");
+  for (let count = 0; count < editBtns.length; count++) {
+    editBtns[count].addEventListener("click", (e) => {
+      e.preventDefault();
+      const btnValue = e.target.text;
+      const btnId =
+        e.target.parentElement.parentElement.parentElement.parentElement
+          .parentElement.id;
+      console.log(btnId);
+      //배송상태가 바뀐 값(배송중 => 배송완료)으로 현재 버튼이 배송완료 바뀌는 기능
+      e.target.parentElement.parentElement.parentElement.querySelector(
+        "a"
+      ).innerText = `${btnValue}`;
+      fetch(`http://localhost:5000/api/users/${btnId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          role: `${btnValue}`,
+        }),
+      })
+        .then((res) => res.json())
+        .then((alt) =>
+          alert(`${alt.name}의 권한이 ${alt.role}로 변경되었습니다.`)
+        );
+    });
+  }
+}
+
+function userManagementDelete() {
+  const deleteBtns = document.querySelectorAll(".btn__delete");
+  for (let count = 0; count < deleteBtns.length; count++) {
+    deleteBtns[count].addEventListener("click", (e) => {
+      const btnId = e.target.parentElement.parentElement.id;
+      document.getElementById(`${btnId}`).remove();
+      fetch(`http://localhost:5000/api/users/${btnId}`, {
         method: "DELETE",
       })
         .then((res) => res.json())
