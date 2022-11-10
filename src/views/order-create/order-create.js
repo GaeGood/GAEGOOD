@@ -7,6 +7,10 @@ import {
 } from "/public/js/main.js";
 const { loggedInUser } = await main();
 
+if (!loggedInUser) {
+  window.location.href = "/";
+}
+
 let orderProductList = [];
 
 // 쿼리스트링 가져오기

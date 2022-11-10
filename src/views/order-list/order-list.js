@@ -1,6 +1,10 @@
 import { main, addCommas } from "/public/js/main.js";
 const { loggedInUser } = await main();
 
+if (!loggedInUser) {
+  window.location.href = "/";
+}
+
 const { orderList, name } = loggedInUser;
 
 const orderNone = document.querySelector(".order__none");
