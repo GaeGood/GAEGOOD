@@ -3,6 +3,7 @@ import {
   deleteIndexedDBdata,
   getAllIndexedDB,
   addCommas,
+  convertToNumber,
 } from "/public/js/main.js";
 const { loggedInUser } = await main();
 
@@ -79,28 +80,6 @@ async function getDirectBuyProductInfo(directProductPid) {
       .catch((error) => alert(error));
   });
 }
-
-// 아래 변수는 post시에 사용될 상품 id들, 수량들의 객체를 위해 선언
-
-/*
-orderProductList
-amount: 1
-bigImageURL: "/public/images/product-images/자유형-개발자-스티커.png"
-category: 
- createdAt: "2022-11-04T17:40:36.745Z"
- name: "스티커/지류"
- updatedAt: "2022-11-04T17:40:36.745Z"
- __v: 0
- _id: "63654e94faa3aa6363ad18b3"
-
-id: "63654ee2faa3aa6363ad18c8" // 상품ID
-longDesc: "스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. 스티커/지류 긴 설명입니다. "
-name: "스티커/지류"
-price: 15000
-shortDesc: "스티커/지류 짧은 설명입니다."
-smallImageURL: "/public/images/product-images/말풍선-개발자-스티커.png"
-stock: 10
-*/
 
 // db에 있는 기존 유저정보 화면에 띄우기
 const { name, phoneNumber, postCode, streetAddress, extraAddress, _id } =
@@ -239,8 +218,6 @@ const customRequestContainer = document.querySelector(
 const customRequestInput = document.querySelector(".customRequest");
 const requestSelectBox = document.querySelector("#request__Select__Box");
 
-console.log(requestSelectBox);
-
 const requestOption = {
   1: "배송 전 연락바랍니다.",
   2: "부재 시 경비실에 맡겨주세요.",
@@ -355,7 +332,7 @@ function payBtnClick() {
       shippingStreetAddress: `${userStreetAddress.value}`,
       shippingExtraAddress: `${userExtraAddress.value}`,
       shippingRequestMessage: `${request}`,
-      totalAmount: `${totalPriceHTML.innerHTML}`,
+      totalAmount: `${convertToNumber(totalPriceHTML.innerHTML)}`,
       recipientName: `${userName.value}`,
       recipientPhoneNumber: `${userPhoneNumber.value}`,
     }),
@@ -376,20 +353,6 @@ function payBtnClick() {
 
       alert("결제 및 주문이 정상적으로 완료되었습니다.\n감사합니다.");
       window.location.href = "/orders/complete";
-      console.log("post보내기전 data", {
-        buyer: `${_id}`,
-        productList: `${productAllIdArr}`,
-        countList: `${productAllAmountArr}`,
-        shippingStatus: "배송전",
-        shippingPostCode: `${userPostCode.value}`,
-        shippingStreetAddress: `${userStreetAddress.value}`,
-        shippingExtraAddress: `${userExtraAddress.value}`,
-        shippingRequestMessage: `${request}`,
-        totalAmount: `${totalPriceHTML.innerHTML}`,
-        recipientName: `${userName.value}`,
-        recipientPhoneNumber: `${userPhoneNumber.value}`,
-      });
-      console.log("post보낸 후 data", data);
     })
     .catch((err) => {
       alert(`에러가 발생했습니다. 관리자에게 문의하세요. \n에러내용: ${err}`);
