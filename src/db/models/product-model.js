@@ -7,7 +7,7 @@ const Product = model("Product", ProductSchema);
 class ProductModel {
   async findById(pid) {
     try {
-      const product = await Product.findOne({ _id: pid }).populate("category");
+      const product = await Product.findOne({ _id: pid });
       return product;
     } catch (err) {
       const error = new Error("ID 기반으로 검색 상품 탐색에 실패하였습니다.");
@@ -38,7 +38,7 @@ class ProductModel {
 
   async findAll() {
     try {
-      const productList = await Product.find({}).populate("category");
+      const productList = await Product.find({});
       return productList;
     } catch (err) {
       const error = new Error("상품 수정에 실패하였습니다.");
@@ -49,8 +49,8 @@ class ProductModel {
 
   async create(productInfo) {
     try {
+      productInfo.category = Product.formatHashtags(productInfo.category);
       let createdNewProduct = await Product.create(productInfo);
-      createdNewProduct = await createdNewProduct.populate("category");
       return createdNewProduct;
     } catch (err) {
       const error = new Error("상품 생성에 실패하였습니다.");
@@ -68,7 +68,7 @@ class ProductModel {
         filter,
         productInfo,
         option
-      ).populate("category");
+      );
 
       return updatedProduct;
     } catch (err) {
@@ -90,7 +90,7 @@ class ProductModel {
         searchBy.category = productCategory._id;
       }
 
-      const productList = await Product.find(searchBy).populate("category");
+      const productList = await Product.find(searchBy);
 
       if (productList.length > 0) {
         return productList;

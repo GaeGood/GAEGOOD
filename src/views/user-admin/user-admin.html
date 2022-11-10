@@ -117,14 +117,14 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form action="/api/products" method="post" enctype="multipart/form-data">
+          <form>
             <div class="mb-3">
-              <label for="recipient-name" class="col-form-label">제품 이름</label>
-              <input type="text" class="form-control" id="recipient-name" name="name" placeholder="파이썬 뱀 인형" />
+              <label for="create-product-name" class="col-form-label">제품 이름</label>
+              <input type="text" class="form-control" id="create-product-name" placeholder="파이썬 뱀 인형" />
             </div>
             <div class="mb-3">
-              <label for="message-text" class="col-form-label">카테고리</label>
-              <select class="form-select" id="inputGroupSelect01" name="category">
+              <label for="create-product-category" class="col-form-label">카테고리</label>
+              <select class="form-select" id="create-product-category">
                 <option selected>카테고리를 선택하세요</option>
                 <option value="의류">의류</option>
                 <option value="패션잡화">패션잡화</option>
@@ -135,39 +135,35 @@
               </select>
             </div>
             <div class="mb-3">
-              <label for="recipient-name" class="col-form-label">제조사</label>
-              <input type="text" class="form-control" id="recipient-name" name="bigImageURL" placeholder="파이썬 주식회사" />
+              <label for="create-product-shortDesc" class="col-form-label">요약 설명</label>
+              <textarea class="form-control" id="create-product-shortDesc" placeholder="귀여운 파이썬 뱀 인형입니다."></textarea>
             </div>
             <div class="mb-3">
-              <label for="message-text" class="col-form-label">요약 설명</label>
-              <textarea class="form-control" id="message-text" name="shortDesc" placeholder="귀여운 파이썬 뱀 인형입니다."></textarea>
-            </div>
-            <div class="mb-3">
-              <label for="message-text" class="col-form-label">상세 설명</label>
-              <textarea class="form-control" id="message-text" name="longDesc" style="height: 200px"
+              <label for="create-product-longDesc" class="col-form-label">상세 설명</label>
+              <textarea class="form-control" id="create-product-longDesc" style="height: 200px"
                 placeholder="화려한 무늬에 귀여움을 동시에가진 개발자라면 놓칠 수 없는 파이썬 뱀 인형입니다."></textarea>
             </div>
             <div class="mb-3">
-              <label for="formFile" class="form-label">제품 사진</label>
-              <input class="form-control" type="file" id="formFile" name="product-image" accept="image/*" />
+              <label for="create-product-imageFile" class="form-label">제품 사진</label>
+              <input class="form-control" type="file" id="create-product-imageFile" accept="image/*" />
             </div>
             <div class="mb-3">
-              <label for="recipient-name" class="col-form-label">재고수</label>
-              <input type="text" class="form-control" id="recipient-name" name="stock" placeholder="10" />
+              <label for="create-product-stock" class="col-form-label">재고수</label>
+              <input type="text" class="form-control" id="create-product-stock" placeholder="10" />
             </div>
             <div class="mb-3">
-              <label for="recipient-name" class="col-form-label">가격</label>
+              <label for="create-product-price" class="col-form-label">가격</label>
               <div class="input-group">
-                <input type="text" class="form-control" id="recipient-name" name="price" placeholder="10000" />
+                <input type="text" class="form-control" id="create-product-price" placeholder="10000" />
                 <span class="input-group-text">원</span>
               </div>
             </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-primary col submit__product">
-                제품 추가하기
-              </button>
-            </div>
           </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary col submit__product">
+            제품 추가하기
+          </button>
         </div>
       </div>
     </div>

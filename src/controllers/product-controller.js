@@ -2,19 +2,18 @@ import { productService } from "../services";
 
 class ProductContoller {
   async addProduct(req, res, next) {
-    console.log("req.body");
-    console.log(req.body);
+    const { name, category, shortDesc, longDesc, price, stock } = req.body;
 
-    console.log("req.file");
-    console.log(req.file);
+    let smallImageURL;
+    let bigImageURL;
 
-    const { name, category, shortDesc, longDesc, price, bigImageURL, stock } =
-      req.body;
-
-    const smallImageURL = "/public/images/product-images/" + req.file.filename;
-
-    console.log("smallImageURL");
-    console.log(smallImageURL);
+    if (req.file) {
+      smallImageURL = "/public/images/product-images/" + req.file.filename;
+      bigImageURL = smallImageURL;
+    } else {
+      smallImageURL = "/public/images/default-product-image.jpg";
+      bigImageURL = "/public/images/default-product-image.jpg";
+    }
 
     if (
       !name ||
@@ -22,9 +21,9 @@ class ProductContoller {
       !shortDesc ||
       !longDesc ||
       !price ||
+      !stock ||
       !smallImageURL ||
-      !bigImageURL ||
-      !stock
+      !bigImageURL
     ) {
       return res.status(400).json("입력 데이터 부족");
     }
@@ -36,9 +35,9 @@ class ProductContoller {
         shortDesc,
         longDesc,
         price,
+        stock,
         smallImageURL,
         bigImageURL,
-        stock,
       });
       return res.status(200).json(createdNewProduct);
     } catch (e) {
@@ -80,6 +79,15 @@ class ProductContoller {
 
   async editProduct(req, res, next) {
     const { pid } = req.params;
+
+    if (req.file) {
+      const smallImageURL =
+        "/public/images/product-images/" + req.file.filename;
+      const bigImageURL = smallImageURL;
+
+      req.body.smallImageURL = smallImageURL;
+      req.body.bigImageURL = bigImageURL;
+    }
 
     try {
       const updatedProduct = await productService.editProduct(pid, req.body);
