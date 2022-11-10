@@ -38,6 +38,14 @@ fetch(`/api/orders/${oid}`)
 
 // order-content 렌더
 function renderOrderContent(order) {
+  let shippingCost;
+
+  if (Number(order.totalAmount) >= 50000) {
+    shippingCost = "0원 (5만원 이상 무료배송)";
+  } else {
+    shippingCost = "3,000원";
+  }
+
   return `
     <h2 class="order-detail__title" id="order-detail__main-title">주문상세</h2>
     <div class="order-detail__order-content__outer-wrap card">
@@ -61,7 +69,7 @@ function renderOrderContent(order) {
       <div class="order-detail__order-content__wrap">
         <label class="order-detail__order-content__label">배송비</label>
         <div class="order-detail__order-content">
-          3,000 원
+          ${shippingCost}
         </div>
       </div>
       <div class="order-detail__order-content__wrap">
