@@ -296,8 +296,6 @@ function categoryManagementEdit() {
       productId = e.target.parentElement.parentElement.id;
       const inputCategoryName = document.querySelector("#edit-category-name");
       inputCategoryName.value = nameValue;
-
-      //inputCategoryName.setAttribute("value", nameValue);
     });
   }
   //수정하기 버튼을 클릭했을 때
@@ -378,42 +376,81 @@ function productManagementEdit() {
   const editProductBtns = document.querySelectorAll(
     ".btn__admin__editProduct"
   );
-  let productId;
+  let editProductId;
   let nameValue;
+  let isData = false;
   for (let count = 0; count < editProductBtns.length; count++) {
+    nameValue = document.querySelectorAll(".current__name")[count].innerText;
     editProductBtns[count].addEventListener("click", (e) => {
-      nameValue =
-        document.querySelectorAll(".current__name")[count].innerText;
-      productId = e.target.parentElement.parentElement.id;
-      const inputCProductName = document.querySelector("#edit-product-name");
-      inputCProductName.value = nameValue;
+      //여러번 버튼을 클릭해도 카테고리들을 1번만 그려주는 기능
+      if (!isData) {
+        fetch("/api/categories")
+          .then((res) => res.json())
+          .then((datas) => {
+            console.log(document.getElementById("edit-product-category"));
+            datas.forEach((element) => {
+              document.getElementById("edit-product-category").innerHTML += `
+        <option>${element.name}</option>`;
+            });
+          });
+        isData = true;
+      }
+      //수정하기 버튼 클릭시 해당 상품에 맞는 데이터 불러와서 모달창에 채워넣기
+      editProductId = e.target.parentElement.parentElement.id;
+      fetch(`/api/products/${editProductId}`)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("==========GET DATA=========");
+          console.log(data);
+          console.log("===========================");
+          document.getElementById("edit-product-name").value = data.name;
+          document.getElementById("edit-product-category").value =
+            data.category;
+          document.getElementById("edit-short-description").value =
+            data.shortDesc;
+          document.getElementById("edit-long-description").value =
+            data.longDesc;
+          document.getElementById("edit-product-price").value = data.price;
+          document.getElementById("edit-product-img").value = "";
+          document.getElementById("edit-product-stock").value = data.stock;
+        });
     });
   }
-  //수정하기 버튼을 클릭했을 때
+  //수정하기 Submit
   document
     .querySelector(".submit__edit__product")
     .addEventListener("click", (e) => {
+      const imgUrl = document
+        .getElementById("edit-product-img")
+        .value.slice(12);
       e.preventDefault();
-      const newValue = document.querySelector("#edit-product-name").value;
-      fetch(`http://localhost:5000/api/products/${productId}`, {
+      fetch(`http://localhost:5000/api/products/${editProductId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: `${newValue}`,
+          name: document.getElementById("edit-product-name").value,
+          category: document.getElementById("edit-product-category").value,
+          shortDesc: document.getElementById("edit-short-description").value,
+          longDesc: document.getElementById("edit-long-description").value,
+          price: document.getElementById("edit-product-price").value,
+          smallImageURL: `/public/images/product-images/${imgUrl}`,
+          bigImageURL: `/public/images/product-images/${imgUrl}`,
+          stock: document.getElementById("edit-product-stock").value,
         }),
       })
         .then((res) => {
           return res.json();
         })
         .then((data) => {
-          alert(`"${nameValue}"이(가) "${data.name}" 으로 변경되었습니다.`);
+          console.log("==========PUT DATA=========");
+          console.log(data);
+          console.log("===========================");
+          alert(`"${nameValue}"에 대한 상품정보가 변경되었습니다`);
           //기존에 있던 table 내의 카테고리 이름을 바뀐 카테고리 이름으로 바꾸어 그려줌
-          document
-            .getElementById(`${data._id}`)
-            .querySelector(".current__name").innerText = `${data.name}`;
           bootstrap.Modal.getInstance("#btn__admin__editProduct").hide();
+          document.querySelector(".btn__admin__Product").click();
         });
     });
 }
@@ -421,60 +458,60 @@ function productManagementEdit() {
 function productManagementCreate() {
   //카테고리의 리스트를 불러오는 작업
   const addCategoryList = document.querySelector(".btn__admin__addProduct");
+  let isData = false;
   addCategoryList.addEventListener("click", (e) => {
-    fetch("/api/categories")
-      .then((res) => res.json())
-      .then((datas) => {
-        datas.forEach((element) => {
-          document.getElementById("product-category").innerHTML += `
+    if (!isData) {
+      fetch("/api/categories")
+        .then((res) => res.json())
+        .then((datas) => {
+          datas.forEach((element) => {
+            document.getElementById("product-category").innerHTML += `
         <option>${element.name}</option>`;
+          });
         });
-      });
+      isData = true;
+    }
   });
   //추가하기 버튼을 클릭했을 때
   const addProductBtn = document.querySelector(".submit__product");
   addProductBtn.addEventListener("click", (e) => {
     e.preventDefault();
+    const name = document.getElementById("product-name");
+    const category = document.getElementById("product-category");
+    const shortDesc = document.getElementById("short-description");
+    const longDesc = document.getElementById("long-description");
+    const img = document.getElementById("product-img");
+    const stock = document.getElementById("product-stock");
+    const price = document.getElementById("product-price");
+
+    const formData = new FormData();
+    form.append("name", name.value);
+    form.append("category", category.value);
+    form.append("shortDesc", shortDesc.value);
+    form.append("longDesc", longDesc.value);
+    form.append("price", price.value);
+    form.append("smallImageURL", img.files[0]);
+    form.append("bigImageURL", img.files[0]);
+    form.append("stock", stock.value);
+
     fetch("/api/products", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: document.getElementById("product-name").value,
-        category: document.getElementById("product-category").value,
-        shortDesc: document.getElementById("short-description").value,
-        longDesc: document.getElementById("long-description").value,
-        price: document.getElementById("product-price").value,
-        smallImageURL: `/public/images/product-images/${
-          document.getElementById("product-img").value
-        }`,
-        bigImageURL: `/public/images/product-images/${
-          document.getElementById("product-img").value
-        }`,
-        stock: document.getElementById("product-stock").value,
-      }),
+      body: formData,
+      headers: {},
     })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        const newData = {
-          _id: data._id,
-          date: data.createdAt.slice(0, 10),
-          name: data.name,
-          updateDate: data.updatedAt.slice(0, 10),
-        };
-        alert(`${newData.name} 이(가) 상품에 추가되었습니다.`);
+        alert(`${data.name} 이(가) 상품에 추가되었습니다.`);
         //form 안의 input값 전부 초기화하기
-        document.getElementById("product-name").value = ""
-        document.getElementById("product-category").value = ""
-        document.getElementById("short-description").value = ""
-        document.getElementById("long-description").value = ""
-        document.getElementById("product-price").value = ""
-        document.getElementById("product-img").value = ""
-        document.getElementById("product-img").value = ""
-        document.getElementById("product-stock").value = ""
-        
+        name.value = "";
+        category.value = "";
+        shortDesc.value = "";
+        longDesc.value = "";
+        img.value = "";
+        stock.value = "";
+        price.value = "";
+
         bootstrap.Modal.getInstance("#btn__admin__addProduct").hide();
         document.querySelector(".btn__admin__Product").click();
       });
