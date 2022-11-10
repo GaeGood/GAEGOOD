@@ -36,7 +36,7 @@
 
     <!-- 메인 컨테이너 -->
     <main id="main__container" role="main">
-       <div class="main__title">
+      <div class="main__title">
         <div class="main__title__zone">
           <div class="process__bar">
             <p>장바구니 ></p>
@@ -44,28 +44,31 @@
             <p>> 주문완료</p>
           </div>
         </div>
-      <!-- border line -->
-      <div class="border__line__container">
-        <div class="border__line"></div>
-      </div>
-      <div class="checkbox__container">
-        <input
-          class="checkbox__all"
-          type="checkbox"
-          name="wholeCheck"
-          value="wholeCheck"
-        />
-        <label for="wholeCheck">전체 선택</label>
-        <button id="checked__delete">선택 삭제</button>
-      </div>
+        <!-- border line -->
+        <div class="border__line__container">
+          <div class="border__line"></div>
+        </div>
+        <div class="checkbox__container">
+          <input
+            class="checkbox__all"
+            type="checkbox"
+            name="wholeCheck"
+            value="wholeCheck"
+          />
+          <label for="wholeCheck">전체 선택</label>
+          <button id="checked__delete">선택 삭제</button>
+        </div>
 
-      <!-- border line -->
-      <div class="border__line__container">
-        <div class="border__line"></div>
-      </div>
-      <!-- 장바구니 상품 목록  -->
-      <div class="cart__container">
-        <!-- <div class="cart__list__top">
+        <!-- border line -->
+        <div class="border__line__container">
+          <div class="border__line"></div>
+        </div>
+        <div class="deliveryFee__info">
+          ※ 상품 금액 50,000원 이상 부터는 배송비가 무료입니다.
+        </div>
+        <!-- 장바구니 상품 목록  -->
+        <div class="cart__container">
+          <!-- <div class="cart__list__top">
           <img
             class="cart__detail__image"
             src="/public/images/product-images/gitignore-키링.png"
@@ -77,45 +80,46 @@
             <div class="cart__detail__bottom">
               <div class="cart__amount">수량</div>
               <div class="cart__amount__btn__container"> -->
-        <!-- <button class="cart__plus__button">+</button>
+          <!-- <button class="cart__plus__button">+</button>
         <button class="cart__minus__button">-</button> -->
-        <!-- </div>
+          <!-- </div>
             </div>
           </div>
         </div> -->
-      </div>
-
-      <!-- border line -->
-      <div class="border__line__container">
-        <div class="border__line"></div>
-      </div>
-
-      <!-- 결제 금액 -->
-      <div class="pay__container">
-        <div id="total__price">결제 금액</div>
-        <div class="pay__list">
-          <div class="pay__detail__container">
-            <div>총 수량</div>
-            <div class="total__amount"></div>
-          </div>
-
-          <div class="pay__detail__container">
-            <div>가격</div>
-            <div class="total__price"></div>
-          </div>
-
-          <div class="pay__detail__container">
-            <div>배송비</div>
-            <div class="deliveryFee"></div>
-          </div>
-
-          <div class="pay__detail__container">
-            <div>합계</div>
-            <div class="total__sum"></div>
-          </div>
         </div>
-        <div class="order__button__container">
-          <!-- <button class="order__button">주문서 작성</button> -->
+
+        <!-- border line -->
+        <div class="border__line__container">
+          <div class="border__line"></div>
+        </div>
+
+        <!-- 결제 금액 -->
+        <div class="pay__container">
+          <div id="total__price">결제 금액</div>
+          <div class="pay__list">
+            <div class="pay__detail__container">
+              <div>총 수량</div>
+              <div class="total__amount"></div>
+            </div>
+
+            <div class="pay__detail__container">
+              <div>가격</div>
+              <div class="total__price"></div>
+            </div>
+
+            <div class="pay__detail__container">
+              <div>배송비</div>
+              <div class="deliveryFee"></div>
+            </div>
+
+            <div class="pay__detail__container">
+              <div>합계</div>
+              <div class="total__sum"></div>
+            </div>
+          </div>
+          <div class="order__button__container">
+            <!-- <button class="order__button">주문서 작성</button> -->
+          </div>
         </div>
       </div>
     </main>
