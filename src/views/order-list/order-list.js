@@ -8,7 +8,7 @@ const orderNone = document.querySelector(".order__none");
 const mainMypageHeader = document.querySelector(".main__mypage__header");
 mainMypageHeader.innerHTML = `안녕하세요, ${name}님!`;
 
-orderList.forEach((order) => {
+orderList.reverse().forEach((order) => {
   // 주문내역이 있으면 주문내역 없다는 안내멘트 지우기
   orderNone.className = "order__none hidden";
 
