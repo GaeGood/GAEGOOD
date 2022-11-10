@@ -6,7 +6,9 @@
 }
 
 /*body*/
-
+body {
+  height: 100vh;
+}
 .div-container {
   display: flex;
   align-items: center;
@@ -34,8 +36,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 100px;
-  margin-top: 20px;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 .border__line {
   width: 100%;
@@ -58,12 +60,14 @@
   width: 80%;
   height: 100%;
   display: flex;
+  margin-top: 40px;
 }
 .product__sub__container {
   width: 40%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  padding: 10px;
   margin-right: 40px;
 }
 .product__main__container {
@@ -72,13 +76,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 20px;
 }
 .product__text__container {
   width: 100%;
-  height: 60%;
+  height: 25%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+.product__category {
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #48c78e;
 }
 .product__img {
   width: 100%;
@@ -90,16 +100,28 @@
 }
 .product__desc {
   margin-bottom: 20px;
+  font-size: 16px;
+}
+.product__price {
+  font-size: 18px;
+  font-weight: bold;
 }
 .amount__container {
+  width: 100%;
+  margin: 50px 0;
+}
+.amount__title {
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+.amount__button__container {
   display: flex;
-  width: 100px;
-  justify-content: space-between;
-  padding: 50px 0;
+  align-items: center;
 }
 .product__amount {
   width: 50px;
   text-align: center;
+  font-weight: bold;
 }
 .button__plus,
 .button__minus {
@@ -107,6 +129,14 @@
   height: 40px;
   font-size: 20px;
   text-align: center;
+  border: none;
+  border-radius: 5px;
+  margin: 0 10px;
+}
+.button__plus:hover,
+.button__minus:hover,
+.button__cart .button__remove:hover {
+  opacity: 0.6;
 }
 .button__container {
   width: 100%;
@@ -114,8 +144,27 @@
   flex-direction: column;
   justify-content: space-between;
 }
+
+.button__sub__container {
+  width: 100%;
+  height: 100%;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+.button__cart {
+  width: 100%;
+  height: 100%;
+  margin-right: 10px;
+}
+.button__remove {
+  width: 30%;
+  height: 100%;
+  font-size: 14px;
+}
 .order__button__user,
 .order__button__any {
+  width: 98%;
 }
 
 /*footer*/
