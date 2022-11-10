@@ -1,4 +1,4 @@
-import { main } from "/public/js/main.js";
+import { main, addCommas, convertToNumber } from "/public/js/main.js";
 const { loggedInUser } = await main();
 
 const html = window.location.href;
@@ -6,8 +6,8 @@ const sp = html.split("products/");
 const id = sp[1].replace("/", "");
 
 const button__container = document.querySelector(".button__container");
-const orderButton__User = `<button type="button" class="order__button__user"><a href="/orders/create?pid=${id}&count=1" id="direct-buy__link">바로 구매하기</a></button>`;
-const orderButton__Any = `  <button data-bs-toggle="modal" data-bs-target="#modalLogin">
+const orderButton__User = `<button type="button" class="order__button__user btn btn-dark btn-lg"><a href="/orders/create?pid=${id}&count=1" id="direct-buy__link">바로 구매하기</a></button>`;
+const orderButton__Any = `  <button type="button" class="order__button__any btn btn-dark btn-lg" data-bs-toggle="modal" data-bs-target="#modalLogin">
     바로 구매하기
   </button>`;
 
@@ -77,12 +77,12 @@ fetch(`/api/products/${id}`)
 
 // home에서 클릭한 제품의 상세 내용 html에 렌더링하는 함수
 function addproduct(product) {
-  productCategory.innerHTML = product.category;
-  productName.innerHTML = product.name;
+  productCategory.textContent = product.category;
+  productName.textContent = product.name;
   productImg.src = product.smallImageURL;
 
-  productDescription.innerHTML = product.shortDesc;
-  productPrice.innerHTML = product.price;
+  productDescription.textContent = product.shortDesc;
+  productPrice.textContent = `${addCommas(product.price)}원`;
 
   getAllIndexedDB(DATABASE_NAME, version, objectStore, id, function (result) {
     result.forEach((data) => {
@@ -165,7 +165,7 @@ function insertIndexedDB(DATABASE_NAME, version, objectStore, idObject) {
       idObject.category = productCategory.textContent;
       idObject.shortDesc = productDescription.textContent;
       //idObject.longDesc = productAmount.textContent;
-      idObject.price = parseInt(productPrice.textContent);
+      idObject.price = convertToNumber(productPrice.textContent);
       idObject.smallImageURL = productImg.src;
       // idObject.bigImageURL = productAmount.textContent;
       store.add(idObject);

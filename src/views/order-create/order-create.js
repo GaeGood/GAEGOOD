@@ -1,4 +1,9 @@
-import { main, deleteIndexedDBdata, getAllIndexedDB } from "/public/js/main.js";
+import {
+  main,
+  deleteIndexedDBdata,
+  getAllIndexedDB,
+  addCommas,
+} from "/public/js/main.js";
 const { loggedInUser } = await main();
 
 let orderProductList = [];
@@ -108,7 +113,10 @@ const [
   userPostCode,
   userStreetAddress,
   userExtraAddress,
-] = document.querySelectorAll(".user");
+] = document.querySelectorAll(".user_info");
+
+console.log(document.querySelectorAll(".user_info"));
+
 const [productsPriceHTML, deliveryFeeHTML, totalPriceHTML] =
   document.querySelectorAll(".pay");
 
@@ -137,35 +145,46 @@ orderProductList.forEach((orderProduct) => {
   // 주의, 장바구니에 체크된 상품들만 주문서로 이동.
   if (orderProduct.checked) {
     orderProductTable.innerHTML += `
-    <tr>
-      <td>
-          <span class="order product__id hidden">${orderProduct.id}</span>
-      </td>
-      <td>
-          <img src="${orderProduct.smallImageURL}" class="order product__picture" />
-      </td>
-      <td>
-          <span class="order product__info">
-            <div>${orderProduct.name}</div>
-            <div>${orderProduct.shortDesc}</div>
-          </span>
-      </td>
-      <td>
-          <span class="order product__amount">${orderProduct.amount}</span>
-      </td>
-      <td>
-          <span class="order product__price">${orderProduct.price}원</span>
-      </td>
-    </tr>  
+        <tr class='order product__information'>
+          <td class="order__product__td">
+              <div class="order product__id hidden">${orderProduct.id}</div>
+          </td>
+          <td class="order__product__td">
+              <img src="${
+                orderProduct.smallImageURL
+              }" class="order product__picture" />
+          </td>
+          <td class="order__product__td">
+              <div class="order product__info">
+                <div class="order product__name">${orderProduct.name}</div>
+                <div class="order product__shortdesc">${
+                  orderProduct.shortDesc
+                }</div>
+              </div>
+          </td>
+          <td class="order__product__td">
+              <div class="order product__amount">${orderProduct.amount}</div>
+          </td>
+          <td class="order__product__td">
+              <div class="order product__price">${addCommas(
+                orderProduct.price
+              )}원</div>
+          </td>
+          <td class="order__product__td">
+              <div class="order product__all__price">${addCommas(
+                orderProduct.price * orderProduct.amount
+              )}원</div>
+          </td>
+        </tr>  
     `;
 
     productAllIdArr.push(orderProduct.id);
     productAllAmountArr.push(orderProduct.amount);
 
     productsPrice += orderProduct.price * orderProduct.amount;
-    productsPriceHTML.innerHTML = productsPrice;
-    deliveryFeeHTML.innerHTML = 3000;
-    totalPriceHTML.innerHTML = productsPrice + 3000;
+    productsPriceHTML.innerHTML = addCommas(productsPrice) + "원";
+    deliveryFeeHTML.innerHTML = addCommas(3000) + "원";
+    totalPriceHTML.innerHTML = addCommas(productsPrice + 3000) + "원";
   }
 });
 
@@ -209,12 +228,18 @@ function searchAddress(e) {
 
 addressSearchBtn.addEventListener("click", searchAddress);
 
+// 우편번호, 도로명주소 input칸 클릭 시 주소검색 나타나게 구현
+userPostCode.addEventListener("click", searchAddress);
+userStreetAddress.addEventListener("click", searchAddress);
+
 // 요청사항
 const customRequestContainer = document.querySelector(
   ".customRequestContainer"
 );
 const customRequestInput = document.querySelector(".customRequest");
 const requestSelectBox = document.querySelector("#request__Select__Box");
+
+console.log(requestSelectBox);
 
 const requestOption = {
   1: "배송 전 연락바랍니다.",
