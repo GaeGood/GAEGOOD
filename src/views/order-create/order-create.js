@@ -113,7 +113,10 @@ const [
   userPostCode,
   userStreetAddress,
   userExtraAddress,
-] = document.querySelectorAll(".user");
+] = document.querySelectorAll(".user_info");
+
+console.log(document.querySelectorAll(".user_info"));
+
 const [productsPriceHTML, deliveryFeeHTML, totalPriceHTML] =
   document.querySelectorAll(".pay");
 
@@ -143,15 +146,15 @@ orderProductList.forEach((orderProduct) => {
   if (orderProduct.checked) {
     orderProductTable.innerHTML += `
         <tr class='order product__information'>
-          <td>
+          <td class="order__product__td">
               <div class="order product__id hidden">${orderProduct.id}</div>
           </td>
-          <td>
+          <td class="order__product__td">
               <img src="${
                 orderProduct.smallImageURL
               }" class="order product__picture" />
           </td>
-          <td>
+          <td class="order__product__td">
               <div class="order product__info">
                 <div class="order product__name">${orderProduct.name}</div>
                 <div class="order product__shortdesc">${
@@ -159,15 +162,15 @@ orderProductList.forEach((orderProduct) => {
                 }</div>
               </div>
           </td>
-          <td>
+          <td class="order__product__td">
               <div class="order product__amount">${orderProduct.amount}</div>
           </td>
-          <td>
+          <td class="order__product__td">
               <div class="order product__price">${addCommas(
                 orderProduct.price
               )}원</div>
           </td>
-          <td>
+          <td class="order__product__td">
               <div class="order product__all__price">${addCommas(
                 orderProduct.price * orderProduct.amount
               )}원</div>

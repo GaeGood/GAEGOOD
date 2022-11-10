@@ -67,12 +67,12 @@ a {
   width: 700px;
 }
 
-th {
+.order__product__th {
   height: 25px;
   text-align: center;
 }
 
-td {
+.order__product__td {
   text-align: center;
   vertical-align: middle;
 }
@@ -109,6 +109,21 @@ td {
 
 .delivery__infomation {
   display: flex;
+}
+
+.password__zone {
+  height: 100px;
+}
+
+.address__zone {
+  height: 140px;
+}
+.address__zone__input {
+  display: flex;
+  justify-content: space-between;
+}
+.postalcode__input {
+  width: 230px;
 }
 
 /*footer*/

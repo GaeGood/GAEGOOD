@@ -53,10 +53,12 @@
           <table class="table order__product__table">
             <thead>
               <tr>
-                <th scope="col" colspan="3">상품정보</th>
-                <th scope="col">수량</th>
-                <th scope="col">단가</th>
-                <th scope="col">총 금액</th>
+                <th class="order__product__th" scope="col" colspan="3">
+                  상품정보
+                </th>
+                <th class="order__product__th" scope="col">수량</th>
+                <th class="order__product__th" scope="col">단가</th>
+                <th class="order__product__th" scope="col">총 금액</th>
               </tr>
             </thead>
             <tbody class="table product__list table-group-divider"></tbody>
@@ -64,72 +66,59 @@
         </div>
       </section>
       <p></p>
+
       <section>
         <div class="table-header">배송지 정보</div>
         <!-- 구분선 -->
         <hr class="my-2" />
         <div class="delivery__infomation">
           <div class="user__infomation">
-            <table>
+            <table class="table">
               <tr>
-                <th>이름</th>
+                <th scope="row">
+                  <label>이름</label>
+                </th>
                 <td>
-                  <input class="user name" />
+                  <input type="text" class="user_info name form-control" />
                 </td>
               </tr>
               <tr>
-                <th>휴대폰번호</th>
+                <th scope="row">
+                  <label>휴대폰번호</label>
+                </th>
                 <td>
                   <input
                     type="text"
                     placeholder="- 제외 입력해주세요"
-                    class="user phonenumber"
+                    class="user_info phonenumber form-control"
                     value="휴대폰번호"
                   />
                 </td>
               </tr>
               <tr>
-                <th>배송지</th>
-                <td>
-                  <div>
+                <th scope="row">
+                  <label>배송지</label>
+                </th>
+                <td class="address__zone">
+                  <div class="address__zone__input">
                     <input
                       type="text"
-                      class="user postalcode__input"
-                      value="우편번호"
-                      placeholder="주소 검색 버튼을 눌러주세요."
+                      class="user_info postalcode__input form-control"
+                      readonly
                     />
+                    <button type="button" class="address__search btn btn-light">
+                      주소검색
+                    </button>
                   </div>
-                </td>
-              </tr>
-              <tr>
-                <th></th>
-                <td>
-                  <div>
-                    <input
-                      type="text"
-                      class="user address__input__1"
-                      value="도로명주소"
-                    />
-                    <!-- <button type="button" class="address__search">주소검색</button> -->
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th></th>
-                <td>
-                  <div>
-                    <input
-                      type="text"
-                      placeholder="상세주소를 입력해주세요."
-                      class="user address__input__2"
-                      value="상세주소"
-                    />
-                    <input
-                      type="button"
-                      class="address__search"
-                      value="주소검색"
-                    />
-                  </div>
+                  <input
+                    type="text"
+                    class="user_info address__input__1 form-control"
+                    readonly
+                  />
+                  <input
+                    type="text"
+                    class="user_info address__input__2 form-control"
+                  />
                 </td>
               </tr>
               <tr>
