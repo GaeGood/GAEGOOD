@@ -111,19 +111,47 @@ a {
   display: flex;
 }
 
+.user__infomation_td {
+  width: 350px;
+}
+
+.address__zone {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  height: 140px;
+}
+
 .password__zone {
   height: 100px;
 }
 
-.address__zone {
-  height: 140px;
-}
 .address__zone__input {
   display: flex;
   justify-content: space-between;
 }
 .postalcode__input {
-  width: 230px;
+  width: 140px;
+}
+
+/* 요청사항존 */
+.btn.dropdown-toggle {
+  height: 38px;
+
+  background-color: white;
+  border: 1px solid #ced4da;
+
+  text-align: left;
+}
+
+.request__zone {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 4px;
+
+  height: 100px;
 }
 
 /*footer*/

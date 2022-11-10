@@ -228,12 +228,18 @@ function searchAddress(e) {
 
 addressSearchBtn.addEventListener("click", searchAddress);
 
+// 우편번호, 도로명주소 input칸 클릭 시 주소검색 나타나게 구현
+userPostCode.addEventListener("click", searchAddress);
+userStreetAddress.addEventListener("click", searchAddress);
+
 // 요청사항
 const customRequestContainer = document.querySelector(
   ".customRequestContainer"
 );
 const customRequestInput = document.querySelector(".customRequest");
 const requestSelectBox = document.querySelector("#request__Select__Box");
+
+console.log(requestSelectBox);
 
 const requestOption = {
   1: "배송 전 연락바랍니다.",

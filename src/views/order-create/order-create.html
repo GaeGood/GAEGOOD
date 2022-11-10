@@ -78,7 +78,7 @@
                 <th scope="row">
                   <label>이름</label>
                 </th>
-                <td>
+                <td class="user__infomation_td">
                   <input type="text" class="user_info name form-control" />
                 </td>
               </tr>
@@ -86,7 +86,7 @@
                 <th scope="row">
                   <label>휴대폰번호</label>
                 </th>
-                <td>
+                <td class="user__infomation_td">
                   <input
                     type="text"
                     placeholder="- 제외 입력해주세요"
@@ -99,7 +99,7 @@
                 <th scope="row">
                   <label>배송지</label>
                 </th>
-                <td class="address__zone">
+                <td class="user__infomation_td address__zone">
                   <div class="address__zone__input">
                     <input
                       type="text"
@@ -131,38 +131,55 @@
                     </div>
                   </div>
                 </th>
-                <td>
-                  <select id="request__Select__Box">
-                    <option value="0">배송시 요청사항을 선택해 주세요.</option>
-                    <option value="1" class="select-option">
-                      배송 전 연락바랍니다.
-                    </option>
-                    <option value="2" class="select-option">
-                      부재 시 경비실에 맡겨주세요.
-                    </option>
-                    <option value="3" class="select-option">
-                      부재 시 문 앞에 놓아주세요.
-                    </option>
-                    <option value="4" class="select-option">
-                      부재 시 택배함에 넣어주세요.
-                    </option>
-                    <option value="5" class="select-option">직접 입력</option>
+                <td class="user__infomation_td request__zone">
+                  <select class="btn dropdown-toggle" id="request__Select__Box">
+                    <ul class="dropdown-menu dropdown-menu-white">
+                      <li>
+                        <option value="0">
+                          배송시 요청사항을 선택해 주세요.
+                        </option>
+                      </li>
+                      <option value="1" class="select-option dropdown-item">
+                        배송 전 연락바랍니다.
+                      </option>
+                      <option value="2" class="select-option dropdown-item">
+                        부재 시 경비실에 맡겨주세요.
+                      </option>
+                      <option value="3" class="select-option dropdown-item">
+                        부재 시 문 앞에 놓아주세요.
+                      </option>
+                      <option value="4" class="select-option dropdown-item">
+                        부재 시 택배함에 넣어주세요.
+                      </option>
+                      <option value="5" class="select-option dropdown-item">
+                        직접 입력
+                      </option>
+                    </ul>
                   </select>
-                </td>
-              </tr>
-              <tr>
-                <th></th>
-                <td>
                   <div class="customRequestContainer hidden">
                     <input
-                      class="customRequest"
                       type="text"
                       maxlength="50"
                       placeholder="최대 50자 입력이 가능합니다."
+                      class="customRequest form-control"
                     />
                   </div>
                 </td>
               </tr>
+
+              <!-- <tr>
+                <th></th>
+                <td>
+                  <div class="customRequestContainer hidden">
+                    <input
+                      type="text"
+                      maxlength="50"
+                      placeholder="최대 50자 입력이 가능합니다."
+                      class="customRequest form-control"
+                    />
+                  </div>
+                </td>
+              </tr> -->
             </table>
           </div>
           <div class="pay__information">
