@@ -6,8 +6,8 @@ const sp = html.split("products/");
 const id = sp[1].replace("/", "");
 
 const button__container = document.querySelector(".button__container");
-const orderButton__User = `<button type="button" class="order__button__user"><a href="/orders/create?pid=${id}&count=1" id="direct-buy__link">바로 구매하기</a></button>`;
-const orderButton__Any = `  <button data-bs-toggle="modal" data-bs-target="#modalLogin">
+const orderButton__User = `<button type="button" class="order__button__user btn btn-dark btn-lg"><a href="/orders/create?pid=${id}&count=1" id="direct-buy__link">바로 구매하기</a></button>`;
+const orderButton__Any = `  <button type="button" class="order__button__any btn btn-dark btn-lg" data-bs-toggle="modal" data-bs-target="#modalLogin">
     바로 구매하기
   </button>`;
 

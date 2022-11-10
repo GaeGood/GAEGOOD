@@ -33,23 +33,36 @@
 
   <body>
     <!-- HEADER -->
+
     <!-- 메인 컨테이너 -->
     <main id="main__container" role="main">
-      <div class="product__container">
-        <div class="product__category">카테고리</div>
-        <img src="#" class="product__img" />
-        <div class="product__name">상품명</div>
-        <div class="product__desc">상품상세설명</div>
-        <div class="product__price">가격</div>
+      <!-- border line -->
+      <div class="border__line__container">
+        <div class="border__line"></div>
       </div>
-      <div class="amount__container">
-        <button class="button__minus">-</button>
-        <div class="product__amount">1</div>
-        <button class="button__plus">+</button>
-      </div>
-      <div class="button__container">
-        <button class="button__cart">장바구니</button>
-        <button class="button__remove">장바구니 삭제</button>
+      <div class="sub__container">
+        <div class="product__sub__container">
+          <div class="product__category">카테고리</div>
+          <img src="#" class="product__img" />
+        </div>
+        <div class="product__main__container">
+          <div class="product__text__container">
+            <div class="product__name">상품명</div>
+            <div class="product__desc">상품상세설명</div>
+            <div class="product__price">가격</div>
+          </div>
+          <div class="amount__container">
+            <button class="button__minus">-</button>
+            <div class="product__amount">1</div>
+            <button class="button__plus">+</button>
+          </div>
+          <div class="button__container">
+            <button class="button__cart btn btn-dark btn-lg">장바구니</button>
+            <button class="button__remove btn btn-light btn-lg">
+              장바구니 삭제
+            </button>
+          </div>
+        </div>
       </div>
     </main>
 
