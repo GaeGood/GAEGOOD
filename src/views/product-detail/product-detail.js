@@ -1,4 +1,5 @@
 import { main } from "/public/js/main.js";
+import { addCommas, convertToNumber } from "/public/js/useful-functions.js";
 const { loggedInUser } = await main();
 
 const html = window.location.href;
@@ -77,12 +78,12 @@ fetch(`/api/products/${id}`)
 
 // home에서 클릭한 제품의 상세 내용 html에 렌더링하는 함수
 function addproduct(product) {
-  productCategory.innerHTML = product.category;
-  productName.innerHTML = product.name;
+  productCategory.textContent = product.category;
+  productName.textContent = product.name;
   productImg.src = product.smallImageURL;
 
-  productDescription.innerHTML = product.shortDesc;
-  productPrice.innerHTML = product.price;
+  productDescription.textContent = product.shortDesc;
+  productPrice.textContent = `${addCommas(product.price)}원`;
 
   getAllIndexedDB(DATABASE_NAME, version, objectStore, id, function (result) {
     result.forEach((data) => {
@@ -165,7 +166,7 @@ function insertIndexedDB(DATABASE_NAME, version, objectStore, idObject) {
       idObject.category = productCategory.textContent;
       idObject.shortDesc = productDescription.textContent;
       //idObject.longDesc = productAmount.textContent;
-      idObject.price = parseInt(productPrice.textContent);
+      idObject.price = convertToNumber(productPrice.textContent);
       idObject.smallImageURL = productImg.src;
       // idObject.bigImageURL = productAmount.textContent;
       store.add(idObject);
