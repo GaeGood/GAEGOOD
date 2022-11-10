@@ -48,8 +48,8 @@
         <hr class="my-2" />
       </div>
       <section class="main-contents">
-        <div class="table-header">주문 상품 정보</div>
-        <div>
+        <div class="table__header">주문 상품 정보</div>
+        <div class="table__zone">
           <table class="table order__product__table">
             <thead>
               <tr>
@@ -68,14 +68,14 @@
       <p></p>
 
       <section>
-        <div class="table-header">배송지 정보</div>
+        <div class="table__header">배송지 정보</div>
         <!-- 구분선 -->
         <hr class="my-2" />
         <div class="delivery__infomation">
           <div class="user__infomation">
-            <table class="table">
+            <table class="table user__infomation__table">
               <tr>
-                <th scope="row">
+                <th class="user__infomation__th" scope="row">
                   <label>이름</label>
                 </th>
                 <td class="user__infomation_td">
@@ -83,7 +83,7 @@
                 </td>
               </tr>
               <tr>
-                <th scope="row">
+                <th class="user__infomation__th" scope="row">
                   <label>휴대폰번호</label>
                 </th>
                 <td class="user__infomation_td">
@@ -96,7 +96,7 @@
                 </td>
               </tr>
               <tr>
-                <th scope="row">
+                <th class="user__infomation__th" scope="row">
                   <label>배송지</label>
                 </th>
                 <td class="user__infomation_td address__zone">
@@ -122,7 +122,7 @@
                 </td>
               </tr>
               <tr>
-                <th>
+                <th class="user__infomation__th">
                   <div class="field is-horizontal">
                     <div class="field-label is-normal">
                       <label class="label" for="requestSelectBox"
@@ -166,37 +166,45 @@
                   </div>
                 </td>
               </tr>
-
-              <!-- <tr>
-                <th></th>
-                <td>
-                  <div class="customRequestContainer hidden">
-                    <input
-                      type="text"
-                      maxlength="50"
-                      placeholder="최대 50자 입력이 가능합니다."
-                      class="customRequest form-control"
-                    />
-                  </div>
-                </td>
-              </tr> -->
             </table>
           </div>
-          <div class="pay__information">
-            <div>결제상세</div>
-            <aside>
-              <div>
-                주문금액<span class="pay products__price">주문금액</span>원
+          <aside class="pay__information">
+            <aside class="pay__information card">
+              <div class="card-body">
+                <h5 class="card-title">최종 결제정보</h5>
+                <div>
+                  <div class="price__zone">
+                    <span class="card-text">총 상품금액</span
+                    ><span class="pay products price card-text"></span>
+                  </div>
+                  <div class="price__zone">
+                    <span class="card-text">배송비</span
+                    ><span class="pay delivery price card-text"></span>
+                  </div>
+                  <!-- 구분선 -->
+                  <hr class="my-2" />
+                  <div class="total price__zone">
+                    <span class="card-text">총 금액</span
+                    ><span class="pay total price card-text"></span>
+                  </div>
+                </div>
+                <div>
+                  <button type="button" class="pay__button btn btn-danger">
+                    결제하기
+                  </button>
+                </div>
               </div>
-              <div>배송비<span class="pay delivery__fee">배송비</span>원</div>
-              <!-- 구분선 -->
-              <hr class="my-2" />
-              <span>총 금액</span><span class="pay total__price"></span>원
             </aside>
-            <div>
-              <button class="pay__button">결제하기</button>
-            </div>
-          </div>
+          </aside>
+
+          <!-- <div>결제상세</div>
+          <aside>
+            <div>주문금액<span class="pay products__price"></span></div>
+            <div>배송비<span class="pay delivery__fee"></span></div>
+
+            <hr class="my-2" />
+            <span>총 금액</span><span class="pay total__price"></span>
+          </aside> -->
         </div>
       </section>
     </main>

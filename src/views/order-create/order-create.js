@@ -182,9 +182,9 @@ orderProductList.forEach((orderProduct) => {
     productAllAmountArr.push(orderProduct.amount);
 
     productsPrice += orderProduct.price * orderProduct.amount;
-    productsPriceHTML.innerHTML = addCommas(productsPrice);
-    deliveryFeeHTML.innerHTML = addCommas(3000);
-    totalPriceHTML.innerHTML = addCommas(productsPrice + 3000);
+    productsPriceHTML.innerHTML = addCommas(productsPrice) + "원";
+    deliveryFeeHTML.innerHTML = addCommas(3000) + "원";
+    totalPriceHTML.innerHTML = addCommas(productsPrice + 3000) + "원";
   }
 });
 

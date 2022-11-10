@@ -25,6 +25,9 @@ a {
 
 /* main */
 
+section {
+  padding: 20px 80px;
+}
 #main__container {
   width: 100%;
   height: 100%;
@@ -59,12 +62,19 @@ a {
 }
 
 /* 상품 존 */
-.table-header {
-  margin: 10px 0;
+.table.order__product__table {
+  width: 1000px;
 }
 
-.order__product__table {
-  width: 700px;
+.table__zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.table__header {
+  font-size: 20px;
+  margin: 10px 0;
 }
 
 .order__product__th {
@@ -108,11 +118,21 @@ a {
 /* 배송지정보 존 */
 
 .delivery__infomation {
+  width: auto;
   display: flex;
+  justify-content: center;
+  gap: 60px;
 }
 
+.user__infomation__table {
+  width: 560px;
+}
 .user__infomation_td {
   width: 350px;
+}
+
+.user_info {
+  width: 450px;
 }
 
 .address__zone {
@@ -137,6 +157,7 @@ a {
 
 /* 요청사항존 */
 .btn.dropdown-toggle {
+  width: 450px;
   height: 38px;
 
   background-color: white;
@@ -152,6 +173,45 @@ a {
   gap: 4px;
 
   height: 100px;
+}
+
+/* 결제상세존 */
+.pay__information.card {
+  width: 18rem;
+  height: auto;
+}
+
+.card-title {
+  font-size: large;
+  font-weight: 1000;
+  margin-bottom: 30px;
+}
+
+.price__zone {
+  margin: 20px 5px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.card-text {
+  font-weight: lighter;
+}
+
+.total.price__zone,
+.price {
+  font-weight: 1000;
+}
+
+.pay.total.price {
+  color: #e24a4a;
+}
+
+.pay__button {
+  background-color: #e24a4a;
+  width: 100%;
+  height: 50px;
 }
 
 /*footer*/
