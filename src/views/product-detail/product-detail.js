@@ -1,5 +1,4 @@
-import { main } from "/public/js/main.js";
-import { addCommas, convertToNumber } from "/public/js/useful-functions.js";
+import { main, addCommas, convertToNumber } from "/public/js/main.js";
 const { loggedInUser } = await main();
 
 const html = window.location.href;
