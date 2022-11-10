@@ -1,3 +1,4 @@
+import { json } from "express";
 import { productService } from "../services";
 
 class ProductContoller {
@@ -124,6 +125,44 @@ class ProductContoller {
       } catch (e) {
         next(e);
       }
+    }
+  }
+
+  async likeProduct(req, res, next) {
+    const { pid } = req.params;
+
+    try {
+      if (req.loggedInUser.likesProductList.length === 0) {
+        req.loggedInUser.likesProductList.push(pid);
+        await req.loggedInUser.save();
+        console.log(req.loggedInUser.likesProductList);
+        return res.status(200).json("좋아요 성공");
+      } else {
+        let alreadyLiked = false;
+
+        req.loggedInUser.likesProductList.forEach((product) => {
+          if (String(product._id) === pid) {
+            alreadyLiked = true;
+          }
+        });
+
+        if (alreadyLiked) {
+          req.loggedInUser.likesProductList =
+            req.loggedInUser.likesProductList.filter(
+              (product) => String(product._id) !== pid
+            );
+          await req.loggedInUser.save();
+          console.log(req.loggedInUser.likesProductList);
+          return res.status(200).json("좋아요 취소");
+        } else {
+          req.loggedInUser.likesProductList.push(pid);
+          await req.loggedInUser.save();
+          console.log(req.loggedInUser.likesProductList);
+          return res.status(200).json("좋아요 성공");
+        }
+      }
+    } catch (e) {
+      next(e);
     }
   }
 }

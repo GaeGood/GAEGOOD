@@ -112,18 +112,45 @@ body {
   font-size: 18px;
   font-weight: bold;
 }
-.amount__container {
+.buttons__container {
   width: 100%;
-  margin: 50px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 }
 .amount__title {
+  margin-left: 10px;
   margin-bottom: 20px;
   font-size: 16px;
+  font-weight: 600;
 }
 .amount__button__container {
   display: flex;
   align-items: center;
 }
+
+.like__button {
+  width: 100%;
+  height: 150px;
+  margin-top: 15px;
+  margin-left: 5px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.fa-solid.fa-heart {
+  color: #eb4d4b;
+}
+
+.fa-solid.fa-heart.hidden {
+  display: none;
+}
+
+.fa-regular.fa-heart.hidden {
+  display: none;
+}
+
 .product__amount {
   width: 50px;
   text-align: center;

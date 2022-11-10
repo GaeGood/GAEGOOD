@@ -33,5 +33,6 @@ productRouter.delete(
   adminRequired,
   productController.removeProduct
 );
+productRouter.post("/:pid/like", loginRequired, productController.likeProduct);
 
 export { productRouter };
