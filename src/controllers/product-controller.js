@@ -4,8 +4,16 @@ class ProductContoller {
   async addProduct(req, res, next) {
     const { name, category, shortDesc, longDesc, price, stock } = req.body;
 
-    const smallImageURL = "/public/images/product-images/" + req.file.filename;
-    const bigImageURL = smallImageURL;
+    let smallImageURL;
+    let bigImageURL;
+
+    if (req.file) {
+      smallImageURL = "/public/images/product-images/" + req.file.filename;
+      bigImageURL = smallImageURL;
+    } else {
+      smallImageURL = "/public/images/default-product-image.jpg";
+      bigImageURL = "/public/images/default-product-image.jpg";
+    }
 
     if (
       !name ||
