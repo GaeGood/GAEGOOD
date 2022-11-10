@@ -10,7 +10,7 @@ const order__button__container = document.querySelector(
   ".order__button__container"
 );
 const orderButton__User = `<button type="button" class="order__button__user"><a href="/orders/create">주문서 작성</a></button>`;
-const orderButton__User_Disabled = `<button type="button" class="order__button__user" disabled>주문서 작성</button>`;
+const orderButton__User__Disabled = `<button type="button" class="order__button__user__disabled" disabled>주문서 작성</button>`;
 const orderButton__Any = `<button data-bs-toggle="modal" data-bs-target="#modalLogin">
     주문서 작성
   </button>`;
@@ -59,7 +59,7 @@ getAllIndexedDB(DATABASE_NAME, version, objectStore, function (dataList) {
     deliveryFee.textContent = `${0}원`;
     total__sum.textContent = `${0}원`;
 
-    order__button__container.innerHTML = orderButton__User_Disabled;
+    order__button__container.innerHTML = orderButton__User__Disabled;
   }
 });
 function emptyCartImage() {
@@ -159,6 +159,7 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
       dataList[i].id,
       false
     );
+    disabledOrderButton(dataList);
     /* cart__list__top 컨테이너 div */
     cartList.classList.add("cart__list__top");
     cart__container.prepend(cartList);
@@ -238,18 +239,23 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
 
     /* 맨 처음 체크박스 초기세팅 */
     checkedDateRender();
-
     /* 체크된 상품 없거나 전부 삭제되면 주문서 작성하기 비활성화 */
     function disabledOrderButton(dataList) {
+      const checkedArray = dataList.map((data) => data.checked);
       if (
         convertToNumber(total__amount.textContent) === 0 ||
-        dataList.length === 0
+        dataList.length === 0 ||
+        checkedArray[0] === false
       ) {
-        order__button__container.innerHTML = orderButton__User_Disabled;
+        console.log("ㅎㅇㅎㅇ");
+        order__button__container.innerHTML = "";
+        order__button__container.innerHTML = orderButton__User__Disabled;
       } else {
         if (loggedInUser) {
+          order__button__container.innerHTML = "";
           order__button__container.innerHTML = orderButton__User;
         } else {
+          order__button__container.innerHTML = "";
           order__button__container.innerHTML = orderButton__Any;
         }
       }
@@ -401,7 +407,7 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
       if (dataList.length === 0) {
         wholeCheck.checked = false;
       }
-      if (i === dataList.length - 1) {
+      if (i === dataList.length - 1 && dataList.length === 0) {
         emptyCartImage();
       }
       // } else {

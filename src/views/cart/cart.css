@@ -201,7 +201,8 @@
 }
 /* 주문서 작성 버튼 */
 .order__button__container button,
-.order__button__user {
+.order__button__user,
+.order__button__user__disabled {
   background-color: rgb(243, 225, 199);
   border: none;
   width: 150px;
