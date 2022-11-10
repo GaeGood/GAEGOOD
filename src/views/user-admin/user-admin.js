@@ -380,6 +380,7 @@ function productManagementEdit() {
   );
   let productId;
   let nameValue;
+  let isCategories = false;
   for (let count = 0; count < editProductBtns.length; count++) {
     editProductBtns[count].addEventListener("click", (e) => {
       nameValue =
@@ -420,64 +421,81 @@ function productManagementEdit() {
 
 function productManagementCreate() {
   //카테고리의 리스트를 불러오는 작업
+  let isCategories = false;
   const addCategoryList = document.querySelector(".btn__admin__addProduct");
   addCategoryList.addEventListener("click", (e) => {
-    fetch("/api/categories")
-      .then((res) => res.json())
-      .then((datas) => {
-        datas.forEach((element) => {
-          document.getElementById("product-category").innerHTML += `
+    if (!isCategories) {
+      fetch("/api/categories")
+        .then((res) => res.json())
+        .then((datas) => {
+          datas.forEach((element) => {
+            document.getElementById("create-product-category").innerHTML += `
         <option>${element.name}</option>`;
+          });
         });
-      });
+      isCategories = true;
+    }
   });
   //추가하기 버튼을 클릭했을 때
   const addProductBtn = document.querySelector(".submit__product");
   addProductBtn.addEventListener("click", (e) => {
-    e.preventDefault();
+    const name = document.getElementById("create-product-name");
+    const category = document.getElementById("create-product-category");
+    const shortDesc = document.getElementById("create-short-description");
+    const longDesc = document.getElementById("create-long-description");
+    const imageFile = document.getElementById("create-product-img");
+    const stock = document.getElementById("create-product-stock");
+    const price = document.getElementById("create-product-price");
+
+    const formData = new FormData();
+
+    formData.append("name", name.value);
+    formData.append("category", category.value);
+    formData.append("shortDesc", shortDesc.value);
+    formData.append("longDesc", longDesc.value);
+    formData.append("productImage", imageFile.files[0]);
+    formData.append("stock", stock.value);
+    formData.append("price", price.value);
+
     fetch("/api/products", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: document.getElementById("product-name").value,
-        category: document.getElementById("product-category").value,
-        shortDesc: document.getElementById("short-description").value,
-        longDesc: document.getElementById("long-description").value,
-        price: document.getElementById("product-price").value,
-        smallImageURL: `/public/images/product-images/${
-          document.getElementById("product-img").value
-        }`,
-        bigImageURL: `/public/images/product-images/${
-          document.getElementById("product-img").value
-        }`,
-        stock: document.getElementById("product-stock").value,
-      }),
+      body: formData,
+      headers: {},
     })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        const newData = {
-          _id: data._id,
-          date: data.createdAt.slice(0, 10),
-          name: data.name,
-          updateDate: data.updatedAt.slice(0, 10),
-        };
-        alert(`${newData.name} 이(가) 상품에 추가되었습니다.`);
-        //form 안의 input값 전부 초기화하기
-        document.getElementById("product-name").value = ""
-        document.getElementById("product-category").value = ""
-        document.getElementById("short-description").value = ""
-        document.getElementById("long-description").value = ""
-        document.getElementById("product-price").value = ""
-        document.getElementById("product-img").value = ""
-        document.getElementById("product-img").value = ""
-        document.getElementById("product-stock").value = ""
-        
-        bootstrap.Modal.getInstance("#btn__admin__addProduct").hide();
-        document.querySelector(".btn__admin__Product").click();
-      });
+    .then(async (res) => {
+      const json = await res.json();
+      console.log(json);
+
+      if (res.ok) {
+        return json;
+      }
+
+      return Promise.reject(json);
+    });
+
+    // .then((res) => res.json())
+    // .then((data) => {
+    //   console.log(data);
+    //   const newData = {
+    //     _id: data._id,
+    //     date: data.createdAt.slice(0, 10),
+    //     name: data.name,
+    //     updateDate: data.updatedAt.slice(0, 10),
+    //   };
+    //   alert(`${newData.name} 이(가) 상품에 추가되었습니다.`);
+    //   //form 안의 input값 전부 초기화하기
+    //   document.getElementById("product-name").value = "";
+    //   document.getElementById("product-category").value = "";
+    //   document.getElementById("short-description").value = "";
+    //   document.getElementById("long-description").value = "";
+    //   document.getElementById("product-price").value = "";
+    //   document.getElementById("product-img").value = "";
+    //   document.getElementById("product-img").value = "";
+    //   document.getElementById("product-stock").value = "";
+
+    //   bootstrap.Modal.getInstance("#btn__admin__addProduct").hide();
+    //   document.querySelector(".btn__admin__Product").click();
+    // });
   });
 }
 

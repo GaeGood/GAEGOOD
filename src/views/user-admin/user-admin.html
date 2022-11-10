@@ -119,36 +119,37 @@
         <div class="modal-body">
           <form>
             <div class="mb-3">
-              <label for="recipient-name" class="col-form-label">상품명</label>
-              <input type="text" class="form-control" id="product-name" placeholder="상품명을 입력해주세요" />
+              <label for="create-product-name" class="col-form-label">상품명</label>
+              <input type="text" class="form-control" id="create-product-name" placeholder="상품명을 입력해주세요" />
             </div>
             <div class="mb-3">
-              <label for="message-text" class="col-form-label">카테고리</label>
-              <select class="form-select" id="product-category">
+              <label for="create-product-category" class="col-form-label">카테고리</label>
+              <select class="form-select" id="create-product-category">
                 <option selected>카테고리를 선택하세요</option>
               </select>
             </div>
             <div class="mb-3">
-              <label for="message-text" class="col-form-label">요약 설명</label>
-              <textarea class="form-control" id="short-description" placeholder="상품에 대한 간단한 설명을 입력해주세요"></textarea>
+              <label for="create-short-description" class="col-form-label">요약 설명</label>
+              <textarea class="form-control" id="create-short-description"
+                placeholder="상품에 대한 간단한 설명을 입력해주세요"></textarea>
             </div>
             <div class="mb-3">
-              <label for="message-text" class="col-form-label">상세 설명</label>
-              <textarea class="form-control" id="long-description" style="height: 200px"
+              <label for="create-long-description" class="col-form-label">상세 설명</label>
+              <textarea class="form-control" id="create-long-description" style="height: 200px"
                 placeholder="상품에 대한 상세한 설명을 입력해주세요"></textarea>
             </div>
             <div class="mb-3">
-              <label for="formFile" class="form-label">제품 사진</label>
-              <input class="form-control" type="file" id="product-img" />
+              <label for="create-product-img" class="form-label">제품 사진</label>
+              <input class="form-control" type="file" id="create-product-img" accept="image/*" />
             </div>
             <div class="mb-3">
-              <label for="recipient-name" class="col-form-label">재고 수</label>
-              <input type="text" class="form-control" id="product-stock" placeholder="10" />
+              <label for="create-product-stock" class="col-form-label">재고 수</label>
+              <input type="text" class="form-control" id="create-product-stock" placeholder="10" />
             </div>
             <div class="mb-3">
-              <label for="recipient-name" class="col-form-label">가격</label>
+              <label for="create-product-price" class="col-form-label">가격</label>
               <div class="input-group">
-                <input type="text" class="form-control" id="product-price" placeholder="10000" />
+                <input type="text" class="form-control" id="create-product-price" placeholder="10000" />
                 <span class="input-group-text">원</span>
               </div>
             </div>
@@ -162,7 +163,6 @@
       </div>
     </div>
   </div>
-  </div>
 
   <!--제품 수정-->
   <div class="modal fade" id="btn__admin__editProduct" tabindex="-1"
@@ -175,43 +175,38 @@
         </div>
         <div class="modal-body">
           <form>
-            <div class="mb-2">
-              <label for="recipient-name" class="col-form-label">상품명</label>
-              <input type="text" class="form-control" id="recipient-name" placeholder="상품명을 입력해주세요">
+            <div class="mb-3">
+              <label for="edit-product-name" class="col-form-label">상품명</label>
+              <input type="text" class="form-control" id="edit-product-name" placeholder="상품명을 입력해주세요" />
             </div>
-            <div class="mb-2">
-              <label for="message-text" class="col-form-label">카테고리</label>
-              <select class="form-select" id="inputGroupSelect01">
+            <div class="mb-3">
+              <label for="edit-product-category" class="col-form-label">카테고리</label>
+              <select class="form-select" id="edit-product-category">
                 <option selected>카테고리를 선택하세요</option>
-                <!-- <option value="1">의류</option>
-                <option value="2">패션잡화</option>
-                <option value="3">폰케이스/테크</option>
-                <option value="4">홈데코/리빙</option>
-                <option value="5">스티커/지류</option>
-                <option value="6">문구/오피스</option> -->
               </select>
             </div>
-            <div class="mb-2">
-              <label for="message-text" class="col-form-label">요약 설명</label>
-              <textarea class="form-control" id="message-text" placeholder="상품에 대한 간단한 설명을 입력해주세요"></textarea>
+            <div class="mb-3">
+              <label for="edit-short-description" class="col-form-label">요약 설명</label>
+              <textarea class="form-control" id="edit-short-description"
+                placeholder="상품에 대한 간단한 설명을 입력해주세요"></textarea>
             </div>
-            <div class="mb-2">
-              <label for="message-text" class="col-form-label">상세 설명</label>
-              <textarea class="form-control" id="message-text" style="height: 200px"
-                placeholder="상품에 대한 상세 설명을 입력해주세요"></textarea>
+            <div class="mb-3">
+              <label for="edit-long-description" class="col-form-label">상세 설명</label>
+              <textarea class="form-control" id="edit-long-description" style="height: 200px"
+                placeholder="상품에 대한 상세한 설명을 입력해주세요"></textarea>
             </div>
-            <div class="mb-2">
-              <label for="formFile" class="form-label">제품 사진</label>
-              <input class="form-control" type="file" id="formFile">
+            <div class="mb-3">
+              <label for="edit-product-img" class="form-label">제품 사진</label>
+              <input class="form-control" type="file" id="edit-product-img" accept="image/*" />
             </div>
-            <div class="mb-2">
-              <label for="recipient-name" class="col-form-label">재고 수</label>
-              <input type="text" class="form-control" id="recipient-name" placeholder="10">
+            <div class="mb-3">
+              <label for="edit-product-stock" class="col-form-label">재고 수</label>
+              <input type="text" class="form-control" id="edit-product-stock" placeholder="10" />
             </div>
-            <div class="mb-2">
-              <label for="recipient-name" class="col-form-label">가격</label>
+            <div class="mb-3">
+              <label for="edit-product-price" class="col-form-label">가격</label>
               <div class="input-group">
-                <input type="text" class="form-control" id="recipient-name" placeholder="10000">
+                <input type="text" class="form-control" id="edit-product-price" placeholder="10000" />
                 <span class="input-group-text">원</span>
               </div>
             </div>
