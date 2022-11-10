@@ -32,12 +32,14 @@ function addEventListenerOnJoinBtn(loggedInUser) {
             return Promise.reject(json);
           })
           .then((user) => {
-            alert("회원가입에 성공했습니다. 로그인해주세요.");
+            alert("회원가입에 성공했습니다.");
 
             document.getElementsByTagName("body")[0].className = "";
             document.getElementsByTagName("body")[0].style = "none";
             document.querySelector("#modalJoin").style = "display: none";
             document.querySelector(".modal-backdrop").remove();
+
+            location.reload();
           })
           .catch((error) => alert(error));
       }

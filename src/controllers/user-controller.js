@@ -9,8 +9,11 @@ class UserContoller {
     }
 
     try {
-      const result = await userService.addUser(req.body);
-      return res.status(200).json(result);
+      const { user, token } = await userService.addUser(req.body);
+      if (token) {
+        res.cookie("jwt_token", token);
+      }
+      return res.status(200).json(user);
     } catch (err) {
       next(err);
     }
