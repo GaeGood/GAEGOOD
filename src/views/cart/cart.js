@@ -61,7 +61,33 @@ getAllIndexedDB(DATABASE_NAME, version, objectStore, function (dataList) {
     order__button__container.innerHTML = orderButton__User_Disabled;
   }
 });
-
+function emptyCartImage() {
+  getAllIndexedDB(DATABASE_NAME, version, objectStore, function (dataList) {
+    /* defaultImage 컨테이너 div */
+    const defaultImage = document.createElement("div");
+    defaultImage.classList.add("default__image");
+    cart__container.prepend(defaultImage);
+    const default__Image = document.querySelector(".default__image");
+    /* defaultText 컨테이너 div */
+    const defaultText = document.createElement("div");
+    defaultText.classList.add("default__text");
+    cart__container.appendChild(defaultText);
+    const default__Text = document.querySelector(".default__text");
+    console.log(dataList.length);
+    if (dataList.length !== 0) {
+      default__Image.remove();
+      default__Text.remove();
+    } else {
+      //장바구니가 비었을 경우
+      default__Image.innerHTML = `<i class="fa-solid fa-cart-shopping" id="empty-cart"></i>`;
+      default__Text.textContent = "장바구니가 비었습니다. 상품을 추가해보세요!";
+      total__amount.textContent = `${0}개`;
+      total__price.textContent = `${0}원`;
+      deliveryFee.textContent = `${0}원`;
+      total__sum.textContent = `${0}원`;
+    }
+  });
+}
 function getAllIndexedDB(DATABASE_NAME, version, objectStore, cb) {
   if (window.indexedDB) {
     const request = indexedDB.open(DATABASE_NAME, version);
@@ -238,6 +264,12 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
       if (dataList.length === 0) {
         wholeCheck.checked = false;
       }
+      console.log(`현재 i는 ${i}`);
+      console.log(`현재 dataList.length는 ${dataList.length}`);
+
+      if (i === 0) {
+        emptyCartImage();
+      }
 
       //   } else {
       // 취소(아니오) 버튼 클릭 시 이벤트
@@ -359,6 +391,9 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
       //db에 데이터 없으면 전체삭제 체크박스 비워주기.
       if (dataList.length === 0) {
         wholeCheck.checked = false;
+      }
+      if (i === dataList.length - 1) {
+        emptyCartImage();
       }
       // } else {
       //   // 취소(아니오) 버튼 클릭 시 이벤트
