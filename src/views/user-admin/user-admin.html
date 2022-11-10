@@ -64,7 +64,7 @@
           <form>
             <div class="mb-3">
               <label for="category-name" class="col-form-label">카테고리 이름</label>
-              <input type="text" class="form-control" id="category-name" placeholder="문구/오피스" />
+              <input type="text" class="form-control" id="category-name" placeholder="문구/오피스" required />
             </div>
           </form>
         </div>
@@ -92,7 +92,7 @@
           <form>
             <div class="mb-3">
               <label for="edit-category-name" class="col-form-label">카테고리 이름</label>
-              <input type="text" class="form-control" id="edit-category-name" placeholder="문구/오피스" />
+              <input type="text" class="form-control" id="edit-category-name" placeholder="문구/오피스" required />
             </div>
           </form>
         </div>
@@ -105,22 +105,22 @@
     </div>
   </div>
 
-  <!--제품 추가-->
+  <!--상품 추가-->
   <div class="modal fade" id="btn__admin__addProduct" tabindex="-1" aria-labelledby="btn__admin__addProduct__ModalLabel"
     aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="btn__admin__product__ModalLabel">
-            제품을 판매해 보세요
+            상품을 판매해 보세요
           </h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form action="/api/products" method="post" enctype="multipart/form-data">
+          <form>
             <div class="mb-3">
               <label for="create-product-name" class="col-form-label">상품명</label>
-              <input type="text" class="form-control" id="create-product-name" placeholder="상품명을 입력해주세요" />
+              <input type="text" class="form-control" id="create-product-name" placeholder="상품명을 입력해주세요" required />
             </div>
             <div class="mb-3">
               <label for="create-product-category" class="col-form-label">카테고리</label>
@@ -139,45 +139,45 @@
                 placeholder="상품에 대한 상세한 설명을 입력해주세요"></textarea>
             </div>
             <div class="mb-3">
-              <label for="create-product-img" class="form-label">제품 사진</label>
+              <label for="create-product-img" class="form-label">상품 사진</label>
               <input class="form-control" type="file" id="create-product-img" accept="image/*" />
             </div>
             <div class="mb-3">
-              <label for="create-product-stock" class="col-form-label">재고 수</label>
-              <input type="text" class="form-control" id="create-product-stock" placeholder="10" />
+              <label for="create-product-stock" class="col-form-label">재고 수량</label>
+              <input type="number" class="form-control" id="create-product-stock" placeholder="10" required />
             </div>
             <div class="mb-3">
               <label for="create-product-price" class="col-form-label">가격</label>
               <div class="input-group">
-                <input type="text" class="form-control" id="create-product-price" placeholder="10000" />
+                <input type="number" class="form-control" id="create-product-price" placeholder="10000" required />
                 <span class="input-group-text">원</span>
               </div>
             </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-primary col submit__product">
-                제품 추가하기
-              </button>
-            </div>
           </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary col submit__product">
+            상품 추가하기
+          </button>
         </div>
       </div>
     </div>
   </div>
 
-  <!--제품 수정-->
+  <!--상품 수정-->
   <div class="modal fade" id="btn__admin__editProduct" tabindex="-1"
     aria-labelledby="btn__admin__editProduct__ModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="btn__admin__editProduct__ModalLabel">제품을 수정합니다</h1>
+          <h1 class="modal-title fs-5" id="btn__admin__editProduct__ModalLabel">상품을 수정합니다</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <form>
             <div class="mb-3">
               <label for="edit-product-name" class="col-form-label">상품명</label>
-              <input type="text" class="form-control" id="edit-product-name" placeholder="상품명을 입력해주세요" />
+              <input type="text" class="form-control" id="edit-product-name" placeholder="상품명을 입력해주세요" required />
             </div>
             <div class="mb-3">
               <label for="edit-product-category" class="col-form-label">카테고리</label>
@@ -187,8 +187,7 @@
             </div>
             <div class="mb-3">
               <label for="edit-short-description" class="col-form-label">요약 설명</label>
-              <textarea class="form-control" id="edit-short-description"
-                placeholder="상품에 대한 간단한 설명을 입력해주세요"></textarea>
+              <textarea class="form-control" id="edit-short-description" placeholder="상품에 대한 간단한 설명을 입력해주세요"></textarea>
             </div>
             <div class="mb-3">
               <label for="edit-long-description" class="col-form-label">상세 설명</label>
@@ -196,24 +195,24 @@
                 placeholder="상품에 대한 상세한 설명을 입력해주세요"></textarea>
             </div>
             <div class="mb-3">
-              <label for="edit-product-img" class="form-label">제품 사진</label>
+              <label for="edit-product-img" class="form-label">상품 사진</label>
               <input class="form-control" type="file" id="edit-product-img" accept="image/*" />
             </div>
             <div class="mb-3">
-              <label for="edit-product-stock" class="col-form-label">재고 수</label>
-              <input type="text" class="form-control" id="edit-product-stock" placeholder="10" />
+              <label for="edit-product-stock" class="col-form-label">재고 수량</label>
+              <input type="number" class="form-control" id="edit-product-stock" placeholder="10" required />
             </div>
             <div class="mb-3">
               <label for="edit-product-price" class="col-form-label">가격</label>
               <div class="input-group">
-                <input type="text" class="form-control" id="edit-product-price" placeholder="10000" />
+                <input type="number" class="form-control" id="edit-product-price" placeholder="10000" required />
                 <span class="input-group-text">원</span>
               </div>
             </div>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary col submit__edit__product">제품 수정하기</button>
+          <button type="button" class="btn btn-primary col submit__edit__product">상품 수정하기</button>
         </div>
       </div>
     </div>
