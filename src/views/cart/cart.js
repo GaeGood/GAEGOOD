@@ -353,7 +353,11 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
 
                 total__amount.textContent = `${addCommas(amount)}개`;
                 total__price.textContent = `${addCommas(price)}원`;
-                deliveryFee.textContent = `${addCommas(3000)}원`;
+                if (convertToNumber(total__price.textContent) <= 50000) {
+                  deliveryFee.textContent = `${addCommas(3000)}원`;
+                } else {
+                  deliveryFee.textContent = `${0}원`;
+                }
                 total__sum.textContent = `${addCommas(
                   price + convertToNumber(deliveryFee.textContent)
                 )}원`;
@@ -571,7 +575,7 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
             total__amount.textContent = `${addCommas(totalAmountCurrent)}개`;
             total__price.textContent = `${addCommas(totalPriceCurrent)}원`;
             /* 배송비 */
-            if (convertToNumber(total__amount.textContent) !== 0) {
+            if (convertToNumber(total__price.textContent) <= 50000) {
               deliveryFee.textContent = `${addCommas(3000)}원`;
             } else {
               deliveryFee.textContent = `${0}원`;
@@ -679,7 +683,7 @@ function deleteIndexedDBdata(DATABASE_NAME, version, objectStore, targetId) {
             total__amount.textContent = `${addCommas(totalAmountCurrent)}개`;
             total__price.textContent = `${addCommas(totalPriceCurrent)}원`;
             /* 배송비 */
-            if (convertToNumber(total__amount.textContent) !== 0) {
+            if (convertToNumber(total__price.textContent) <= 50000) {
               deliveryFee.textContent = `${addCommas(3000)}원`;
             } else {
               deliveryFee.textContent = `${0}원`;
