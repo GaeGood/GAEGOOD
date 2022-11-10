@@ -9,7 +9,9 @@ const mainMypageHeader = document.querySelector(".main__mypage__header");
 mainMypageHeader.innerHTML = `안녕하세요, ${name}님!`;
 
 // 페이지 로드시 무조건 최근주문순으로
-orderListDefultSort();
+if (orderList.length) {
+  orderListDefultSort();
+}
 
 function orderListDefultSort() {
   orderListZone.innerHTML = "";
@@ -47,6 +49,7 @@ function orderListOldSort() {
 
 function orderListMake(order) {
   // 주문내역이 있으면 주문내역 없다는 안내멘트 지우기
+
   orderNone.className = "order__none hidden";
 
   const orderId = order._id;

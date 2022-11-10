@@ -1,5 +1,6 @@
 import { userModel } from "../db";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 class UserService {
   async addUser(userInfo) {
     const { email, password } = userInfo;
@@ -15,8 +16,17 @@ class UserService {
       const hashPassword = await bcrypt.hash(password, saltRound);
       userInfo.password = hashPassword;
       const user = await userModel.create(userInfo);
-      return user;
+      const payload = {
+        id: user._id,
+        role: user.role,
+      };
+      const key = process.env.JWT_SECRET_KEY || "secret";
+      const token = jwt.sign(payload, key, {
+        expiresIn: "2h",
+      });
+      return { user, token };
     } catch (err) {
+      console.log(err);
       const error = new Error(" 회원가입 도중 에러가 발생했습니다.");
       error.statusCode = 400;
       throw error;

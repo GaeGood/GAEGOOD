@@ -291,6 +291,7 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
         }
       });
 
+      checkedDateRender();
       disabledOrderButton(dataList);
     });
 
@@ -309,8 +310,8 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
       const selectAll = document.querySelector('input[name="wholeCheck"]');
 
       selectAll.checked = checkboxes.length === singlechecked.length;
-      checkedDateRender();
       checkedStatusUpdate(e);
+      checkedDateRender();
       renderCheckedValues();
       disabledOrderButton(dataList);
     }
@@ -328,43 +329,44 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
     }
 
     function checkedDateRender() {
-      // 전체 체크박스 하는중
-      const checkboxes = document.querySelectorAll('input[name="singleCheck"]');
-      // 선택된 체크박스
-      const singlechecked = document.querySelectorAll(
-        'input[name="singleCheck"]:checked'
-      );
-      let amount = 0;
-      let price = 0;
-      if (singlechecked.length === 0) {
-        total__amount.textContent = `${0}개`;
-        total__price.textContent = `${0}원`;
-        deliveryFee.textContent = `${0}원`;
-        total__sum.textContent = `${0}원`;
-      } else {
-        checkboxes.forEach((checkbox) => {
-          if (checkbox.checked) {
-            const key = checkbox.value;
+      getAllIndexedDB(DATABASE_NAME, version, objectStore, function (values) {
+        // 전체 체크박스 하는중
+        const checkboxes = document.querySelectorAll(
+          'input[name="singleCheck"]'
+        );
+        let amount = 0;
+        let price = 0;
+        values.forEach((value) => {
+          if (value.checked) {
+            checkboxes.forEach((checkbox) => {
+              if (checkbox.checked) {
+                const key = checkbox.value;
+                total__amount.textContent = `${0}개`;
+                total__price.textContent = `${0}원`;
+                deliveryFee.textContent = `${0}원`;
+                total__sum.textContent = `${0}원`;
+
+                if (value.id === key) {
+                  amount += value.amount;
+                  price += value.amount * value.price;
+                }
+
+                total__amount.textContent = `${addCommas(amount)}개`;
+                total__price.textContent = `${addCommas(price)}원`;
+                deliveryFee.textContent = `${addCommas(3000)}원`;
+                total__sum.textContent = `${addCommas(
+                  price + convertToNumber(deliveryFee.textContent)
+                )}원`;
+              }
+            });
+          } else {
             total__amount.textContent = `${0}개`;
             total__price.textContent = `${0}원`;
             deliveryFee.textContent = `${0}원`;
             total__sum.textContent = `${0}원`;
-
-            dataList.forEach((elem) => {
-              if (elem.id === key) {
-                amount += elem.amount;
-                price += elem.amount * elem.price;
-              }
-            });
-            total__amount.textContent = `${addCommas(amount)}개`;
-            total__price.textContent = `${addCommas(price)}원`;
-            deliveryFee.textContent = `${addCommas(3000)}원`;
-            total__sum.textContent = `${addCommas(
-              price + convertToNumber(deliveryFee.textContent)
-            )}원`;
           }
         });
-      }
+      });
     }
 
     /* 체크박스 - 전체 선택 클릭 이벤트 */
@@ -376,7 +378,6 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
       checkboxes.forEach((checkbox) => {
         checkbox.checked = wholeCheck.checked;
       });
-      checkedDateRender();
       updateCheckedAllIndexedDB(
         DATABASE_NAME,
         version,
@@ -384,6 +385,7 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
         checkStatus
       );
       //getAllindexedDB 해서, 모든 value.checked = true으로 put
+      checkedDateRender();
       disabledOrderButton(dataList);
     }
 
@@ -412,6 +414,7 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
         document.querySelector(`#${deleteTarget}`).remove();
       });
 
+      checkedDateRender();
       disabledOrderButton(dataList);
       //db에 데이터 없으면 전체삭제 체크박스 비워주기.
       getAllIndexedDB(DATABASE_NAME, version, objectStore, function (result) {
