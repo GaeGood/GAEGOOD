@@ -1,6 +1,5 @@
-import { main } from "/main.js";
+import { main, addCommas } from "/public/js/main.js";
 const { loggedInUser } = await main();
-import { addCommas } from "/useful-functions.js";
 
 const { orderList, name } = loggedInUser;
 

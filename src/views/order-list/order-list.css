@@ -1,5 +1,4 @@
-@import "/../reset.css";
-@import "/../navbar.css";
+@import "/public/css/main.css";
 
 * {
   padding: 0px;
