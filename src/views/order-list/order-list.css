@@ -79,8 +79,20 @@ a:hover {
   width: 500px;
 }
 
+.table__title {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .table-header {
   font-size: 25px;
+}
+
+.order__sort {
+  font-size: small;
+  color: #767676;
 }
 
 /* 주문정보 카드존 */
