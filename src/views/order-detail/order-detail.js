@@ -39,7 +39,7 @@ fetch(`/api/orders/${oid}`)
 // order-content 렌더
 function renderOrderContent(order) {
   return `
-    <h2 class="order-detail__title">주문상세</h2>
+    <h2 class="order-detail__title" id="order-detail__main-title">주문상세</h2>
     <div class="order-detail__order-content__outer-wrap card">
       <div class="order-detail__order-content__wrap">
         <div class="order-detail__order-content order-detail__underline"><h6>
@@ -57,6 +57,12 @@ function renderOrderContent(order) {
           class="order-detail__order-content card"
           id="order-detail__order-content__product-info"
         ></div>
+      </div>
+      <div class="order-detail__order-content__wrap">
+        <label class="order-detail__order-content__label">배송비</label>
+        <div class="order-detail__order-content">
+          3,000 원
+        </div>
       </div>
       <div class="order-detail__order-content__wrap">
         <label class="order-detail__order-content__label">총 결제금액</label>
@@ -145,7 +151,7 @@ function checkOrderShippingStatus(order) {
   const shippingStatus = order.shippingStatus;
   if (shippingStatus === "배송전") {
     document.getElementById("shipping-ready").style.color = "black";
-    document.getElementById("shipping-ready").style.fontSize = "32px";
+    document.getElementById("shipping-ready").style.fontSize = "36px";
   } else {
     const orderEditBtn = document.getElementById(
       "order__options__option__edit-btn"
@@ -161,10 +167,10 @@ function checkOrderShippingStatus(order) {
 
     if (shippingStatus === "배송중") {
       document.getElementById("shipping-ongoing").style.color = "black";
-      document.getElementById("shipping-ongoing").style.fontSize = "32px";
+      document.getElementById("shipping-ongoing").style.fontSize = "36px";
     } else if (shippingStatus === "배송완료") {
       document.getElementById("shipping-finished").style.color = "black";
-      document.getElementById("shipping-finished").style.fontSize = "32px";
+      document.getElementById("shipping-finished").style.fontSize = "36px";
     } else if (shippingStatus === "취소완료") {
       document.getElementById(
         "order-detail__order-content__shipping-status__wrap"

@@ -51,7 +51,7 @@ getAllIndexedDB(DATABASE_NAME, version, objectStore, function (dataList) {
     }
   } else {
     //장바구니가 비었을 경우
-    default__Image.innerHTML = `<i class="fa-solid fa-cart-shopping"></i>`;
+    default__Image.innerHTML = `<i class="fa-solid fa-cart-shopping" id="empty-cart"></i>`;
     default__Text.textContent = "장바구니가 비었습니다. 상품을 추가해보세요!";
     total__amount.textContent = `${0}개`;
     total__price.textContent = `${0}원`;

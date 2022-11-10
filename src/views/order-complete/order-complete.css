@@ -112,12 +112,13 @@ body {
 }
 /* process bar */
 .process__bar {
-  width: 30%;
+  width: 100%;
   height: 10%;
   display: flex;
   flex-wrap: wrap;
   font-size: 20px;
   align-items: center;
+  margin-top: 50px;
 }
 .process__bar p {
   margin-left: 10px;
