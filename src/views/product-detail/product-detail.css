@@ -44,6 +44,12 @@ body {
   height: 1px;
   background-color: rgb(180, 180, 180);
 }
+
+.deliveryFee__info {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
 /* main */
 #main__container {
   width: 100%;
@@ -165,6 +171,11 @@ body {
 .order__button__user,
 .order__button__any {
   width: 98%;
+}
+.order__button__user > a,
+.order__button__any > a {
+  text-decoration: none;
+  color: white;
 }
 
 /*footer*/
