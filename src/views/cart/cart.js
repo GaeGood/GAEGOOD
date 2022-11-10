@@ -44,6 +44,7 @@ getAllIndexedDB(DATABASE_NAME, version, objectStore, function (dataList) {
     default__Image.remove();
     default__Text.remove();
     dataRender(dataList, DATABASE_NAME, version, objectStore);
+
     if (loggedInUser) {
       order__button__container.innerHTML = orderButton__User;
     } else {
@@ -150,6 +151,14 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
     /* 맨처음 화면에서 결제 금액란 렌더링 해줌 */
     totalAmount += dataList[i].amount;
     totalPrice += dataList[i].amount * dataList[i].price;
+    /* 맨처음 checked === false 로 세팅해줌 */
+    updateCheckedIndexedDB(
+      DATABASE_NAME,
+      version,
+      objectStore,
+      dataList[i].id,
+      false
+    );
     /* cart__list__top 컨테이너 div */
     cartList.classList.add("cart__list__top");
     cart__container.prepend(cartList);
@@ -738,7 +747,9 @@ function updateCheckedIndexedDB(
           const targetCheckbox = document.querySelector(
             `input[value="${key}"]`
           );
-          targetCheckbox.checked = value.checked;
+          if (targetCheckbox) {
+            targetCheckbox.checked = value.checked;
+          }
         };
       };
       store.get(key).onerror = function () {
