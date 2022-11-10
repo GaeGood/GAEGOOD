@@ -2,16 +2,19 @@ import { productService } from "../services";
 
 class ProductContoller {
   async addProduct(req, res, next) {
-    const {
-      name,
-      category,
-      shortDesc,
-      longDesc,
-      price,
-      smallImageURL,
-      bigImageURL,
-      stock,
-    } = req.body;
+    console.log("req.body");
+    console.log(req.body);
+
+    console.log("req.file");
+    console.log(req.file);
+
+    const { name, category, shortDesc, longDesc, price, bigImageURL, stock } =
+      req.body;
+
+    const smallImageURL = "/public/images/product-images/" + req.file.filename;
+
+    console.log("smallImageURL");
+    console.log(smallImageURL);
 
     if (
       !name ||

@@ -63,7 +63,7 @@ section {
 
 /* 상품 존 */
 .table.order__product__table {
-  width: 1000px;
+  width: 100%;
 }
 
 .table__zone {
