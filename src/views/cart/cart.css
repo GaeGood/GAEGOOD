@@ -6,12 +6,6 @@
   margin: 0px;
 }
 
-/* body */
-body {
-  width: 100vw;
-  height: 100vh;
-}
-
 .border__line__container {
   display: flex;
   justify-content: center;
@@ -23,12 +17,30 @@ body {
   height: 1px;
   background-color: rgb(53, 53, 53);
 }
-
+.main__title__zone {
+  margin: 20px;
+}
+.process__bar {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 20px;
+  align-items: center;
+  margin-top: 50px;
+}
+.process__bar p {
+  margin-left: 10px;
+}
+.process__bar p:first-child {
+  font-size: 30px;
+  font-weight: 500;
+}
 /* main */
 #main__container {
   width: 100%;
   height: 100%;
-  padding: 10px 100px;
+  padding: 100px;
   box-sizing: border-box;
   font-family: "Noto Sans KR", sans-serif;
   color: rgb(39, 48, 48);
@@ -40,121 +52,194 @@ body {
   grid-auto-rows: minmax(150px, auto);
   place-items: center;
   width: 100%;
-  height: 60%;
+  height: 30%;
   box-sizing: border-box;
-  overflow: auto;
 }
 
 .checkbox__container {
-  padding: 40px 0 20px 0;
+  height: 8%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px;
+}
+
+.checkbox__container > * {
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+#checked__delete {
+  width: 100px;
+  height: 30px;
+  margin-left: 30px;
+  border: none;
+  background-color: #bcbcbc;
+  border-radius: 5px;
+}
+
+#checked__delete:hover {
+  opacity: 0.6;
+}
+
+.checkbox__all,
+.cart__detail__check {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #bcbcbc;
+  cursor: pointer;
+}
+
+.cart__detail__check {
+  margin: auto;
 }
 
 .cart__list__top {
-  width: 100%;
-  height: 65%;
+  width: 80%;
+  height: 100%;
   display: flex;
   justify-content: space-between;
-  padding-right: 100px;
-  padding-left: 50px;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 20px 0px;
+}
+
+.cart__list__top:last-child {
+  border: none;
+}
+
+.cart__detail__image {
+  width: 150px;
+  height: 150px;
 }
 
 .cart__detail {
-  margin: 0 20px;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
 }
-.cart__detail > div {
-  margin: 5px 20px;
+
+.cart__detail div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
 }
 
 .cart__detail__name {
-  font-size: 20px;
+  font-size: 16px;
 }
 .cart__detail__price {
-  font-size: 18px;
+  font-size: 14px;
 }
 .cart__detail__bottom {
   width: 100%;
-  height: 35%;
-  display: flex;
-  justify-content: space-between;
-  font-size: 20px;
+  font-size: 14px;
 }
 .cart__amount__btn__container {
-  display: flex;
-  justify-content: space-between;
+  color: black;
 }
 
 .cart__plus__button,
 .cart__minus__button {
-  height: 30px;
-  width: 30px;
-  margin-left: 10px;
+  width: 25px;
+  height: 25px;
   border: none;
   border-radius: 5px;
+  margin: 0 10px;
   font-size: 20px;
+}
+
+.cart__container .cart__delete__button {
+  font-size: 28px;
+  margin-left: 10px;
+  border: none;
+  background-color: white;
+}
+
+.cart__plus__button:hover,
+.cart__minus__button:hover,
+.cart__container .cart__delete__button:hover {
+  opacity: 0.6;
 }
 
 .pay__container {
   width: 100%;
-  height: 40%;
-  padding: 20px;
-  box-sizing: border-box;
+  height: 15%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(228, 228, 228);
+  border-radius: 30px;
+  margin-top: 10px;
 }
-.pay__container > div:first-child {
-  font-size: 30px;
-  margin-bottom: 20px;
+
+#total__price {
+  margin-top: 10px;
+  font-size: 20px;
 }
+
 /* 결제금액 */
 .pay__list {
-  background-color: rgb(228, 228, 228);
-  border-radius: 10px;
   width: 100%;
-  height: 60%;
+  height: 70%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   padding: 10px 20px;
-  font-size: 20px;
+  font-size: 16px;
+
+  box-sizing: border-box;
 }
 .pay__detail__container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  margin: 5px 0px;
 }
-.total__amount,
-.total__price,
-.deliveryFee,
-.total__sum {
-  width: 150px;
-  height: 40px;
-  border: 2px solid black;
+
+.pay__detail__container div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25%;
 }
 
 .order__button__container {
   width: 100%;
-  height: 30%;
+  height: 20%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 /* 주문서 작성 버튼 */
-.order__button {
+.order__button__container button,
+.order__button__user,
+.order__button__user__disabled {
   background-color: rgb(243, 225, 199);
   border: none;
-  width: 50%;
-  height: 60%;
+  width: 150px;
+  height: 30px;
   border-radius: 10px;
-  font-size: 30px;
+  font-size: 18px;
+  margin-bottom: 10px;
 }
-/*footer*/
+.order__button__container button a,
+.order__button__user a {
+  color: rgba(0, 0, 0, 0.8);
+  text-decoration: none;
+}
 
-footer {
-  background-color: rgb(207, 167, 107);
-  width: 100%;
-  height: 10%;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.order__button__container button a:hover,
+.order__button__user a:hover {
+  opacity: 0.6;
 }
+
+/*footer*/
 
 /*display:none*/
 .hidden {
@@ -163,4 +248,26 @@ footer {
 
 .disabled {
   background-color: gray;
+}
+
+#empty-cart {
+  font-size: 64px;
+}
+
+.default__image,
+.default__text {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.default__image {
+  align-items: flex-end;
+}
+
+.default__text {
+  align-items: flex-start;
 }

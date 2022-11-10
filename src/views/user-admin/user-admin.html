@@ -117,7 +117,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form>
+          <form action="/api/products" method="post" enctype="multipart/form-data">
             <div class="mb-3">
               <label for="create-product-name" class="col-form-label">상품명</label>
               <input type="text" class="form-control" id="create-product-name" placeholder="상품명을 입력해주세요" />
@@ -153,12 +153,12 @@
                 <span class="input-group-text">원</span>
               </div>
             </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary col submit__product">
+                제품 추가하기
+              </button>
+            </div>
           </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary col submit__product">
-            제품 추가하기
-          </button>
         </div>
       </div>
     </div>
