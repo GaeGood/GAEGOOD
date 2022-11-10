@@ -13,7 +13,7 @@ productRouter.post(
   "/",
   loginRequired,
   adminRequired,
-  productImageUpload.single("product-image"),
+  productImageUpload.single("productImage"),
   productController.addProduct
 );
 productRouter.get("/", productController.getProductList);
@@ -24,6 +24,7 @@ productRouter.put(
   bodyEmptyChecker,
   loginRequired,
   adminRequired,
+  productImageUpload.single("productImage"),
   productController.editProduct
 );
 productRouter.delete(

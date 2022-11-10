@@ -6,7 +6,7 @@ const categoryWrap = document.getElementById("category__wrap");
 const createCategory = (category) => {
   return `
         <li class="nav-item category">
-          <div class="nav-link">${category.name}</div>
+          <div class="nav-link">#${category.name}</div>
         </li>`;
 };
 
@@ -21,7 +21,7 @@ const createCard = (item) => {
   }" />
       <div class="card-body">
       <div class="card-text card-title">${item.name}</div>
-      <div class="card-text card-spec">${item.shortDesc}</div>
+      <div class="card-text card-hashtags">${item.category}</div>
       <div class="card-text card-price">₩ ${addCommas(item.price)}</div>
       </div>
     </a>
@@ -40,15 +40,13 @@ fetch("/api/categories")
     return new Promise.reject(json);
   })
   .then((categoryList) => {
-    console.log("categoryList");
-    console.log(categoryList);
     categoryList.forEach((category) => {
       const categoryDiv = createCategory(category);
       categoryWrap.innerHTML += categoryDiv;
     });
   })
   .catch((e) => {
-    alert(e);
+    alert(`에러 발생 : ${e}`);
   });
 
 fetch("/api/products")
@@ -86,7 +84,7 @@ fetch("/api/products")
 
         productList.forEach((product) => {
           if (
-            clickedCategoryName === product.category ||
+            product.category.includes(clickedCategoryName) ||
             clickedCategoryName === "전체"
           ) {
             searchByCategoryProductList.push(product);
@@ -112,5 +110,5 @@ fetch("/api/products")
     });
   })
   .catch((e) => {
-    alert(e);
+    alert(`에러 발생 : ${e}`);
   });

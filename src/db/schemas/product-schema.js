@@ -9,6 +9,7 @@ const ProductSchema = new Schema(
     category: {
       type: String,
       required: true,
+      trim: true,
     },
     shortDesc: {
       type: String,
@@ -41,5 +42,12 @@ const ProductSchema = new Schema(
     collection: "products",
   }
 );
+
+ProductSchema.static("formatHashtags", function (category) {
+  return category
+    .split(",")
+    .map((word) => (word.startsWith("#") ? word : `#${word}`))
+    .join(" ");
+});
 
 export { ProductSchema };

@@ -17,13 +17,30 @@
   height: 1px;
   background-color: rgb(53, 53, 53);
 }
-
+.main__title__zone {
+  margin: 20px;
+}
+.process__bar {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 20px;
+  align-items: center;
+  margin-top: 50px;
+}
+.process__bar p {
+  margin-left: 10px;
+}
+.process__bar p:first-child {
+  font-size: 30px;
+  font-weight: 500;
+}
 /* main */
 #main__container {
   width: 100%;
-  height: 70%;
-  margin-top: 80px;
-  padding: 10px 100px;
+  height: 100%;
+  padding: 100px;
   box-sizing: border-box;
   font-family: "Noto Sans KR", sans-serif;
   color: rgb(39, 48, 48);
@@ -201,7 +218,8 @@
 }
 /* 주문서 작성 버튼 */
 .order__button__container button,
-.order__button__user {
+.order__button__user,
+.order__button__user__disabled {
   background-color: rgb(243, 225, 199);
   border: none;
   width: 150px;

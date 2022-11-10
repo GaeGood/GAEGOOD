@@ -168,7 +168,7 @@ for (let i = 0; i < adminPageList.length - 2; i++) {
           mainTag.append(newHtml);
         })
         .then(() => {
-          // productManagementCreate();
+          productManagementCreate();
           productManagementEdit();
           productManagementDelete();
         });
@@ -403,29 +403,43 @@ function productManagementEdit() {
 function productManagementCreate() {
   const addProdcutBtn = document.querySelector(".submit__product");
   addProdcutBtn.addEventListener("click", (e) => {
+    const name = document.getElementById("create-product-name");
+    const category = document.getElementById("create-product-category");
+    const shortDesc = document.getElementById("create-product-shortDesc");
+    const longDesc = document.getElementById("create-product-longDesc");
+    const imageFile = document.getElementById("create-product-imageFile");
+    const stock = document.getElementById("create-product-stock");
+    const price = document.getElementById("create-product-price");
+
+    const formData = new FormData();
+
+    formData.append("name", name.value);
+    formData.append("category", category.value);
+    formData.append("shortDesc", shortDesc.value);
+    formData.append("longDesc", longDesc.value);
+    formData.append("productImage", imageFile.files[0]);
+    formData.append("stock", stock.value);
+    formData.append("price", price.value);
+
     fetch("/api/products", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      enctype: "multipart/form-data",
-      //`${document.querySelector("#category-name").value}`,
-      body: JSON.stringify({
-        name: "개발자 버튼 코스터 2Set",
-        category: "홈데코/리빙",
-        shortDesc: "개발자 버튼 코스터 2Set 짧은 설명입니다.",
-        longDesc:
-          "개발자 버튼 코스터 2Set 긴 설명입니다. 개발자 버튼 코스터 2Set 긴 설명입니다. 개발자 버튼 코스터 2Set 긴 설명입니다. 개발자 버튼 코스터 2Set 긴 설명입니다. 개발자 버튼 코스터 2Set 긴 설명입니다. 개발자 버튼 코스터 2Set 긴 설명입니다. 개발자 버튼 코스터 2Set 긴 설명입니다. 개발자 버튼 코스터 2Set 긴 설명입니다. 개발자 버튼 코스터 2Set 긴 설명입니다. ",
-        price: 21000,
-        smallImageURL:
-          "/public/images/product-images/개발자-버튼-코스터-2Set.png",
-        bigImageURL:
-          "/public/images/product-images/개발자-버튼-코스터-2Set.png",
-        stock: "100",
-      }),
+      body: formData,
+      headers: {},
     })
-      .then((res) => res.json())
+      .then(async (res) => {
+        const json = await res.json();
+
+        if (res.ok) {
+          return json;
+        }
+
+        return Promise.reject(json);
+      })
       .then((data) => {
+        alert(data);
+        console.log("data");
+        console.log(data);
+
         const newData = {
           _id: data._id,
           date: data.createdAt.slice(0, 10),
@@ -463,6 +477,11 @@ function productManagementCreate() {
                   </td>
                 </tr>`
         );
+      })
+      .catch((e) => {
+        alert(e);
+        console.log("e");
+        console.log(e);
       });
   });
 }
