@@ -37,6 +37,7 @@ let totalAmountCurrent = 0;
 let totalPriceCurrent = 0;
 let totalAmount = 0;
 let totalSumAmount = 0;
+let isFirst = false;
 /* 데이터 렌더링 */
 getAllIndexedDB(DATABASE_NAME, version, objectStore, function (dataList) {
   //dataList === response.target.result
@@ -248,12 +249,6 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
         let countCheckedFalse = checkedArray.filter(
           (element) => element === false
         ).length;
-        console.log(`checkedArray : ${checkedArray}`);
-        console.log(`countCheckedFalse : ${countCheckedFalse}`);
-        console.log(`dataList.length : ${dataList.length}`);
-        console.log(
-          `total__amount: ${convertToNumber(total__amount.textContent)}`
-        );
         if (countCheckedFalse === result.length) {
           // if (
           //   convertToNumber(total__amount.textContent) === 0 ||
@@ -289,9 +284,12 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
         wholeCheck.checked = false;
       }
 
-      if (i === 0) {
-        emptyCartImage();
-      }
+      getAllIndexedDB(DATABASE_NAME, version, objectStore, function (result) {
+        if (result.length === 0 && !isFirst) {
+          isFirst = true;
+          emptyCartImage();
+        }
+      });
 
       disabledOrderButton(dataList);
     });
@@ -416,20 +414,12 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
 
       disabledOrderButton(dataList);
       //db에 데이터 없으면 전체삭제 체크박스 비워주기.
-
-      // if (dataList.length === 0) {
-      //   wholeCheck.checked = false;
-      // }
-      // if (i === dataList.length - 1 && dataList.length === 0) {
-      //   emptyCartImage();
-      // }
       getAllIndexedDB(DATABASE_NAME, version, objectStore, function (result) {
         if (result.length === 0) {
           wholeCheck.checked = false;
         }
-        if (result.length === 0) {
-          default__Image.remove();
-          default__Text.remove();
+        if (result.length === 0 && !isFirst) {
+          isFirst = true;
           emptyCartImage();
         }
       });
