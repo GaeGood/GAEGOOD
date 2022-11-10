@@ -43,13 +43,13 @@ getAllIndexedDB(DATABASE_NAME, version, objectStore, function (dataList) {
   if (dataList.length !== 0) {
     default__Image.remove();
     default__Text.remove();
-    dataRender(dataList, DATABASE_NAME, version, objectStore);
 
     if (loggedInUser) {
       order__button__container.innerHTML = orderButton__User;
     } else {
       order__button__container.innerHTML = orderButton__Any;
     }
+    dataRender(dataList, DATABASE_NAME, version, objectStore);
   } else {
     //장바구니가 비었을 경우
     default__Image.innerHTML = `<i class="fa-solid fa-cart-shopping" id="empty-cart"></i>`;
@@ -74,7 +74,6 @@ function emptyCartImage() {
     defaultText.classList.add("default__text");
     cart__container.appendChild(defaultText);
     const default__Text = document.querySelector(".default__text");
-    console.log(dataList.length);
     if (dataList.length !== 0) {
       default__Image.remove();
       default__Text.remove();
@@ -102,6 +101,9 @@ function getAllIndexedDB(DATABASE_NAME, version, objectStore, cb) {
       const store = transaction.objectStore(objectStore);
       store.getAll().onsuccess = function (response) {
         cb(response.target.result);
+      };
+      store.getAll().onerror = function () {
+        alert("indexedDB의 데이터를 가져오는데 실패했습니다.");
       };
     };
   } else {
@@ -241,29 +243,37 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
     checkedDateRender();
     /* 체크된 상품 없거나 전부 삭제되면 주문서 작성하기 비활성화 */
     function disabledOrderButton(dataList) {
-      const checkedArray = dataList.map((data) => data.checked);
-      if (
-        convertToNumber(total__amount.textContent) === 0 ||
-        dataList.length === 0 ||
-        checkedArray[0] === false
-      ) {
-        console.log("ㅎㅇㅎㅇ");
-        order__button__container.innerHTML = "";
-        order__button__container.innerHTML = orderButton__User__Disabled;
-      } else {
-        if (loggedInUser) {
+      getAllIndexedDB(DATABASE_NAME, version, objectStore, function (result) {
+        const checkedArray = result.map((data) => data.checked);
+        let countCheckedFalse = checkedArray.filter(
+          (element) => element === false
+        ).length;
+        console.log(`checkedArray : ${checkedArray}`);
+        console.log(`countCheckedFalse : ${countCheckedFalse}`);
+        console.log(`dataList.length : ${dataList.length}`);
+        console.log(
+          `total__amount: ${convertToNumber(total__amount.textContent)}`
+        );
+        if (countCheckedFalse === result.length) {
+          // if (
+          //   convertToNumber(total__amount.textContent) === 0 ||
+          //   dataList.length === 0
+          // ) {
           order__button__container.innerHTML = "";
-          order__button__container.innerHTML = orderButton__User;
+          order__button__container.innerHTML = orderButton__User__Disabled;
         } else {
-          order__button__container.innerHTML = "";
-          order__button__container.innerHTML = orderButton__Any;
+          if (loggedInUser) {
+            order__button__container.innerHTML = "";
+            order__button__container.innerHTML = orderButton__User;
+          } else {
+            order__button__container.innerHTML = "";
+            order__button__container.innerHTML = orderButton__Any;
+          }
         }
-      }
+      });
     }
     /* 장바구니 상품 삭제 버튼 클릭 이벤트 */
     cart__delete__button.addEventListener("click", (e) => {
-      //   if (confirm("선택한 상품들을 삭제하시겠습니까?")) {
-      // 확인(예) 버튼 클릭 시 이벤트
       const targetId = e.target.id;
       const deleteTarget = `container-${targetId.substring(4)}`;
       deleteIndexedDBdata(
@@ -274,21 +284,16 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
       );
       document.querySelector(`#${deleteTarget}`).remove();
 
-      disabledOrderButton(dataList);
       //db에 데이터 없으면 전체삭제 체크박스 비워주기.
       if (dataList.length === 0) {
         wholeCheck.checked = false;
       }
-      console.log(`현재 i는 ${i}`);
-      console.log(`현재 dataList.length는 ${dataList.length}`);
 
       if (i === 0) {
         emptyCartImage();
       }
 
-      //   } else {
-      // 취소(아니오) 버튼 클릭 시 이벤트
-      //   }
+      disabledOrderButton(dataList);
     });
 
     /* 체크박스 - 부분 선택 클릭 이벤트 */
@@ -307,9 +312,9 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
 
       selectAll.checked = checkboxes.length === singlechecked.length;
       checkedDateRender();
-      disabledOrderButton(dataList);
       checkedStatusUpdate(e);
       renderCheckedValues();
+      disabledOrderButton(dataList);
     }
 
     function checkedStatusUpdate(e) {
@@ -369,11 +374,18 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
     wholeCheck.addEventListener("click", selectAll);
     function selectAll() {
       const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-
+      let checkStatus = wholeCheck.checked;
       checkboxes.forEach((checkbox) => {
         checkbox.checked = wholeCheck.checked;
       });
       checkedDateRender();
+      updateCheckedAllIndexedDB(
+        DATABASE_NAME,
+        version,
+        objectStore,
+        checkStatus
+      );
+      //getAllindexedDB 해서, 모든 value.checked = true으로 put
       disabledOrderButton(dataList);
     }
 
@@ -404,12 +416,24 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
 
       disabledOrderButton(dataList);
       //db에 데이터 없으면 전체삭제 체크박스 비워주기.
-      if (dataList.length === 0) {
-        wholeCheck.checked = false;
-      }
-      if (i === dataList.length - 1 && dataList.length === 0) {
-        emptyCartImage();
-      }
+
+      // if (dataList.length === 0) {
+      //   wholeCheck.checked = false;
+      // }
+      // if (i === dataList.length - 1 && dataList.length === 0) {
+      //   emptyCartImage();
+      // }
+      getAllIndexedDB(DATABASE_NAME, version, objectStore, function (result) {
+        if (result.length === 0) {
+          wholeCheck.checked = false;
+        }
+        if (result.length === 0) {
+          default__Image.remove();
+          default__Text.remove();
+          emptyCartImage();
+        }
+      });
+
       // } else {
       //   // 취소(아니오) 버튼 클릭 시 이벤트
       // }
@@ -760,6 +784,55 @@ function updateCheckedIndexedDB(
       };
       store.get(key).onerror = function () {
         alert("indexedDB의 key를 가져오는데 실패했습니다.");
+      };
+    };
+  }
+}
+
+/* 모든 indexedDB checked 를 변경 */
+function updateCheckedAllIndexedDB(
+  DATABASE_NAME,
+  version,
+  objectStore,
+  checkStatus
+) {
+  if (window.indexedDB) {
+    const request = indexedDB.open(DATABASE_NAME, version);
+    //const key = productId;
+    request.onerror = function (event) {
+      console.log(event.target.errorCode);
+      alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
+    };
+    request.onsuccess = function () {
+      const db = request.result;
+      const transaction = db.transaction(objectStore, "readwrite");
+      transaction.onerror = function (e) {
+        console.log("fail");
+      };
+      transaction.oncomplete = function (e) {
+        console.log("success");
+      };
+      const store = transaction.objectStore(objectStore);
+      store.getAll().onsuccess = function (response) {
+        const values = response.target.result;
+        values.forEach((value) => {
+          if (checkStatus) {
+            value.checked = true;
+          } else {
+            value.checked = false;
+          }
+          store.put(value).onsuccess = function () {
+            // const targetCheckbox = document.querySelector(
+            //   `input[value="${key}"]`
+            // );
+            // if (targetCheckbox) {
+            //   targetCheckbox.checked = value.checked;
+            // }
+          };
+        });
+      };
+      store.getAll().onerror = function () {
+        alert("indexedDB의 데이터를 가져오는데 실패했습니다.");
       };
     };
   }
