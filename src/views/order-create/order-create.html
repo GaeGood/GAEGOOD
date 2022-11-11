@@ -49,6 +49,9 @@
       </div>
       <section class="main-contents">
         <div class="table__header">주문 상품 정보</div>
+
+        <!-- 구분선 -->
+        <hr class="my-2" />
         <div class="table__zone">
           <table class="table order__product__table">
             <thead>
@@ -67,7 +70,7 @@
       </section>
       <p></p>
 
-      <section>
+      <section class="main-contents">
         <div class="table__header">배송지 정보</div>
         <!-- 구분선 -->
         <hr class="my-2" />
@@ -79,7 +82,11 @@
                   <label>이름</label>
                 </th>
                 <td class="user__infomation_td">
-                  <input type="text" class="user_info name form-control" />
+                  <input
+                    type="text"
+                    class="user_info name form-control"
+                    placeholder="이름을 입력해주세요."
+                  />
                 </td>
               </tr>
               <tr>
@@ -120,6 +127,7 @@
                     type="text"
                     class="user_info address__input__2 form-control"
                     maxlength="30"
+                    placeholder="상세주소를 입력해주세요."
                   />
                 </td>
               </tr>

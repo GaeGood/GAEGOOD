@@ -26,7 +26,6 @@ class OrderController {
       !shippingStatus ||
       !shippingPostCode ||
       !shippingStreetAddress ||
-      !shippingExtraAddress ||
       !totalAmount ||
       !recipientName ||
       !recipientPhoneNumber

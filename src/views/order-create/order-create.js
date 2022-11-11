@@ -63,9 +63,6 @@ if (directBuy) {
     }
   );
 
-  console.log(orderProductList);
-  console.log(orderProductList.length);
-
   if (orderProductList.length === 0) {
     alert("구매 목록이 없습니다. 1초 후 홈으로 이동합니다.");
     setTimeout("location.href = '/'", 1000);
@@ -96,7 +93,6 @@ async function getDirectBuyProductInfo(directProductPid) {
 // db에 있는 기존 유저정보 화면에 띄우기
 const { name, phoneNumber, postCode, streetAddress, extraAddress, _id } =
   loggedInUser;
-console.log(loggedInUser);
 
 const [
   userName,
@@ -105,8 +101,6 @@ const [
   userStreetAddress,
   userExtraAddress,
 ] = document.querySelectorAll(".user_info");
-
-console.log(document.querySelectorAll(".user_info"));
 
 const [productsPriceHTML, deliveryFeeHTML, totalPriceHTML] =
   document.querySelectorAll(".pay");
@@ -264,11 +258,10 @@ const payBtn = document.querySelector(".pay__button");
 
 function payBtnClick() {
   if (
-    !userName.value ||
+    !userName.value.trim() ||
     !userPhoneNumber.value ||
     !userPostCode.value ||
-    !userStreetAddress.value ||
-    !userExtraAddress.value
+    !userStreetAddress.value
   ) {
     return alert("배송지 정보를 모두 입력해주세요");
   }
@@ -305,8 +298,6 @@ function payBtnClick() {
       if (numberCheck.length < 10) {
         return alert("휴대폰번호를 잘못 입력하셨습니다. 다시 입력해주세요.");
       }
-
-      console.log(numberCheck.length);
     }
 
     fetch(`/api/users/${_id}`, {

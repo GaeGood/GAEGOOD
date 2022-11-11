@@ -118,11 +118,6 @@ function saveUserData(e) {
     return alert("비밀번호를 입력해주세요.");
   }
 
-  // 주소를 변경했는데, 덜 입력한 경우(상세주소 칸이 비어있을 때)
-  if (userStreetAddress.value === "" || userExtraAddress.value === "") {
-    return alert("주소를 정확하게 입력해주세요.");
-  }
-
   // 전화번호
   if (!userPhoneNumber.value) {
     return alert("휴대폰번호를 입력해주세요.");
@@ -147,7 +142,7 @@ function saveUserData(e) {
     userPhoneNumber.value = phoneNumber;
   }
 
-  if (!userName.value) {
+  if (!userName.value.trim()) {
     return alert("이름을 입력해주세요");
   }
 
@@ -162,7 +157,7 @@ function saveUserData(e) {
       password: `${password}`,
       phoneNumber: `${userPhoneNumber.value}`,
       createdAt: `${createdAt}`,
-      name: `${userName.value}`,
+      name: `${userName.value.trim()}`,
       role: `${role}`,
       postCode: `${userPostCode.value}`,
       streetAddress: `${userStreetAddress.value}`,
