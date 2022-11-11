@@ -1,0 +1,236 @@
+@import "/public/css/main.css";
+
+* {
+  padding: 0px;
+  margin: 0px;
+}
+
+/*html*/
+html {
+  width: 100vw;
+  height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.div-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+/* main */
+
+section {
+  padding: 20px 80px;
+}
+#main__container {
+  width: 100%;
+  height: 100%;
+  padding: 100px;
+  box-sizing: border-box;
+}
+
+.main-contents {
+  display: flex;
+  flex-direction: column;
+}
+
+.main__title__zone {
+  margin: 20px;
+}
+
+.process__bar {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 20px;
+  align-items: center;
+  margin-top: 50px;
+}
+.process__bar p {
+  margin-left: 10px;
+}
+.process__bar p:nth-child(2) {
+  font-size: 30px;
+  font-weight: 500;
+}
+
+/* 상품 존 */
+.table.order__product__table {
+  width: 100%;
+}
+
+.table__zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.table__header {
+  font-size: 20px;
+  margin: 10px 0;
+}
+
+.order__product__th {
+  height: 25px;
+  text-align: center;
+}
+
+.order__product__td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.product__information {
+  align-items: center;
+  margin: 10px;
+  height: 130px;
+}
+
+.product__picture {
+  width: 100px;
+  height: 100px;
+}
+
+.product__info {
+  width: 500px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  text-align: left;
+}
+
+.product__name {
+  font-size: large;
+}
+
+.product__shortdesc {
+  font-size: small;
+  color: rgb(59, 59, 59);
+}
+
+/* 배송지정보 존 */
+
+.delivery__infomation {
+  width: auto;
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+}
+
+.user__infomation__table {
+  width: 560px;
+}
+.user__infomation_td {
+  width: 350px;
+}
+
+.user_info {
+  width: 450px;
+}
+
+.address__zone {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  height: 140px;
+}
+
+.password__zone {
+  height: 100px;
+}
+
+.address__zone__input {
+  width: 450px;
+
+  display: flex;
+  justify-content: space-between;
+}
+.postalcode__input {
+  width: 200px;
+}
+
+/* 요청사항존 */
+.btn.dropdown-toggle {
+  width: 450px;
+  height: 38px;
+
+  background-color: white;
+  border: 1px solid #ced4da;
+
+  text-align: left;
+}
+
+.request__zone {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 4px;
+  width: 466px;
+  height: 100px;
+}
+
+/* 결제상세존 */
+.pay__information.card {
+  width: 18rem;
+  height: auto;
+}
+
+.card-title {
+  font-size: large;
+  font-weight: 1000;
+  margin-bottom: 30px;
+}
+
+.price__zone {
+  margin: 20px 5px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.card-text {
+  font-weight: lighter;
+}
+
+.total.price__zone,
+.price {
+  font-weight: 1000;
+}
+
+.pay.total.price {
+  color: #e24a4a;
+}
+
+.pay__button {
+  background-color: #e24a4a;
+  width: 100%;
+  height: 50px;
+}
+
+/*footer*/
+
+.footer {
+  background-color: #f8f8f8;
+  width: 100%;
+  height: 10%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*display:none*/
+.hidden {
+  display: none;
+}

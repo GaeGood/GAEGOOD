@@ -18,17 +18,42 @@ const UserSchema = new Schema(
     },
     role: {
       type: String,
-      required: false,
       default: "basic-user",
     },
-    address: {
+    phoneNumber: {
       type: String,
-      required: true,
-      default: "서울특별시 선동구 성수성수2가3동 광나루로6길 49",
+      default: "",
     },
+    postCode: {
+      type: String,
+      default: "",
+    },
+    streetAddress: {
+      type: String,
+      default: "",
+    },
+    extraAddress: {
+      type: String,
+      default: "",
+    },
+    orderList: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Order",
+        required: true,
+      },
+    ],
+    likesProductList: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Product",
+        required: true,
+      },
+    ],
   },
   {
     timestamps: true,
+    collection: "users",
   }
 );
 

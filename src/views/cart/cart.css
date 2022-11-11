@@ -1,0 +1,277 @@
+@import "/public/css/main.css";
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap");
+
+* {
+  padding: 0px;
+  margin: 0px;
+}
+
+.border__line__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.border__line {
+  width: 100%;
+  height: 1px;
+  background-color: rgb(53, 53, 53);
+}
+.main__title__zone {
+  margin: 20px;
+}
+.process__bar {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 20px;
+  align-items: center;
+  margin-top: 50px;
+}
+.process__bar p {
+  margin-left: 10px;
+}
+.process__bar p:first-child {
+  font-size: 30px;
+  font-weight: 500;
+}
+.deliveryFee__info {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+/* main */
+#main__container {
+  width: 100%;
+  height: 100%;
+  padding: 100px;
+  box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif;
+  color: rgb(39, 48, 48);
+}
+
+.cart__container {
+  display: grid;
+  /* grid-template-rows: repeat(auto-fill, minmax(20%, auto)); */
+  grid-auto-rows: minmax(150px, auto);
+  place-items: center;
+  width: 100%;
+  height: 30%;
+  box-sizing: border-box;
+}
+
+.checkbox__container {
+  height: 8%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px;
+}
+
+.checkbox__container > * {
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+#checked__delete {
+  width: 100px;
+  height: 30px;
+  margin-left: 30px;
+  border: none;
+  background-color: #bcbcbc;
+  border-radius: 5px;
+}
+
+#checked__delete:hover {
+  opacity: 0.6;
+}
+
+.checkbox__all,
+.cart__detail__check {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #bcbcbc;
+  cursor: pointer;
+}
+
+.cart__detail__check {
+  margin: auto;
+}
+
+.cart__list__top {
+  width: 80%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 20px 0px;
+}
+
+.cart__list__top:last-child {
+  border: none;
+}
+
+.cart__detail__image {
+  width: 150px;
+  height: 150px;
+}
+
+.cart__detail {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
+.cart__detail div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+}
+
+.cart__detail__name {
+  font-size: 16px;
+}
+.cart__detail__price {
+  font-size: 14px;
+}
+.cart__detail__bottom {
+  width: 100%;
+  font-size: 14px;
+}
+.cart__amount__btn__container {
+  color: black;
+}
+
+.cart__plus__button,
+.cart__minus__button {
+  width: 25px;
+  height: 25px;
+  border: none;
+  border-radius: 5px;
+  margin: 0 10px;
+  font-size: 20px;
+}
+
+.cart__container .cart__delete__button {
+  font-size: 28px;
+  margin-left: 10px;
+  border: none;
+  background-color: white;
+}
+
+.cart__plus__button:hover,
+.cart__minus__button:hover,
+.cart__container .cart__delete__button:hover {
+  opacity: 0.6;
+}
+
+.pay__container {
+  width: 100%;
+  height: 15%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(228, 228, 228);
+  border-radius: 30px;
+  margin-top: 10px;
+}
+
+#total__price {
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+/* 결제금액 */
+.pay__list {
+  width: 100%;
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 10px 20px;
+  font-size: 16px;
+
+  box-sizing: border-box;
+}
+.pay__detail__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px 0px;
+}
+
+.pay__detail__container div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25%;
+}
+
+.order__button__container {
+  width: 100%;
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* 주문서 작성 버튼 */
+.order__button__container button,
+.order__button__user,
+.order__button__user__disabled {
+  background-color: rgb(243, 225, 199);
+  border: none;
+  width: 150px;
+  height: 30px;
+  border-radius: 10px;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+.order__button__container button a,
+.order__button__user a {
+  color: rgba(0, 0, 0, 0.8);
+  text-decoration: none;
+}
+
+.order__button__container button a:hover,
+.order__button__user a:hover {
+  opacity: 0.6;
+}
+
+/*footer*/
+
+/*display:none*/
+.hidden {
+  display: none;
+}
+
+.disabled {
+  background-color: gray;
+}
+
+#empty-cart {
+  font-size: 64px;
+}
+
+.default__image,
+.default__text {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.default__image {
+  align-items: flex-end;
+}
+
+.default__text {
+  align-items: flex-start;
+}

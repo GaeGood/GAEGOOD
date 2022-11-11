@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>개굿</title>
+  <!-- 아이콘 -->
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-32x32.png" />
+
+  <!-- CSS only Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+  <!-- JavaScript Bundle with Popper Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+    crossorigin="anonymous"></script>
+  <!-- 폰트 어썸: 아이콘 -->
+  <script defer src="https://kit.fontawesome.com/9daa42bcef.js" crossorigin="anonymous"></script>
+  <!-- 커스텀 css, js -->
+  <link rel="stylesheet" href="user-admin.css" />
+  <script src="user-admin.js" type="module" defer></script>
+</head>
+
+<body>
+  <!-- 메인 컨테이너 -->
+  <main id="main__container" role="main">
+    <div class="admin__page__list d-flex bd-highlight mb-3">
+      <button type="button" class="btn btn-success p-2 bd-highlight btn__admin__oder">
+        주문관리
+      </button>
+      <button type="button" class="btn btn-danger p-2 bd-highlight btn__admin__user">
+        회원관리
+      </button>
+      <button type="button" class="btn btn-warning p-2 bd-highlight btn__admin__category">
+        카테고리 관리
+      </button>
+      <button type="button" class="btn btn-info p-2 bd-highlight btn__admin__Product">
+        상품 관리
+      </button>
+      <button type="button" class="btn btn-dark ms-auto p-2 bd-highlight btn__admin__addCategory" data-bs-toggle="modal"
+        data-bs-target="#btn__admin__addCategory">
+        카테고리 추가
+      </button>
+      <button type="button" class="btn btn-dark ms-auto p-2 bd-highlight btn__admin__addProduct" data-bs-toggle="modal"
+        data-bs-target="#btn__admin__addProduct">
+        상품 추가
+      </button>
+    </div>
+  </main>
+
+  <!--카테고리 추가-->
+  <div class="modal fade" id="btn__admin__addCategory" tabindex="-1"
+    aria-labelledby="btn__admin__addCategory__ModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="btn__admin__addCategory__ModalLabel">
+            카테고리 추가하기
+          </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="category-name" class="col-form-label">카테고리 이름</label>
+              <input type="text" class="form-control" id="category-name" placeholder="문구/오피스" />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary col submit__category">
+            카테고리 추가하기
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--카테고리 수정-->
+  <div class="modal fade" id="btn__admin__editCategory" tabindex="-1"
+    aria-labelledby="btn__admin__editCategory__ModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="btn__admin__editCategory__ModalLabel">
+            카테고리 수정하기
+          </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="/api/categories" method="post">
+            <div class="mb-3">
+              <label for="edit-category-name" class="col-form-label">카테고리 이름</label>
+              <input type="text" class="form-control" id="edit-category-name" placeholder="문구/오피스" />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary col submit__edit__category">
+            카테고리 수정하기
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--제품 추가-->
+  <div class="modal fade" id="btn__admin__addProduct" tabindex="-1" aria-labelledby="btn__admin__addProduct__ModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="btn__admin__product__ModalLabel">
+            제품을 판매해 보세요
+          </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="create-product-name" class="col-form-label">제품 이름</label>
+              <input type="text" class="form-control" id="create-product-name" placeholder="파이썬 뱀 인형" />
+            </div>
+            <div class="mb-3">
+              <label for="create-product-category" class="col-form-label">카테고리</label>
+              <select class="form-select" id="create-product-category">
+                <option selected>카테고리를 선택하세요</option>
+                <option value="의류">의류</option>
+                <option value="패션잡화">패션잡화</option>
+                <option value="폰케이스">폰케이스/테크</option>
+                <option value="홈데코/리빙">홈데코/리빙</option>
+                <option value="스티커/지류">스티커/지류</option>
+                <option value="문구/오피스">문구/오피스</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="create-product-shortDesc" class="col-form-label">요약 설명</label>
+              <textarea class="form-control" id="create-product-shortDesc" placeholder="귀여운 파이썬 뱀 인형입니다."></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="create-product-longDesc" class="col-form-label">상세 설명</label>
+              <textarea class="form-control" id="create-product-longDesc" style="height: 200px"
+                placeholder="화려한 무늬에 귀여움을 동시에가진 개발자라면 놓칠 수 없는 파이썬 뱀 인형입니다."></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="create-product-imageFile" class="form-label">제품 사진</label>
+              <input class="form-control" type="file" id="create-product-imageFile" accept="image/*" />
+            </div>
+            <div class="mb-3">
+              <label for="create-product-stock" class="col-form-label">재고수</label>
+              <input type="text" class="form-control" id="create-product-stock" placeholder="10" />
+            </div>
+            <div class="mb-3">
+              <label for="create-product-price" class="col-form-label">가격</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="create-product-price" placeholder="10000" />
+                <span class="input-group-text">원</span>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary col submit__product">
+            제품 추가하기
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!--제품 수정-->
+  <div class="modal fade" id="btn__admin__editProduct" tabindex="-1"
+    aria-labelledby="btn__admin__editProduct__ModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="btn__admin__editProduct__ModalLabel">제품을 판매해 보세요</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-2">
+              <label for="recipient-name" class="col-form-label">제품 이름</label>
+              <input type="text" class="form-control" id="recipient-name" placeholder="상품명을 입력해주세요">
+            </div>
+            <div class="mb-2">
+              <label for="message-text" class="col-form-label">카테고리</label>
+              <select class="form-select" id="inputGroupSelect01">
+                <option selected>카테고리를 선택하세요</option>
+                <option value="1">의류</option>
+                <option value="2">패션잡화</option>
+                <option value="3">폰케이스/테크</option>
+                <option value="4">홈데코/리빙</option>
+                <option value="5">스티커/지류</option>
+                <option value="6">문구/오피스</option>
+              </select>
+            </div>
+            <div class="mb-2">
+              <label for="message-text" class="col-form-label">요약 설명</label>
+              <textarea class="form-control" id="message-text" placeholder="상품에 대한 간단한 설명을 입력해주세요"></textarea>
+            </div>
+            <div class="mb-2">
+              <label for="message-text" class="col-form-label">상세 설명</label>
+              <textarea class="form-control" id="message-text" style="height: 200px"
+                placeholder="상품에 대한 상세 설명을 입력해주세요."></textarea>
+            </div>
+            <div class="mb-2">
+              <label for="formFile" class="form-label">제품 사진</label>
+              <input class="form-control" type="file" id="formFile">
+            </div>
+            <div class="mb-2">
+              <label for="recipient-name" class="col-form-label">재고수</label>
+              <input type="text" class="form-control" id="recipient-name" placeholder="10">
+            </div>
+            <div class="mb-2">
+              <label for="recipient-name" class="col-form-label">가격</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="recipient-name" placeholder="10000">
+                <span class="input-group-text">원</span>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary col submit__edit__product">제품 추가하기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Footer -->
+
+  <footer></footer>
+</body>
+
+</html>

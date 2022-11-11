@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>개굿</title>
+    <!-- 아이콘 -->
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-32x32.png" />
+
+    <!-- CSS only Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+    <!-- JavaScript Bundle with Popper Bootstrap -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+      crossorigin="anonymous"
+    ></script>
+    <!-- 폰트 어썸: 아이콘 -->
+    <script
+      defer
+      src="https://kit.fontawesome.com/9daa42bcef.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- 커스텀 css, js -->
+    <link rel="stylesheet" href="order-create.css" />
+    <script src="order-create.js" type="module" defer></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  </head>
+
+  <body>
+    <!-- 메인 컨테이너 -->
+    <main id="main__container" role="main">
+      <div class="main__title">
+        <div class="main__title__zone">
+          <div class="process__bar">
+            <p>장바구니 ></p>
+            <p>주문결제</p>
+            <p>> 주문완료</p>
+          </div>
+        </div>
+
+        <!-- 구분선 -->
+        <hr class="my-2" />
+      </div>
+      <section class="main-contents">
+        <div class="table__header">주문 상품 정보</div>
+        <div class="table__zone">
+          <table class="table order__product__table">
+            <thead>
+              <tr>
+                <th class="order__product__th" scope="col" colspan="3">
+                  상품정보
+                </th>
+                <th class="order__product__th" scope="col">수량</th>
+                <th class="order__product__th" scope="col">단가</th>
+                <th class="order__product__th" scope="col">총 금액</th>
+              </tr>
+            </thead>
+            <tbody class="table product__list table-group-divider"></tbody>
+          </table>
+        </div>
+      </section>
+      <p></p>
+
+      <section>
+        <div class="table__header">배송지 정보</div>
+        <!-- 구분선 -->
+        <hr class="my-2" />
+        <div class="delivery__infomation">
+          <div class="user__infomation">
+            <table class="table user__infomation__table">
+              <tr>
+                <th class="user__infomation__th" scope="row">
+                  <label>이름</label>
+                </th>
+                <td class="user__infomation_td">
+                  <input type="text" class="user_info name form-control" />
+                </td>
+              </tr>
+              <tr>
+                <th class="user__infomation__th" scope="row">
+                  <label>휴대폰번호</label>
+                </th>
+                <td class="user__infomation_td">
+                  <input
+                    type="text"
+                    placeholder="- 제외 입력해주세요"
+                    class="user_info phonenumber form-control"
+                    value="휴대폰번호"
+                    maxlength="11"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th class="user__infomation__th" scope="row">
+                  <label>배송지</label>
+                </th>
+                <td class="user__infomation_td address__zone">
+                  <div class="address__zone__input">
+                    <input
+                      type="text"
+                      class="user_info postalcode__input form-control"
+                      readonly
+                    />
+                    <button type="button" class="address__search btn btn-light">
+                      주소검색
+                    </button>
+                  </div>
+                  <input
+                    type="text"
+                    class="user_info address__input__1 form-control"
+                    readonly
+                  />
+                  <input
+                    type="text"
+                    class="user_info address__input__2 form-control"
+                    maxlength="30"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th class="user__infomation__th">
+                  <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                      <label class="label" for="requestSelectBox"
+                        >요청사항</label
+                      >
+                    </div>
+                  </div>
+                </th>
+                <td class="user__infomation_td request__zone">
+                  <select class="btn dropdown-toggle" id="request__Select__Box">
+                    <ul class="dropdown-menu dropdown-menu-white">
+                      <li>
+                        <option value="0">
+                          배송시 요청사항을 선택해 주세요.
+                        </option>
+                      </li>
+                      <option value="1" class="select-option dropdown-item">
+                        배송 전 연락바랍니다.
+                      </option>
+                      <option value="2" class="select-option dropdown-item">
+                        부재 시 경비실에 맡겨주세요.
+                      </option>
+                      <option value="3" class="select-option dropdown-item">
+                        부재 시 문 앞에 놓아주세요.
+                      </option>
+                      <option value="4" class="select-option dropdown-item">
+                        부재 시 택배함에 넣어주세요.
+                      </option>
+                      <option value="5" class="select-option dropdown-item">
+                        직접 입력
+                      </option>
+                    </ul>
+                  </select>
+                  <div class="customRequestContainer hidden">
+                    <input
+                      type="text"
+                      maxlength="50"
+                      placeholder="최대 50자 입력이 가능합니다."
+                      class="customRequest form-control"
+                    />
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <aside class="pay__information">
+            <aside class="pay__information card">
+              <div class="card-body">
+                <h5 class="card-title">최종 결제정보</h5>
+                <div>
+                  <div class="price__zone">
+                    <span class="card-text">총 상품금액</span
+                    ><span class="pay products price card-text"></span>
+                  </div>
+                  <div class="price__zone">
+                    <span class="card-text">배송비</span
+                    ><span class="pay delivery price card-text"></span>
+                  </div>
+                  <!-- 구분선 -->
+                  <hr class="my-2" />
+                  <div class="total price__zone">
+                    <span class="card-text">총 금액</span
+                    ><span class="pay total price card-text"></span>
+                  </div>
+                </div>
+                <div>
+                  <button type="button" class="pay__button btn btn-danger">
+                    결제하기
+                  </button>
+                </div>
+              </div>
+            </aside>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer></footer>
+  </body>
+</html>
