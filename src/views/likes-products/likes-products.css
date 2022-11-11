@@ -102,7 +102,6 @@ a:hover {
 .like__product__list {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  /* grid-template-columns: repeat(auto-fill, minmax(20%, auto)); */
   place-items: center;
   text-decoration: none;
 }
@@ -123,7 +122,6 @@ a:hover {
 }
 
 .card-title {
-  /* width: 138px; */
   margin-bottom: 0;
 }
 
@@ -187,12 +185,6 @@ img {
 .hidden {
   display: none;
 }
-
-/* @media (max-width: 1500px) {
-  .like__product__list {
-    grid-template-columns: repeat(auto-fill, minmax(25%, auto));
-  }
-} */
 
 @media (max-width: 1670px) {
   .like__product__list {
