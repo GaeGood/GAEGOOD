@@ -370,3 +370,14 @@ function searchAddress(e) {
 }
 
 addressSearchBtn.addEventListener("click", searchAddress);
+
+// 우편번호/도로명주소 클릭 시 주소검색창 OPEN 기능
+const shippingPostCode = document.getElementById(
+  "order-edit__modal__input__shipping-post-code"
+);
+const shippingStreetAddress = document.getElementById(
+  "order-edit__modal__input__shipping-street-address"
+);
+
+shippingPostCode.addEventListener("click", searchAddress);
+shippingStreetAddress.addEventListener("click", searchAddress);
