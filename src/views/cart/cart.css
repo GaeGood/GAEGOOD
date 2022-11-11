@@ -6,6 +6,10 @@
   margin: 0px;
 }
 
+body {
+  height: 100vh;
+}
+
 .border__line__container {
   display: flex;
   justify-content: center;

@@ -1,0 +1,14 @@
+# Query: 제품
+
+9개 결과 - 1개 파일
+
+src/views/user-admin/user-admin.html:
+  114:   <!--상품 추가-->
+  121:             상품을 판매해 보세요
+  128:               <label for="create-product-name" class="col-form-label">상품명</label>
+  129:               <input type="text" class="form-control" id="create-product-name" placeholder="상품명을 입력해주세요" required />
+  131:                 상품명을 입력해주세요.
+  151:               <label for="create-product-img" class="form-label">상품 사진</label>
+  175:             상품 추가하기
+  182:   <!--상품 수정-->
+  188:           <h1 class="modal-title fs-5" id="btn__admin__editProduct__ModalLabel">상품을 수정합니다</h1>

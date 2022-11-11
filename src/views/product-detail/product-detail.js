@@ -37,7 +37,7 @@ const pathArray = window.location.pathname.split("/");
 const productId = pathArray[2];
 let productAmountNum = parseInt(productAmount.textContent);
 /* 상품 상제정보 불러오기*/
-// home에서 클릭한 제품의 상세 내용
+// home에서 클릭한 상품의 상세 내용
 let nameValue = "";
 let checkedValue = false;
 let categoryValue = "";
@@ -75,7 +75,7 @@ fetch(`/api/products/${id}`)
   })
   .catch((err) => alert(err));
 
-// home에서 클릭한 제품의 상세 내용 html에 렌더링하는 함수
+// home에서 클릭한 상품의 상세 내용 html에 렌더링하는 함수
 function addproduct(product) {
   productCategory.textContent = product.category;
   productName.textContent = product.name;

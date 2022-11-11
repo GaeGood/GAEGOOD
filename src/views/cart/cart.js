@@ -601,7 +601,7 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
   }
 }
 
-// home에서 클릭한 제품의 상세 내용 html에 렌더링하는 함수
+// home에서 클릭한 상품의 상세 내용 html에 렌더링하는 함수
 function addProduct(product, idx, cartProductId, data) {
   //리팩토링! 한 번만 호출할 수 있도록 for문 위에다 선언하고 불러올수 있게 고쳐보자.
   const cartImage = document.querySelectorAll(".cart__detail__image");
