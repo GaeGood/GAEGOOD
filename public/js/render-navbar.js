@@ -1,5 +1,4 @@
 function renderNavbar(loggedInUser) {
-  console.log("------------ navbar 렌더 시작 ------------");
   let navbar;
 
   if (loggedInUser && loggedInUser.role === "admin") {
@@ -78,7 +77,6 @@ function renderNavbar(loggedInUser) {
 
   // navbar를 body에 렌더
   document.body.innerHTML = navbar + document.body.innerHTML;
-  console.log("------------ navbar 렌더 완료 ------------");
 }
 
 export { renderNavbar };

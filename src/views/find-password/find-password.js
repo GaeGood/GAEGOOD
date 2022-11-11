@@ -28,8 +28,6 @@ function sendEmail() {
       return Promise.reject(json);
     })
     .then((data) => {
-      console.log(data);
-
       alert("이메일로 임시 비밀번호가 발송되었습니다. \n로그인해주세요");
       window.location.href = "/";
     })

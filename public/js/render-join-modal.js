@@ -1,5 +1,4 @@
 function renderJoinModal() {
-  console.log("------------ login modal 렌더 시작 ------------");
   const joinModal = `<div
   class="modal fade"
   id="modalJoin"
@@ -77,7 +76,6 @@ function renderJoinModal() {
 </div>`;
 
   document.body.innerHTML = joinModal + document.body.innerHTML;
-  console.log("------------ login modal 렌더 완료 ------------");
 }
 
 export { renderJoinModal };

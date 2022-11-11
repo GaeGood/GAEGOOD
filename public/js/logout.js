@@ -2,7 +2,6 @@
 function addEventListenerOnLogoutBtn(loggedInUser) {
   // 로그인 한 유저가 있어야 함
   if (loggedInUser) {
-    console.log("-------- logout button에 이벤트 리스너 연결 시작 --------");
     const logoutBtn = document.querySelector(".nav-item.logout");
     logoutBtn.addEventListener("click", (e) => {
       fetch("/api/auth/logout", {
@@ -25,7 +24,6 @@ function addEventListenerOnLogoutBtn(loggedInUser) {
           alert(e);
         });
     });
-    console.log("-------- logout button에 이벤트 리스너 연결 완료 --------");
   }
 }
 

@@ -132,7 +132,6 @@ function deleteIndexedDBdata(DATABASE_NAME, version, objectStore, idObject) {
     const request = indexedDB.open(DATABASE_NAME, version);
     const key = idObject.id;
     request.onerror = function (event) {
-      console.log(event.target.errorCode);
       alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
     };
     request.onsuccess = function () {
@@ -151,7 +150,6 @@ function insertIndexedDB(DATABASE_NAME, version, objectStore, idObject) {
   if (window.indexedDB) {
     const request = indexedDB.open(DATABASE_NAME, version);
     request.onerror = function (event) {
-      console.log(event.target.errorCode);
       alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
     };
     request.onsuccess = function (response) {
@@ -179,7 +177,6 @@ function getAllIndexedDB(DATABASE_NAME, version, objectStore, id, cb) {
   if (window.indexedDB) {
     const request = indexedDB.open(DATABASE_NAME, version);
     request.onerror = function (event) {
-      console.log(event.target.errorCode);
       alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
     };
     request.onsuccess = function () {
@@ -200,18 +197,13 @@ function updateIndexedDB(DATABASE_NAME, version, objectStore, id) {
     const request = indexedDB.open(DATABASE_NAME, version);
     const key = id;
     request.onerror = function (event) {
-      console.log(event.target.errorCode);
       alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
     };
     request.onsuccess = function () {
       const db = request.result;
       const transaction = db.transaction(objectStore, "readwrite");
-      transaction.onerror = function (e) {
-        console.log("fail");
-      };
-      transaction.oncomplete = function (e) {
-        console.log("success");
-      };
+      transaction.onerror = function (e) {};
+      transaction.oncomplete = function (e) {};
       const store = transaction.objectStore(objectStore);
 
       store.get(key).onsuccess = function (response) {
@@ -232,7 +224,6 @@ function getAllKeysIndexedDB(DATABASE_NAME, version, objectStore, cb) {
   if (window.indexedDB) {
     const request = indexedDB.open(DATABASE_NAME, version);
     request.onerror = function (event) {
-      console.log(event.target.errorCode);
       alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
     };
     request.onsuccess = function () {
@@ -344,7 +335,6 @@ likeButton.addEventListener("click", (e) => {
       return Promise.reject(json);
     })
     .then((message) => {
-      alert(message);
       if (message === "좋아요 성공") {
         renderLikedButton();
       } else {

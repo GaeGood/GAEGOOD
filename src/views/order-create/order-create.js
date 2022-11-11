@@ -30,9 +30,6 @@ const version = 1;
 const objectStore = "cartStorage";
 
 if (directBuy) {
-  // 다이렉트 구매
-  alert("다이렉트 구매입니다.");
-
   // 쿼리스트링에서 pid, count 값을 가져옴
   let params = new URLSearchParams(queryString);
   const directProductPid = params.get("pid");
@@ -49,9 +46,6 @@ if (directBuy) {
   // orderProductList에 directProduct를 넣음
   orderProductList.push(directProduct); // 무조건 1개
 } else {
-  // 장바구니 구매
-  alert("장바구니 구매입니다.");
-
   // 장바구니 상품 여부 확인
   orderProductList = await getAllIndexedDB(
     // indexedDB에 들어간 만큼
@@ -321,9 +315,7 @@ function payBtnClick() {
 
         return Promise.reject(json);
       })
-      .then((userInfoChange) => {
-        console.log("회원정보 업데이트 완료");
-      })
+      .then((userInfoChange) => {})
       .catch((err) => {
         alert(`에러가 발생했습니다. 관리자에게 문의하세요. \n에러내용: ${err}`);
       });

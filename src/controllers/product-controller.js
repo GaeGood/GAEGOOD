@@ -135,7 +135,6 @@ class ProductContoller {
       if (req.loggedInUser.likesProductList.length === 0) {
         req.loggedInUser.likesProductList.push(pid);
         await req.loggedInUser.save();
-        console.log(req.loggedInUser.likesProductList);
         return res.status(200).json("좋아요 성공");
       } else {
         let alreadyLiked = false;
@@ -152,12 +151,10 @@ class ProductContoller {
               (product) => String(product._id) !== pid
             );
           await req.loggedInUser.save();
-          console.log(req.loggedInUser.likesProductList);
           return res.status(200).json("좋아요 취소");
         } else {
           req.loggedInUser.likesProductList.push(pid);
           await req.loggedInUser.save();
-          console.log(req.loggedInUser.likesProductList);
           return res.status(200).json("좋아요 성공");
         }
       }

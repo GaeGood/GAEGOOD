@@ -26,7 +26,6 @@ class UserService {
       });
       return { user, token };
     } catch (err) {
-      console.log(err);
       const error = new Error(" 회원가입 도중 에러가 발생했습니다.");
       error.statusCode = 400;
       throw error;

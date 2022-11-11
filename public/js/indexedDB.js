@@ -30,7 +30,6 @@ async function deleteIndexedDBdata(
     const request = indexedDB.open(DATABASE_NAME, version);
     const key = idObject._id;
     request.onerror = function (event) {
-      console.log(event.target.errorCode);
       alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
     };
     request.onsuccess = function () {
@@ -50,7 +49,6 @@ async function getAllIndexedDB(DATABASE_NAME, version, objectStore, cb) {
     if (window.indexedDB) {
       const request = indexedDB.open(DATABASE_NAME, version);
       request.onerror = function (event) {
-        console.log(event.target.errorCode);
         alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
       };
       request.onsuccess = function () {
@@ -65,10 +63,8 @@ async function getAllIndexedDB(DATABASE_NAME, version, objectStore, cb) {
     } else {
       alert("해당 브라우저에서는 indexedDB를 지원하지 않습니다.");
     }
-  })
-  
+  });
 }
-
 
 /* 해당 indexedDB에 존재하는 특정 데이터 조회하기 */
 async function getIndexedDB(DATABASE_NAME, version, objectStore, idObject) {
@@ -76,7 +72,6 @@ async function getIndexedDB(DATABASE_NAME, version, objectStore, idObject) {
     const request = indexedDB.open(DATABASE_NAME, version);
     const key = idObject.id;
     request.onerror = function (event) {
-      console.log(event.target.errorCode);
       alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
     };
     request.onsuccess = function () {
@@ -97,13 +92,11 @@ async function getIndexedDB(DATABASE_NAME, version, objectStore, idObject) {
   }
 }
 
-
-// indexedDB 의 키값들 가져오기 
+// indexedDB 의 키값들 가져오기
 async function getAllKeysIndexedDB(DATABASE_NAME, version, objectStore, cb) {
   if (window.indexedDB) {
     const request = indexedDB.open(DATABASE_NAME, version);
     request.onerror = function (event) {
-      console.log(event.target.errorCode);
       alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
     };
     request.onsuccess = function () {
@@ -111,7 +104,7 @@ async function getAllKeysIndexedDB(DATABASE_NAME, version, objectStore, cb) {
       const transaction = db.transaction(objectStore, "readwrite");
       const store = transaction.objectStore(objectStore);
       store.getAllKeys().onsuccess = function (response) {
-        cb(response.target.result)
+        cb(response.target.result);
       };
       store.getAllKeys().onerror = function () {
         alert("indexedDB의 key를 가져오는데 실패했습니다.");
