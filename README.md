@@ -58,7 +58,7 @@
 ### 데모 영상
 
 
-<details><summary>홈 & 카테고리별 상품조회</summary>
+<details><summary>홈 & 카테고리별 상품조회(페페)</summary>
 
 
 </details>
