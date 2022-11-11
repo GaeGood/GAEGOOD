@@ -83,7 +83,7 @@ a:hover {
 
   margin-top: 20px;
 
-  width: 500px;
+  width: 1400px;
 }
 
 .table__title {
@@ -99,25 +99,52 @@ a:hover {
 
 /* 찜 상품존 */
 
+.like__product__list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  /* grid-template-columns: repeat(auto-fill, minmax(20%, auto)); */
+  place-items: center;
+  text-decoration: none;
+}
+.card {
+  margin-bottom: 20px;
+}
+
 .card-body {
   display: flex;
-  gap: 22px;
+  gap: 15px;
   box-sizing: border-box;
   flex-direction: column;
 }
+.product__information {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .card-title {
+  /* width: 138px; */
   margin-bottom: 0;
 }
 
+img {
+  display: block;
+  margin: auto;
+}
+
+.product__image__zone {
+  padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x) 0
+    var(--bs-card-spacer-x);
+}
+
 .product__image {
-  width: 250px;
-  height: 250px;
+  width: 200px;
+  height: 200px;
 }
 
 .like__zone {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
 }
 
 .card-text {
@@ -125,6 +152,25 @@ a:hover {
   color: #707070;
 }
 
+.like__button {
+  width: 100%;
+  margin-top: 15px;
+  margin-left: 5px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.fa-solid.fa-heart {
+  color: #eb4d4b;
+}
+
+.fa-solid.fa-heart.hidden {
+  display: none;
+}
+
+.fa-regular.fa-heart.hidden {
+  display: none;
+}
 /*footer*/
 
 .footer {
@@ -140,4 +186,28 @@ a:hover {
 /*display:none*/
 .hidden {
   display: none;
+}
+
+/* @media (max-width: 1500px) {
+  .like__product__list {
+    grid-template-columns: repeat(auto-fill, minmax(25%, auto));
+  }
+} */
+
+@media (max-width: 1670px) {
+  .like__product__list {
+    grid-template-columns: repeat(auto-fill, minmax(33%, auto));
+  }
+}
+
+@media (max-width: 1270px) {
+  .like__product__list {
+    grid-template-columns: repeat(auto-fill, minmax(50%, auto));
+  }
+}
+
+@media (max-width: 930px) {
+  .like__product__list {
+    grid-template-columns: repeat(auto-fill, minmax(100%, auto));
+  }
 }
