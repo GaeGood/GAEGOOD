@@ -5,7 +5,7 @@ if (!loggedInUser) {
   window.location.href = "/";
 }
 
-const { orderList, name } = loggedInUser;
+const { orderList, name, _id } = loggedInUser;
 
 const orderNone = document.querySelector(".order__none");
 const orderListZone = document.querySelector(".order__list");
@@ -135,6 +135,8 @@ function orderListMake(order) {
 
 // 회원탈퇴 기능
 const deleteUserBtn = document.querySelector(".user__delete");
+
+// 회원탈퇴 기능
 
 function deleteUser() {
   const answer = confirm(
