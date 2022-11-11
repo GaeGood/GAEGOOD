@@ -65,7 +65,8 @@
 
 
 <details><summary>로그인 & 회원가입 & 토큰인증</summary>
-
+회원가입 & 로그인
+![](https://velog.velcdn.com/images/gyuri092/post/7226d290-93ad-4020-99dd-0370593975ab/image.gif)
 
 </details>
 
