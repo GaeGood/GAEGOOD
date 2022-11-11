@@ -61,6 +61,13 @@ a:hover {
   color: black;
   padding: 10px;
   transition: all 0.2s;
+  font-weight: 600;
+}
+
+.mypage__category__a.clicked {
+  color: #252525;
+  background-color: #efefef;
+  border-radius: 5px;
 }
 
 .mypage__category__a:hover {
