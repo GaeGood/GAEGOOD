@@ -102,6 +102,8 @@ function likesProductListMake() {
 // 회원탈퇴 기능
 const deleteUserBtn = document.querySelector(".user__delete");
 
+// 회원탈퇴 기능
+
 function deleteUser() {
   const answer = confirm(
     "회원 탈퇴 하시겠습니까? \n탈퇴즉시 정보가 삭제됩니다."
