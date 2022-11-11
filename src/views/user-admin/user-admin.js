@@ -9,6 +9,10 @@ import {
 
 const mainTag = document.getElementById("main__container");
 
+let categoryId;
+let beforeValue;
+let productId;
+
 const adminBtnOder = document.querySelector(".btn__admin__oder");
 const adminBtnUser = document.querySelector(".btn__admin__user");
 const adminBtnCategory = document.querySelector(".btn__admin__category");
@@ -195,12 +199,8 @@ for (let i = 0; i < allBtns.length; i++) {
     }
   });
 }
-let categoryId;
-let beforeValue;
 editSubmitCategory();
 categoryManagementCreate();
-
-let productId;
 editSubmitProduct();
 productManagementCreate();
 
@@ -220,7 +220,7 @@ function oderManagementEdit() {
       e.target.parentElement.parentElement.parentElement.querySelector(
         "a"
       ).innerText = `${btnValue}`;
-      fetch(`http://localhost:5000/api/orders/${btnId}`, {
+      fetch(`/api/orders/${btnId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -244,7 +244,7 @@ function oderManagementDelete() {
       if (conf) {
         const btnId = e.target.parentElement.parentElement.id;
         document.getElementById(`${btnId}`).remove();
-        fetch(`http://localhost:5000/api/orders/${btnId}`, {
+        fetch(`/api/orders/${btnId}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -268,7 +268,7 @@ function userManagementEdit() {
       e.target.parentElement.parentElement.parentElement.querySelector(
         "a"
       ).innerText = `${btnValue}`;
-      fetch(`http://localhost:5000/api/users/${btnId}`, {
+      fetch(`/api/users/${btnId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -292,7 +292,7 @@ function userManagementDelete() {
       if (conf) {
         const btnId = e.target.parentElement.parentElement.id;
         document.getElementById(`${btnId}`).remove();
-        fetch(`http://localhost:5000/api/users/${btnId}`, {
+        fetch(`/api/users/${btnId}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -356,7 +356,7 @@ function categoryManagementCreate() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: `${document.getElementById("#category-name").value}`,
+        name: `${document.getElementById("category-name").value}`,
       }),
     })
       .then(async (res) => {
@@ -390,7 +390,7 @@ function categoryManagementDelete() {
       if (conf) {
         const btnId = e.target.parentElement.parentElement.id;
         document.getElementById(`${btnId}`).remove();
-        fetch(`http://localhost:5000/api/categories/${btnId}`, {
+        fetch(`/api/categories/${btnId}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -575,7 +575,7 @@ function productManagementDelete() {
       if (conf) {
         const btnId = e.target.parentElement.parentElement.id;
         document.getElementById(`${btnId}`).remove();
-        fetch(`http://localhost:5000/api/products/${btnId}`, {
+        fetch(`/api/products/${btnId}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
