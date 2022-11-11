@@ -131,6 +131,11 @@ for (let i = 0; i < allBtns.length; i++) {
         })
         .then((datas) => {
           const newDatas = datas.map((data) => {
+            if (data.role === "admin") {
+              data.role = "관리자";
+            } else {
+              data.role = "일반유저";
+            }
             return {
               _id: data._id,
               date: data.createdAt.slice(0, 10),
@@ -320,13 +325,19 @@ function userManagementEdit() {
       e.target.parentElement.parentElement.parentElement.querySelector(
         "a"
       ).innerText = `${btnValue}`;
+      let newRole;
+      if (btnValue === "관리자") {
+        newRole = "admin";
+      } else {
+        newRole = "basic-user";
+      }
       fetch(`/api/users/${btnId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          role: `${btnValue}`,
+          role: `${newRole}`,
         }),
       })
         .then(async (res) => {
@@ -338,9 +349,10 @@ function userManagementEdit() {
 
           return Promise.reject(json);
         })
-        .then((alt) =>
-          alert(`${alt.name}의 권한이 ${alt.role}로 변경되었습니다.`)
-        )
+        .then((alt) => {
+          alt.role === "admin" ? (alt.role = "관리자") : "일반유저";
+          alert(`${alt.name}의 권한이 "${alt.role}"로 변경되었습니다.`);
+        })
         .catch((err) => alert(err));
     });
   }
@@ -384,7 +396,7 @@ function editSubmitCategory() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: newValue,
+          name: newValue.trim(),
         }),
       })
         .then(async (res) => {
@@ -426,7 +438,7 @@ function categoryManagementCreate() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: `${document.getElementById("category-name").value}`,
+        name: `${document.getElementById("category-name").value.trim()}`,
       }),
     })
       .then(async (res) => {
@@ -495,14 +507,14 @@ function editSubmitProduct() {
     if (category.value === "카테고리를 선택하세요") {
       formData.append("category", "#전체");
     } else {
-      formData.append("category", `#${category.value}`);
+      formData.append("category", `#${category.value.trim()}`);
     }
-    formData.append("name", name.value);
-    formData.append("shortDesc", shortDesc.value);
-    formData.append("longDesc", longDesc.value);
+    formData.append("name", name.value.trim());
+    formData.append("shortDesc", shortDesc.value.trim());
+    formData.append("longDesc", longDesc.value.trim());
     formData.append("productImage", imageFile.files[0]);
-    formData.append("stock", stock.value);
-    formData.append("price", price.value);
+    formData.append("stock", stock.value.trim());
+    formData.append("price", price.value.trim());
 
     fetch(`/api/products/${productId}`, {
       method: "PUT",
@@ -517,7 +529,6 @@ function editSubmitProduct() {
         return Promise.reject(json);
       })
       .then((data) => {
-        console.log(data);
         alert(`${data.name} 의 정보가 변경되었습니다.`);
         //form 안의 input값 전부 초기화하기
         name.value = "";
@@ -636,14 +647,14 @@ function productManagementCreate() {
     if (category.value === "카테고리를 선택하세요") {
       formData.append("category", "전체");
     } else {
-      formData.append("category", category.value);
+      formData.append("category", category.value.trim());
     }
-    formData.append("name", name.value);
-    formData.append("shortDesc", shortDesc.value);
-    formData.append("longDesc", longDesc.value);
+    formData.append("name", name.value.trim());
+    formData.append("shortDesc", shortDesc.value.trim());
+    formData.append("longDesc", longDesc.value.trim());
     formData.append("productImage", imageFile.files[0]);
-    formData.append("stock", stock.value);
-    formData.append("price", price.value);
+    formData.append("stock", stock.value.trim());
+    formData.append("price", price.value.trim());
 
     fetch("/api/products", {
       method: "POST",
