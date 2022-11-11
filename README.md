@@ -123,25 +123,37 @@
 |  |  |
 | ------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------|
 | ![](https://velog.velcdn.com/images/gyuri092/post/80d40273-1ce4-435f-8a86-9456ea93858f/image.png) | ![](https://velog.velcdn.com/images/gyuri092/post/80d40273-1ce4-435f-8a86-9456ea93858f/image.png) |
-|                                                메인 페이지 (카테고리별 제품 목록 페이지 이동 링크)                                             |                                                회원가입 화면                                                    |
+|                                                홈 & 카테고리별 상품조회                                             |                                                회원정보수정 & 회원탈퇴                                                    |
 | ![](https://velog.velcdn.com/images/gyuri092/post/15384467-6529-4112-9e99-5ba04b1b4513/image.png) | ![](https://velog.velcdn.com/images/gyuri092/post/15384467-6529-4112-9e99-5ba04b1b4513/image.png) |
-|                                                로그인 페이지                                                |                                                카테고리별 제품 목록 페이지 (여자옷)                                                 |
+|                                                로그인 페이지                                                |                                                마이페이지 - 회원정보수정                                                 |
 | ![image](https://i.ibb.co/S67hhtQ/image.png) | ![image](https://i.ibb.co/3hHGhKn/image.png) |
-|                                   카테고리별 제품 목록 페이지 (남자옷)                                  |                                                  제품 상세 페이지                                                |
+|                                   마이페이지 - 주문내역                                  |                                                  제품 마이페이지 - 찜 목록                                                |
 | ![image](https://i.ibb.co/Q6f0G7m/image.png) | ![image](https://i.ibb.co/KDc1xMW/image.png) |
 |                                                  장바구니 페이지                                                  |                                                   주문 페이지                                                   |
-| ![image](https://i.ibb.co/mGq3v2q/image.png) | ![](https://velog.velcdn.com/images/bamzzi15/post/ec916df8-dda1-4c5f-8232-fc22c2339258/image.png) |
+| ![image](https://i.ibb.co/mGq3v2q/image.png) | ![image](https://i.ibb.co/XsjP6p8/image.png) |
 |                                                  주문완료 페이지                                                  |                                                  주문내역 페이지                                                   |
-| ![image](https://i.ibb.co/YN6VLKK/image.png) | ![](https://velog.velcdn.com/images/bamzzi15/post/02a6dd47-3414-475a-93e1-f399a88ecef8/image.png) |
+| ![image](https://i.ibb.co/YN6VLKK/image.png) | ![image](https://i.ibb.co/vdZvhMb/image.png) |
 |                                                  개인 계정관리 페이지                                                  |                                                  회원정보 수정 페이지                                                   |
 | ![image](https://i.ibb.co/0jLxC6m/image.png) | ![image](https://i.ibb.co/162YcXN/image.png) |
 |                                                  관리자 괸리 페이지                                                  |                                                  관리자 회원관리 페이지                                                   |
 | ![image](https://i.ibb.co/dBzM2Qb/image.png) | ![image](https://i.ibb.co/BzbWx0M/image.png) |
 |                                                  관리자 주문관리 페이지                                                  |                                                  관리자 제품추가 페이지                                                   |
-| ![](https://velog.velcdn.com/images/bamzzi15/post/958218d2-8e7c-48c6-b0c4-5302cf2298a2/image.png) | ![image](https://i.ibb.co/BzbWx0M/image.png) |
-|                                                  찜                                                  |                                                  관리자 제품추가 페이지                                                   |
 
 
+![](https://velog.velcdn.com/images/bamzzi15/post/958218d2-8e7c-48c6-b0c4-5302cf2298a2/image.png)
+찜
+
+---------------
+
+![](https://velog.velcdn.com/images/bamzzi15/post/ec916df8-dda1-4c5f-8232-fc22c2339258/image.png)
+주문목록
+
+------------
+
+![](https://velog.velcdn.com/images/bamzzi15/post/02a6dd47-3414-475a-93e1-f399a88ecef8/image.png)
+회원정보
+
+-------
 
 <br />
 
