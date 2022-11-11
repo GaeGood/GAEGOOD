@@ -44,8 +44,8 @@ const productAdmin = [
   "생성날짜",
   "상품명",
   "카테고리",
-  "가격",
-  "재고수량",
+  "가격(원)",
+  "재고수량(개)",
   "수정",
   "삭제",
 ];
@@ -191,7 +191,7 @@ for (let i = 0; i < allBtns.length; i++) {
           categoryManagementDelete();
         })
         .catch((err) => alert(err));
-    } else {
+    } else if (listName === "상품 관리") {
       //상품추가와 카테고리추가 없애기
       document.querySelector(".btn__admin__addCategory").style =
         "display:none";
@@ -213,10 +213,10 @@ for (let i = 0; i < allBtns.length; i++) {
             return {
               _id: data._id,
               date: data.createdAt.slice(0, 10),
-              category: data.category,
+              category: data.category.replace("#", ""),
               name: data.name,
-              price: data.price,
-              stock: data.stock,
+              price: Number(data.price).toLocaleString(),
+              stock: Number(data.stock).toLocaleString(),
             };
           });
           return newDatas.sort((a, b) => {
@@ -243,10 +243,8 @@ productManagementCreate();
 //============ 주문관련 =====================
 function oderManagementEdit() {
   const editBtns = document.querySelectorAll(".dropdown-item");
-  //버튼클릭 => 배송준비 => 랜더링화면바꾸기 => fetch 수정 =>
   for (let count = 0; count < editBtns.length; count++) {
     editBtns[count].addEventListener("click", (e) => {
-      //아래 기능이 없으면 배송상태가 바뀌면 최상단으로 화면이 이동한다
       e.preventDefault();
       const btnValue = e.target.text;
       const btnId =
@@ -265,7 +263,15 @@ function oderManagementEdit() {
           shippingStatus: `${btnValue}`,
         }),
       })
-        .then((res) => res.json())
+        .then(async (res) => {
+          const json = await res.json();
+
+          if (res.ok) {
+            return json;
+          }
+
+          return Promise.reject(json);
+        })
         .then((alt) =>
           alert(`배송상태가 "${alt.shippingStatus}"으로 변경되었습니다.`)
         )
@@ -386,7 +392,7 @@ function editSubmitCategory() {
           if (res.ok) {
             return json;
           }
-          return Promise.reject();
+          return Promise.reject(json);
         })
         .then((data) => {
           alert(`"${beforeValue}"이(가) "${data.name}" 으로 변경되었습니다.`);
@@ -443,7 +449,7 @@ function categoryManagementCreate() {
         bootstrap.Modal.getInstance("#btn__admin__addCategory").hide();
         document.querySelector(".btn__admin__category").click();
       })
-      .catch((err) => alert(err));
+      .catch(() => alert("카테고리명을 입력해주세요"));
   });
 }
 function categoryManagementDelete() {
@@ -487,9 +493,9 @@ function editSubmitProduct() {
     const formData = new FormData();
 
     if (category.value === "카테고리를 선택하세요") {
-      formData.append("category", "전체");
+      formData.append("category", "#전체");
     } else {
-      formData.append("category", category.value);
+      formData.append("category", `#${category.value}`);
     }
     formData.append("name", name.value);
     formData.append("shortDesc", shortDesc.value);
@@ -511,6 +517,7 @@ function editSubmitProduct() {
         return Promise.reject(json);
       })
       .then((data) => {
+        console.log(data);
         alert(`${data.name} 의 정보가 변경되었습니다.`);
         //form 안의 input값 전부 초기화하기
         name.value = "";
@@ -534,14 +541,23 @@ function productManagementEdit() {
   addCategoryList.forEach((editBtn) => {
     editBtn.addEventListener("click", (e) => {
       fetch("/api/categories")
-        .then((res) => res.json())
+        .then(async (res) => {
+          const json = await res.json();
+
+          if (res.ok) {
+            return json;
+          }
+
+          return Promise.reject(json);
+        })
         .then((datas) => {
           document.getElementById("edit-product-category").innerHTML = "";
           datas.forEach((element) => {
             document.getElementById("edit-product-category").innerHTML += `
         <option>${element.name}</option>`;
           });
-        });
+        })
+        .catch((err) => alert(err));
     });
   });
 
@@ -553,7 +569,6 @@ function productManagementEdit() {
   const category = document.getElementById("edit-product-category");
   const shortDesc = document.getElementById("edit-short-description");
   const longDesc = document.getElementById("edit-long-description");
-  const imageFile = document.getElementById("edit-product-img");
   const stock = document.getElementById("edit-product-stock");
   const price = document.getElementById("edit-product-price");
 
@@ -572,6 +587,7 @@ function productManagementEdit() {
         })
         .then((newData) => {
           name.value = newData.name;
+          //카테고리의 제일첫번째 데이터가 현재 데이터의 카테고리 표기가 되게 replace사용
           category.value = newData.category.replace("#", "");
           shortDesc.value = newData.shortDesc;
           longDesc.value = newData.longDesc;
@@ -669,8 +685,17 @@ function productManagementDelete() {
         fetch(`/api/products/${btnId}`, {
           method: "DELETE",
         })
-          .then((res) => res.json())
-          .then((alt) => alert(alt));
+          .then(async (res) => {
+            const json = await res.json();
+
+            if (res.ok) {
+              return json;
+            }
+
+            return Promise.reject(json);
+          })
+          .then((alt) => alert(alt))
+          .catch((err) => alert(err));
       }
     });
   }
