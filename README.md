@@ -140,6 +140,20 @@
 |                                                  관리자 주문관리 페이지                                                  |                                                  관리자 제품추가 페이지                                                   |
 
 
+![](https://velog.velcdn.com/images/bamzzi15/post/958218d2-8e7c-48c6-b0c4-5302cf2298a2/image.png)
+찜
+
+---------------
+
+![](https://velog.velcdn.com/images/bamzzi15/post/ec916df8-dda1-4c5f-8232-fc22c2339258/image.png)
+주문목록
+
+------------
+
+![](https://velog.velcdn.com/images/bamzzi15/post/02a6dd47-3414-475a-93e1-f399a88ecef8/image.png)
+회원정보
+
+-------
 
 <br />
 
