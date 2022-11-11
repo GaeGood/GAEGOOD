@@ -67,6 +67,10 @@ viewsRouter.use(
   serveStatic("error-page", "order-owner-required")
 );
 
+viewsRouter.use(
+  "/find-password",
+  serveStatic("find-password", "find-password")
+);
 // views 폴더의 최상단 파일인 rabbit.png, api.js 등을 쓸 수 있게 함
 viewsRouter.use("/", serveStatic(""));
 
