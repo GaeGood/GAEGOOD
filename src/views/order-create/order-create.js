@@ -262,7 +262,7 @@ function payBtnClick() {
     !userStreetAddress.value ||
     !userExtraAddress.value
   ) {
-    return alert("배송지 정보를 정확하게 입력해주세요");
+    return alert("배송지 정보를 모두 입력해주세요");
   }
 
   const requestType = requestSelectBox.value;
@@ -278,7 +278,7 @@ function payBtnClick() {
 
   // 기존에 휴대폰번호와 주소가 없다면 주문할 때 배송지와 휴대폰번호로 기존 유저정보 업데이트
 
-  if (!phoneNumber && !postCode) {
+  if (!phoneNumber || !postCode) {
     // 전화번호
     if (userPhoneNumber.value !== "") {
       // 숫자만 매칭
@@ -294,9 +294,11 @@ function payBtnClick() {
         return alert("휴대폰번호를 잘못 입력하셨습니다. 숫자만 입력하세요.");
       }
       // 길이가 아닐 경우
-      if (!(numberCheck.length >= 10 && numberCheck.length <= 11)) {
+      if (numberCheck.length < 10) {
         return alert("휴대폰번호를 잘못 입력하셨습니다. 다시 입력해주세요.");
       }
+
+      console.log(numberCheck.length);
     }
 
     fetch(`/api/users/${_id}`, {

@@ -124,7 +124,9 @@ function saveUserData(e) {
   }
 
   // 전화번호
-  if (userPhoneNumber.value !== "") {
+  if (!userPhoneNumber.value) {
+    return alert("휴대폰번호를 입력해주세요.");
+  } else if (userPhoneNumber.value !== "") {
     // 숫자만 매칭
     const numberCheck = userPhoneNumber.value.split("");
     let result = [];
