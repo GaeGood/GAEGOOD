@@ -73,6 +73,11 @@
 
 
 <details><summary>회원정보수정 & 회원탈퇴(메이)</summary>
+![](https://velog.velcdn.com/images/bamzzi15/post/536380f7-5294-4d81-b9c1-42b0c1072b99/image.gif)
+회원정보수정
+
+![](https://velog.velcdn.com/images/bamzzi15/post/d932ddef-f712-44a9-a964-218ff322423d/image.gif)
+회원탈퇴
 
 
 </details>
@@ -97,14 +102,19 @@
 
 <details><summary>주문내역조회 & 주문정보수정 & 주문취소(메이)</summary>
 
-![](https://velog.velcdn.com/images/bamzzi15/post/57768ec0-90be-4131-9f26-cdeeac549e8e/image.gif)
+![](https://velog.velcdn.com/images/bamzzi15/post/615a83df-8b63-476b-8a0f-c71fe8d87f43/image.gif)
+주문조회
+
+
+![](https://velog.velcdn.com/images/bamzzi15/post/2870e56c-3022-4a46-8071-7b455db72cf0/image.gif)
+주문상세조회, 수정, 탈퇴
 
 </details>
 
 
 <details><summary>상품찜하기 & 찜목록조회(메이)</summary>
 
-![](https://velog.velcdn.com/images/bamzzi15/post/e6c6c731-8e37-444c-976e-07e56b8a6f49/image.gif)
+![](https://velog.velcdn.com/images/bamzzi15/post/c773a054-b27e-46bc-b618-d13eeb059459/image.gif)
 
 </details>
 
