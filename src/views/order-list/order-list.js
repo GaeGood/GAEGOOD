@@ -63,7 +63,7 @@ function orderListMake(order) {
   const shippingStatus = order.shippingStatus;
 
   orderListZone.innerHTML += `<div class="card order__contents">
-        <a href="/orders/${orderId}">
+        <a href="/orders/detail/${orderId}">
         <div class="card-header">${orderDay} 주문</div>
         <div class="orderzone__${orderId}" style="display:flex;align-items: center;justify-content: space-between;">
           <div class="order__${orderId}"></div>
@@ -110,7 +110,7 @@ function orderListMake(order) {
         <div>
         <div class="etc__zone">
           <div class="shipping__status__${orderId}">${shippingStatus}</div>
-          <a type="button" class="btn btn-outline-secondary" href="/orders/${orderId}">
+          <a type="button" class="btn btn-outline-secondary" href="/orders/detail/${orderId}">
             주문상세</a>
         </div>
         </div>
