@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>개굿</title>
     <!-- 아이콘 -->
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-32x32.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/public/images/favicon-36x36.png"
+    />
 
     <!-- CSS only Bootstrap -->
     <link
@@ -33,60 +38,59 @@
 
   <body>
     <!-- HEADER -->
-    <nav class="navbar">
-      <!-- <div class="container-fluid"> -->
-      <a class="navbar-brand" href="/">GAEGOOD</a>
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/login"
-            >로그인</a
-          >
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/register">회원가입</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/cart"
-            >장바구니
-            <span class="icon">
-              <i class="fas fa-cart-shopping"></i>
-            </span>
-          </a>
-        </li>
-      </ul>
-      <!-- </div> -->
-    </nav>
 
     <!-- 메인 컨테이너 -->
     <main id="main__container" role="main">
-      <div class="product__container">
-        <div class="product__category">카테고리</div>
-        <img src="#" class="product__img" />
-        <div class="product__name">상품명</div>
-        <div class="product__desc">상품상세설명</div>
-        <div class="product__price">가격</div>
+      <!-- border line -->
+      <div class="border__line__container">
+        <div class="border__line"></div>
       </div>
-      <div class="button__container">
-        <button class="button__cart">장바구니</button>
-        <button class="button__remove">장바구니 삭제</button>
-        <button class="button__buy">바로 구매하기</button>
-        <button class="button__delete">
-          indexedDB(데이터베이스) 삭제 - 주의, 데이터값 아니고 DB임
-        </button>
+      <div class="sub__container">
+        <div class="product__sub__container">
+          <div class="product__category">카테고리</div>
+          <div class="product__img__container">
+            <img src="#" class="product__img" />
+          </div>
+        </div>
+        <div class="product__main__container">
+          <div class="product__text__container">
+            <div class="product__name">상품명</div>
+            <div class="product__desc">상품상세설명</div>
+            <div class="product__price">가격</div>
+          </div>
+          <div class="buttons__container">
+            <div class="like__button">
+              <i class="fa-regular fa-heart hidden"></i>
+              <i class="fa-solid fa-heart hidden"></i>
+            </div>
+            <div class="amount__title">수량</div>
+            <div class="amount__button__container">
+              <button class="button__minus">-</button>
+              <div class="product__amount">1</div>
+              <button class="button__plus">+</button>
+            </div>
+          </div>
+          <div class="deliveryFee__info">
+            ※ 상품 금액 50,000원 이상 부터는 배송비가 무료입니다.
+          </div>
+
+          <!-- border line -->
+          <div class="border__line__container">
+            <div class="border__line"></div>
+          </div>
+
+          <div class="button__container">
+            <div class="button__sub__container">
+              <button class="button__cart btn btn-dark btn-lg">장바구니</button>
+              <!-- <button class="button__remove btn btn-light btn-lg">
+                장바구니 삭제
+              </button> -->
+            </div>
+          </div>
+        </div>
       </div>
     </main>
 
-    <!-- Footer -->
-    <footer
-      class="text-center text-white"
-      style="background-color: blanchedalmond"
-    >
-      <!-- Copyright -->
-      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-        <p>© 2022 개굿개굿</p>
-        <p>저작권 yalco</p>
-      </div>
-      <!-- Copyright -->
-    </footer>
+    <footer></footer>
   </body>
 </html>

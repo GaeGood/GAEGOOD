@@ -1,0 +1,69 @@
+@import "/public/css/main.css";
+* {
+  padding: 0px;
+  margin: 0px;
+}
+
+/*html*/
+html {
+  width: 100vw;
+  height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.div-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+/* main */
+
+#main__container {
+  width: 100%;
+  height: 100%;
+  padding: 100px;
+  box-sizing: border-box;
+}
+
+.main-contents {
+  display: flex;
+}
+
+/*user-admin*/
+.btn__admin__addCategory {
+  display: none;
+}
+.btn__admin__addProduct {
+  display: none;
+}
+
+/*footer*/
+
+.footer {
+  background-color: #f8f8f8;
+  width: 100%;
+  height: 10%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*display:none*/
+.hidden {
+  display: none;
+}
+
+textarea {
+  resize: none;
+}
+
+.admin__page__list > button{
+  margin-right: 10px;
+}

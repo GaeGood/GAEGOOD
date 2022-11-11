@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>개굿</title>
+    <!-- 아이콘 -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/public/images/favicon-36x36.png"
+    />
+
+    <!-- CSS only Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+    <!-- JavaScript Bundle with Popper Bootstrap -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+      crossorigin="anonymous"
+    ></script>
+    <!-- 폰트 어썸: 아이콘 -->
+    <script
+      defer
+      src="https://kit.fontawesome.com/9daa42bcef.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- 커스텀 css, js -->
+    <link rel="stylesheet" href="order-complete.css" />
+    <script src="order-complete.js" type="module" defer></script>
+  </head>
+
+  <body>
+    <!-- 메인 컨테이너 -->
+    <main id="main__container" role="main">
+      <div class="process__bar">
+        <p>장바구니 ></p>
+        <p>주문결제 ></p>
+        <p>주문완료</p>
+      </div>
+      <!-- border line -->
+      <div class="border__line__container">
+        <div class="border__line"></div>
+      </div>
+      <!-- card -->
+      <div class="card__container">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title card__common">
+              <h5>주문 완료</h5>
+            </div>
+            <h6 class="card-subtitle mb-2 text-muted card__common">
+              <i class="fa-solid fa-circle-check fa-5x"></i>
+            </h6>
+            <div class="card-text other__link">주문이 완료되었습니다!</div>
+            <div class="other__link">
+              <a href="/orders/list" class="card-link">주문 내역 보러가기</a>
+            </div>
+            <div class="other__link">
+              <a href="/" class="card-link">다른 상품 보러가기</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer></footer>
+  </body>
+</html>
