@@ -80,7 +80,7 @@
 
 <details><summary>장바구니 기능</summary>
 
-<img src="file:///C:/Users/ggr09/Desktop/Animation-cart.gif">
+![](https://velog.velcdn.com/images/gyuri092/post/a13cc16e-3be7-440d-8aee-c1c56903cff0/image.gif)
 
 </details>
 
