@@ -29,13 +29,7 @@ const oderAdmin = [
   "취소",
 ];
 const userAdmin = ["가입날짜", "이메일", "이름", "권한", "관리"];
-const categoryAdmin = [
-  "생성날짜",
-  "카테고리 이름",
-  "수정날짜",
-  "수정",
-  "삭제",
-];
+const categoryAdmin = ["생성날짜", "카테고리 이름", "수정날짜", "수정", "삭제"];
 const productAdmin = [
   "생성날짜",
   "상품명",
@@ -68,12 +62,18 @@ for (let i = 0; i < allBtns.length; i++) {
 
     //주문관리 기능 구현
     if (listName === "주문관리") {
-      document.querySelector(".btn__admin__addCategory").style =
-        "display:none";
-      document.querySelector(".btn__admin__addProduct").style =
-        "display:none";
+      document.querySelector(".btn__admin__addCategory").style = "display:none";
+      document.querySelector(".btn__admin__addProduct").style = "display:none";
       fetch("/api/orders")
-        .then((res) => res.json())
+        .then(async (res) => {
+          const json = await res.json();
+
+          if (res.ok) {
+            return json;
+          }
+
+          return Promise.reject(json);
+        })
         .then((datas) => {
           const newDatas = datas.map((data) => {
             return {
@@ -96,18 +96,25 @@ for (let i = 0; i < allBtns.length; i++) {
         .then(() => {
           oderManagementEdit();
           oderManagementDelete();
-        });
+        })
+        .catch((err) => alert(err));
     }
 
     //회원관리 기능구현
     else if (listName === "회원관리") {
-      document.querySelector(".btn__admin__addCategory").style =
-        "display:none";
-      document.querySelector(".btn__admin__addProduct").style =
-        "display:none";
+      document.querySelector(".btn__admin__addCategory").style = "display:none";
+      document.querySelector(".btn__admin__addProduct").style = "display:none";
 
       fetch("/api/users")
-        .then((res) => res.json())
+        .then(async (res) => {
+          const json = await res.json();
+
+          if (res.ok) {
+            return json;
+          }
+
+          return Promise.reject(json);
+        })
         .then((datas) => {
           const newDatas = datas.map((data) => {
             return {
@@ -130,16 +137,24 @@ for (let i = 0; i < allBtns.length; i++) {
           productManagementCreate();
           userManagementEdit();
           userManagementDelete();
-        });
+        })
+        .catch((err) => alert(err));
     } else if (listName === "카테고리 관리") {
       //상품추가와 카테고리추가 없애기
       document.querySelector(".btn__admin__addCategory").style =
         "display:inline";
-      document.querySelector(".btn__admin__addProduct").style =
-        "display:none";
+      document.querySelector(".btn__admin__addProduct").style = "display:none";
 
       fetch("/api/categories")
-        .then((res) => res.json())
+        .then(async (res) => {
+          const json = await res.json();
+
+          if (res.ok) {
+            return json;
+          }
+
+          return Promise.reject(json);
+        })
         .then((datas) => {
           const newDatas = datas.map((data) => {
             return {
@@ -160,16 +175,24 @@ for (let i = 0; i < allBtns.length; i++) {
         .then(() => {
           categoryManagementEdit();
           categoryManagementDelete();
-        });
+        })
+        .catch((err) => alert(err));
     } else {
       //상품추가와 카테고리추가 없애기
-      document.querySelector(".btn__admin__addCategory").style =
-        "display:none";
+      document.querySelector(".btn__admin__addCategory").style = "display:none";
       document.querySelector(".btn__admin__addProduct").style =
         "display:inline";
 
       fetch("/api/products")
-        .then((res) => res.json())
+        .then(async (res) => {
+          const json = await res.json();
+
+          if (res.ok) {
+            return json;
+          }
+
+          return Promise.reject(json);
+        })
         .then((datas) => {
           const newDatas = datas.map((data) => {
             return {
@@ -192,7 +215,8 @@ for (let i = 0; i < allBtns.length; i++) {
         .then(() => {
           productManagementEdit();
           productManagementDelete();
-        });
+        })
+        .catch((err) => alert(err));
     }
   });
 }
@@ -227,7 +251,8 @@ function oderManagementEdit() {
         .then((res) => res.json())
         .then((alt) =>
           alert(`배송상태가 "${alt.shippingStatus}"으로 변경되었습니다.`)
-        );
+        )
+        .catch((err) => alert(err));
     });
   }
 }
@@ -242,8 +267,17 @@ function oderManagementDelete() {
         fetch(`http://localhost:5000/api/orders/${btnId}`, {
           method: "DELETE",
         })
-          .then((res) => res.json())
-          .then((alt) => alert(alt));
+          .then(async (res) => {
+            const json = await res.json();
+
+            if (res.ok) {
+              return json;
+            }
+
+            return Promise.reject(json);
+          })
+          .then((alt) => alert(alt))
+          .catch((err) => alert(err));
       }
     });
   }
@@ -272,10 +306,19 @@ function userManagementEdit() {
           role: `${btnValue}`,
         }),
       })
-        .then((res) => res.json())
+        .then(async (res) => {
+          const json = await res.json();
+
+          if (res.ok) {
+            return json;
+          }
+
+          return Promise.reject(json);
+        })
         .then((alt) =>
           alert(`${alt.name}의 권한이 ${alt.role}로 변경되었습니다.`)
-        );
+        )
+        .catch((err) => alert(err));
     });
   }
 }
@@ -290,8 +333,17 @@ function userManagementDelete() {
         fetch(`http://localhost:5000/api/users/${btnId}`, {
           method: "DELETE",
         })
-          .then((res) => res.json())
-          .then((idData) => alert(`${idData}이 삭제되었습니다.`));
+          .then(async (res) => {
+            const json = await res.json();
+
+            if (res.ok) {
+              return json;
+            }
+
+            return Promise.reject(json);
+          })
+          .then((idData) => alert(`${idData}이 삭제되었습니다.`))
+          .catch((err) => alert(err));
       }
     });
   }
@@ -305,8 +357,7 @@ function categoryManagementEdit() {
   let nameValue;
   for (let count = 0; count < editCategoryBtns.length; count++) {
     editCategoryBtns[count].addEventListener("click", (e) => {
-      nameValue =
-        document.querySelectorAll(".current__name")[count].innerText;
+      nameValue = document.querySelectorAll(".current__name")[count].innerText;
       productId = e.target.parentElement.parentElement.id;
       const inputCategoryName = document.getElementById("edit-category-name");
       inputCategoryName.value = nameValue;
@@ -339,7 +390,7 @@ function categoryManagementEdit() {
           document.querySelector(".btn__admin__category").click();
           bootstrap.Modal.getInstance("#btn__admin__editCategory").hide();
         })
-        .catch(() => alert("카테고리 이름을 입력해주세요."));
+        .catch((err) => alert(err));
     });
 }
 function categoryManagementCreate() {
@@ -375,7 +426,7 @@ function categoryManagementCreate() {
         bootstrap.Modal.getInstance("#btn__admin__addCategory").hide();
         document.querySelector(".btn__admin__category").click();
       })
-      .catch(() => alert("카테고리 이름을 입력해주세요."));
+      .catch((err) => alert(err));
   });
 }
 function categoryManagementDelete() {
@@ -389,8 +440,17 @@ function categoryManagementDelete() {
         fetch(`http://localhost:5000/api/categories/${btnId}`, {
           method: "DELETE",
         })
-          .then((res) => res.json())
-          .then((alt) => alert(alt));
+          .then(async (res) => {
+            const json = await res.json();
+
+            if (res.ok) {
+              return json;
+            }
+
+            return Promise.reject(json);
+          })
+          .then((alt) => alert(alt))
+          .catch((err) => alert(err));
       }
     });
   }
@@ -401,20 +461,27 @@ function productManagementEdit() {
   const addCategoryList = document.querySelector(".btn__admin__editProduct");
   addCategoryList.addEventListener("click", (e) => {
     fetch("/api/categories")
-      .then((res) => res.json())
+      .then(async (res) => {
+        const json = await res.json();
+
+        if (res.ok) {
+          return json;
+        }
+
+        return Promise.reject(json);
+      })
       .then((datas) => {
         document.getElementById("edit-product-category").innerHTML = "";
         datas.forEach((element) => {
           document.getElementById("edit-product-category").innerHTML += `
       <option>${element.name}</option>`;
         });
-      });
+      })
+      .catch((err) => alert(err));
   });
 
   //수정하기 모달창을 띄울 때 데이터에 맞게 모달창에 넣어주기
-  const editProductBtns = document.querySelectorAll(
-    ".btn__admin__editProduct"
-  );
+  const editProductBtns = document.querySelectorAll(".btn__admin__editProduct");
   let productId;
   let nameValue;
 
@@ -430,7 +497,15 @@ function productManagementEdit() {
     editProductBtns[count].addEventListener("click", (e) => {
       productId = e.target.parentElement.parentElement.id;
       fetch(`/api/products/${productId}`)
-        .then((res) => res.json())
+        .then(async (res) => {
+          const json = await res.json();
+
+          if (res.ok) {
+            return json;
+          }
+
+          return Promise.reject(json);
+        })
         .then((newData) => {
           name.value = newData.name;
           category.value = newData.category;
@@ -438,7 +513,8 @@ function productManagementEdit() {
           longDesc.value = newData.longDesc;
           stock.value = newData.stock;
           price.value = newData.price;
-        });
+        })
+        .catch((err) => alert(err));
     });
   }
   //수정하기 버튼을 클릭했을 때
@@ -488,14 +564,23 @@ function productManagementCreate() {
   const addCategoryList = document.querySelector(".btn__admin__addProduct");
   addCategoryList.addEventListener("click", (e) => {
     fetch("/api/categories")
-      .then((res) => res.json())
+      .then(async (res) => {
+        const json = await res.json();
+
+        if (res.ok) {
+          return json;
+        }
+
+        return Promise.reject(json);
+      })
       .then((datas) => {
         document.getElementById("create-product-category").innerHTML = "";
         datas.forEach((element) => {
           document.getElementById("create-product-category").innerHTML += `
         <option>${element.name}</option>`;
         });
-      });
+      })
+      .catch((err) => alert(err));
   });
   //추가하기 버튼을 클릭했을 때
   const addProductBtn = document.querySelector(".submit__product");
@@ -556,14 +641,23 @@ function productManagementDelete() {
     deleteBtns[count].addEventListener("click", (e) => {
       const conf = confirm("해당 상품의 정보를 삭제하시겠습니까?");
       if (conf) {
-      const btnId = e.target.parentElement.parentElement.id;
-      document.getElementById(`${btnId}`).remove();
-      fetch(`http://localhost:5000/api/products/${btnId}`, {
-        method: "DELETE",
-      })
-        .then((res) => res.json())
-        .then((alt) => alert(alt));
-    }
+        const btnId = e.target.parentElement.parentElement.id;
+        document.getElementById(`${btnId}`).remove();
+        fetch(`http://localhost:5000/api/products/${btnId}`, {
+          method: "DELETE",
+        })
+          .then(async (res) => {
+            const json = await res.json();
+
+            if (res.ok) {
+              return json;
+            }
+
+            return Promise.reject(json);
+          })
+          .then((alt) => alert(alt))
+          .catch((err) => alert(err));
+      }
     });
   }
 }
