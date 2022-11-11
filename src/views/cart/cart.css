@@ -36,6 +36,10 @@
   font-size: 30px;
   font-weight: 500;
 }
+.deliveryFee__info {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 /* main */
 #main__container {
   width: 100%;

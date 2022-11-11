@@ -140,6 +140,11 @@
   color: #ed4c67;
 }
 
-.address__search {
-  margin: 5px;
+#order-edit__modal__input__shipping-post-code {
+  width: 360px;
+}
+
+.post__code__zone {
+  display: flex;
+  justify-content: space-between;
 }

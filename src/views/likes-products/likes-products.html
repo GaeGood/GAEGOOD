@@ -27,8 +27,8 @@
       crossorigin="anonymous"
     ></script>
     <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="order-list.css" />
-    <script src="order-list.js" type="module" defer></script>
+    <link rel="stylesheet" href="likes-products.css" />
+    <script src="likes-products.js" type="module" defer></script>
   </head>
 
   <body>
@@ -49,9 +49,7 @@
             <a class="mypage__category__a" href="/users/mypage">회원정보수정</a>
           </li>
           <li class="mypage__category nav-item">
-            <a class="mypage__category__a clicked" href="/orders/list"
-              >주문/배송조회</a
-            >
+            <a class="mypage__category__a" href="/orders/list">주문/배송조회</a>
           </li>
           <li class="mypage__category nav-item">
             <a class="mypage__category__a" href="/users/likes-products"
@@ -65,12 +63,10 @@
         <!-- <div class="order__list"> -->
         <div class="information__zone order__list">
           <div class="table__title">
-            <div class="table-header">주문정보</div>
-            <div class="table__title asc__desc">
-              <a class="order__sort"><div>오래된주문순</div></a>
-            </div>
+            <div class="table-header">찜 목록</div>
           </div>
-          <div class="order__none">주문내역이 없습니다</div>
+          <div class="like__none">찜한 상품이 없습니다</div>
+          <div class="like__product__list"></div>
         </div>
       </div>
     </main>

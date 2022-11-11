@@ -43,6 +43,13 @@ const UserSchema = new Schema(
         required: true,
       },
     ],
+    likesProductList: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Product",
+        required: true,
+      },
+    ],
   },
   {
     timestamps: true,

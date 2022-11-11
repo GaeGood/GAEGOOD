@@ -1,6 +1,8 @@
 import { userModel } from "../db";
+import { userService } from "./user-service";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import nodemailer from "nodemailer";
 class AuthService {
   constructor(userModel) {
     this.userModel = userModel;
@@ -50,6 +52,56 @@ class AuthService {
       error.statusCode = 403;
       throw error;
     }
+  }
+  async renewPassword(email) {
+    const transport = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: process.env.AUTH_GMAIL_USER,
+        pass: process.env.AUTH_GMAIL_PASS,
+      },
+    });
+    const message = {
+      from: process.env.AUTH_GMAIL_USER,
+      to: email,
+      subject: "Gaegood.com 패스워드 변경알림",
+      text: "mail testing",
+    };
+    let chars =
+      "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let passwordLength = 12;
+    let password = "";
+    for (let i = 0; i < passwordLength; i++) {
+      let randomNumber = Math.floor(Math.random() * chars.length);
+      password += chars.substring(randomNumber, randomNumber + 1);
+    }
+    message.text = `Password : ${password}`;
+    Object.freeze(message);
+
+    try {
+      const User = await userModel.findByEmail(email);
+      const id = User.id;
+      try {
+        await userService.editUser(id, { password });
+      } catch (err) {
+        const error = new Error(
+          " 유저 임시비밀번호 부여 후 수정도중 에러가 발생하였습니다."
+        );
+        error.statusCode = 400;
+        throw error;
+      }
+    } catch (err) {
+      const error = new Error("찾으려는 계정이 존재하지 않습니다.");
+      error.statusCode = 400;
+      throw error;
+    }
+    transport.sendMail(message, (err, info) => {
+      if (err) {
+        const error = new Error("Sending new password failed");
+        error.statusCode = 400;
+        throw error;
+      }
+    });
   }
 }
 

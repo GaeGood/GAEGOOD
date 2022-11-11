@@ -1,6 +1,10 @@
 import { main } from "/public/js/main.js";
 const { loggedInUser } = await main();
 
+if (!loggedInUser) {
+  window.location.href = "/";
+}
+
 const [
   userEmail,
   userPassWordOne,
@@ -85,6 +89,7 @@ function searchAddress(e) {
       }
       userPostCode.value = `${data.zonecode}`;
       userStreetAddress.value = `${addr} ${extraAddr}`;
+      userExtraAddress.value = "";
       userExtraAddress.focus();
     },
   }).open();

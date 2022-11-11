@@ -7,6 +7,10 @@ import {
 } from "/public/js/main.js";
 const { loggedInUser } = await main();
 
+if (!loggedInUser) {
+  window.location.href = "/";
+}
+
 let orderProductList = [];
 
 // 쿼리스트링 가져오기
@@ -159,11 +163,17 @@ orderProductList.forEach((orderProduct) => {
 
     productAllIdArr.push(orderProduct.id);
     productAllAmountArr.push(orderProduct.amount);
-
     productsPrice += orderProduct.price * orderProduct.amount;
-    productsPriceHTML.innerHTML = addCommas(productsPrice) + "원";
-    deliveryFeeHTML.innerHTML = addCommas(3000) + "원";
-    totalPriceHTML.innerHTML = addCommas(productsPrice + 3000) + "원";
+
+    if (productsPrice >= 50000) {
+      productsPriceHTML.innerHTML = addCommas(productsPrice) + "원";
+      deliveryFeeHTML.innerHTML = addCommas(0) + "원";
+      totalPriceHTML.innerHTML = addCommas(productsPrice) + "원";
+    } else {
+      productsPriceHTML.innerHTML = addCommas(productsPrice) + "원";
+      deliveryFeeHTML.innerHTML = addCommas(3000) + "원";
+      totalPriceHTML.innerHTML = addCommas(productsPrice + 3000) + "원";
+    }
   }
 });
 

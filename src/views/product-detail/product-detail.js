@@ -18,7 +18,7 @@ if (loggedInUser) {
 }
 
 const button__cart = document.querySelector(".button__cart");
-const button__remove = document.querySelector(".button__remove");
+// const button__remove = document.querySelector(".button__remove");
 const button__delete = document.querySelector(".button__delete");
 const button__plus = document.querySelector(".button__plus");
 const button__minus = document.querySelector(".button__minus");
@@ -290,13 +290,68 @@ button__minus.addEventListener("click", function minusAmount() {
   changeDirectBuyLink(productAmountNum);
 });
 /* 장바구니 내용 삭제 버튼 클릭 이벤트 */
-button__remove.addEventListener("click", () => {
-  deleteIndexedDBdata(DATABASE_NAME, version, objectStore, idObject);
-  alert("상품을 장바구니에서 삭제했습니다.");
-});
+// button__remove.addEventListener("click", () => {
+//   deleteIndexedDBdata(DATABASE_NAME, version, objectStore, idObject);
+//   alert("상품을 장바구니에서 삭제했습니다.");
+// });
 
 function changeDirectBuyLink(amount) {
   const directBuyLink = document.getElementById("direct-buy__link");
 
   directBuyLink.href = `/orders/create?pid=${id}&count=${amount}`;
 }
+
+function renderLikedButton() {
+  document.querySelector(".fa-regular.fa-heart").classList.add("hidden");
+  document.querySelector(".fa-solid.fa-heart").classList.remove("hidden");
+}
+
+function renderUnlikedButton() {
+  document.querySelector(".fa-regular.fa-heart").classList.remove("hidden");
+  document.querySelector(".fa-solid.fa-heart").classList.add("hidden");
+}
+
+let alreadyLiked = false;
+
+loggedInUser.likesProductList.forEach((product) => {
+  if (String(product._id) === id) {
+    alreadyLiked = true;
+  }
+});
+
+if (alreadyLiked) {
+  renderLikedButton();
+} else {
+  renderUnlikedButton();
+}
+
+const likeButton = document.querySelector(".like__button");
+
+likeButton.addEventListener("click", (e) => {
+  fetch(`/api/products/${id}/like`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then(async (res) => {
+      const json = await res.json();
+
+      if (res.ok) {
+        return json;
+      }
+
+      return Promise.reject(json);
+    })
+    .then((message) => {
+      alert(message);
+      if (message === "좋아요 성공") {
+        renderLikedButton();
+      } else {
+        renderUnlikedButton();
+      }
+    })
+    .catch((e) => {
+      alert(e);
+    });
+});

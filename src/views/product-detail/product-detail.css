@@ -44,10 +44,18 @@ body {
   height: 1px;
   background-color: rgb(180, 180, 180);
 }
+
+.deliveryFee__info {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
 /* main */
 #main__container {
+  margin-top: 30px;
   width: 100%;
-  height: 100%;
+  height: 90%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -56,14 +64,16 @@ body {
   box-sizing: border-box;
   color: rgb(58, 58, 58);
 }
+
 .sub__container {
   width: 80%;
   height: 100%;
   display: flex;
   margin-top: 40px;
 }
+
 .product__sub__container {
-  width: 40%;
+  width: 50%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -71,7 +81,7 @@ body {
   margin-right: 40px;
 }
 .product__main__container {
-  width: 40%;
+  width: 50%;
   height: 60%;
   display: flex;
   flex-direction: column;
@@ -106,18 +116,46 @@ body {
   font-size: 18px;
   font-weight: bold;
 }
-.amount__container {
+.buttons__container {
   width: 100%;
-  margin: 50px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 }
+
 .amount__title {
+  margin-left: 10px;
   margin-bottom: 20px;
   font-size: 16px;
+  font-weight: 600;
 }
 .amount__button__container {
   display: flex;
   align-items: center;
 }
+
+.like__button {
+  width: 100%;
+  height: 150px;
+  margin-top: 15px;
+  margin-left: 5px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.fa-solid.fa-heart {
+  color: #eb4d4b;
+}
+
+.fa-solid.fa-heart.hidden {
+  display: none;
+}
+
+.fa-regular.fa-heart.hidden {
+  display: none;
+}
+
 .product__amount {
   width: 50px;
   text-align: center;
@@ -166,10 +204,43 @@ body {
 .order__button__any {
   width: 98%;
 }
+.order__button__user > a,
+.order__button__any > a {
+  text-decoration: none;
+  color: white;
+}
 
 /*footer*/
 
 /*display:none*/
 .hidden {
   display: none;
+}
+
+@media (max-width: 1100px) {
+  .like__button {
+    height: 50px;
+    margin-top: 60px;
+  }
+}
+
+@media (max-width: 800px) {
+  #main__container {
+    margin-top: 100px;
+  }
+  .sub__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 200px;
+  }
+
+  .product__sub__container {
+    width: 100%;
+  }
+
+  .product__main__container {
+    width: 100%;
+  }
 }
