@@ -17,7 +17,7 @@
 
 <br />
 
-## 1. 서비스 소개
+## 서비스 소개
 
 #### 제품 등록, 장바구니 추가, 주문하기 등 쇼핑몰의 핵심 서비스를 구현합니다. 
 1. 회원가입, 로그인, 회원정보 수정 등 **유저 정보 관련 CRUD** 
@@ -55,7 +55,7 @@
 
 <br/>
 
-### 1-2. 데모 영상
+### 데모 영상
 
 <details><summary>사용자 회원가입, 로그인</summary>
 
@@ -102,7 +102,7 @@
 
 <br />
 
-### 1-3. 페이지 별 화면
+### 페이지 별 화면
 
 |  |  |
 | ------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------|
@@ -114,14 +114,14 @@
 <br />
 
 
-### 2-1. 프론트엔드
+### 프론트엔드
 
 - **Vanilla javascript**, html, css (**Bootstrap css**)
 - Font-awesome 
 - Daum 도로명 주소 api 
 - 이외
 
-### 2-2. 백엔드 
+### 백엔드 
 
 - **Express** (nodemon, babel-node로 실행됩니다.)
 - Mongodb, Mongoose
@@ -129,7 +129,7 @@
 - 이외
 
 
-### 3-1. 폴더 구조
+### 폴더 구조
 - 프론트: `src/views` 폴더 
 - 백: src/views 이외 폴더 전체
 - 실행: **프론트, 백 동시에, express로 실행**
@@ -147,6 +147,44 @@
 |  :snowman: HUNI(재훈)   |  BE   |
 |  :penguin: SIAN(시안)   |  FE   |
 |  :leopard: PEPE(종훈)   |  BE   |
+
+## Collaboration Tools
+
+- Padlet : 초반 주제 기획시 의사결정 빠르게 하는 칸반 보드 용도(Trello보다 가벼워서 잠시 사용, 이후에 notion으로 통일)
+- PigJam : 초반 기획시 빠른 레이아웃을 잡기 위해 사용
+- Notion : 수정이 빈번하고 같이 수정해야하는 것
+- Discord : 화상회의 , 수시로 스크럼 잡는 용도
+- Gitlab : Code Repository
+- Gitlab Issue : 진행상황이나 Trouble Shooting 내역 적기
+- Gitlab Wiki : 스크럼 회의내용 적기
+
+
+## Scrum
+
+- 탄력적으로 운영. 시작스크럼 첫주(11:00~) , 둘째주(13:00~)
+- YTB(Yesterday, Today, Blocking) 기반 스크럼 회의 진행
+  + 어제할일, 오늘할일, 막히는 상황 스크럼 회의때 공유
+- 필요시 수시로 프론트/백엔드/전체 스크럼 잡아서 진행
+
+
+## 코드 컨벤션
+- URL, URI를 RESTful 하게 작성하기
+- 파일명이 여러 단어로 이루어지면 ‘- (하이픈)’ 으로 연결하기
+- 스키마, 모델은 Upper Camel Case 사용하기
+- 일반변수 lower Camel Case
+- Class, ID Selector : 프론트엔드 재량
+- DOM 요소 : 프론트엔드 재량
+- 백엔드 : 4계층 구조 (Router,Controller,Service,Model)
+
+## 커멧메세지 컨벤션 (개발 생산성을 낮추지 않기위해 3개로 축소)
+- feat: 새로운 기능추가
+- fix: 수정사항 발생시, 버그fix , refactoring
+- template : html,css,js 등 view 관련 변경사항 발생시
+- feat, fix, template 3가지를 공통적으로 사용하되 그 외는 자유롭게 사용
+
+## 브랜치 전략
+![gaegood_branch_strategy drawio (3)](https://user-images.githubusercontent.com/59651691/201296955-04f0a6d2-7f49-42b2-980e-e4550930335e.png)
+
 
 
 <br />
