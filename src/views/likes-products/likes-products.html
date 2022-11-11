@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>개굿</title>
+    <!-- 아이콘 -->
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-32x32.png" />
+
+    <!-- CSS only Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+    <!-- JavaScript Bundle with Popper Bootstrap -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+      crossorigin="anonymous"
+    ></script>
+    <!-- 폰트 어썸: 아이콘 -->
+    <script
+      defer
+      src="https://kit.fontawesome.com/9daa42bcef.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- 커스텀 css, js -->
+    <link rel="stylesheet" href="likes-products.css" />
+    <script src="likes-products.js" type="module" defer></script>
+  </head>
+
+  <body>
+    <!-- 메인 컨테이너 -->
+    <main id="main__container" role="main">
+      <div class="main__title">
+        <div class="main__title__zone">
+          <span class="main__mypage__header"></span>
+        </div>
+
+        <!-- 구분선 -->
+        <hr class="my-2" />
+      </div>
+
+      <div class="main-contents">
+        <ul class="mypage-category nav flex-column">
+          <li class="mypage__category nav-item">
+            <a class="mypage__category__a" href="/users/mypage">회원정보수정</a>
+          </li>
+          <li class="mypage__category nav-item">
+            <a class="mypage__category__a" href="/orders/list">주문/배송조회</a>
+          </li>
+          <li class="mypage__category nav-item">
+            <a class="mypage__category__a" href="/users/likes-products"
+              >찜 목록</a
+            >
+          </li>
+          <li class="mypage__category nav-item">
+            <a class="user__delete mypage__category__a" href="#">회원탈퇴</a>
+          </li>
+        </ul>
+        <!-- <div class="order__list"> -->
+        <div class="information__zone order__list">
+          <div class="table__title">
+            <div class="table-header">찜 목록</div>
+          </div>
+          <!-- <div class="order__none">찜한 상품이 없습니다</div> -->
+          <div class="card" style="width: 18rem">
+            <div class="product__image">
+              <img src="상품이름" class="card-img-top" alt="찜상품사진" />
+            </div>
+            <div class="card-body">
+              <div class="like__zone">
+                <h5 class="card-title">상품이름</h5>
+                <a href="#" class="btn btn-primary">하트</a>
+              </div>
+              <p class="card-text">카테고리</p>
+
+              <p class="card-text">짧은설명</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer></footer>
+  </body>
+</html>

@@ -16,6 +16,7 @@ viewsRouter.use("/cart", serveStatic("cart"));
 viewsRouter.use("/users/mypage", serveStatic("user-mypage"));
 viewsRouter.use("/users/:uid/edit", serveStatic("user-edit"));
 viewsRouter.use("/users/admin", serveStatic("user-admin"));
+viewsRouter.use("/users/likes-products", serveStatic("likes-products"));
 
 // products
 viewsRouter.use("/products/create", serveStatic("product-create"));
