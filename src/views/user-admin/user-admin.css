@@ -8,6 +8,7 @@
 html {
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
 }
 
 body {
@@ -35,7 +36,13 @@ a {
   padding: 100px;
   min-height: 83vh;
   box-sizing: border-box;
-  overflow-x: hidden;
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+#main__container::-webkit-scrollbar {
+  display: none;
 }
 
 .main-contents {
