@@ -62,6 +62,14 @@ if (directBuy) {
       return orderProductDBList;
     }
   );
+
+  console.log(orderProductList);
+  console.log(orderProductList.length);
+
+  if (orderProductList.length === 0) {
+    alert("구매 목록이 없습니다. 1초 후 홈으로 이동합니다.");
+    setTimeout("location.href = '/'", 1000);
+  }
 }
 
 async function getDirectBuyProductInfo(directProductPid) {
