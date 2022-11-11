@@ -14,7 +14,6 @@ const viewsRouter = express.Router();
 
 //
 viewsRouter.use("/", serveStatic("home"));
-viewsRouter.use("/join", serveStatic("join"));
 viewsRouter.use("/cart", serveStatic("cart"));
 
 // users
