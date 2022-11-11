@@ -106,9 +106,9 @@
 
 |  |  |
 | ------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------|
-| ![image](https://i.ibb.co/jyxjcd3/image.png) | ![image](https://i.ibb.co/Q860RKz/image.png) |
+| ![](https://velog.velcdn.com/images/gyuri092/post/80d40273-1ce4-435f-8a86-9456ea93858f/image.png) | ![](https://velog.velcdn.com/images/gyuri092/post/397877a8-9d94-4f52-a940-d2113b0fc8ef/image.png) |
 |    메인 페이지                                |      회원가입 화면                            |
-| ![image](https://i.ibb.co/RpYN379/image.png) |                                         |
+| ![](https://velog.velcdn.com/images/gyuri092/post/15384467-6529-4112-9e99-5ba04b1b4513/image.png) |                                         |
 |    로그인 페이지                              |     앞으로 추가할 페이지                         |
 
 <br />
