@@ -88,6 +88,9 @@
 
 <details><summary>즉시구매 & 장바구니구매(맨디)</summary>
 
+![](https://velog.velcdn.com/images/gyuri092/post/2f26730d-5903-4ec9-97a1-6d95bf1ec15b/image.gif)
+
+![](https://velog.velcdn.com/images/gyuri092/post/7226d290-93ad-4020-99dd-0370593975ab/image.gif)
 
 </details>
 
