@@ -46,7 +46,7 @@ viewsRouter.use(
 );
 viewsRouter.use("/orders/list", loginRequiredPage, serveStatic("order-list"));
 viewsRouter.use(
-  "/orders/:oid",
+  "/orders/detail/:oid",
   loginRequiredPage,
   orderOwnerRequiredPage,
   serveStatic("order-detail")

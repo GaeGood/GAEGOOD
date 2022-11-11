@@ -4,7 +4,7 @@ const loggedInUser = await main();
 const path = window.location.href;
 console.log(path);
 
-const oid = path.split("/")[4];
+const oid = path.split("/")[5];
 console.log(oid);
 
 fetch(`/api/orders/${oid}`)
