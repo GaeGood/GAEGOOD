@@ -33,7 +33,7 @@
  - http://gaegood.com/
  <div>
 
-<img alt="GAEGOOD 로고" src="/uploads/5247b084d1d25cc1d45fd8efaf32ace0/GAEGOOD.PNG">
+<img alt="GAEGOOD 로고" src="/uploads/698b51c434aaec0eeb2cc8900cb4568e/GAEGOOD.PNG">
 
 </div>
 
