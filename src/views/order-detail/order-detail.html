@@ -117,12 +117,26 @@
               </div>
               <div class="mb-3">
                 <label for="" class="form-label">우편주소</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="order-edit__modal__input__shipping-post-code"
-                  placeholder=""
-                />
+                <div class="post__code__zone">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="order-edit__modal__input__shipping-post-code"
+                    placeholder=""
+                    readonly
+                  />
+                  <button
+                    type="button"
+                    class="address__search btn btn-secondary"
+                  >
+                    주소검색
+                  </button>
+                  <!-- <input
+                    type="button"
+                    class="address__search"
+                    value="주소검색"
+                  /> -->
+                </div>
               </div>
               <div class="mb-3">
                 <label for="" class="form-label">도로명 주소</label>
@@ -131,6 +145,7 @@
                   class="form-control"
                   id="order-edit__modal__input__shipping-street-address"
                   placeholder=""
+                  readonly
                 />
               </div>
               <div class="mb-3">
@@ -142,7 +157,7 @@
                   placeholder=""
                 />
               </div>
-              <input type="button" class="address__search" value="주소검색" />
+              <!-- <input type="button" class="address__search" value="주소검색" /> -->
             </form>
           </div>
           <div class="modal-footer">
