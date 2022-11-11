@@ -63,3 +63,7 @@ a {
 textarea {
   resize: none;
 }
+
+.admin__page__list > button{
+  margin-right: 10px;
+}

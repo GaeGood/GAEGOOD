@@ -69,6 +69,7 @@ function createOderMiddle(dataArr) {
         </tr>`
     );
   }
+  middle.innerHTML = "";
   middle.innerHTML += addHtml.join("");
   return middle;
 }
@@ -129,10 +130,10 @@ function createUserMiddle(dataArr) {
         </tr>`
     );
   }
+  middle.innerHTML = "";
   middle.innerHTML += addHtml.join("");
   return middle;
 }
-
 
 function createCategoryMiddle(dataArr) {
   const middle = document.createElement("tbody");
@@ -165,6 +166,7 @@ function createCategoryMiddle(dataArr) {
         </tr>`
     );
   }
+  middle.innerHTML = "";
   middle.innerHTML += addHtml.join("");
   return middle;
 }
@@ -219,10 +221,10 @@ function createProductMiddle(dataArr) {
         </tr>`
     );
   }
+  middle.innerHTML = "";
   middle.innerHTML += addHtml.join("");
   return middle;
 }
-
 
 function createProductTable(listArr, datasArr) {
   //datas 는 필요한 데이터만 받아온 객체들의 배열
