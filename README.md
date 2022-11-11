@@ -97,12 +97,14 @@
 
 <details><summary>주문내역조회 & 주문정보수정 & 주문취소(메이)</summary>
 
+![](https://velog.velcdn.com/images/bamzzi15/post/57768ec0-90be-4131-9f26-cdeeac549e8e/image.gif)
 
 </details>
 
 
 <details><summary>상품찜하기 & 찜목록조회(메이)</summary>
 
+![](https://velog.velcdn.com/images/bamzzi15/post/e6c6c731-8e37-444c-976e-07e56b8a6f49/image.gif)
 
 </details>
 
