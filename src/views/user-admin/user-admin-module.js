@@ -52,14 +52,14 @@ function createOderMiddle(dataArr) {
           </td>
           <td>
             <div class="dropdown">
-              <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="btn btn-outline-secondary dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 ${dataArr[count].shopStatus}
               </a>
               <ul class="dropdown-menu btn__edit">
-                <li><a class="dropdown-item" href="#">배송전</a></li>
-                <li><a class="dropdown-item" href="#">배송중</a></li>
-                <li><a class="dropdown-item" href="#">배송완료</a></li>
-                <li><a class="dropdown-item" href="#">취소완료</a></li>
+                <li><a class="dropdown-item">배송전</a></li>
+                <li><a class="dropdown-item">배송중</a></li>
+                <li><a class="dropdown-item">배송완료</a></li>
+                <li><a class="dropdown-item">취소완료</a></li>
               </ul>
             </div>
           </td>
@@ -69,7 +69,6 @@ function createOderMiddle(dataArr) {
         </tr>`
     );
   }
-  middle.innerHTML = "";
   middle.innerHTML += addHtml.join("");
   return middle;
 }
@@ -115,12 +114,12 @@ function createUserMiddle(dataArr) {
           </td>
           <td>
             <div class="dropdown">
-              <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="btn btn-outline-secondary dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 ${dataArr[count].role}
               </a>
               <ul class="dropdown-menu btn__edit">
-                <li><a class="dropdown-item" href="#">basic-user</a></li>
-                <li><a class="dropdown-item" href="#">admin</a></li>
+                <li><a class="dropdown-item">basic-user</a></li>
+                <li><a class="dropdown-item">admin</a></li>
               </ul>
             </div>
           </td>
@@ -130,7 +129,6 @@ function createUserMiddle(dataArr) {
         </tr>`
     );
   }
-  middle.innerHTML = "";
   middle.innerHTML += addHtml.join("");
   return middle;
 }
@@ -166,7 +164,6 @@ function createCategoryMiddle(dataArr) {
         </tr>`
     );
   }
-  middle.innerHTML = "";
   middle.innerHTML += addHtml.join("");
   return middle;
 }
@@ -221,7 +218,6 @@ function createProductMiddle(dataArr) {
         </tr>`
     );
   }
-  middle.innerHTML = "";
   middle.innerHTML += addHtml.join("");
   return middle;
 }
