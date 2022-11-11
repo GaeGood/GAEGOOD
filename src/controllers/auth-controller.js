@@ -1,5 +1,4 @@
 import { authService } from "../services";
-
 class AuthController {
   async loginUser(req, res, next) {
     const { email, password } = req.body;
@@ -39,6 +38,21 @@ class AuthController {
       return res.status(200).json(result);
     } catch (e) {
       next(e);
+    }
+  }
+
+  async renewPassword(req, res, next) {
+    const { email } = req.body;
+    if (!email) {
+      return res
+        .status(400)
+        .json("이메일이 입력되지 않았습니다. 패스워드를 갱신할 수 없습니다.");
+    }
+    try {
+      await authService.renewPassword(email);
+      return res.status(200).json("비밀번호 찾기가 수행되었습니다.");
+    } catch (err) {
+      return res.status(400).json("비밀번호 찾기를 수행할 수 없습니다.");
     }
   }
 }
