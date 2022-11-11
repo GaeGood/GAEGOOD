@@ -1,5 +1,7 @@
 import { main } from "/public/js/main.js";
 
+const { loggedInUser } = await main();
+
 // /api/auth/renewPassword 로 api 요청
 const userInputEmail = document.querySelector("#exampleFormControlInput1");
 

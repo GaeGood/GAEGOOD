@@ -26,6 +26,7 @@ function renderLoginModal() {
           </form>
         </div>
         <div class="modal-footer">
+          <div id="find__password__wrap"><a href="/find-password" id="find__password__btn">비밀번호 찾기</a></div>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
           <button type="button" class="btn btn-primary login__submit__btn">확인</button>
         </div>
