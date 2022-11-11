@@ -21,7 +21,6 @@ productRouter.get("/search", productController.searchProduct);
 productRouter.get("/:pid", productController.getProduct);
 productRouter.put(
   "/:pid",
-  bodyEmptyChecker,
   loginRequired,
   adminRequired,
   productImageUpload.single("productImage"),
