@@ -152,11 +152,12 @@
 
 - Padlet : 초반 주제 기획시 의사결정 빠르게 하는 칸반 보드 용도(Trello보다 가벼워서 잠시 사용, 이후에 notion으로 통일)
 - PigJam : 초반 기획시 빠른 레이아웃을 잡기 위해 사용
-- Notion : 수정이 빈번하고 같이 수정해야하는 것
+- Notion : 수정이 빈번하고 같이 수정해야하는 것, API 명세
 - Discord : 화상회의 , 수시로 스크럼 잡는 용도
 - Gitlab : Code Repository
 - Gitlab Issue : 진행상황이나 Trouble Shooting 내역 적기
 - Gitlab Wiki : 스크럼 회의내용 적기
+- Postman Teams : API 테스트 진행
 
 
 ## Scrum
@@ -183,13 +184,17 @@
 - feat, fix, template 3가지를 공통적으로 사용하되 그 외는 자유롭게 사용
 
 ## 브랜치 전략
-![gaegood_branch_strategy drawio (3)](https://user-images.githubusercontent.com/59651691/201296955-04f0a6d2-7f49-42b2-980e-e4550930335e.png)
+![gaegood_branch_strategy drawio (5)](https://user-images.githubusercontent.com/59651691/201320404-6b33526e-ce66-4c1a-9cc6-da612e68f07b.png)
 
 
 
 <br />
 
-## 5. 실행 방법
+## 배포
+- google domain 적용
+- letsencrypt ssl 무료 인증서 적용
+
+## 실행 방법
 
 ```bash
 git clone {.....repository_name}.git
