@@ -116,10 +116,24 @@
 
 |  |  |
 | ------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------|
-| ![](https://velog.velcdn.com/images/gyuri092/post/80d40273-1ce4-435f-8a86-9456ea93858f/image.png) | ![](https://velog.velcdn.com/images/gyuri092/post/397877a8-9d94-4f52-a940-d2113b0fc8ef/image.png) |
-|    메인 페이지                                |      회원가입 화면                            |
-| ![](https://velog.velcdn.com/images/gyuri092/post/15384467-6529-4112-9e99-5ba04b1b4513/image.png) |                                         |
-|    로그인 페이지                              |     앞으로 추가할 페이지                         |
+| ![](https://velog.velcdn.com/images/gyuri092/post/80d40273-1ce4-435f-8a86-9456ea93858f/image.png) | ![](https://velog.velcdn.com/images/gyuri092/post/80d40273-1ce4-435f-8a86-9456ea93858f/image.png) |
+|                                                메인 페이지 (카테고리별 제품 목록 페이지 이동 링크)                                             |                                                회원가입 화면                                                    |
+| ![](https://velog.velcdn.com/images/gyuri092/post/15384467-6529-4112-9e99-5ba04b1b4513/image.png) | ![](https://velog.velcdn.com/images/gyuri092/post/15384467-6529-4112-9e99-5ba04b1b4513/image.png) |
+|                                                로그인 페이지                                                |                                                카테고리별 제품 목록 페이지 (여자옷)                                                 |
+| ![image](https://i.ibb.co/S67hhtQ/image.png) | ![image](https://i.ibb.co/3hHGhKn/image.png) |
+|                                   카테고리별 제품 목록 페이지 (남자옷)                                  |                                                  제품 상세 페이지                                                |
+| ![image](https://i.ibb.co/Q6f0G7m/image.png) | ![image](https://i.ibb.co/KDc1xMW/image.png) |
+|                                                  장바구니 페이지                                                  |                                                   주문 페이지                                                   |
+| ![image](https://i.ibb.co/mGq3v2q/image.png) | ![image](https://i.ibb.co/XsjP6p8/image.png) |
+|                                                  주문완료 페이지                                                  |                                                  주문내역 페이지                                                   |
+| ![image](https://i.ibb.co/YN6VLKK/image.png) | ![image](https://i.ibb.co/vdZvhMb/image.png) |
+|                                                  개인 계정관리 페이지                                                  |                                                  회원정보 수정 페이지                                                   |
+| ![image](https://i.ibb.co/0jLxC6m/image.png) | ![image](https://i.ibb.co/162YcXN/image.png) |
+|                                                  관리자 괸리 페이지                                                  |                                                  관리자 회원관리 페이지                                                   |
+| ![image](https://i.ibb.co/dBzM2Qb/image.png) | ![image](https://i.ibb.co/BzbWx0M/image.png) |
+|                                                  관리자 주문관리 페이지                                                  |                                                  관리자 제품추가 페이지                                                   |
+
+
 
 <br />
 
