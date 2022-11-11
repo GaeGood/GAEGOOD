@@ -122,9 +122,12 @@
 
 |  |  |
 | ------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------|
-| ![](https://velog.velcdn.com/images/gyuri092/post/80d40273-1ce4-435f-8a86-9456ea93858f/image.png) | ![](https://velog.velcdn.com/images/gyuri092/post/80d40273-1ce4-435f-8a86-9456ea93858f/image.png) |
+| ![](https://velog.velcdn.com/images/roka/post/b46c0c6f-7d85-4880-bed4-4829f46f608b/image.PNG)
+ | ![](https://velog.velcdn.com/images/roka/post/aefa87b0-2449-46fa-bdd9-07bdb0dcfaa0/image.PNG)
+ |
 |                                                홈 & 카테고리별 상품조회                                             |                                                로그인                                                   |
-| ![](https://velog.velcdn.com/images/gyuri092/post/15384467-6529-4112-9e99-5ba04b1b4513/image.png) | ![](https://velog.velcdn.com/images/gyuri092/post/15384467-6529-4112-9e99-5ba04b1b4513/image.png) |
+| ![](https://velog.velcdn.com/images/roka/post/23aabd8a-c9e5-40bb-8c75-877a1e14e326/image.PNG)
+ | ![](https://velog.velcdn.com/images/gyuri092/post/15384467-6529-4112-9e99-5ba04b1b4513/image.png) |
 |                                                회원가입                                                |                                                마이페이지 - 회원정보수정                                                 |
 | ![image](https://i.ibb.co/S67hhtQ/image.png) | ![image](https://i.ibb.co/3hHGhKn/image.png) |
 |                                   마이페이지 - 주문내역                                  |                                                  마이페이지 - 찜 목록                                                |
