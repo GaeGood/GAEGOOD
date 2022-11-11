@@ -33,7 +33,7 @@
  - http://gaegood.com/
  <div>
 
-<img alt="쇼핑-데모 로고" src="https://i.ibb.co/xSZHxmy/image.png">
+<img alt="GAEGOOD 로고" src="/uploads/5247b084d1d25cc1d45fd8efaf32ace0/GAEGOOD.PNG">
 
 </div>
 
