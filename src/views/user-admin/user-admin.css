@@ -10,6 +10,11 @@ html {
   height: 100vh;
 }
 
+body {
+  display: grid;
+  height: 100vh;
+}
+
 a {
   text-decoration: none;
   color: black;
@@ -28,7 +33,9 @@ a {
   width: 100%;
   height: 100%;
   padding: 100px;
+  min-height: 83vh;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .main-contents {
@@ -64,6 +71,6 @@ textarea {
   resize: none;
 }
 
-.admin__page__list > button{
+.admin__page__list > button {
   margin-right: 10px;
 }
