@@ -71,13 +71,7 @@
 </details>
 
 
-<details><summary>카테고리별 상품조회</summary>
-
-
-</details>
-
-
-<details><summary>회원정보수정 & 회원탈퇴</summary>
+<details><summary>회원정보수정 & 회원탈퇴(메이)</summary>
 
 
 </details>
@@ -91,25 +85,25 @@
 </details>
 
 
-<details><summary>즉시구매 & 장바구니구매</summary>
+<details><summary>즉시구매 & 장바구니구매(맨디)</summary>
 
 
 </details>
 
 
-<details><summary>주문내역조회 & 주문정보수정 & 주문취소</summary>
+<details><summary>주문내역조회 & 주문정보수정 & 주문취소(메이)</summary>
 
 
 </details>
 
 
-<details><summary>상품찜하기 & 찜목록조회</summary>
+<details><summary>상품찜하기 & 찜목록조회(메이)</summary>
 
 
 </details>
 
 
-<details><summary>관리자</summary>
+<details><summary>관리자(시안)</summary>
 
 
 </details>
