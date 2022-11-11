@@ -1,23 +1,28 @@
 import { Router } from "express";
 import { userController } from "../controllers";
 import { adminRequired, bodyEmptyChecker, loginRequired } from "../middlewares";
-import { checkOwner } from "../middlewares";
+import { userOwnRequired } from "../middlewares";
 const userRouter = Router();
 
 userRouter.get("/", loginRequired, adminRequired, userController.getUserList);
-userRouter.get("/:userId", loginRequired, checkOwner, userController.getUser);
+userRouter.get(
+  "/:userId",
+  loginRequired,
+  userOwnRequired,
+  userController.getUser
+);
 userRouter.post("/", userController.addUser);
 userRouter.put(
   "/:userId",
   bodyEmptyChecker,
   loginRequired,
-  checkOwner,
+  userOwnRequired,
   userController.editUser
 );
 userRouter.delete(
   "/:userId",
   loginRequired,
-  checkOwner,
+  userOwnRequired,
   userController.removeUser
 );
 
