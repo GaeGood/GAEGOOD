@@ -57,26 +57,31 @@
 
 ### 데모 영상
 
-<details><summary>사용자 회원가입, 로그인</summary>
+
+<details><summary>홈 & 카테고리별 상품조회</summary>
 
 
 </details>
 
-<details><summary>카테고리 추가 및 반영</summary>
 
-추후 관련 영상을 삽입하세요 (하기 2가지 방법 가능)
-1. 화면녹화 -> 유튜브 업로드 -> 유튜브 링크 삽입  
-2. 화면움짤녹화 -> 움짤삽입 (https://www.screentogif.com/ 활용가능)
-   
-</details>
+<details><summary>로그인 & 회원가입 & 토큰인증</summary>
 
-<details><summary>상품 추가 및 반영</summary>
-
-추후 관련 영상을 삽입하세요 (하기 2가지 방법 가능)
-1. 화면녹화 -> 유튜브 업로드 -> 유튜브 링크 삽입  
-2. 화면움짤녹화 -> 움짤삽입 (https://www.screentogif.com/ 활용가능)
 
 </details>
+
+
+<details><summary>카테고리별 상품조회</summary>
+
+
+</details>
+
+
+<details><summary>회원정보수정 & 회원탈퇴</summary>
+
+
+</details>
+
+
 
 <details><summary>장바구니 기능</summary>
 
@@ -84,21 +89,31 @@
 
 </details>
 
-<details><summary>주문 기능</summary>
 
-추후 관련 영상을 삽입하세요 (하기 2가지 방법 가능)
-1. 화면녹화 -> 유튜브 업로드 -> 유튜브 링크 삽입  
-2. 화면움짤녹화 -> 움짤삽입 (https://www.screentogif.com/ 활용가능)
+<details><summary>즉시구매 & 장바구니구매</summary>
+
 
 </details>
 
-<details><summary>관리자 페이지</summary>
 
-추후 관련 영상을 삽입하세요 (하기 2가지 방법 가능)
-1. 화면녹화 -> 유튜브 업로드 -> 유튜브 링크 삽입  
-2. 화면움짤녹화 -> 움짤삽입 (https://www.screentogif.com/ 활용가능)
+<details><summary>주문내역조회 & 주문정보수정 & 주문취소</summary>
+
 
 </details>
+
+
+<details><summary>상품찜하기 & 찜목록조회</summary>
+
+
+</details>
+
+
+<details><summary>관리자</summary>
+
+
+</details>
+
+
 
 <br />
 
