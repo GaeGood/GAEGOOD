@@ -80,9 +80,7 @@
 
 <details><summary>장바구니 기능</summary>
 
-추후 관련 영상을 삽입하세요 (하기 2가지 방법 가능)
-1. 화면녹화 -> 유튜브 업로드 -> 유튜브 링크 삽입  
-2. 화면움짤녹화 -> 움짤삽입 (https://www.screentogif.com/ 활용가능)
+<img src="file:///C:/Users/ggr09/Desktop/Animation-cart.gif">
 
 </details>
 
