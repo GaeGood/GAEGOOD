@@ -72,7 +72,7 @@
 </details>
 
 
-<details><summary>회원정보수정 & 회원탈퇴(메이)</summary>
+<details><summary>회원정보수정 & 회원탈퇴</summary>
 ![](https://velog.velcdn.com/images/bamzzi15/post/536380f7-5294-4d81-b9c1-42b0c1072b99/image.gif)
 회원정보수정
 
@@ -91,7 +91,7 @@
 </details>
 
 
-<details><summary>즉시구매 & 장바구니구매(맨디)</summary>
+<details><summary>즉시구매 & 장바구니구매</summary>
 
 ![](https://velog.velcdn.com/images/gyuri092/post/62572aac-09a3-42ae-9aae-915541128764/image.gif)
 
@@ -100,7 +100,7 @@
 </details>
 
 
-<details><summary>주문내역조회 & 주문정보수정 & 주문취소(메이)</summary>
+<details><summary>주문내역조회 & 주문정보수정 & 주문취소</summary>
 
 ![](https://velog.velcdn.com/images/bamzzi15/post/615a83df-8b63-476b-8a0f-c71fe8d87f43/image.gif)
 주문조회
@@ -112,14 +112,14 @@
 </details>
 
 
-<details><summary>상품찜하기 & 찜목록조회(메이)</summary>
+<details><summary>상품찜하기 & 찜목록조회</summary>
 
 ![](https://velog.velcdn.com/images/bamzzi15/post/c773a054-b27e-46bc-b618-d13eeb059459/image.gif)
 
 </details>
 
 
-<details><summary>관리자(시안)</summary>
+<details><summary>관리자</summary>
 
 
 </details>
