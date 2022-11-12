@@ -162,8 +162,8 @@
   + Product, Order, Category 스키마 설계 및 API 구현, 로그인 여부, 접근 권한, 입력 값 등을 체크하는 미들웨어 구현, 이미지 업로드 미들웨어 구현
 - HUNI(재훈)
   +  Auth : nodemailer 활용한 gmail 임시패스워드 발송, verifyToken ,bcrypt 활용한 해싱작업,JWT token cookie 인증방식 및 로그인,로그아웃 로직 설계 
-User : CRUD 작성
-배포: pm2 활용한 무중단 배포, nginx 활용한 reverse proxy 적용, google domain 설정, ssl letsencrypt적용
+  + User : CRUD 작성
+  + 배포: pm2 활용한 무중단 배포, nginx 활용한 reverse proxy 적용, google domain 설정, ssl letsencrypt적용
 
 
 ### 폴더 구조
