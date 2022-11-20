@@ -72,6 +72,7 @@
 
 
 <details><summary>회원정보수정 & 회원탈퇴</summary>
+ 
 ![](https://velog.velcdn.com/images/bamzzi15/post/536380f7-5294-4d81-b9c1-42b0c1072b99/image.gif)
 회원정보수정
 
