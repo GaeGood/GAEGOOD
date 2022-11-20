@@ -108,7 +108,7 @@
 </details>
 
 <details><summary>관리자</summary>
-![녹화_2022_11_13_02_28_45_368](https://user-images.githubusercontent.com/59651691/201486963-b0b0aba7-f9a6-42bc-85e8-9b2bf9072167.gif)
+![](https://user-images.githubusercontent.com/59651691/201486963-b0b0aba7-f9a6-42bc-85e8-9b2bf9072167.gif)
 
 </details>
 
