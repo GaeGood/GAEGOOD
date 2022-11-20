@@ -34,7 +34,7 @@
 - https://gaegood.com/
 <div>
 
-<img alt="GAEGOOD 로고" src="/uploads/698b51c434aaec0eeb2cc8900cb4568e/GAEGOOD.PNG">
+![GAEGOOD](https://user-images.githubusercontent.com/59651691/201486542-5f37d229-6e12-4c27-8ae6-4c779c81cd78.PNG)
 
 </div>
 
@@ -58,15 +58,18 @@
 
 <details><summary>홈 & 카테고리별 상품조회</summary>
 
-![](https://velog.velcdn.com/images/roka/post/e7685c47-6c97-4e80-901b-6e398ea4bf45/image.gif)
+![image](https://user-images.githubusercontent.com/59651691/201486815-bf901786-ee40-418a-aa15-c34aa021b1bf.gif)
+
 
 </details>
+
 
 <details><summary>로그인 & 회원가입 & 토큰인증</summary>
 
 ![](https://velog.velcdn.com/images/gyuri092/post/7226d290-93ad-4020-99dd-0370593975ab/image.gif)
 
 </details>
+
 
 <details><summary>회원정보수정 & 회원탈퇴</summary>
 ![](https://velog.velcdn.com/images/bamzzi15/post/536380f7-5294-4d81-b9c1-42b0c1072b99/image.gif)
@@ -75,13 +78,17 @@
 ![](https://velog.velcdn.com/images/bamzzi15/post/d932ddef-f712-44a9-a964-218ff322423d/image.gif)
 회원탈퇴
 
+
 </details>
+
+
 
 <details><summary>장바구니 기능</summary>
 
 ![](https://velog.velcdn.com/images/gyuri092/post/a13cc16e-3be7-440d-8aee-c1c56903cff0/image.gif)
 
 </details>
+
 
 <details><summary>즉시구매 & 장바구니구매</summary>
 
@@ -91,15 +98,18 @@
 
 </details>
 
+
 <details><summary>주문내역조회 & 주문정보수정 & 주문취소</summary>
 
 ![](https://velog.velcdn.com/images/bamzzi15/post/615a83df-8b63-476b-8a0f-c71fe8d87f43/image.gif)
 주문조회
 
+
 ![](https://velog.velcdn.com/images/bamzzi15/post/2870e56c-3022-4a46-8071-7b455db72cf0/image.gif)
 주문상세조회, 수정, 탈퇴
 
 </details>
+
 
 <details><summary>상품찜하기 & 찜목록조회</summary>
 
@@ -107,8 +117,10 @@
 
 </details>
 
+
 <details><summary>관리자</summary>
-![](https://user-images.githubusercontent.com/59651691/201486963-b0b0aba7-f9a6-42bc-85e8-9b2bf9072167.gif)
+
+![녹화_2022_11_13_02_28_45_368](https://user-images.githubusercontent.com/59651691/201486963-b0b0aba7-f9a6-42bc-85e8-9b2bf9072167.gif)
 
 </details>
 
