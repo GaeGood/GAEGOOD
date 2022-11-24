@@ -40,18 +40,6 @@ const OrderSchema = new Schema(
       type: String,
       required: true,
     },
-    shippingStreetAddress: {
-      type: String,
-      required: true,
-    },
-    shippingExtraAddress: {
-      type: String,
-      required: false,
-    },
-    shippingRequestMessage: {
-      type: String,
-      required: false,
-    },
     totalAmount: {
       type: String,
       required: true,
