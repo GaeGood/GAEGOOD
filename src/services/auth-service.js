@@ -8,7 +8,7 @@ class AuthService {
     this.userModel = userModel;
   }
 
-  async login(email, password) {
+  async loginUser(email, password) {
     const user = await userModel.findByEmail(email);
     if (!user) {
       const error = new Error("가입 된 메일이 아닙니다.");
@@ -42,9 +42,9 @@ class AuthService {
 
   async verifyToken(token) {
     try {
-      const data = jwt.verify(token, process.env.JWT_SECRET_KEY || 10);
-      const getUser = await userModel.findById(data.id); //PEPE 요청대로 User data 불러와서 뿌려줄 예정 , password 빼야한다고 판단하면 그때 리팩토링 하는걸로.
-      return getUser;
+      const tokenPayload = jwt.verify(token, process.env.JWT_SECRET_KEY || 10);
+      const foundUser = await userModel.findById(tokenPayload.userId);
+      return foundUser;
     } catch (err) {
       const error = new Error(
         "유효한 정상적인 토큰이 아니거나 가입된 _Id를 찾을 수 없습니다."
@@ -68,8 +68,8 @@ class AuthService {
       subject: "Gaegood.com 패스워드 변경알림",
       text: "mail testing",
     };
-    let chars =
-      "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let chars = S;
+    ("0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ");
     let passwordLength = 12;
     let password = "";
     for (let i = 0; i < passwordLength; i++) {

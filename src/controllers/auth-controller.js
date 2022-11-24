@@ -7,7 +7,7 @@ class AuthController {
     }
 
     try {
-      const token = await authService.login(email, password);
+      const token = await authService.loginUser(email, password);
       if (token) {
         res.cookie("jwt_token", token);
       }
