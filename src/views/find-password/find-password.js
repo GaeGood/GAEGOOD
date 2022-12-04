@@ -5,7 +5,7 @@ const { loggedInUser } = await main();
 // /api/auth/renewPassword 로 api 요청
 const userInputEmail = document.querySelector("#exampleFormControlInput1");
 
-const findPasswordBtn = document.querySelector(".btn.btn-primary");
+const findPasswordBtn = document.getElementById("find-password");
 findPasswordBtn.addEventListener("click", sendEmail);
 
 function sendEmail() {

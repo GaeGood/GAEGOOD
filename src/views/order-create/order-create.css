@@ -80,8 +80,9 @@ a {
 
 .order__product__th {
   min-width: 55px;
-  height: 25px;
+  height: 40px;
   text-align: center;
+  font-weight: 600;
 }
 
 .order__product__td {
