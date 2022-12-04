@@ -18,6 +18,7 @@ if (orderList.length) {
 }
 
 function orderListDefultSort() {
+  orderListZone.innerHTML = "";
   orderListZone.innerHTML = `
           <div class="table__title">
             <div class="table-header">주문정보</div>
