@@ -13,9 +13,9 @@ const likesProductListZone = document.querySelector(".like__product__list");
 const mainMypageHeader = document.querySelector(".main__mypage__header");
 mainMypageHeader.innerHTML = `안녕하세요, ${name}님!`;
 
-likesProductListMake();
+MakeikesProductList();
 
-function likesProductListMake() {
+function MakeikesProductList() {
   likesProductList.forEach((likesProduct) => {
     // 주문내역이 있으면 주문내역 없다는 안내멘트 지우기
     likeNone.className = "like__none hidden";
@@ -68,7 +68,7 @@ function likesProductListMake() {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              likesProductList: likesProductList,
+              likesProductList,
             }),
           })
             .then(async (res) => {
