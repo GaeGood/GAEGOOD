@@ -30,9 +30,6 @@ const version = 1;
 const objectStore = "cartStorage";
 
 if (directBuy) {
-  // 다이렉트 구매
-  alert("다이렉트 구매입니다.");
-
   // 쿼리스트링에서 pid, count 값을 가져옴
   let params = new URLSearchParams(queryString);
   const directProductPid = params.get("pid");
@@ -49,9 +46,6 @@ if (directBuy) {
   // orderProductList에 directProduct를 넣음
   orderProductList.push(directProduct); // 무조건 1개
 } else {
-  // 장바구니 구매
-  alert("장바구니 구매입니다.");
-
   // 장바구니 상품 여부 확인
   orderProductList = await getAllIndexedDB(
     // indexedDB에 들어간 만큼
@@ -62,6 +56,11 @@ if (directBuy) {
       return orderProductDBList;
     }
   );
+
+  if (orderProductList.length === 0) {
+    alert("구매 목록이 없습니다. 1초 후 홈으로 이동합니다.");
+    setTimeout("location.href = '/'", 1000);
+  }
 }
 
 async function getDirectBuyProductInfo(directProductPid) {
@@ -88,7 +87,6 @@ async function getDirectBuyProductInfo(directProductPid) {
 // db에 있는 기존 유저정보 화면에 띄우기
 const { name, phoneNumber, postCode, streetAddress, extraAddress, _id } =
   loggedInUser;
-console.log(loggedInUser);
 
 const [
   userName,
@@ -97,8 +95,6 @@ const [
   userStreetAddress,
   userExtraAddress,
 ] = document.querySelectorAll(".user_info");
-
-console.log(document.querySelectorAll(".user_info"));
 
 const [productsPriceHTML, deliveryFeeHTML, totalPriceHTML] =
   document.querySelectorAll(".pay");
@@ -256,13 +252,12 @@ const payBtn = document.querySelector(".pay__button");
 
 function payBtnClick() {
   if (
-    !userName.value ||
+    !userName.value.trim() ||
     !userPhoneNumber.value ||
     !userPostCode.value ||
-    !userStreetAddress.value ||
-    !userExtraAddress.value
+    !userStreetAddress.value
   ) {
-    return alert("배송지 정보를 정확하게 입력해주세요");
+    return alert("배송지 정보를 모두 입력해주세요");
   }
 
   const requestType = requestSelectBox.value;
@@ -278,7 +273,7 @@ function payBtnClick() {
 
   // 기존에 휴대폰번호와 주소가 없다면 주문할 때 배송지와 휴대폰번호로 기존 유저정보 업데이트
 
-  if (!phoneNumber && !postCode) {
+  if (!phoneNumber || !postCode) {
     // 전화번호
     if (userPhoneNumber.value !== "") {
       // 숫자만 매칭
@@ -294,7 +289,7 @@ function payBtnClick() {
         return alert("휴대폰번호를 잘못 입력하셨습니다. 숫자만 입력하세요.");
       }
       // 길이가 아닐 경우
-      if (!(numberCheck.length >= 10 && numberCheck.length <= 11)) {
+      if (numberCheck.length < 10) {
         return alert("휴대폰번호를 잘못 입력하셨습니다. 다시 입력해주세요.");
       }
     }
@@ -320,9 +315,7 @@ function payBtnClick() {
 
         return Promise.reject(json);
       })
-      .then((userInfoChange) => {
-        console.log("회원정보 업데이트 완료");
-      })
+      .then((userInfoChange) => {})
       .catch((err) => {
         alert(`에러가 발생했습니다. 관리자에게 문의하세요. \n에러내용: ${err}`);
       });

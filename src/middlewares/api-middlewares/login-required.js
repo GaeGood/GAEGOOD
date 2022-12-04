@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken";
-import { userModel } from "../db";
+import { userModel } from "../../db";
 
 async function loginRequired(req, res, next) {
   const token = req.cookies.jwt_token;
   if (!token) {
-    const e = new Error("토큰이 존재하지 않습니다.");
+    const e = new Error("로그인하지 않아, 이 API에 대한 사용을 불허합니다.");
     e.statusCode = 403;
     next(e);
   }
@@ -16,7 +16,7 @@ async function loginRequired(req, res, next) {
     req.loggedInUser = user;
     next();
   } catch (err) {
-    const e = new Error("JWT 토큰이 존재하지만, 검증에 실패했습니다.");
+    const e = new Error("로그인하지 않아, 이 API에 대한 사용을 불허합니다.");
     e.statusCode = 403;
     next(e);
   }

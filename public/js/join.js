@@ -6,10 +6,13 @@ function addEventListenerOnJoinBtn(loggedInUser) {
     const joinEmail = document.querySelector("#join__email");
     const joinPassword = document.querySelector("#join__password");
     const joinPasswordCheck = document.querySelector("#join__password__check");
-
+    const reg_email =
+      /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
     joinFormSubmit.addEventListener("click", (event) => {
       if (joinPassword.value !== joinPasswordCheck.value) {
         alert("입력하신 두 비밀번호가 일치하지 않습니다.");
+      } else if (!reg_email.test(joinEmail.value)) {
+        alert("이메일 형식이 맞지 않습니다. 다시 입력해주세요.");
       } else {
         fetch("/api/users", {
           method: "POST",

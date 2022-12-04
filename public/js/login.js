@@ -2,15 +2,11 @@
 function addEventListenerOnLoginBtn(loggedInUser) {
   // 로그인 한 유저가 없어야 함
   if (!loggedInUser) {
-    console.log("-------- login button에 이벤트 리스너 연결 시작 --------");
     const loginFormSubmit = document.querySelector(".login__submit__btn");
     const email = document.querySelector("#email");
     const password = document.querySelector("#password");
 
     loginFormSubmit.addEventListener("click", (event) => {
-      alert(
-        `입력한 이메일과 비밀번호입니다\nemail: ${email.value}\npassword: ${password.value}` // 추후 삭제
-      );
       fetch("/api/auth/login", {
         method: "POST",
         headers: {
@@ -31,7 +27,6 @@ function addEventListenerOnLoginBtn(loggedInUser) {
           return Promise.reject(json);
         })
         .then((success) => {
-          alert(success);
           //모달창이 닫히는 기능
           document.getElementsByTagName("body")[0].className = "";
           document.getElementsByTagName("body")[0].style = "none";
@@ -43,7 +38,6 @@ function addEventListenerOnLoginBtn(loggedInUser) {
           alert(e);
         });
     });
-    console.log("-------- login button에 이벤트 리스너 연결 완료 --------");
   }
 }
 

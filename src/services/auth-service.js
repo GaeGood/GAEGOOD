@@ -53,6 +53,7 @@ class AuthService {
       throw error;
     }
   }
+
   async renewPassword(email) {
     const transport = nodemailer.createTransport({
       service: "Gmail",

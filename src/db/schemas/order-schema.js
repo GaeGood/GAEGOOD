@@ -46,7 +46,7 @@ const OrderSchema = new Schema(
     },
     shippingExtraAddress: {
       type: String,
-      required: true,
+      required: false,
     },
     shippingRequestMessage: {
       type: String,

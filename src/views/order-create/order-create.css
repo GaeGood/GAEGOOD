@@ -25,9 +25,6 @@ a {
 
 /* main */
 
-section {
-  padding: 20px 80px;
-}
 #main__container {
   width: 100%;
   height: 100%;
@@ -38,6 +35,8 @@ section {
 .main-contents {
   display: flex;
   flex-direction: column;
+
+  margin-top: 30px;
 }
 
 .main__title__zone {
@@ -56,6 +55,7 @@ section {
 .process__bar p {
   margin-left: 10px;
 }
+
 .process__bar p:nth-child(2) {
   font-size: 30px;
   font-weight: 500;
@@ -74,12 +74,15 @@ section {
 
 .table__header {
   font-size: 20px;
+  font-weight: 700;
   margin: 10px 0;
 }
 
 .order__product__th {
-  height: 25px;
+  min-width: 55px;
+  height: 40px;
   text-align: center;
+  font-weight: 600;
 }
 
 .order__product__td {
@@ -122,8 +125,7 @@ section {
 .delivery__infomation {
   width: auto;
   display: flex;
-  justify-content: center;
-  gap: 60px;
+  justify-content: space-between;
 }
 
 .user__infomation__table {
@@ -233,4 +235,17 @@ section {
 /*display:none*/
 .hidden {
   display: none;
+}
+
+/* placeholder */
+input.phonenumber::placeholder {
+  color: lightgray;
+}
+
+input.name::placeholder {
+  color: lightgray;
+}
+
+input.address__input__2::placeholder {
+  color: lightgray;
 }

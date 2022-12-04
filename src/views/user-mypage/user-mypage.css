@@ -98,10 +98,12 @@ td {
 .address__zone {
   height: 140px;
 }
+
 .address__zone__input {
   display: flex;
   justify-content: space-between;
 }
+
 .postalcode__input {
   width: 230px;
 }
@@ -123,4 +125,26 @@ td {
 /*display:none*/
 .hidden {
   display: none;
+}
+
+/* placeholder */
+
+input.name::placeholder {
+  color: lightgray;
+}
+
+input.password__first::placeholder {
+  color: lightgray;
+}
+
+input.password__second::placeholder {
+  color: lightgray;
+}
+
+input.phonenumber::placeholder {
+  color: lightgray;
+}
+
+input.address__input__2::placeholder {
+  color: lightgray;
 }

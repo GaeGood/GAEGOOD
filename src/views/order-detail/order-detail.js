@@ -2,10 +2,8 @@ import { main } from "/public/js/main.js";
 const loggedInUser = await main();
 
 const path = window.location.href;
-console.log(path);
 
-const oid = path.split("/")[4];
-console.log(oid);
+const oid = path.split("/")[5];
 
 fetch(`/api/orders/${oid}`)
   .then(async (res) => {
@@ -17,9 +15,6 @@ fetch(`/api/orders/${oid}`)
     return Promise.reject(json);
   })
   .then((order) => {
-    console.log("order");
-    console.log(order);
-
     const orderDetailWrap = document.getElementById("order-detail__wrap");
     orderDetailWrap.innerHTML += renderOrderContent(order);
 
@@ -285,8 +280,6 @@ const orderCancelBtn = document.getElementById(
 );
 
 orderCancelBtn.addEventListener("click", (e) => {
-  console.log("주문 취소 버튼 클릭");
-
   if (window.confirm("주문을 취소하시겠습니까?")) {
     fetch(`/api/orders/${oid}`, {
       method: "PUT",
@@ -322,8 +315,6 @@ orderCancelBtn.addEventListener("click", (e) => {
 // 주소 검색 기능
 
 const addressSearchBtn = document.querySelector(".address__search");
-console.log("addressSearchBtn");
-console.log(addressSearchBtn);
 
 function searchAddress(e) {
   e.preventDefault();

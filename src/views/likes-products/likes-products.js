@@ -15,8 +15,6 @@ mainMypageHeader.innerHTML = `안녕하세요, ${name}님!`;
 
 likesProductListMake();
 
-console.log("likesProductList", likesProductList);
-
 function likesProductListMake() {
   likesProductList.forEach((likesProduct) => {
     // 주문내역이 있으면 주문내역 없다는 안내멘트 지우기
@@ -101,6 +99,8 @@ function likesProductListMake() {
 
 // 회원탈퇴 기능
 const deleteUserBtn = document.querySelector(".user__delete");
+
+// 회원탈퇴 기능
 
 function deleteUser() {
   const answer = confirm(

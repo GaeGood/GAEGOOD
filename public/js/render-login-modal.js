@@ -5,7 +5,6 @@
 // "주문하기" 버튼처럼 특정 버튼을 클릭 시 로그인 모달이 뜨게 할지, 또는 주문페이지로 이동하게 할지의 여부는
 // verifyToken으로 가져온 로그인 여부에 따라 동적으로 결정하는 로직이 필요함
 function renderLoginModal() {
-  console.log("------------ login modal 렌더 시작 ------------");
   const loginModal = `<div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLoginLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -26,6 +25,7 @@ function renderLoginModal() {
           </form>
         </div>
         <div class="modal-footer">
+          <div id="find__password__wrap"><a href="/find-password" id="find__password__btn">비밀번호 찾기</a></div>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
           <button type="button" class="btn btn-primary login__submit__btn">확인</button>
         </div>
@@ -34,7 +34,6 @@ function renderLoginModal() {
   </div>`;
 
   document.body.innerHTML = loginModal + document.body.innerHTML;
-  console.log("------------ login modal 렌더 완료 ------------");
 }
 
 export { renderLoginModal };
