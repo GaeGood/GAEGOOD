@@ -161,15 +161,12 @@ orderProductList.forEach((orderProduct) => {
     productAllAmountArr.push(orderProduct.amount);
     productsPrice += orderProduct.price * orderProduct.amount;
 
-    if (productsPrice >= 50000) {
-      productsPriceHTML.innerHTML = addCommas(productsPrice) + "원";
-      deliveryFeeHTML.innerHTML = addCommas(0) + "원";
-      totalPriceHTML.innerHTML = addCommas(productsPrice) + "원";
-    } else {
-      productsPriceHTML.innerHTML = addCommas(productsPrice) + "원";
-      deliveryFeeHTML.innerHTML = addCommas(3000) + "원";
-      totalPriceHTML.innerHTML = addCommas(productsPrice + 3000) + "원";
-    }
+    const isFreeDelivery = productsPrice >= 50000;
+    const deliveryFee = isFreeDelivery ? 0 : 3000;
+
+    productsPriceHTML.innerHTML = addCommas(productsPrice) + "원";
+    deliveryFeeHTML.innerHTML = addCommas(deliveryFee) + "원";
+    totalPriceHTML.innerHTML = addCommas(productsPrice + deliveryFee) + "원";
   }
 });
 
