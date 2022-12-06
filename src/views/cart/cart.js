@@ -63,6 +63,7 @@ getAllIndexedDB(DATABASE_NAME, version, objectStore, function (dataList) {
     order__button__container.innerHTML = orderButton__User__Disabled;
   }
 });
+
 function emptyCartImage() {
   getAllIndexedDB(DATABASE_NAME, version, objectStore, function (dataList) {
     /* defaultImage 컨테이너 div */
@@ -89,11 +90,44 @@ function emptyCartImage() {
     }
   });
 }
+
+const store = {
+  getData: (storeName) => {
+    return JSON.parse(localStorage.getItem(storeName));
+  },
+  setData: (storeName, data) => {
+    localStorage.setItem(storeName, JSON.stringify(data));
+  },
+  removeStore: (storeName) => {
+    localStorage.removeItem(storeName);
+  },
+};
+function localStorageGetData() {
+  //produc-detail 에서 데이터 set후 작성 필요
+}
+
+function localStorageSetData(key, formData) {
+  const value = JSON.stringify(formData);
+  var str = localStorage.getItem(key);
+  var obj = {};
+  try {
+    obj = JSON.parse(str);
+  } catch {
+    obj = {};
+  }
+  if (!obj) {
+    obj = {};
+    obj[key] = [];
+  }
+  obj[key].push(value);
+  localStorage.setItem(key, JSON.stringify(obj));
+}
+
 function getAllIndexedDB(DATABASE_NAME, version, objectStore, cb) {
   if (window.indexedDB) {
     const request = indexedDB.open(DATABASE_NAME, version);
     request.onerror = function (event) {
-      alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
+      localStorageGetData();
     };
     request.onsuccess = function () {
       const db = request.result;
@@ -107,7 +141,7 @@ function getAllIndexedDB(DATABASE_NAME, version, objectStore, cb) {
       };
     };
   } else {
-    alert("해당 브라우저에서는 indexedDB를 지원하지 않습니다.");
+    notAvailableInexedDB();
   }
 }
 /* 해당 indexedDB에 존재하는 모든 key 조회하기 */
@@ -115,7 +149,7 @@ function getAllKeysIndexedDB(DATABASE_NAME, version, objectStore, cb) {
   if (window.indexedDB) {
     const request = indexedDB.open(DATABASE_NAME, version);
     request.onerror = function (event) {
-      alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
+      localStorageGetData();
     };
     request.onsuccess = function () {
       const db = request.result;
@@ -129,10 +163,12 @@ function getAllKeysIndexedDB(DATABASE_NAME, version, objectStore, cb) {
       };
     };
   } else {
-    alert("해당 브라우저에서는 indexedDB를 지원하지 않습니다.");
+    notAvailableInexedDB();
   }
 }
-
+function notAvailableInexedDB() {
+  alert("해당 브라우저에서는 indexedDB를 지원하지 않습니다.");
+}
 /* 데이터 렌더링 */
 function dataRender(dataList, DATABASE_NAME, version, objectStore) {
   const cart__container = document.querySelector(".cart__container");
@@ -508,7 +544,7 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
         });
 
         request.onerror = function (event) {
-          alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
+          localStorageGetData();
         };
         request.onsuccess = function () {
           const db = request.result;
@@ -540,7 +576,7 @@ function dataRender(dataList, DATABASE_NAME, version, objectStore) {
         let ischeckedId = keys[i];
         const request = indexedDB.open(DATABASE_NAME, version);
         request.onerror = function (event) {
-          alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
+          localStorageGetData();
         };
         request.onsuccess = function () {
           const db = request.result;
@@ -650,7 +686,7 @@ function deleteIndexedDBdata(DATABASE_NAME, version, objectStore, targetId) {
     const request = indexedDB.open(DATABASE_NAME, version);
     const key = targetId; //"btn-" 제거하고 id값만 반환
     request.onerror = function (event) {
-      alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
+      localStorageGetData();
     };
     request.onsuccess = function () {
       const db = request.result;
@@ -702,7 +738,7 @@ function deleteIndexedDBdata(DATABASE_NAME, version, objectStore, targetId) {
       store.delete(key);
     };
   } else {
-    alert("해당 브라우저에서는 indexedDB를 지원하지 않습니다.");
+    notAvailableInexedDB();
   }
 }
 
@@ -713,7 +749,7 @@ function getIndexedDB(DATABASE_NAME, version, objectStore, productId, cb) {
     const request = indexedDB.open(DATABASE_NAME, version);
     const key = productId;
     request.onerror = function (event) {
-      alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
+      localStorageGetData();
     };
     request.onsuccess = function () {
       const db = request.result;
@@ -729,7 +765,7 @@ function getIndexedDB(DATABASE_NAME, version, objectStore, productId, cb) {
       };
     };
   } else {
-    alert("해당 브라우저에서는 indexedDB를 지원하지 않습니다.");
+    notAvailableInexedDB();
   }
 }
 
@@ -745,7 +781,7 @@ function updateCheckedIndexedDB(
     const request = indexedDB.open(DATABASE_NAME, version);
     const key = productId;
     request.onerror = function (event) {
-      alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
+      localStorageGetData();
     };
     request.onsuccess = function () {
       const db = request.result;
@@ -787,7 +823,7 @@ function updateCheckedAllIndexedDB(
     const request = indexedDB.open(DATABASE_NAME, version);
     //const key = productId;
     request.onerror = function (event) {
-      alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
+      localStorageGetData();
     };
     request.onsuccess = function () {
       const db = request.result;
