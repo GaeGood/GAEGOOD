@@ -1,4 +1,8 @@
 import { main, addCommas, convertToNumber } from "/public/js/main.js";
+// import {
+//   localStorageSetData,
+//   localStorageGetData,
+// } from "../../utils/localstorageStore";
 const { loggedInUser } = await main();
 
 const html = window.location.href;
@@ -132,7 +136,8 @@ function deleteIndexedDBdata(DATABASE_NAME, version, objectStore, idObject) {
     const request = indexedDB.open(DATABASE_NAME, version);
     const key = idObject.id;
     request.onerror = function (event) {
-      alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
+      store.getData("cart");
+      //alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
     };
     request.onsuccess = function () {
       const db = request.result;
@@ -144,28 +149,88 @@ function deleteIndexedDBdata(DATABASE_NAME, version, objectStore, idObject) {
     alert("해당 브라우저에서는 indexedDB를 지원하지 않습니다.");
   }
 }
+//----아래 영역은 함수 모듈화 후 삭제해주세요 ----//
+// *********아래 함수는 ../../utils/localstrageStrore 에 존재하지만 import 에러발생하여 임시로 코드내에 삽입함*********
+const store = {
+  getData: (storeName) => {
+    return JSON.parse(localStorage.getItem(storeName));
+  },
+  setData: (storeName, data) => {
+    localStorage.setItem(storeName, JSON.stringify(data));
+  },
+  removeStore: (storeName) => {
+    localStorage.removeItem(storeName);
+  },
+};
+// localstorage에 Data set
+function localStorageSetData(key, formData) {
+  const value = JSON.stringify(formData);
+  var str = localStorage.getItem(key);
+  var obj = {};
+  try {
+    obj = JSON.parse(str);
+  } catch {
+    obj = {};
+  }
+  if (!obj) {
+    obj = {};
+    obj[key] = [];
+  }
+  obj[key].push(value);
+  localStorage.setItem(key, JSON.stringify(obj));
+}
+
+// localstorage에서 Data get
+function localStorageGetData(key, id, amount) {
+  const localStorageData = store.getData(key);
+  const array = localStorageData.cart;
+  var str = localStorage.getItem(key);
+  var obj = {};
+  try {
+    obj = JSON.parse(str);
+  } catch {
+    obj = {};
+  }
+  if (!obj) {
+    obj = {};
+    obj[key] = [];
+  }
+  obj.amount = amount;
+  // Localstorage의 email, password 값과 일치해야만 ture값 반환 --> 배열로 정의, 리턴
+  const validate = array.map((data) => {
+    let parsedData = JSON.parse(data);
+    if (parsedData.id === id) {
+      store.removeStore(key);
+      localStorage.setItem(key, JSON.stringify(obj));
+      return [true, parsedData.id];
+    }
+  });
+  return validate;
+}
+//******************************************************************************************************* */
 
 /* 장바구니 버튼 클릭 시 indexedDB에 데이터 추가*/
 function insertIndexedDB(DATABASE_NAME, version, objectStore, idObject) {
+  idObject.amount = parseInt(productAmount.textContent);
+  idObject.checked = false;
+  idObject.name = productName.textContent;
+  idObject.category = productCategory.textContent;
+  idObject.shortDesc = productDescription.textContent;
+  //idObject.longDesc = productAmount.textContent;
+  idObject.price = convertToNumber(productPrice.textContent);
+  idObject.smallImageURL = productImg.src;
+  // idObject.bigImageURL = productAmount.textContent;
   if (window.indexedDB) {
     const request = indexedDB.open(DATABASE_NAME, version);
     request.onerror = function (event) {
-      alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
+      localStorageSetData("cart", idObject);
+      //alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
     };
     request.onsuccess = function (response) {
       const db = request.result;
       const transaction = db.transaction(objectStore, "readwrite");
       const store = transaction.objectStore(objectStore);
       // 상품 수량 담기 (최초)
-      idObject.amount = parseInt(productAmount.textContent);
-      idObject.checked = false;
-      idObject.name = productName.textContent;
-      idObject.category = productCategory.textContent;
-      idObject.shortDesc = productDescription.textContent;
-      //idObject.longDesc = productAmount.textContent;
-      idObject.price = convertToNumber(productPrice.textContent);
-      idObject.smallImageURL = productImg.src;
-      // idObject.bigImageURL = productAmount.textContent;
       store.add(idObject);
     };
   } else {
@@ -177,7 +242,8 @@ function getAllIndexedDB(DATABASE_NAME, version, objectStore, id, cb) {
   if (window.indexedDB) {
     const request = indexedDB.open(DATABASE_NAME, version);
     request.onerror = function (event) {
-      alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
+      store.getData("cart");
+      //alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
     };
     request.onsuccess = function () {
       const db = request.result;
@@ -193,23 +259,23 @@ function getAllIndexedDB(DATABASE_NAME, version, objectStore, id, cb) {
 }
 
 function updateIndexedDB(DATABASE_NAME, version, objectStore, id) {
+  const amount = parseInt(productAmount.textContent);
   if (window.indexedDB) {
     const request = indexedDB.open(DATABASE_NAME, version);
     const key = id;
     request.onerror = function (event) {
-      alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
+      localStorageGetData("cart", id, amount);
+      //alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
     };
     request.onsuccess = function () {
       const db = request.result;
       const transaction = db.transaction(objectStore, "readwrite");
-      transaction.onerror = function (e) {};
-      transaction.oncomplete = function (e) {};
       const store = transaction.objectStore(objectStore);
 
       store.get(key).onsuccess = function (response) {
         const value = response.target.result;
 
-        value.amount = parseInt(productAmount.textContent);
+        value.amount = amount;
         store.put(value).onsuccess = function () {};
       };
       store.get(key).onerror = function () {
@@ -224,7 +290,8 @@ function getAllKeysIndexedDB(DATABASE_NAME, version, objectStore, cb) {
   if (window.indexedDB) {
     const request = indexedDB.open(DATABASE_NAME, version);
     request.onerror = function (event) {
-      alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
+      store.getData("cart");
+      //alert("indexedDB 사용 불가로 장바구니 사용이 제한됩니다.");
     };
     request.onsuccess = function () {
       const db = request.result;
