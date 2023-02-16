@@ -108,16 +108,8 @@ function saveUserData(e) {
   if (!userPhoneNumber.value) {
     return alert("휴대폰번호를 입력해주세요.");
   } else if (userPhoneNumber.value !== "") {
-    // 숫자만 매칭
-    const numberCheck = userPhoneNumber.value.split("");
-    let result = [];
-    numberCheck.forEach((number) => {
-      const pattern = /[0-9]/g;
-      result.push(number.match(pattern));
-    });
-
     // 숫자가 아닌 다른값이 들어가 있을 경우
-    if (result.includes(null)) {
+    if (/[0-9]\D/.test(userPhoneNumber.value)) {
       return alert("휴대폰번호를 잘못 입력하셨습니다. 숫자만 입력하세요.");
     }
     // 길이가 아닐 경우
