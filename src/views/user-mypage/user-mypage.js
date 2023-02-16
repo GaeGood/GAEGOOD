@@ -44,20 +44,6 @@ userPostCode.value = postCode;
 userStreetAddress.value = streetAddress;
 userExtraAddress.value = extraAddress;
 
-// 주소와 핸드폰번호가 없을 경우 빈칸으로 만들기
-if (
-  userPostCode.value === "undefined" ||
-  userStreetAddress.value === "undefined"
-) {
-  userPostCode.value = "";
-  userStreetAddress.value = "";
-  userExtraAddress.value = "";
-}
-
-if (userPhoneNumber.value === "undefined") {
-  userPhoneNumber.value = "";
-}
-
 // 주소찾기
 // Daum 주소 API
 function searchAddress(e) {
