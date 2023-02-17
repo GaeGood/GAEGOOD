@@ -129,22 +129,30 @@ td {
 
 /* placeholder */
 
-input.name::placeholder {
+.name::placeholder {
   color: lightgray;
 }
 
-input.password__first::placeholder {
+.password__first::placeholder {
   color: lightgray;
 }
 
-input.password__second::placeholder {
+.password__second::placeholder {
   color: lightgray;
 }
 
-input.phonenumber::placeholder {
+.phonenumber::placeholder {
   color: lightgray;
 }
 
-input.address__input__2::placeholder {
+.postalcode__input::placeholder {
+  color: lightgray;
+}
+
+.address__input__1::placeholder {
+  color: lightgray;
+}
+
+.address__input__2::placeholder {
   color: lightgray;
 }

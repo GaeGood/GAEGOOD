@@ -160,15 +160,15 @@ orderProductList.forEach((orderProduct) => {
     productAllIdArr.push(orderProduct.id);
     productAllAmountArr.push(orderProduct.amount);
     productsPrice += orderProduct.price * orderProduct.amount;
-
-    const isFreeDelivery = productsPrice >= 50000;
-    const deliveryFee = isFreeDelivery ? 0 : 3000;
-
-    productsPriceHTML.innerHTML = addCommas(productsPrice) + "원";
-    deliveryFeeHTML.innerHTML = addCommas(deliveryFee) + "원";
-    totalPriceHTML.innerHTML = addCommas(productsPrice + deliveryFee) + "원";
   }
 });
+
+const isFreeDelivery = productsPrice >= 50000;
+const deliveryFee = isFreeDelivery ? 0 : 3000;
+
+productsPriceHTML.innerHTML = addCommas(productsPrice) + "원";
+deliveryFeeHTML.innerHTML = addCommas(deliveryFee) + "원";
+totalPriceHTML.innerHTML = addCommas(productsPrice + deliveryFee) + "원";
 
 // 주소찾기
 const addressSearchBtn = document.querySelector(".address__search");

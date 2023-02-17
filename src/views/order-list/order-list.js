@@ -14,10 +14,10 @@ mainMypageHeader.innerHTML = `안녕하세요, ${name}님!`;
 
 // 페이지 로드시 무조건 최근주문순으로
 if (orderList.length) {
-  orderListDefultSort();
+  orderListDefaultSort();
 }
 
-function orderListDefultSort() {
+function orderListDefaultSort() {
   orderListZone.innerHTML = "";
   orderListZone.innerHTML = `
           <div class="table__title">
@@ -43,11 +43,11 @@ function orderListOldSort() {
             </div>
   `;
 
-  orderList.reverse().forEach(orderListMake);
+  orderList.reverse().forEach((element) => orderListMake(element));
 
   // 최근주문순 클릭 시 최근주문순으로 정렬 이벤트
   const orderSort = document.querySelector(".order__sort");
-  orderSort.addEventListener("click", orderListDefultSort);
+  orderSort.addEventListener("click", orderListDefaultSort);
 }
 
 function orderListMake(order) {
